@@ -1,6 +1,7 @@
 import 'package:socialv/routes/route_helper.dart';
 import 'package:get/get.dart';
 
+import '../view/auth/login_screen.dart';
 import '../view/bottomBar/bottombar.dart';
 
 class SplashController extends GetxController {
@@ -15,7 +16,7 @@ class SplashController extends GetxController {
       //         ? RouteHelper.getWelcomeLoginRoute()
       //         : RouteHelper.getBottomBarRoute(),
       // ),
-      () => Get.to(BottomBar()),
+      () => Get.to(LoginScreen()),
     );
 
     super.onInit();

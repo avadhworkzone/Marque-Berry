@@ -12,4 +12,9 @@ class VariableUtils {
 
   ///
   static const noInternetText = "noInternetText";
+
+  ///  Login Screen
+  static const welcomeBack = "Welcome back!";
+  static const youHaveBeenMissed = "you have been missed for long Time";
+  static const mobileNumber = "Mobile Number";
 }
