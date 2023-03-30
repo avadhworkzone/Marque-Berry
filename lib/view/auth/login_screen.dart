@@ -10,6 +10,7 @@ import '../../utils/decoration_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
+import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -20,162 +21,172 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   int selectedIndex = 0;
+  TextEditingController otp = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Column(
-        children: [
-          SizeConfig.sH10,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ImagesWidgets.adoroImage,
-              // 8.width,
-            ],
-          ),
-          SizeConfig.sH7,
-          Stack(
-            children: [
-              Container(
-                width: Get.width,
-                height: 45.h,
-                decoration: DecorationUtils.loginDecoration(context),
-                child: Column(
-                  children: [
-                    SizeConfig.sH2,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            selectedIndex = 0;
-                            setState(() {});
-                          },
-                          child: AdoroText(
-                            "LOGIN",
-                            color: selectedIndex == 0
-                                ? Colors.white
-                                : ColorUtils.blueE7,
-                          ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizeConfig.sH10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ImagesWidgets.adoroImage,
+                // 8.width,
+              ],
+            ),
+            SizeConfig.sH7,
+            Container(
+              width: Get.width,
+              height: 12.h,
+              decoration: DecorationUtils.loginDecoration(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          selectedIndex = 0;
+                          setState(() {});
+                        },
+                        child: AdoroText(
+                          "LOGIN",
+                          fontSize: 13.sp,
+                          color: selectedIndex == 0
+                              ? Colors.white
+                              : ColorUtils.blueE7,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            selectedIndex = 1;
-                            setState(() {});
-                          },
-                          child: AdoroText(
-                            "SIGN UP",
-                            color: selectedIndex == 1
-                                ? Colors.white
-                                : ColorUtils.blueE7,
-                          ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          selectedIndex = 1;
+                          setState(() {});
+                        },
+                        child: AdoroText(
+                          "SIGN UP",
+                          fontSize: 13.sp,
+                          color: selectedIndex == 1
+                              ? Colors.white
+                              : ColorUtils.blueE7,
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 8.w,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: ColorUtils.greyFA,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5.w),
+                          topRight: Radius.circular(5.w)),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizeConfig.sH7,
-              selectedIndex == 0
-                  ? Positioned(
-                      top: 15.w,
-                      bottom: 0.h,
-                      child: Container(
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: ColorUtils.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5.w),
-                              topRight: Radius.circular(5.w)),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 5.w, vertical: 2.h),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AdoroText(
-                                VariableUtils.welcomeBack,
-                                fontSize: 15.sp,
-                                color: ColorUtils.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              AdoroText(
-                                VariableUtils.youHaveBeenMissed,
-                                color: ColorUtils.black92,
-                              ),
-                              SizeConfig.sH5,
-                              AdoroText(
-                                VariableUtils.mobileNumber,
-                                color: ColorUtils.black92,
-                              ),
-                              CommonTextFieldContainer(
-                                keyboardType: TextInputType.number,
-                              ),
-                              SizeConfig.sH5,
-                              CustomBtn(
-                                onTap: () {},
-                                text: 'GET OTP',
-                              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 5.w,
+              ),
+              child: Column(
+                children: [
+                  selectedIndex == 0
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AdoroText(
+                              VariableUtils.welcomeBack,
+                              fontSize: 15.sp,
+                              color:
+                                  Theme.of(context).textTheme.subtitle1?.color,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            AdoroText(VariableUtils.youHaveBeenMissed,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.color),
+                            SizeConfig.sH5,
+                            AdoroText(VariableUtils.mobileNumber,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.color),
+                            CommonTextFieldContainer(
+                              keyboardType: TextInputType.number,
+                            ),
 
-                              // VariableUtils.welcomeBack,
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  : Positioned(
-                      top: 15.w,
-                      bottom: 0.h,
-                      child: Container(
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: ColorUtils.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5.w),
-                              topRight: Radius.circular(5.w)),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 5.w, vertical: 2.h),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AdoroText(
-                                VariableUtils.welcomeBack,
-                                fontSize: 15.sp,
-                                color: ColorUtils.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              AdoroText(
-                                VariableUtils.youHaveBeenMissed,
-                                color: ColorUtils.black92,
-                              ),
-                              SizeConfig.sH5,
-                              AdoroText(
-                                VariableUtils.mobileNumber,
-                                color: ColorUtils.black92,
-                              ),
-                              CommonTextFieldContainer(
-                                keyboardType: TextInputType.number,
-                              ),
-                              SizeConfig.sH5,
-                              CustomBtn(
-                                onTap: () {},
-                                text: 'GET OTP',
-                              ),
+                            // VariableUtils.welcomeBack,
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AdoroText(
+                              VariableUtils.welcomeCreator,
+                              fontSize: 15.sp,
+                              color:
+                                  Theme.of(context).textTheme.subtitle1?.color,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            AdoroText(VariableUtils.joinTheWorld,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.color),
+                            SizeConfig.sH5,
+                            AdoroText(VariableUtils.fullName,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.color),
+                            CommonTextFieldContainer(
+                              keyboardType: TextInputType.name,
+                            ),
+                            SizeConfig.sH2,
+                            AdoroText(
+                              VariableUtils.userName,
+                              color: ColorUtils.black92,
+                            ),
+                            CommonTextFieldContainer(
+                              keyboardType: TextInputType.name,
+                            ),
+                            SizeConfig.sH2,
+                            AdoroText(VariableUtils.mobileNumber,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.color),
+                            CommonTextFieldContainer(
+                              keyboardType: TextInputType.number,
+                            ),
 
-                              // VariableUtils.welcomeBack,
-                            ],
-                          ),
+                            // VariableUtils.welcomeBack,
+                          ],
                         ),
-                      ),
-                    ),
-            ],
-          ),
-          // getFragment().expand(),
-        ],
+                ],
+              ),
+            ),
+            SizeConfig.sH10,
+            CustomBtn(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                {
+                  if (otp.text.length != 6 && otp.text != "1234") {
+                  } else {}
+                }
+                Get.to(OtpScreen());
+              },
+              text: 'GET OTP',
+            ),
+          ],
+        ),
       ),
     );
   }

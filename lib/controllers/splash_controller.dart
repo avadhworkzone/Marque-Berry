@@ -16,7 +16,7 @@ class SplashController extends GetxController {
       //         ? RouteHelper.getWelcomeLoginRoute()
       //         : RouteHelper.getBottomBarRoute(),
       // ),
-      () => Get.to(LoginScreen()),
+      () => Get.off(LoginScreen()),
     );
 
     super.onInit();

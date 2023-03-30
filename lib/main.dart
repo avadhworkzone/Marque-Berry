@@ -109,8 +109,10 @@ class AppTheme {
     ),
     iconTheme: const IconThemeData(color: ColorUtils.black),
     hintColor: ColorUtils.black,
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       subtitle1: TextStyle(color: ColorUtils.black),
+      subtitle2: TextStyle(color: ColorUtils.black92),
+      headline1: TextStyle(color: ColorUtils.blueB9),
       bodyText1: TextStyle(color: ColorUtils.greyFA),
       bodyText2: TextStyle(color: ColorUtils.white),
     ),
@@ -143,6 +145,8 @@ class AppTheme {
     hintColor: ColorUtils.black,
     textTheme: const TextTheme(
       subtitle1: TextStyle(color: ColorUtils.black),
+      subtitle2: TextStyle(color: ColorUtils.black92),
+      headline1: TextStyle(color: ColorUtils.blueB9),
       bodyText1: TextStyle(color: ColorUtils.greyFA),
       bodyText2: TextStyle(color: ColorUtils.white),
     ),

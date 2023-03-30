@@ -18,7 +18,6 @@ class CommonTextFieldContainer extends StatelessWidget {
     return TextFormField(
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 5.w),
         filled: true,
         suffixIcon: suffixIcon,
         fillColor: color,
