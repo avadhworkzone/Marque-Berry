@@ -1,6 +1,7 @@
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/utils/color_utils.dart';
 
 String imagesbasePath = 'assets/images';
 String iconsbasePath = 'assets/icons';
@@ -25,6 +26,22 @@ class IconsWidgets {
   // static String notFoundImage = '$iconsbasePath/image-not-found.png';
   // static Image plugsImages =
   //     Image.asset('$iconsbasePath/plug.png', scale: 2.5.w);
+  static Image drawerImage = Image.asset(
+    '$iconsbasePath/drawer.png',
+    width: 25.w,
+  );
+
+  /// appbar home
+  static Image searchImage = Image.asset(
+    "assets/icons/search.png",
+    width: 7.w,
+    height: 7.w,
+  );
+  static Image messageImage = Image.asset(
+    "assets/icons/message.png",
+    width: 7.w,
+    height: 7.w,
+  );
 }
 
 /// All Lotties

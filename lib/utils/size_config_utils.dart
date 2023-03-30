@@ -26,6 +26,8 @@ class SizeConfig {
   static Widget sW3 = SizedBox(width: 3.w);
   static Widget sW4 = SizedBox(width: 4.w);
   static Widget sW5 = SizedBox(width: 5.w);
+  static Widget sW6 = SizedBox(width: 6.w);
+  static Widget sW7 = SizedBox(width: 7.w);
   static Widget sW9 = SizedBox(width: 9.w);
   static Widget sW10 = SizedBox(width: 10.w);
   static Widget sW15 = SizedBox(width: 15.w);

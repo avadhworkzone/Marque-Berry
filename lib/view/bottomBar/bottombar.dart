@@ -14,7 +14,7 @@ import 'package:socialv/view/home/home.dart';
 class BottomBar extends StatelessWidget {
   BottomBar({super.key});
 
-  List pageRoute = [const Home(), const Home(), const Home(), const Profile()];
+  List pageRoute = [Home(), Home(), Home(), const Profile()];
 
   @override
   Widget build(BuildContext context) {

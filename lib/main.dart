@@ -5,9 +5,11 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:socialv/routes/route_constant.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 
@@ -62,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               navigatorKey: Get.key,
               getPages: RouteHelper.routes,
               debugShowCheckedModeBanner: false,
-              // initialRoute: RouteConstant.inital,
+              initialRoute: RouteConstant.inital,
               smartManagement: SmartManagement.full,
               home: GetBuilder<ConnectivityViewModel>(
                 init: ConnectivityViewModel(),
@@ -86,6 +88,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   BottomBarController bottomController = Get.put(BottomBarController());
+  HomeController homeController = Get.put(HomeController());
 }
 
 class AppTheme {
@@ -94,6 +97,7 @@ class AppTheme {
     fontFamily: 'Poppins',
     cardColor: ColorUtils.white,
     scaffoldBackgroundColor: ColorUtils.white,
+
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
       // subtitle1: TextStyle(color: ColorUtils.black85),

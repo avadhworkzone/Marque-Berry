@@ -5,15 +5,27 @@ class PreferenceUtils {
 
   static String mode = 'mode';
 
-  /// LIGHT MODE
-  static Future setLightMode({
+  /// SET STRING PREFERENCE
+  static Future setString({
     required String key,
     required String value,
   }) async {
     await getStorage.write(key, value);
   }
 
-  static String getLightMode() {
-    return getStorage.read(mode) ?? "light";
+  static String getString() {
+    return getStorage.read(mode) ?? "";
+  }
+
+  /// SET INT PREFERENCE
+  static Future setInt({
+    required String key,
+    required int value,
+  }) async {
+    await getStorage.write(key, value);
+  }
+
+  static int getInt() {
+    return getStorage.read(mode) ?? 0;
   }
 }
