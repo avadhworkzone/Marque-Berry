@@ -51,6 +51,7 @@ class ValidationMsg {
   static String enterValidName = "enterValidName";
   static String enterValidDate = "enterValidDate";
   static String passwordDoesNotMatch = 'passwordDoesNotMatch';
+
   //
 
   static String numberIsInvalid = 'Card is invalid';

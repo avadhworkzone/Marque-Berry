@@ -12,6 +12,12 @@ class ImagesWidgets {
   /// LOGO & SPLASH
   static String logoImage = '$imagesbasePath/logo.png';
   static Image logoISImage = Image.asset(logoImage, scale: 3.6.w);
+  static Image adoroImage =
+      Image.asset('$imagesbasePath/adoro.png', scale: 1.5.w);
+  static Image verifiedImage = Image.asset(
+    '$imagesbasePath/verifieduser.png',
+    scale: 1.5.w,
+  );
 }
 
 class SvgWidgets {

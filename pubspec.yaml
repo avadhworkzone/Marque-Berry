@@ -26,6 +26,11 @@ dependencies:
   http: ^0.13.5
   firebase_core: ^2.8.0
 
+  pin_code_fields: ^7.4.0
+  otp_timer_button: ^1.1.0
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

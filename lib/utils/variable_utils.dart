@@ -13,20 +13,26 @@ class VariableUtils {
   ///
   static const noInternetText = "noInternetText";
 
-  ///DRAWER
-  static const notificationText = "Notification";
-  static const resultText = "Result";
-  static const noteFromAdoroText = "Note from adoro";
-  static const walletText = "Wallet";
-  static const templateText = "Template";
-  static const referEarnText = "Refer & Earn";
-  static const supportText = "Support";
-  static const settingsText = "Settings";
+  ///  Login Screen
+  static const welcomeBack = "Welcome back!";
+  static const youHaveBeenMissed = "you have been missed for long Time";
+  static const mobileNumber = "Mobile Number";
+  static const welcomeCreator = "Welcome Creator";
+  static const joinTheWorld = "Join the world of creators";
+  static const fullName = "Full Name";
+  static const userName = "Username";
 
-  /// TABBAR
-  static const relevantText = "Relevant";
-  static const trendingText = "Trending";
-  static const freshText = "Fresh";
-  static const newsText = "News";
-  static const dankText = "Dank";
+  ///  otp Screen
+
+  static const otpVerification = "OTP Verification";
+  static const weHaveSentDigitCode =
+      "We have sent a 4 digit code to your email address";
+
+  ///InterestScreen
+  static const welcomeToAdoro = "Welcome to adoro";
+  static const chooseOrMoreMemeCategories = "Choose 5 or more meme categories";
+
+  ///InterestScreen
+  static const dontReceiveTheOTP = "Dont Receive The OTP?";
+  static const resendOTP = "Resend OTP";
 }
