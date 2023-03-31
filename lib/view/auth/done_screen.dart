@@ -17,6 +17,7 @@ class DoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -29,7 +30,7 @@ class DoneScreen extends StatelessWidget {
           SizeConfig.sH10,
           CustomBtn(
             onTap: () {
-              Get.to(InterestScreen());
+              Get.to(() => InterestScreen());
             },
             text: 'DONE',
           ),

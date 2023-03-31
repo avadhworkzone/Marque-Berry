@@ -70,7 +70,6 @@ class PostComponents extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(2.w),
                       child: Container(
-                        color: Colors.red,
                         height: 60.w,
                         width: Get.width,
                         child: Image.asset(
@@ -109,83 +108,87 @@ class PostComponents extends StatelessWidget {
                     ),
                     SizeConfig.sH1,
                     DecorationUtils.dividerLine2(),
-                    Row(
-                      children: [
-                        // Stack(
-                        //   children: [
-                        //     "assets/icon/user2.png",
-                        //     "assets/icon/user3.png",
-                        //     "assets/icon/user4.png"
-                        //   ].map(
-                        //     (e) {
-                        //       return Container(
-                        //           width: 24,
-                        //           height: 24,
-                        //           margin: EdgeInsets.only(left: 18 * 2),
-                        //           child: AdoroText(e.removeAllWhitespace)
-                        //           // Image.asset(
-                        //           //   "assets/icons/user2.png",
-                        //           //   fit: BoxFit.cover,
-                        //           // ),
-                        //           );
-                        //     },
-                        //   ).toList(),
-                        // ),
-                        Text.rich(
-                          TextSpan(
-                            style: TextStyle(fontSize: 9.sp),
-                            children: <InlineSpan>[
-                              TextSpan(
-                                text: 'Liked by ',
-                                style: TextStyle(
-                                  fontSize: 9.sp,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .color,
-                                  fontWeight: FontWeight.bold,
+                    SizeConfig.sH1,
+                    Container(
+                      width: Get.width,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 24 * 3,
+                            height: 24,
+                            child: Stack(
+                              children: List.generate(
+                                3,
+                                (index) => Positioned(
+                                  left: (2 - index) * 18,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    // margin: EdgeInsets.only(left: 18 * 2),
+                                    child: Image.asset(
+                                      "assets/icons/user2.png",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              TextSpan(
-                                text: 'Ms.mountain',
-                                style: TextStyle(
-                                  fontSize: 9.sp,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .color,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ' And ',
-                                style: TextStyle(
-                                  fontSize: 9.sp,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .color,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextSpan(
-                                text: '110 other',
-                                style: TextStyle(
-                                  fontSize: 9.sp,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .color,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        )
-                        // "Liked by ms.mountain and 1,10 others",
-                        // fontSize: 9.sp,
-                      ],
-                    )
+                          Text.rich(
+                            TextSpan(
+                              style: TextStyle(fontSize: 9.sp),
+                              children: <InlineSpan>[
+                                TextSpan(
+                                  text: 'Liked by ',
+                                  style: TextStyle(
+                                    fontSize: 9.sp,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .color,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'Ms.mountain',
+                                  style: TextStyle(
+                                    fontSize: 9.sp,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .color,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' And ',
+                                  style: TextStyle(
+                                    fontSize: 9.sp,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .color,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '110 other',
+                                  style: TextStyle(
+                                    fontSize: 9.sp,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .color,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizeConfig.sH1,
                   ],
                 ),
               ),

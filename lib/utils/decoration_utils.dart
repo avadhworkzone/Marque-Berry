@@ -39,7 +39,7 @@ class DecorationUtils {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
-      borderRadius: BorderRadius.circular(1.5.w),
+      borderRadius: BorderRadius.circular(2.w),
     );
   }
 
@@ -61,7 +61,9 @@ class DecorationUtils {
         end: Alignment.bottomRight,
       ),
       borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5.w), topRight: Radius.circular(5.w)),
+        topLeft: Radius.circular(5.w),
+        topRight: Radius.circular(5.w),
+      ),
     );
   }
 
@@ -102,7 +104,8 @@ class DecorationUtils {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
-      borderRadius: BorderRadius.circular(50.w),
+      shape: BoxShape.circle,
+      // borderRadius: BorderRadius.circular(50.w),
     );
   }
 

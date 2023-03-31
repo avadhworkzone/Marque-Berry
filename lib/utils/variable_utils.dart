@@ -13,6 +13,26 @@ class VariableUtils {
   ///
   static const noInternetText = "noInternetText";
 
+  ///  VIREN VAR ///
+  ///DRAWER
+  static const notificationText = "Notification";
+  static const resultText = "Result";
+  static const noteFromAdoroText = "Note from adoro";
+  static const walletText = "Wallet";
+  static const templateText = "Template";
+  static const referEarnText = "Refer & Earn";
+  static const supportText = "Support";
+  static const settingsText = "Settings";
+
+  /// TABBAR
+  static const relevantText = "Relevant";
+  static const trendingText = "Trending";
+  static const freshText = "Fresh";
+  static const newsText = "News";
+  static const dankText = "Dank";
+
+  ///
+
   ///  Login Screen
   static const welcomeBack = "Welcome back!";
   static const youHaveBeenMissed = "you have been missed for long Time";
@@ -23,7 +43,6 @@ class VariableUtils {
   static const userName = "Username";
 
   ///  otp Screen
-
   static const otpVerification = "OTP Verification";
   static const weHaveSentDigitCode =
       "We have sent a 4 digit code to your email address";
@@ -34,5 +53,5 @@ class VariableUtils {
 
   ///InterestScreen
   static const dontReceiveTheOTP = "Dont Receive The OTP?";
-  static const resendOTP = "Resend OTP";
+  static const resendOTP = " RESEND OTP";
 }

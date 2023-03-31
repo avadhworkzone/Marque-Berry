@@ -4,6 +4,8 @@ class PreferenceUtils {
   static GetStorage getStorage = GetStorage();
 
   static String mode = 'mode';
+  static String login = 'login';
+  static String welcome = 'welcome';
 
   /// SET STRING PREFERENCE
   static Future setString({
@@ -13,8 +15,8 @@ class PreferenceUtils {
     await getStorage.write(key, value);
   }
 
-  static String getString() {
-    return getStorage.read(mode) ?? "";
+  static String getString({required String key}) {
+    return getStorage.read(key) ?? "";
   }
 
   /// SET INT PREFERENCE
@@ -25,7 +27,7 @@ class PreferenceUtils {
     await getStorage.write(key, value);
   }
 
-  static int getInt() {
-    return getStorage.read(mode) ?? 0;
+  static int getInt({required String key}) {
+    return getStorage.read(key) ?? 0;
   }
 }

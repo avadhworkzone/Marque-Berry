@@ -8,6 +8,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/view/auth/otp_screen.dart';
+import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 
@@ -85,18 +87,18 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  OtpController otpController = Get.put(OtpController());
+  HomeController homeController = Get.put(HomeController());
   BottomBarController bottomController = Get.put(BottomBarController());
 }
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
-    // useMaterial3: true,
     fontFamily: 'Poppins',
     cardColor: ColorUtils.white,
     scaffoldBackgroundColor: ColorUtils.white,
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
-      // subtitle1: TextStyle(color: ColorUtils.black85),
     ),
     appBarTheme: const AppBarTheme(
       brightness: Brightness.light,
@@ -110,11 +112,9 @@ class AppTheme {
     iconTheme: const IconThemeData(color: ColorUtils.black),
     hintColor: ColorUtils.black,
     textTheme: TextTheme(
-      subtitle1: TextStyle(color: ColorUtils.black),
-      subtitle2: TextStyle(color: ColorUtils.black92),
-      headline1: TextStyle(color: ColorUtils.blueB9),
-      bodyText1: TextStyle(color: ColorUtils.greyFA),
-      bodyText2: TextStyle(color: ColorUtils.white),
+      titleSmall: TextStyle(color: ColorUtils.black),
+      titleMedium: TextStyle(color: ColorUtils.black92),
+      titleLarge: TextStyle(color: ColorUtils.black92),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: ColorUtils.white),
@@ -126,11 +126,10 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     // useMaterial3: true,
     fontFamily: 'Poppins',
-    cardColor: ColorUtils.white,
-    scaffoldBackgroundColor: ColorUtils.white,
+    cardColor: ColorUtils.black2E,
+    scaffoldBackgroundColor: ColorUtils.black2E,
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
-      // subtitle1: TextStyle(color: ColorUtils.black85),
     ),
     appBarTheme: const AppBarTheme(
       brightness: Brightness.light,
@@ -144,11 +143,9 @@ class AppTheme {
     iconTheme: const IconThemeData(color: ColorUtils.black),
     hintColor: ColorUtils.black,
     textTheme: const TextTheme(
-      subtitle1: TextStyle(color: ColorUtils.black),
-      subtitle2: TextStyle(color: ColorUtils.black92),
-      headline1: TextStyle(color: ColorUtils.blueB9),
-      bodyText1: TextStyle(color: ColorUtils.greyFA),
-      bodyText2: TextStyle(color: ColorUtils.white),
+      titleSmall: TextStyle(color: ColorUtils.white),
+      titleMedium: TextStyle(color: ColorUtils.white),
+      titleLarge: TextStyle(color: ColorUtils.blueB9),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: ColorUtils.white),

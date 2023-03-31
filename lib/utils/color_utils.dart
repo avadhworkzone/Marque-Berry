@@ -30,4 +30,9 @@ class ColorUtils {
   static const red29 = Color(0xFFF93E29);
   static const green4E = Color(0xFF3AB74E);
   static const transparent = Colors.transparent;
+
+  //
+  static const referEarn = Color(0xFFF0F0F0);
+  static const result = Color(0xFF35A700);
+  static const note = Color(0xFFD9D9D9);
 }

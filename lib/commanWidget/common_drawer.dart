@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/utils/tecell_text.dart';
@@ -6,6 +7,14 @@ import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/view/drawer/note.dart';
+import 'package:socialv/view/drawer/notification.dart';
+import 'package:socialv/view/drawer/referAndEarn.dart';
+import 'package:socialv/view/drawer/result.dart';
+import 'package:socialv/view/drawer/setting.dart';
+import 'package:socialv/view/drawer/support.dart';
+import 'package:socialv/view/drawer/template.dart';
+import 'package:socialv/view/drawer/wallet.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -24,10 +33,14 @@ class _MyDrawerState extends State<MyDrawer> {
           child: Column(
             children: [
               InkWell(
+                onTap: () => Get.back(),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Align(
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Theme.of(context).textTheme.titleSmall?.color,
+                    ),
                     alignment: Alignment.topLeft,
                   ),
                 ),
@@ -52,42 +65,58 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => NotificationScreen());
+                },
                 title: VariableUtils.notificationText,
                 image: IconsWidgets.notificationImage,
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => Result());
+                },
                 title: VariableUtils.resultText,
                 image: IconsWidgets.resultImage,
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => Note());
+                },
                 title: VariableUtils.noteFromAdoroText,
                 image: IconsWidgets.noteImage,
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => Wallet());
+                },
                 title: VariableUtils.walletText,
                 image: IconsWidgets.walletImage,
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => Template());
+                },
                 title: VariableUtils.templateText,
                 image: IconsWidgets.templateImage,
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => ReferAndEarn());
+                },
                 title: VariableUtils.referEarnText,
                 image: IconsWidgets.referImage,
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => Support());
+                },
                 title: VariableUtils.supportText,
                 image: IconsWidgets.supportImage,
               ),
               drawerData(
-                onTap: () {},
+                onTap: () {
+                  // Get.to(() => Setting());
+                },
                 title: VariableUtils.settingsText,
                 image: IconsWidgets.settingImage,
               ),

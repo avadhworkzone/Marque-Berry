@@ -41,16 +41,16 @@ class RegularExpression {
 // }
 
 class ValidationMsg {
-  static String isRequired = "isRequired";
-  static String passwordLength = 'passwordLength';
-  static String modelNumberLength = 'modelNumberLength';
-  static String voucherCodeLength = 'voucherCodeLength';
-  static String pinLength = 'pinLength';
-  static String maxClientLength = 'maxClientLength12';
-  static String pleaseEnterValidEmail = "pleaseEnterValidEmail";
-  static String enterValidName = "enterValidName";
-  static String enterValidDate = "enterValidDate";
-  static String passwordDoesNotMatch = 'passwordDoesNotMatch';
+  static String isRequired = "is required";
+  // static String passwordLength = 'passwordLength';
+  // static String modelNumberLength = 'modelNumberLength';
+  // static String voucherCodeLength = 'voucherCodeLength';
+  // static String pinLength = 'pinLength';
+  // static String maxClientLength = 'maxClientLength12';
+  // static String pleaseEnterValidEmail = "pleaseEnterValidEmail";
+  // static String enterValidName = "enterValidName";
+  // static String enterValidDate = "enterValidDate";
+  // static String passwordDoesNotMatch = 'passwordDoesNotMatch';
 
   //
 
@@ -72,61 +72,71 @@ userValidation(value) {
     return ValidationMsg.isRequired.tr;
   }
   if (!RegExp(RegularExpression.alphabetSpacePattern).hasMatch(value!)) {
-    return ValidationMsg.enterValidName.tr;
+    return "Enter valid name";
   }
   return null;
 }
 
-emailValidation(value) {
+mobileValidation(value) {
   if (value.toString().isEmpty) {
     return ValidationMsg.isRequired.tr;
   }
-  if (!RegExp(RegularExpression.emailValidationPattern).hasMatch(value!)) {
-    return ValidationMsg.pleaseEnterValidEmail.tr;
+  if (value.toString().length < 10) {
+    return "Mobile number must be 10 char";
   }
   return null;
 }
+
+// emailValidation(value) {
+//   if (value.toString().isEmpty) {
+//     return ValidationMsg.isRequired.tr;
+//   }
+//   if (!RegExp(RegularExpression.contactKeyboardPattern).hasMatch(value!)) {
+//     return ValidationMsg.pleaseEnterValidEmail.tr;
+//   }
+//   return null;
+// }
 
 passwordValidation(value) {
   if (value.toString().isEmpty) {
     return ValidationMsg.isRequired.tr;
   } else if (value.toString().length < 6) {
-    return ValidationMsg.passwordLength.tr;
+    return "password must be more then 6 char";
   }
   return null;
 }
 
-confirmPasswordValidation(value, password) {
-  if (value.toString().isEmpty) {
-    return ValidationMsg.isRequired.tr;
-  } else if (password != value) {
-    return ValidationMsg.passwordDoesNotMatch.tr;
-  }
-  return null;
-}
+// confirmPasswordValidation(value, password) {
+//   if (value.toString().isEmpty) {
+//     return ValidationMsg.isRequired.tr;
+//   } else if (password != value) {
+//     return ValidationMsg.passwordDoesNotMatch.tr;
+//   }
+//   return null;
+// }
 
-cityValidation(value) {
-  if (value.toString().isEmpty) {
-    return ValidationMsg.isRequired.tr;
-  }
-  return null;
-}
+// cityValidation(value) {
+//   if (value.toString().isEmpty) {
+//     return ValidationMsg.isRequired.tr;
+//   }
+//   return null;
+// }
+//
+// pincodeValidation(value) {
+//   if (value.toString().isEmpty) {
+//     return ValidationMsg.isRequired.tr;
+//   } else if (value.toString().length < 6) {
+//     return ValidationMsg.pinLength.tr;
+//   }
+//   return null;
+// }
 
-pincodeValidation(value) {
-  if (value.toString().isEmpty) {
-    return ValidationMsg.isRequired.tr;
-  } else if (value.toString().length < 6) {
-    return ValidationMsg.pinLength.tr;
-  }
-  return null;
-}
-
-clientNumberValidate(value) {
-  if (value.toString().length > 12) {
-    return ValidationMsg.maxClientLength.tr;
-  }
-  return null;
-}
+// clientNumberValidate(value) {
+//   if (value.toString().length > 12) {
+//     return ValidationMsg.maxClientLength.tr;
+//   }
+//   return null;
+// }
 
 // "Client number length is a maximum of 12."
 // "ग्राहक संख्या की लंबाई अधिकतम 12 है।"

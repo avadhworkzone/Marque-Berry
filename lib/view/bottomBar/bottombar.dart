@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/view/profile/profile.dart';
@@ -26,17 +27,17 @@ class BottomBar extends StatelessWidget {
               return GetBuilder<BottomBarController>(
                 init: BottomBarController(),
                 initState: (_) {},
-                builder: (controller) {
+                builder: (bottomBarController) {
                   return Scaffold(
-                    body: pageRoute[controller.selectedIndex],
+                    body: pageRoute[bottomBarController.selectedIndex],
                     bottomNavigationBar: Container(
                       height: 16.w,
                       width: Get.width,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         boxShadow: [
                           BoxShadow(
-                            color: ColorUtils.black2E.withOpacity(0.2),
+                            color: ColorUtils.black.withOpacity(0.5),
                             blurRadius: 2.0,
                           ),
                         ],
@@ -44,28 +45,75 @@ class BottomBar extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 13.w),
                         child: Container(
-                          color: Colors.white,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           child: Row(
                             children: [
-                              InkWell(
-                                onTap: () => controller.pageChange(0),
-                                child: IconsWidgets.homeImages,
+                              bottombarIcon(
+                                index: 0,
+                                img: IconsWidgets.homeImages,
+                                scale: 1.2.w,
+                                context: context,
+                                controller: bottomBarController,
                               ),
                               const Spacer(),
-                              InkWell(
-                                onTap: () => controller.pageChange(1),
-                                child: IconsWidgets.plusCircleImages,
+                              bottombarIcon(
+                                index: 1,
+                                scale: 1.w,
+                                context: context,
+                                img: IconsWidgets.plusCircleImages,
+                                controller: bottomBarController,
                               ),
                               const Spacer(),
-                              InkWell(
-                                onTap: () => controller.pageChange(2),
-                                child: IconsWidgets.medalLightImages,
+                              bottombarIcon(
+                                index: 2,
+                                scale: 1.w,
+                                context: context,
+                                controller: bottomBarController,
+                                img: IconsWidgets.medalLightImages,
                               ),
                               const Spacer(),
-                              InkWell(
-                                onTap: () => controller.pageChange(3),
-                                child: IconsWidgets.userImages,
+                              bottombarIcon(
+                                index: 3,
+                                scale: 1.w,
+                                context: context,
+                                img: IconsWidgets.userImages,
+                                controller: bottomBarController,
                               ),
+                              // InkWell(
+                              //   onTap: () => bottomBarController.pageChange(1),
+                              //   child: CommonImageScale(
+                              //     img: IconsWidgets.plusCircleImages,
+                              //     scale: 1.w,
+                              //     color: Theme.of(context)
+                              //         .textTheme
+                              //         .titleSmall!
+                              //         .color,
+                              //   ),
+                              // ),
+                              // const Spacer(),
+                              // InkWell(
+                              //   onTap: () => bottomBarController.pageChange(2),
+                              //   child: CommonImageScale(
+                              //     img: IconsWidgets.medalLightImages,
+                              //     scale: 1.w,
+                              //     color: Theme.of(context)
+                              //         .textTheme
+                              //         .titleSmall!
+                              //         .color,
+                              //   ),
+                              // ),
+                              // const Spacer(),
+                              // InkWell(
+                              //   onTap: () => bottomBarController.pageChange(3),
+                              //   child: CommonImageScale(
+                              //     img: IconsWidgets.userImages,
+                              //     scale: 1.w,
+                              //     color: Theme.of(context)
+                              //         .textTheme
+                              //         .titleSmall!
+                              //         .color,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -81,6 +129,23 @@ class BottomBar extends StatelessWidget {
             return const SizedBox();
           }
         },
+      ),
+    );
+  }
+
+  Widget bottombarIcon({
+    required int index,
+    required String img,
+    required double scale,
+    required BuildContext context,
+    required BottomBarController controller,
+  }) {
+    return InkWell(
+      onTap: () => controller.pageChange(index),
+      child: CommonImageScale(
+        img: img,
+        scale: scale,
+        color: Theme.of(context).textTheme.titleSmall!.color,
       ),
     );
   }

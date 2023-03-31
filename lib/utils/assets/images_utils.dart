@@ -12,8 +12,10 @@ class ImagesWidgets {
   /// LOGO & SPLASH
   static String logoImage = '$imagesbasePath/logo.png';
   static Image logoISImage = Image.asset(logoImage, scale: 3.6.w);
-  static Image adoroImage =
-      Image.asset('$imagesbasePath/adoro.png', scale: 1.5.w);
+  static Image adoroImage = Image.asset(
+    '$imagesbasePath/adoro.png',
+    scale: 1.5.w,
+  );
   static Image verifiedImage = Image.asset(
     '$imagesbasePath/verifieduser.png',
     scale: 1.5.w,
@@ -51,22 +53,23 @@ class IconsWidgets {
   static String supportImage = '$iconsbasePath/support.png';
   static String settingImage = '$iconsbasePath/setting.png';
 
-  static Image homeImages = Image.asset(
-    '$iconsbasePath/home.png',
-    scale: 1.2.w,
-  );
-  static Image plusCircleImages = Image.asset(
-    '$iconsbasePath/plus_circle.png',
-    scale: 1.w,
-  );
-  static Image medalLightImages = Image.asset(
-    '$iconsbasePath/medal_light.png',
-    scale: 1.w,
-  );
-  static Image userImages = Image.asset(
-    '$iconsbasePath/user.png',
-    scale: 1.w,
-  );
+  static String homeImages = '$iconsbasePath/home.png';
+  static String plusCircleImages = '$iconsbasePath/plus_circle.png';
+  static String medalLightImages = '$iconsbasePath/medal_light.png';
+  static String userImages = '$iconsbasePath/user.png';
+
+  // static Image plusCircleImages = Image.asset(
+  //   '$iconsbasePath/plus_circle.png',
+  //   scale: 1.w,
+  // );
+  // static Image medalLightImages = Image.asset(
+  //   '$iconsbasePath/medal_light.png',
+  //   scale: 1.w,
+  // );
+  // static Image userImages = Image.asset(
+  //   '$iconsbasePath/user.png',
+  //   scale: 1.w,
+  // );
 }
 
 /// All Lotties

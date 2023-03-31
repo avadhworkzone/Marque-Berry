@@ -4,6 +4,8 @@ import 'package:get/get_core/src/get_main.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/bottomBar/bottombar.dart';
 
 import '../../commanWidget/custom_btn.dart';
 import '../../utils/color_utils.dart';
@@ -18,6 +20,7 @@ class InterestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: GetBuilder<IntrestController>(builder: (intrestController) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -37,7 +40,7 @@ class InterestScreen extends StatelessWidget {
               Expanded(
                 child: GridView.builder(
                   shrinkWrap: true,
-                  // physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 150,
                     mainAxisSpacing: 8,
@@ -46,49 +49,45 @@ class InterestScreen extends StatelessWidget {
                   itemCount: 18,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
-                      onTap: () {
-                        logs("INDEX:====> $index");
-                        intrestController.addIndex(index);
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(2.w),
-                        child: Stack(
-                          children: [
-                            Container(
+                      onTap: () => intrestController.addIndex(index),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(2.w),
+                            child: Container(
                               height: 15.h,
                               width: 30.w,
                               decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                        "assets/images/Group.png",
-                                      ),
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.white.withOpacity(0.9),
-                                          BlendMode.dstATop),
-                                      fit: BoxFit.cover)),
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/Group.png"),
+                                  fit: BoxFit.cover,
+                                  // colorFilter: ColorFilter.mode(
+                                  //   BlendMode.dstATop,
+                                  // ),
+                                ),
+                              ),
                               child: Padding(
                                 padding: EdgeInsets.only(top: 21.w, left: 8.w),
-                                child: Text("Savage",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
+                                child: AdoroText(
+                                  "Savage",
+                                  color: ColorUtils.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                            intrestController.selectedIndex.contains(index) ==
-                                    false
-                                ? SizedBox()
-                                : Container(
-                                    height: 2.5.h,
-                                    width: 5.w,
-                                    decoration:
-                                        DecorationUtils.welcomeDecoration(
-                                            context),
-                                    child: Image(
-                                      image: AssetImage(
-                                          "assets/images/design.png"),
-                                    ),
-                                  ),
-                          ],
-                        ),
+                          ),
+                          if (intrestController.selectedIndex.contains(index) ==
+                              true)
+                            Container(
+                              height: 2.5.h,
+                              width: 5.w,
+                              decoration:
+                                  DecorationUtils.welcomeDecoration(context),
+                              child: Image(
+                                image: AssetImage("assets/images/design.png"),
+                              ),
+                            ),
+                        ],
                       ),
                     );
                   },
@@ -96,15 +95,23 @@ class InterestScreen extends StatelessWidget {
               ),
               SizeConfig.sH2,
               Center(
-                child: intrestController.selectedIndex.length < 6
+                child: intrestController.selectedIndex.length < 5
                     ? CustomBtn(
                         onTap: null,
                         text: 'DONE',
-                        decoration: BoxDecoration(color: ColorUtils.black92),
+                        decoration: BoxDecoration(
+                          color: ColorUtils.black92,
+                          borderRadius: BorderRadius.circular(1.5.w),
+                        ),
                       )
                     : CustomBtn(
-                        onTap: () {
-                          // Get.to(InterestScreen());
+                        onTap: () async {
+                          await PreferenceUtils.setInt(
+                            key: PreferenceUtils.welcome,
+                            value: 1,
+                          );
+
+                          Get.to(() => BottomBar());
                         },
                         text: 'DONE',
                       ),
