@@ -20,8 +20,6 @@ class FontWeightClass {
 /// FONT TEXT STYLE
 class FontTextStyle {
   static TextStyle blackTextStyle = const TextStyle(color: ColorUtils.black);
-  static TextStyle primaryTextStyle =
-      const TextStyle(color: ColorUtils.primaryColor);
 
   /// NO INTERNET
   static TextStyle noInternetStyle = TextStyle(

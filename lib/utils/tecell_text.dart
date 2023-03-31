@@ -41,7 +41,7 @@ class AdoroText extends StatelessWidget {
       style: TextStyle(
         color: color ??
             Theme.of(context).textTheme.subtitle1!.color ??
-            ColorUtils.primaryColor,
+            ColorUtils.black,
         fontFamily: fontFamily,
         fontWeight: fontWeight,
         fontSize: fontSize ?? 14,

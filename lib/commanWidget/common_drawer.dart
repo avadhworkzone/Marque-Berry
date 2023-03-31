@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/size_config_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/typedef_utils.dart';
-
-import '../utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -20,6 +19,7 @@ class _MyDrawerState extends State<MyDrawer> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Drawer(
+        backgroundColor: Theme.of(context).cardColor,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -36,10 +36,11 @@ class _MyDrawerState extends State<MyDrawer> {
                 leading: CircleAvatar(
                   radius: 10.w,
                   backgroundColor: Colors.grey[400],
-                  backgroundImage: AssetImage("assets/images/"),
+                  backgroundImage: AssetImage("assets/icons/user1.png"),
                 ),
                 title: AdoroText(
                   "Deepanshu Sarmandal",
+                  color: Theme.of(context).textTheme.titleSmall?.color,
                   fontWeight: FontWeightClass.fontWeight600,
                 ),
                 subtitle: Padding(
@@ -51,44 +52,44 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
               drawerData(
-                title: 'Notification',
-                image: 'assets/icons/notification.png',
                 onTap: () {},
+                title: VariableUtils.notificationText,
+                image: IconsWidgets.notificationImage,
               ),
               drawerData(
-                title: 'Result',
-                image: 'assets/icons/result.png',
                 onTap: () {},
+                title: VariableUtils.resultText,
+                image: IconsWidgets.resultImage,
               ),
               drawerData(
-                title: 'Note from adoro',
-                image: 'assets/icons/note.png',
                 onTap: () {},
+                title: VariableUtils.noteFromAdoroText,
+                image: IconsWidgets.noteImage,
               ),
               drawerData(
-                title: 'Wallet',
-                image: 'assets/icons/wallet.png',
                 onTap: () {},
+                title: VariableUtils.walletText,
+                image: IconsWidgets.walletImage,
               ),
               drawerData(
-                title: 'Template',
-                image: 'assets/icons/template.png',
                 onTap: () {},
+                title: VariableUtils.templateText,
+                image: IconsWidgets.templateImage,
               ),
               drawerData(
-                title: 'Refer & Earn',
-                image: 'assets/icons/refer.png',
                 onTap: () {},
+                title: VariableUtils.referEarnText,
+                image: IconsWidgets.referImage,
               ),
               drawerData(
-                title: 'Support',
-                image: 'assets/icons/support.png',
                 onTap: () {},
+                title: VariableUtils.supportText,
+                image: IconsWidgets.supportImage,
               ),
               drawerData(
-                title: 'Settings',
-                image: 'assets/icons/setting.png',
                 onTap: () {},
+                title: VariableUtils.settingsText,
+                image: IconsWidgets.settingImage,
               ),
             ],
           ),
@@ -105,15 +106,15 @@ class _MyDrawerState extends State<MyDrawer> {
     return Padding(
       padding: EdgeInsets.fromLTRB(3.w, 0.5.w, 3.w, 0),
       child: ListTile(
-        leading: Image.asset(
-          image,
-          fit: BoxFit.cover,
+        leading: CommonImageWidth(
+          img: image,
           width: 5.5.w,
+          color: Theme.of(context).textTheme.titleMedium?.color,
         ),
         minLeadingWidth: 5.w,
         title: AdoroText(
           title,
-          color: ColorUtils.black2E,
+          color: Theme.of(context).textTheme.titleSmall?.color,
           fontWeight: FontWeightClass.fontWeight600,
         ),
         onTap: onTap,

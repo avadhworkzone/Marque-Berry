@@ -94,8 +94,10 @@ class _MyAppState extends State<MyApp> {
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     // useMaterial3: true,
+    // cardColor: ColorUtils.white,
+
     fontFamily: 'Poppins',
-    cardColor: ColorUtils.white,
+    cardColor: ColorUtils.greyFA,
     scaffoldBackgroundColor: ColorUtils.white,
 
     primaryTextTheme: const TextTheme(
@@ -111,12 +113,13 @@ class AppTheme {
       onPrimary: ColorUtils.white,
       secondary: ColorUtils.white,
     ),
+
     iconTheme: const IconThemeData(color: ColorUtils.black),
     hintColor: ColorUtils.black,
     textTheme: const TextTheme(
-      subtitle1: TextStyle(color: ColorUtils.black),
-      bodyText1: TextStyle(color: ColorUtils.greyFA),
-      bodyText2: TextStyle(color: ColorUtils.white),
+      titleSmall: TextStyle(color: ColorUtils.black),
+      titleMedium: TextStyle(color: ColorUtils.black92),
+      titleLarge: TextStyle(color: ColorUtils.black92),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: ColorUtils.white),
@@ -126,13 +129,11 @@ class AppTheme {
   );
 
   static final ThemeData darkTheme = ThemeData(
-    // useMaterial3: true,
     fontFamily: 'Poppins',
-    cardColor: ColorUtils.white,
-    scaffoldBackgroundColor: ColorUtils.white,
+    cardColor: ColorUtils.black2E,
+    scaffoldBackgroundColor: ColorUtils.black2E,
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
-      // subtitle1: TextStyle(color: ColorUtils.black85),
     ),
     appBarTheme: const AppBarTheme(
       brightness: Brightness.light,
@@ -143,12 +144,12 @@ class AppTheme {
       onPrimary: ColorUtils.white,
       secondary: ColorUtils.white,
     ),
-    iconTheme: const IconThemeData(color: ColorUtils.black),
+    iconTheme: const IconThemeData(color: ColorUtils.white),
     hintColor: ColorUtils.black,
-    textTheme: const TextTheme(
-      subtitle1: TextStyle(color: ColorUtils.black),
-      bodyText1: TextStyle(color: ColorUtils.greyFA),
-      bodyText2: TextStyle(color: ColorUtils.white),
+    textTheme: TextTheme(
+      titleSmall: TextStyle(color: ColorUtils.white),
+      titleMedium: TextStyle(color: ColorUtils.white),
+      titleLarge: TextStyle(color: ColorUtils.blueB9),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: ColorUtils.white),

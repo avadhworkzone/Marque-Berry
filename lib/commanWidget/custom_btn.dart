@@ -85,10 +85,6 @@ class BorderBtn extends StatelessWidget {
         decoration: BoxDecoration(
           color: ColorUtils.transparent,
           borderRadius: BorderRadius.circular(radius ?? 4.w),
-          border: Border.all(
-            color: ColorUtils.primaryColor,
-            width: bWidth ?? 2.5,
-          ),
           boxShadow: hasShadow == false
               ? []
               : [

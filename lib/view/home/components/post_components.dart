@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/utils/color_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 
 class PostComponents extends StatelessWidget {
   const PostComponents({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class PostComponents extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 2.w),
       child: Container(
         decoration: BoxDecoration(
-          color: ColorUtils.white,
+          color: Theme.of(context).cardColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 5,
@@ -33,7 +34,7 @@ class PostComponents extends StatelessWidget {
                   'Ira Membrit',
                   maxLines: 1,
                   fontSize: 12.sp,
-                  color: ColorUtils.black2E,
+                  color: Theme.of(context).textTheme.titleSmall!.color,
                   overflow: TextOverflow.ellipsis,
                   fontWeight: FontWeightClass.fontWeight600,
                 ),
@@ -41,22 +42,16 @@ class PostComponents extends StatelessWidget {
                   '2 min ago',
                   maxLines: 1,
                   fontSize: 9.sp,
-                  color: ColorUtils.black92,
+                  color: Theme.of(context).textTheme.titleMedium!.color,
                   overflow: TextOverflow.ellipsis,
                 ),
                 leading: CircleAvatar(
                   radius: 7.w,
-                  // backgroundColor: ColorUtils.linearGradient1,
                   backgroundImage: AssetImage("assets/icons/user1.png"),
                 ),
-
-                // Icon(
-                //   Icons.more_horiz,
-                //   color: Color(0xff6F7F92),
-                // ),
                 trailing: Icon(
                   Icons.more_horiz,
-                  color: Color(0xff6F7F92),
+                  color: Theme.of(context).textTheme.titleMedium?.color,
                 ),
               ),
               Padding(
@@ -67,7 +62,7 @@ class PostComponents extends StatelessWidget {
                     AdoroText(
                       "The great thing about reaching the top of the mountain is realising that there’s space space",
                       maxLines: 2,
-                      color: ColorUtils.black92,
+                      color: Theme.of(context).textTheme.titleMedium?.color,
                       fontWeight: FontWeight.w500,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -87,25 +82,28 @@ class PostComponents extends StatelessWidget {
                     SizeConfig.sH2,
                     Row(
                       children: [
-                        Image.asset(
-                          "assets/icons/heart.png",
+                        CommonImageScale(
+                          img: IconsWidgets.heartImage,
                           scale: 1.w,
+                          color: Theme.of(context).textTheme.titleMedium?.color,
                         ),
                         SizeConfig.sW2,
-                        Image.asset(
-                          "assets/icons/chat.png",
+                        CommonImageScale(
+                          img: IconsWidgets.chatImage,
                           scale: 0.8.w,
+                          color: Theme.of(context).textTheme.titleMedium?.color,
                         ),
                         SizeConfig.sW2,
-                        Image.asset(
-                          "assets/icons/send.png",
+                        CommonImageScale(
+                          img: IconsWidgets.sendImage,
                           scale: 1.w,
+                          color: Theme.of(context).textTheme.titleMedium?.color,
                         ),
                         Spacer(),
                         AdoroText(
                           "0 Comments",
                           fontSize: 10.sp,
-                          color: ColorUtils.black92,
+                          color: Theme.of(context).textTheme.titleMedium?.color,
                         )
                       ],
                     ),
@@ -113,26 +111,26 @@ class PostComponents extends StatelessWidget {
                     DecorationUtils.dividerLine2(),
                     Row(
                       children: [
-                        Stack(
-                          children: [
-                            "assets/icon/user2.png",
-                            "assets/icon/user3.png",
-                            "assets/icon/user4.png"
-                          ].map(
-                            (e) {
-                              return Container(
-                                  width: 24,
-                                  height: 24,
-                                  margin: EdgeInsets.only(left: 18 * 2),
-                                  child: AdoroText(e.removeAllWhitespace)
-                                  // Image.asset(
-                                  //   "assets/icons/user2.png",
-                                  //   fit: BoxFit.cover,
-                                  // ),
-                                  );
-                            },
-                          ).toList(),
-                        ),
+                        // Stack(
+                        //   children: [
+                        //     "assets/icon/user2.png",
+                        //     "assets/icon/user3.png",
+                        //     "assets/icon/user4.png"
+                        //   ].map(
+                        //     (e) {
+                        //       return Container(
+                        //           width: 24,
+                        //           height: 24,
+                        //           margin: EdgeInsets.only(left: 18 * 2),
+                        //           child: AdoroText(e.removeAllWhitespace)
+                        //           // Image.asset(
+                        //           //   "assets/icons/user2.png",
+                        //           //   fit: BoxFit.cover,
+                        //           // ),
+                        //           );
+                        //     },
+                        //   ).toList(),
+                        // ),
                         Text.rich(
                           TextSpan(
                             style: TextStyle(fontSize: 9.sp),
@@ -141,7 +139,10 @@ class PostComponents extends StatelessWidget {
                                 text: 'Liked by ',
                                 style: TextStyle(
                                   fontSize: 9.sp,
-                                  color: Colors.black,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .color,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -149,7 +150,10 @@ class PostComponents extends StatelessWidget {
                                 text: 'Ms.mountain',
                                 style: TextStyle(
                                   fontSize: 9.sp,
-                                  color: ColorUtils.black92,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .color,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -157,7 +161,10 @@ class PostComponents extends StatelessWidget {
                                 text: ' And ',
                                 style: TextStyle(
                                   fontSize: 9.sp,
-                                  color: Colors.black,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .color,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -165,7 +172,10 @@ class PostComponents extends StatelessWidget {
                                 text: '110 other',
                                 style: TextStyle(
                                   fontSize: 9.sp,
-                                  color: ColorUtils.black92,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .color,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

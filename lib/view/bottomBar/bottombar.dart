@@ -1,15 +1,14 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously, deprecated_member_use
-import 'package:socialv/view/home/home.dart';
-import 'package:socialv/view/profile/profile.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/view/profile/profile.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
-import 'package:socialv/view/home/home.dart';
 
 class BottomBar extends StatelessWidget {
   BottomBar({super.key});
@@ -29,9 +28,6 @@ class BottomBar extends StatelessWidget {
                 initState: (_) {},
                 builder: (controller) {
                   return Scaffold(
-                    // appBar: AppBar(
-                    //   title: const Text('pageRoute[controller.selectedIndex]'),
-                    // ),
                     body: pageRoute[controller.selectedIndex],
                     bottomNavigationBar: Container(
                       height: 16.w,
@@ -52,43 +48,23 @@ class BottomBar extends StatelessWidget {
                           child: Row(
                             children: [
                               InkWell(
-                                onTap: () {
-                                  controller.pageChange(0);
-                                },
-                                child: Image.asset(
-                                  "assets/icons/home.png",
-                                  scale: 1.2.w,
-                                ),
+                                onTap: () => controller.pageChange(0),
+                                child: IconsWidgets.homeImages,
                               ),
                               const Spacer(),
                               InkWell(
-                                onTap: () {
-                                  controller.pageChange(1);
-                                },
-                                child: Image.asset(
-                                  "assets/icons/plus_circle.png",
-                                  scale: 1.w,
-                                ),
+                                onTap: () => controller.pageChange(1),
+                                child: IconsWidgets.plusCircleImages,
                               ),
                               const Spacer(),
                               InkWell(
-                                onTap: () {
-                                  controller.pageChange(2);
-                                },
-                                child: Image.asset(
-                                  "assets/icons/medal_light.png",
-                                  scale: 1.w,
-                                ),
+                                onTap: () => controller.pageChange(2),
+                                child: IconsWidgets.medalLightImages,
                               ),
                               const Spacer(),
                               InkWell(
-                                onTap: () {
-                                  controller.pageChange(3);
-                                },
-                                child: Image.asset(
-                                  "assets/icons/user.png",
-                                  scale: 1.w,
-                                ),
+                                onTap: () => controller.pageChange(3),
+                                child: IconsWidgets.userImages,
                               ),
                             ],
                           ),

@@ -1,7 +1,6 @@
-import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/utils/color_utils.dart';
 
 String imagesbasePath = 'assets/images';
 String iconsbasePath = 'assets/icons';
@@ -26,21 +25,41 @@ class IconsWidgets {
   // static String notFoundImage = '$iconsbasePath/image-not-found.png';
   // static Image plugsImages =
   //     Image.asset('$iconsbasePath/plug.png', scale: 2.5.w);
-  static Image drawerImage = Image.asset(
-    '$iconsbasePath/drawer.png',
-    width: 25.w,
-  );
 
-  /// appbar home
-  static Image searchImage = Image.asset(
-    "assets/icons/search.png",
-    width: 7.w,
-    height: 7.w,
+  ///APPBAR HOME
+  static String drawerImage = '$iconsbasePath/drawer.png';
+  static String messageImage = '$iconsbasePath/message.png';
+  static String searchImage = '$iconsbasePath/search.png';
+
+  static String heartImage = '$iconsbasePath/heart.png';
+  static String chatImage = '$iconsbasePath/chat.png';
+  static String sendImage = '$iconsbasePath/send.png';
+
+  /// DRAWER
+  static String notificationImage = '$iconsbasePath/notification.png';
+  static String resultImage = '$iconsbasePath/result.png';
+  static String noteImage = '$iconsbasePath/note.png';
+  static String walletImage = '$iconsbasePath/wallet.png';
+  static String templateImage = '$iconsbasePath/template.png';
+  static String referImage = '$iconsbasePath/refer.png';
+  static String supportImage = '$iconsbasePath/support.png';
+  static String settingImage = '$iconsbasePath/setting.png';
+
+  static Image homeImages = Image.asset(
+    '$iconsbasePath/home.png',
+    scale: 1.2.w,
   );
-  static Image messageImage = Image.asset(
-    "assets/icons/message.png",
-    width: 7.w,
-    height: 7.w,
+  static Image plusCircleImages = Image.asset(
+    '$iconsbasePath/plus_circle.png',
+    scale: 1.w,
+  );
+  static Image medalLightImages = Image.asset(
+    '$iconsbasePath/medal_light.png',
+    scale: 1.w,
+  );
+  static Image userImages = Image.asset(
+    '$iconsbasePath/user.png',
+    scale: 1.w,
   );
 }
 

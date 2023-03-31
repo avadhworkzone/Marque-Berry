@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter/material.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/decoration_utils.dart';
+import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
 
 class GroupComponents extends StatelessWidget {
   const GroupComponents({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class GroupComponents extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 2.w),
       child: Container(
         decoration: BoxDecoration(
-          color: ColorUtils.white,
+          color: Theme.of(context).cardColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 5,
@@ -35,19 +34,19 @@ class GroupComponents extends StatelessWidget {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Paul Molive Molive',
+                        text: 'Paul Molive',
                         style: TextStyle(
                           fontSize: 12.sp,
-                          color: Colors.black,
                           fontWeight: FontWeight.bold,
+                          color: Theme.of(context).textTheme.titleSmall!.color,
                         ),
                       ),
                       TextSpan(
                         text: '\njoined the group group',
                         style: TextStyle(
-                          fontSize: 11.sp,
-                          color: ColorUtils.black92,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
+                          color: Theme.of(context).textTheme.titleMedium!.color,
                         ),
                       ),
                     ],
@@ -57,7 +56,7 @@ class GroupComponents extends StatelessWidget {
                   '15 min ago',
                   maxLines: 1,
                   fontSize: 9.sp,
-                  color: ColorUtils.black92,
+                  color: Theme.of(context).textTheme.titleMedium!.color,
                   overflow: TextOverflow.ellipsis,
                 ),
                 leading: CircleAvatar(
@@ -66,7 +65,7 @@ class GroupComponents extends StatelessWidget {
                 ),
                 trailing: Icon(
                   Icons.more_horiz,
-                  color: Color(0xff6F7F92),
+                  color: Theme.of(context).textTheme.titleMedium?.color,
                 ),
               ),
               Padding(
@@ -76,7 +75,6 @@ class GroupComponents extends StatelessWidget {
                   child: Container(
                     height: 60.w,
                     width: Get.width,
-                    color: Colors.white12,
                     child: Stack(
                       children: [
                         Column(

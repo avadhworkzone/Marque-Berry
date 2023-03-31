@@ -1,7 +1,5 @@
-import 'package:socialv/routes/route_helper.dart';
 import 'package:get/get.dart';
-
-import '../view/bottomBar/bottombar.dart';
+import 'package:socialv/view/bottomBar/bottombar.dart';
 
 class SplashController extends GetxController {
   @override
