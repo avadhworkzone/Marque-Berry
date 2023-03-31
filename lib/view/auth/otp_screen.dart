@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import '../../commanWidget/custom_btn.dart';
@@ -21,6 +22,7 @@ class OtpScreen extends StatelessWidget {
   StreamController<ErrorAnimationType>? errorController;
 
   OtpTimerButtonController controller = OtpTimerButtonController();
+
   _requestOtp() {
     controller.loading();
     Future.delayed(Duration(seconds: 60), () {
@@ -55,11 +57,12 @@ class OtpScreen extends StatelessWidget {
                   length: 4,
                   controller: otp,
                   appContext: context,
+                  textStyle: TextStyle(color: ColorUtils.black92),
                   onChanged: (value) {},
                   enableActiveFill: true,
                   blinkWhenObscuring: true,
                   cursorColor: ColorUtils.black,
-                  // animationType: AnimationType.fade,
+                  animationType: AnimationType.fade,
                   keyboardType: TextInputType.number,
                   errorAnimationController: errorController,
                   pinTheme: PinTheme(
@@ -68,28 +71,26 @@ class OtpScreen extends StatelessWidget {
                     fieldHeight: 15.w,
                     fieldWidth: 12.w,
                     activeFillColor: ColorUtils.greyFA,
-                    // activeColor: ColorUtils.transparent,
+                    activeColor: ColorUtils.greyFA,
                     selectedFillColor: ColorUtils.greyFA,
                     inactiveColor: ColorUtils.greyFA,
                     inactiveFillColor: ColorUtils.greyFA,
-                    // selectedColor: Colors.black,
+                    selectedColor: Colors.black,
                   ),
-                  pastedTextStyle: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeightClass.fontWeightBold),
+                  pastedTextStyle:
+                      TextStyle(fontWeight: FontWeightClass.fontWeightBold),
                   animationDuration: const Duration(milliseconds: 300),
                 ),
               ],
             ),
           ),
           SizeConfig.sH5,
-
-          // OtpTimerButton(
-          //   controller: controller,
-          //   onPressed: () => _requestOtp(),
-          //   text: Text('Resend OTP'),
-          //   duration: 60,
-          // ),
+          OtpTimerButton(
+            controller: controller,
+            onPressed: () => _requestOtp(),
+            text: Text('Resend OTP'),
+            duration: 60,
+          ),
           SizeConfig.sH5,
           RichText(
             text: TextSpan(

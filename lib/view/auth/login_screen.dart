@@ -9,6 +9,7 @@ import '../../utils/custom_text_field.dart';
 import '../../utils/decoration_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/tecell_text.dart';
+import '../../utils/validation_utils.dart';
 import '../../utils/variable_utils.dart';
 import 'otp_screen.dart';
 
@@ -40,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizeConfig.sH7,
             Container(
               width: Get.width,
-              height: 12.h,
+              height: 10.h,
               decoration: DecorationUtils.loginDecoration(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -78,13 +79,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   Container(
-                    height: 8.w,
+                    height: 4.w,
                     width: Get.width,
                     decoration: BoxDecoration(
-                      color: ColorUtils.greyFA,
+                      color: Theme.of(context).textTheme.bodyText2?.color,
+                      // color: ColorUtils.red29,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5.w),
-                          topRight: Radius.circular(5.w)),
+                          topLeft: Radius.circular(8.w),
+                          topRight: Radius.circular(8.w)),
                     ),
                   ),
                 ],
@@ -142,6 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ?.color),
                             SizeConfig.sH5,
                             AdoroText(VariableUtils.fullName,
+                                fontFamily:
+                                    RegularExpression.fullNameKeyboardPattern,
                                 color: Theme.of(context)
                                     .textTheme
                                     .subtitle2
@@ -150,15 +154,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               keyboardType: TextInputType.name,
                             ),
                             SizeConfig.sH2,
-                            AdoroText(
-                              VariableUtils.userName,
-                              color: ColorUtils.black92,
-                            ),
+                            AdoroText(VariableUtils.userName,
+                                fontFamily:
+                                    RegularExpression.nameKeyboardPattern,
+                                color:
+                                    Theme.of(context).textTheme.subtitle2?.color
+                                // color: ColorUtils.black92,
+                                ),
                             CommonTextFieldContainer(
                               keyboardType: TextInputType.name,
                             ),
                             SizeConfig.sH2,
                             AdoroText(VariableUtils.mobileNumber,
+                                fontFamily:
+                                    RegularExpression.contactKeyboardPattern,
                                 color: Theme.of(context)
                                     .textTheme
                                     .subtitle2
