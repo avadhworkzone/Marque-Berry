@@ -16,14 +16,9 @@ import 'package:socialv/view/drawer/support.dart';
 import 'package:socialv/view/drawer/template.dart';
 import 'package:socialv/view/drawer/wallet.dart';
 
-class MyDrawer extends StatefulWidget {
+class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
-  @override
-  _MyDrawerState createState() => _MyDrawerState();
-}
-
-class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -68,6 +63,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Get.to(() => NotificationScreen());
                 },
+                context: context,
                 title: VariableUtils.notificationText,
                 image: IconsWidgets.notificationImage,
               ),
@@ -75,6 +71,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Get.to(() => Result());
                 },
+                context: context,
                 title: VariableUtils.resultText,
                 image: IconsWidgets.resultImage,
               ),
@@ -82,6 +79,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Get.to(() => Note());
                 },
+                context: context,
                 title: VariableUtils.noteFromAdoroText,
                 image: IconsWidgets.noteImage,
               ),
@@ -89,6 +87,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Get.to(() => Wallet());
                 },
+                context: context,
                 title: VariableUtils.walletText,
                 image: IconsWidgets.walletImage,
               ),
@@ -96,6 +95,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Get.to(() => Template());
                 },
+                context: context,
                 title: VariableUtils.templateText,
                 image: IconsWidgets.templateImage,
               ),
@@ -103,6 +103,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Get.to(() => ReferAndEarn());
                 },
+                context: context,
                 title: VariableUtils.referEarnText,
                 image: IconsWidgets.referImage,
               ),
@@ -110,6 +111,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Get.to(() => Support());
                 },
+                context: context,
                 title: VariableUtils.supportText,
                 image: IconsWidgets.supportImage,
               ),
@@ -117,6 +119,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   // Get.to(() => Setting());
                 },
+                context: context,
                 title: VariableUtils.settingsText,
                 image: IconsWidgets.settingImage,
               ),
@@ -128,6 +131,7 @@ class _MyDrawerState extends State<MyDrawer> {
   }
 
   Widget drawerData({
+    required BuildContext context,
     required OnTab onTap,
     required String image,
     required String title,

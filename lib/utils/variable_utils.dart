@@ -5,6 +5,8 @@ class VariableUtils {
   static const poppinsMediumFontFamily = "Poppins";
 
   /// API DATA
+  static const status200 = '200';
+  static const status500 = '500';
   static const tryAfterSomeTime = 'tryAfterSomeTime';
   static const somethingWentWrong = "somethingWentWrong";
   static const noDataFound = "No data found";

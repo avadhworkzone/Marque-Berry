@@ -1,10 +1,13 @@
 abstract class BaseService {
   /// ----------------- BASE URL START -----------------------
 
-  final String baseURL = '';
+  final String baseURL = "http://52.66.136.133:8081/";
 
   /// ----------------- BASE URL END -----------------------
 
   /// DRIVER POST
-  final String driverPostURL = '';
+  final String loginURL = 'login';
+  final String registerURL = 'signup';
+  final String validateOTPURL = 'validateOTP';
+  final String memeCategoriesURL = 'meme_categories';
 }

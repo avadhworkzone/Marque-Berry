@@ -34,6 +34,8 @@ class IconsWidgets {
   // static Image plugsImages =
   //     Image.asset('$iconsbasePath/plug.png', scale: 2.5.w);
 
+  static String imageNotFoundImages = '$iconsbasePath/image_not_found.png';
+
   ///APPBAR HOME
   static String drawerImage = '$iconsbasePath/drawer.png';
   static String messageImage = '$iconsbasePath/message.png';

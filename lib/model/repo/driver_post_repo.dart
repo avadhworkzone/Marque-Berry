@@ -9,7 +9,7 @@ class DriverPostRepo extends BaseService {
     var response = await ApiService().getResponse(
       apiType: APIType.aPost,
       body: reqModel.toJson(),
-      url: '$baseURL$driverPostURL',
+      url: '$baseURL',
     );
     return DriverPostResModel.fromJson(response);
   }

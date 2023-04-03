@@ -1,6 +1,19 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 
+class CommonImage extends StatelessWidget {
+  String img;
+  Color? color;
+
+  CommonImage({Key? key, required this.img, required this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(img, color: color);
+  }
+}
+
 class CommonImageScale extends StatelessWidget {
   String img;
   double scale;

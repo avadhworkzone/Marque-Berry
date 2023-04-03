@@ -7,6 +7,8 @@ class PreferenceUtils {
   static String login = 'login';
   static String welcome = 'welcome';
 
+  static String token = 'token';
+
   /// SET STRING PREFERENCE
   static Future setString({
     required String key,

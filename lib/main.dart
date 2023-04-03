@@ -5,15 +5,21 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:socialv/controllers/intrest_controller.dart';
+import 'package:socialv/controllers/login_controller.dart';
+import 'package:socialv/controllers/validate_otp_controller.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/view/auth/login_screen.dart';
 import 'package:socialv/view/auth/otp_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 
 import 'commanWidget/noInternet_screen.dart';
+import 'view/auth/interest.dart';
+import 'viewModel/auth_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,7 +93,10 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  LoginController login = Get.put(LoginController());
+  AuthViewModel authViewModel = Get.put(AuthViewModel());
   OtpController otpController = Get.put(OtpController());
+  IntrestController intrest = Get.put(IntrestController());
   HomeController homeController = Get.put(HomeController());
   BottomBarController bottomController = Get.put(BottomBarController());
 }

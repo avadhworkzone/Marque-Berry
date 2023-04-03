@@ -41,7 +41,7 @@ class RegularExpression {
 // }
 
 class ValidationMsg {
-  static String isRequired = "is required";
+  static String isRequired = "Field is required";
   // static String passwordLength = 'passwordLength';
   // static String modelNumberLength = 'modelNumberLength';
   // static String voucherCodeLength = 'voucherCodeLength';
@@ -51,13 +51,6 @@ class ValidationMsg {
   // static String enterValidName = "enterValidName";
   // static String enterValidDate = "enterValidDate";
   // static String passwordDoesNotMatch = 'passwordDoesNotMatch';
-
-  //
-
-  static String numberIsInvalid = 'Card is invalid';
-  static String cvvInvalid = 'CVV is invalid';
-  static String cardExpired = 'Card has expired';
-  static String invalidInput = 'invalid input';
 }
 
 emptyValidation(value) {
@@ -87,16 +80,6 @@ mobileValidation(value) {
   return null;
 }
 
-// emailValidation(value) {
-//   if (value.toString().isEmpty) {
-//     return ValidationMsg.isRequired.tr;
-//   }
-//   if (!RegExp(RegularExpression.contactKeyboardPattern).hasMatch(value!)) {
-//     return ValidationMsg.pleaseEnterValidEmail.tr;
-//   }
-//   return null;
-// }
-
 passwordValidation(value) {
   if (value.toString().isEmpty) {
     return ValidationMsg.isRequired.tr;
@@ -105,38 +88,3 @@ passwordValidation(value) {
   }
   return null;
 }
-
-// confirmPasswordValidation(value, password) {
-//   if (value.toString().isEmpty) {
-//     return ValidationMsg.isRequired.tr;
-//   } else if (password != value) {
-//     return ValidationMsg.passwordDoesNotMatch.tr;
-//   }
-//   return null;
-// }
-
-// cityValidation(value) {
-//   if (value.toString().isEmpty) {
-//     return ValidationMsg.isRequired.tr;
-//   }
-//   return null;
-// }
-//
-// pincodeValidation(value) {
-//   if (value.toString().isEmpty) {
-//     return ValidationMsg.isRequired.tr;
-//   } else if (value.toString().length < 6) {
-//     return ValidationMsg.pinLength.tr;
-//   }
-//   return null;
-// }
-
-// clientNumberValidate(value) {
-//   if (value.toString().length > 12) {
-//     return ValidationMsg.maxClientLength.tr;
-//   }
-//   return null;
-// }
-
-// "Client number length is a maximum of 12."
-// "ग्राहक संख्या की लंबाई अधिकतम 12 है।"

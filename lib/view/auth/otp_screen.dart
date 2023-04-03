@@ -10,9 +10,17 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/controllers/validate_otp_controller.dart';
+import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
+import 'package:socialv/model/apiModel/responseModel/otp_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/viewModel/auth_view_model.dart';
 import '../../commanWidget/custom_btn.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/size_config_utils.dart';
@@ -20,167 +28,226 @@ import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
 import 'done_screen.dart';
 
-class OtpScreen extends StatelessWidget {
+class ValidateOtpScreen extends StatelessWidget {
   TextEditingController otp = TextEditingController(text: "");
 
   StreamController<ErrorAnimationType>? errorController;
-
   final otpFormKey = GlobalKey<FormState>();
 
-  OtpTimerButtonController controller = OtpTimerButtonController();
+  LoginReqModel loginReqModel = LoginReqModel();
+  RegisterReqModel registerReqModel = RegisterReqModel();
 
-  // _requestOtp() {
-  //   controller.loading();
-  //   Future.delayed(Duration(seconds: 60), () {
-  //     controller.startTimer();
-  //   });
-  // }
-
+  AuthViewModel authViewModel = Get.find<AuthViewModel>();
+  ValidateOTPReqModel validateOTPReqModel = ValidateOTPReqModel();
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: GetBuilder<OtpController>(builder: (otpController) {
-        return Form(
-          key: otpFormKey,
-          child: Column(
-            children: [
-              SizeConfig.sH25,
-              AdoroText(
-                VariableUtils.otpVerification,
-                fontSize: 15.sp,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                fontWeight: FontWeight.bold,
-              ),
-              SizeConfig.sH2,
-              AdoroText(
-                VariableUtils.weHaveSentDigitCode,
-                fontSize: 11.sp,
-                color: Theme.of(context).textTheme.titleMedium?.color,
-              ),
-              SizeConfig.sH2,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Column(
-                  children: [
-                    Theme(
-                      data: ThemeData(
-                        accentColor: Colors.red,
-                        primaryColor: Colors.orange,
-                      ),
-                      child: PinCodeTextField(
-                        length: 4,
-                        controller: otp,
-                        appContext: context,
-                        textStyle: TextStyle(color: ColorUtils.black92),
-                        onChanged: (value) => otpController.changeotp(value),
-                        enableActiveFill: true,
-                        blinkWhenObscuring: true,
-                        cursorColor: ColorUtils.black,
-                        animationType: AnimationType.fade,
-                        keyboardType: TextInputType.number,
-                        errorAnimationController: errorController,
-                        pinTheme: PinTheme(
-                          shape: PinCodeFieldShape.box,
-                          borderRadius: BorderRadius.circular(5),
-                          fieldHeight: 15.w,
-                          fieldWidth: 12.w,
-                          activeColor: ColorUtils.grey[300],
-                          activeFillColor: ColorUtils.grey[300],
-                          selectedFillColor: ColorUtils.grey[300],
-                          inactiveColor: ColorUtils.grey[300],
-                          inactiveFillColor: ColorUtils.grey[300],
-                          selectedColor: Colors.black,
+    return GetBuilder<AuthViewModel>(
+      init: AuthViewModel(),
+      builder: (authViewModel) {
+        return GetBuilder<OtpController>(
+          init: OtpController(),
+          builder: (otpController) {
+            return Material(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Stack(
+                children: [
+                  Form(
+                    key: otpFormKey,
+                    child: Column(
+                      children: [
+                        SizeConfig.sH25,
+                        AdoroText(
+                          VariableUtils.otpVerification,
+                          fontSize: 15.sp,
+                          color: Theme.of(context).textTheme.titleSmall?.color,
+                          fontWeight: FontWeight.bold,
                         ),
-                        pastedTextStyle: TextStyle(
-                            fontWeight: FontWeightClass.fontWeightBold),
-                        animationDuration: const Duration(milliseconds: 300),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                        SizeConfig.sH2,
+                        AdoroText(
+                          VariableUtils.weHaveSentDigitCode,
+                          fontSize: 11.sp,
+                          color: Theme.of(context).textTheme.titleMedium?.color,
+                        ),
+                        SizeConfig.sH2,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
+                          child: Column(
+                            children: [
+                              Theme(
+                                data: ThemeData(
+                                    // accentColor: Colors.red,
+                                    // primaryColor: Colors.orange,
+                                    ),
+                                child: PinCodeTextField(
+                                  length: 6,
+                                  controller: otp,
+                                  appContext: context,
+                                  textStyle:
+                                      TextStyle(color: ColorUtils.black92),
+                                  onChanged: (value) =>
+                                      otpController.changeotp(value),
+                                  enableActiveFill: true,
+                                  blinkWhenObscuring: true,
+                                  cursorColor: ColorUtils.black,
+                                  animationType: AnimationType.fade,
+                                  keyboardType: TextInputType.number,
+                                  errorAnimationController: errorController,
+                                  pinTheme: PinTheme(
+                                    shape: PinCodeFieldShape.box,
+                                    borderRadius: BorderRadius.circular(5),
+                                    fieldHeight: 15.w,
+                                    fieldWidth: 12.w,
+                                    activeColor: ColorUtils.grey[300],
+                                    activeFillColor: ColorUtils.grey[300],
+                                    selectedFillColor: ColorUtils.grey[300],
+                                    inactiveColor: ColorUtils.grey[300],
+                                    inactiveFillColor: ColorUtils.grey[300],
+                                    selectedColor: ColorUtils.black,
+                                  ),
+                                  pastedTextStyle: TextStyle(
+                                    fontWeight: FontWeightClass.fontWeightBold,
+                                  ),
+                                  animationDuration:
+                                      const Duration(milliseconds: 300),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        AdoroText("00 : 19", color: ColorUtils.green4E),
+                        if (otpController.hasError == true)
+                          Column(
+                            children: [
+                              SizeConfig.sH3,
+                              Center(
+                                child: AdoroText(
+                                  "Please fill all the cell",
+                                  fontSize: 12,
+                                  color: ColorUtils.red29,
+                                  fontWeight: FontWeightClass.fontWeight400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        SizeConfig.sH3,
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.color,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: VariableUtils.dontReceiveTheOTP,
+                              ),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () async {
+                                    resendOTP(authViewModel: authViewModel);
+                                  },
+                                text: ' ${VariableUtils.resendOTP}',
+                                style: TextStyle(color: ColorUtils.blueB9),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizeConfig.sH7,
+                        CustomBtn(
+                          onTap: () async {
+                            if (otpFormKey.currentState!.validate()) {
+                              validateOTPReqModel.mobileNo =
+                                  Get.arguments['mobile'];
+                              validateOTPReqModel.otp = otp.text;
+                              await authViewModel
+                                  .validateOTP(validateOTPReqModel);
 
-              AdoroText("00 : 19", color: ColorUtils.green4E),
-              otpController.hasError == true
-                  ? Center(
-                      child: AdoroText(
-                        otp.text.isEmpty
-                            ? "Please fill all the cell"
-                            : 'Wrong OTP',
-                        fontSize: 12,
-                        color: ColorUtils.red29,
-                        fontWeight: FontWeightClass.fontWeight400,
-                      ),
-                    )
-                  : const SizedBox(),
-              // SizeConfig.sH5,
-              // OtpTimerButton(
-              //   duration: 60,
-              //   controller: controller,
-              //   onPressed: () => _requestOtp(),
-              //   text: Text('Resend OTP'),
-              //   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              // ),
-              SizeConfig.sH3,
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.titleMedium?.color,
+                              if (authViewModel.validateOTPApiResponse.status ==
+                                  Status.COMPLETE) {
+                                ValidateOTPResModel response =
+                                    authViewModel.validateOTPApiResponse.data;
+                                if (response.status.toString() == "200") {
+                                  showSnackBar(
+                                    message: "Login successfully",
+                                  );
+
+                                  PreferenceUtils.setString(
+                                    key: PreferenceUtils.token,
+                                    value: response.token.toString(),
+                                  );
+                                  otpController.changeerror(false);
+
+                                  PreferenceUtils.setInt(
+                                    key: PreferenceUtils.login,
+                                    value: 1,
+                                  );
+
+                                  Get.offAllNamed(RouteHelper.getDoneRoute());
+                                } else {
+                                  errorController!
+                                      .add(ErrorAnimationType.shake);
+                                  otpController.changeerror(true);
+                                  showSnackBar(
+                                    message: VariableUtils.somethingWentWrong,
+                                  );
+                                }
+                              } else {
+                                errorController!.add(ErrorAnimationType.shake);
+                                otpController.changeerror(true);
+                                showSnackBar(
+                                  message: VariableUtils.somethingWentWrong,
+                                );
+                              }
+                            }
+                          },
+                          text: 'VERIFY NOW',
+                        ),
+                      ],
+                    ),
                   ),
-                  children: [
-                    TextSpan(
-                      text: VariableUtils.dontReceiveTheOTP,
-                    ),
-                    TextSpan(
-                      // recognizer: TapGestureRecognizer()
-                      //   ..onTap = () => Get.to(() => DoneScreen()),
-                      text: ' ${VariableUtils.resendOTP}',
-                      style: TextStyle(color: ColorUtils.blueB9),
-                    ),
-                  ],
-                ),
+                  if (authViewModel.validateOTPApiResponse.status ==
+                      Status.LOADING)
+                    loader(context),
+                  if (authViewModel.loginApiResponse.status == Status.LOADING)
+                    loader(context),
+                  if (authViewModel.registerApiResponse.status ==
+                      Status.LOADING)
+                    loader(context)
+                ],
               ),
-              SizeConfig.sH7,
-              CustomBtn(
-                onTap: () {
-                  if (otpFormKey.currentState!.validate()) {
-                    if (otpController.currentText != "0000") {
-                      showSnackBar(message: "Wrong otp");
-                      // errorController!.add(ErrorAnimationType.shake);
-                      otpController.changeerror(true);
-                      // setState(() {});
-                    } else {
-                      PreferenceUtils.setInt(
-                        key: PreferenceUtils.login,
-                        value: 1,
-                      );
-                      Get.to(() => DoneScreen());
-                      otpController.changeerror(false);
-                    }
-                  }
-                },
-                text: 'VERIFY NOW',
-              ),
-            ],
-          ),
+            );
+          },
         );
-      }),
+      },
     );
   }
-}
 
-class OtpController extends GetxController {
-  bool hasError = false;
-
-  changeerror(val) {
-    hasError = val;
-    logs("HAS ERROR:=====> $hasError");
-    update();
+  loader(context) {
+    return Center(
+      child: CircularProgressIndicator(
+        backgroundColor: Theme.of(context).textTheme.titleSmall?.color,
+      ),
+    );
   }
 
-  String currentText = "";
-  changeotp(val) {
-    currentText = val;
+  resendOTP({required AuthViewModel authViewModel}) async {
+    if (Get.arguments != null &&
+        Get.arguments.containsKey('mobile') &&
+        Get.arguments['mobile'] != "") {
+      if (Get.arguments['type'] == "login" &&
+          Get.arguments.containsKey('type')) {
+        loginReqModel.mobileNo = Get.arguments['mobile'];
+        await authViewModel.login(loginReqModel);
+      }
+      if (Get.arguments['type'] == "register" &&
+          Get.arguments.containsKey('type')) {
+        registerReqModel.username = Get.arguments['username'];
+        registerReqModel.mobileNo = Get.arguments['mobile'];
+        await authViewModel.register(registerReqModel);
+      }
+    } else {
+      logs("SOMETHING WRONG");
+    }
   }
 }
