@@ -19,6 +19,8 @@ import 'package:socialv/viewModel/connectivity_view_model.dart';
 
 import 'commanWidget/noInternet_screen.dart';
 import 'view/auth/interest.dart';
+import 'view/sharePost/edit_profile.dart';
+import 'view/sharePost/share_post.dart';
 import 'viewModel/auth_view_model.dart';
 
 Future<void> main() async {
@@ -77,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return SplashScreen();
+                      return LoginScreen();
                     } else {
                       return const NoInterNetConnected();
                     }

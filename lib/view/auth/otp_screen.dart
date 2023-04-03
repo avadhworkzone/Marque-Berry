@@ -15,6 +15,7 @@ import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/otp_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/register_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -22,23 +23,35 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import '../../commanWidget/custom_btn.dart';
+import '../../model/apiModel/responseModel/login_res_model.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
 import 'done_screen.dart';
 
-class ValidateOtpScreen extends StatelessWidget {
+class ValidateOtpScreen extends StatefulWidget {
+  @override
+  State<ValidateOtpScreen> createState() => _ValidateOtpScreenState();
+}
+
+class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
   TextEditingController otp = TextEditingController(text: "");
 
   StreamController<ErrorAnimationType>? errorController;
+
   final otpFormKey = GlobalKey<FormState>();
 
   LoginReqModel loginReqModel = LoginReqModel();
+
   RegisterReqModel registerReqModel = RegisterReqModel();
 
   AuthViewModel authViewModel = Get.find<AuthViewModel>();
+
+  OtpController otpController = Get.find<OtpController>();
+
   ValidateOTPReqModel validateOTPReqModel = ValidateOTPReqModel();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthViewModel>(
@@ -46,6 +59,9 @@ class ValidateOtpScreen extends StatelessWidget {
       builder: (authViewModel) {
         return GetBuilder<OtpController>(
           init: OtpController(),
+          initState: (_) {
+            otpController.startTimer();
+          },
           builder: (otpController) {
             return Material(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -114,7 +130,12 @@ class ValidateOtpScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        AdoroText("00 : 19", color: ColorUtils.green4E),
+                        AdoroText(
+                          (otpController.timer - otpController.tick) < 10
+                              ? "00: 0${otpController.timer - otpController.tick}"
+                              : "00: ${otpController.timer - otpController.tick}",
+                          color: ColorUtils.green4E,
+                        ),
                         if (otpController.hasError == true)
                           Column(
                             children: [
@@ -239,12 +260,40 @@ class ValidateOtpScreen extends StatelessWidget {
           Get.arguments.containsKey('type')) {
         loginReqModel.mobileNo = Get.arguments['mobile'];
         await authViewModel.login(loginReqModel);
+        if (authViewModel.loginApiResponse.status == Status.COMPLETE) {
+          LoginResModel response = authViewModel.loginApiResponse.data;
+
+          if (response.status.toString() == "200") {
+            showSnackBar(
+              message: response.msg.toString(),
+            );
+          } else {
+            showSnackBar(
+              message: response.msg ?? VariableUtils.somethingWentWrong,
+            );
+          }
+        }
       }
       if (Get.arguments['type'] == "register" &&
           Get.arguments.containsKey('type')) {
         registerReqModel.username = Get.arguments['username'];
         registerReqModel.mobileNo = Get.arguments['mobile'];
         await authViewModel.register(registerReqModel);
+        if (authViewModel.registerApiResponse.status == Status.COMPLETE) {
+          RegisterResModel response = authViewModel.registerApiResponse.data;
+
+          if (response.status.toString() == VariableUtils.status200) {
+            showSnackBar(
+              message: response.msg.toString(),
+              snackColor: ColorUtils.red29,
+            );
+          } else {
+            showSnackBar(
+              message: response.msg ?? VariableUtils.somethingWentWrong,
+              snackColor: ColorUtils.red29,
+            );
+          }
+        }
       }
     } else {
       logs("SOMETHING WRONG");

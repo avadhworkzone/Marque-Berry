@@ -423,14 +423,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (authViewModel.loginApiResponse.status == Status.LOADING)
                     Center(
                       child: CircularProgressIndicator(
-                        backgroundColor: Colors.red,
+                        backgroundColor: ColorUtils.black,
                       ),
                     ),
                   if (authViewModel.registerApiResponse.status ==
                       Status.LOADING)
                     Center(
                       child: CircularProgressIndicator(
-                        backgroundColor: Colors.red,
+                        backgroundColor: ColorUtils.black,
                       ),
                     )
                 ],

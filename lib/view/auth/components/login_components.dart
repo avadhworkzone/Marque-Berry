@@ -82,7 +82,8 @@ class LoginComponents extends StatelessWidget {
                       );
                     } else {
                       showSnackBar(
-                        message: "Something went wrong",
+                        message:
+                            response.msg ?? VariableUtils.somethingWentWrong,
                       );
                     }
                   }

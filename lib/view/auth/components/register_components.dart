@@ -22,7 +22,7 @@ class RegisterComponents extends StatelessWidget {
 
   final registerKey = GlobalKey<FormState>();
 
-  var fullName = TextEditingController();
+  // var fullName = TextEditingController();
   var username = TextEditingController();
   var registerContact = TextEditingController();
 
@@ -48,16 +48,16 @@ class RegisterComponents extends StatelessWidget {
           ),
           AdoroText(VariableUtils.joinTheWorld, color: black92White),
           SizeConfig.sH5,
-          AdoroText(VariableUtils.fullName, color: black92White),
-          CommonTextFormField(
-            color: blackWhite,
-            controller: fullName,
-            keyboardType: TextInputType.name,
-            validator: (v) => userValidation(v),
-            denyInputFormatters: RegularExpression.onlyFirstSpaceNoAllowPattern,
-            allowInputFormatters: RegularExpression.alphabetSpacePattern,
-          ),
-          SizeConfig.sH2,
+          // AdoroText(VariableUtils.fullName, color: black92White),
+          // CommonTextFormField(
+          //   color: blackWhite,
+          //   controller: fullName,
+          //   keyboardType: TextInputType.name,
+          //   validator: (v) => userValidation(v),
+          //   denyInputFormatters: RegularExpression.onlyFirstSpaceNoAllowPattern,
+          //   allowInputFormatters: RegularExpression.alphabetSpacePattern,
+          // ),
+          // SizeConfig.sH2,
           AdoroText(VariableUtils.userName, color: black92White),
           CommonTextFormField(
             color: blackWhite,
@@ -106,7 +106,10 @@ class RegisterComponents extends StatelessWidget {
                         },
                       );
                     } else {
-                      showSnackBar(message: VariableUtils.somethingWentWrong);
+                      showSnackBar(
+                        message:
+                            response.msg ?? VariableUtils.somethingWentWrong,
+                      );
                     }
                   }
                 }
