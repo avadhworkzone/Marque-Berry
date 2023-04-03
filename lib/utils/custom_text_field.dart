@@ -7,25 +7,43 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 
 class CommonTextFieldContainer extends StatelessWidget {
-  const CommonTextFieldContainer({
-    Key? key,
-    this.text,
-    this.suffixIcon,
-    this.color,
-    this.keyboardType,
-  }) : super(key: key);
+  const CommonTextFieldContainer(
+      {Key? key,
+      this.text,
+      this.suffixIcon,
+      this.color,
+      this.keyboardType,
+      this.prefixIcon,
+      this.minLines,
+      this.maxLines,
+      this.hintStyle,
+      this.hintText,
+      this.decoration,
+      this.textAlignVertical})
+      : super(key: key);
   final Widget? suffixIcon;
 
   final text;
   final color;
   final keyboardType;
+  final prefixIcon;
+  final minLines;
+  final maxLines;
+  final hintStyle;
+  final hintText;
+  final textAlignVertical;
+  final decoration;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: keyboardType,
+      minLines: minLines,
+      maxLines: maxLines,
+      textAlignVertical: textAlignVertical,
       decoration: InputDecoration(
-        filled: true,
+        // filled: true,
+
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: ColorUtils.greyFA),
         ),
@@ -35,7 +53,9 @@ class CommonTextFieldContainer extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         suffixIcon: suffixIcon,
         fillColor: color,
-        hintText: text,
+        hintStyle: hintStyle,
+        hintText: hintText,
+        prefixIcon: prefixIcon,
       ),
     );
   }
@@ -98,4 +118,21 @@ class CommonTextFormField extends StatelessWidget {
   UnderlineInputBorder underlineInputBorder = UnderlineInputBorder(
     borderSide: BorderSide(color: ColorUtils.grey.withOpacity(0.5)),
   );
+}
+
+class EditTextFormField extends StatelessWidget {
+  final hintText;
+  final hintStyle;
+
+  const EditTextFormField({super.key, this.hintText, this.hintStyle});
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+          border:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+          hintText: hintText,
+          hintStyle: hintStyle),
+    );
+  }
 }
