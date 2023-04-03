@@ -8,8 +8,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/view/auth/interest.dart';
 import 'package:socialv/view/auth/otp_screen.dart';
 import 'package:socialv/view/home/home.dart';
+import 'package:socialv/view/sharePost/edit_profile.dart';
+import 'package:socialv/view/sharePost/share_post.dart';
+import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 
@@ -71,7 +75,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return SplashScreen();
+                      return EditProfile();
                     } else {
                       return const NoInterNetConnected();
                     }

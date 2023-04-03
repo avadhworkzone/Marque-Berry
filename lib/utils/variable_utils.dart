@@ -54,4 +54,27 @@ class VariableUtils {
   ///InterestScreen
   static const dontReceiveTheOTP = "Dont Receive The OTP?";
   static const resendOTP = " RESEND OTP";
+
+  ///SharePostScreen
+  static const sharePost = " Share post";
+  static const Post = " Post";
+  static const ritikRaj = " Ritik Raj";
+  static const whatYouWantToTalkAbout = " What  do you want to talk about?";
+  static const uploadAPhoto = " Upload a photo";
+  static const uploadAVideo = " Upload a Video";
+  static const uploadAGIF = " Upload a GIF";
+  static const chooseATemplate = " choose a template";
+  static const tagAFriend = " Tag a friend";
+
+  ///TagAPeopleScreen
+  static const tagfriends = " Tag friends";
+
+  ///EditProfileScreen
+  static const updateProfile = " Update Profile";
+  static const Username = " Username";
+  static const mailid = " Mail id";
+  static const bankName = " Bank Name";
+  static const beneficiaryName = " Beneficiary Name";
+  static const accountNumber = " Account Number";
+  static const ifscCode = " IFSC Code";
 }
