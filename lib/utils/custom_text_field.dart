@@ -67,6 +67,8 @@ class CommonTextFormField extends StatelessWidget {
   final int? mobilelength;
   final Color? color;
   final Function validator;
+  final hintText;
+  final hintStyle;
   // final bool? enableSuggestions;
   final TextInputType? keyboardType;
   final String denyInputFormatters;
@@ -79,6 +81,8 @@ class CommonTextFormField extends StatelessWidget {
     this.lableTitle,
     this.keyboardType,
     this.mobilelength,
+    this.hintText,
+    this.hintStyle,
     // this.enableSuggestions,
     required this.color,
     required this.validator,
@@ -105,6 +109,8 @@ class CommonTextFormField extends StatelessWidget {
       maxLength: mobilelength ?? 1000,
       decoration: InputDecoration(
         filled: true,
+        hintText: hintText,
+        hintStyle: hintStyle,
         fillColor: ColorUtils.transparent,
         counterText: "",
         border: underlineInputBorder,
