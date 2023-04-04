@@ -197,12 +197,11 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     key: PreferenceUtils.token,
                                     value: response.token.toString(),
                                   );
-                                  otpController.changeerror(false);
-
                                   PreferenceUtils.setInt(
                                     key: PreferenceUtils.login,
                                     value: 1,
                                   );
+                                  otpController.changeerror(false);
 
                                   Get.offAllNamed(RouteHelper.getDoneRoute());
                                 } else {
@@ -285,12 +284,10 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
           if (response.status.toString() == VariableUtils.status200) {
             showSnackBar(
               message: response.msg.toString(),
-              snackColor: ColorUtils.red29,
             );
           } else {
             showSnackBar(
               message: response.msg ?? VariableUtils.somethingWentWrong,
-              snackColor: ColorUtils.red29,
             );
           }
         }

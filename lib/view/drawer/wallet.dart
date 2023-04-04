@@ -1,87 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
 
 class Wallet extends StatelessWidget {
   const Wallet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
+
     return Scaffold(
-      appBar: customAppbar('Wallet'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20.w),
+        child: CommonAppBar(title: VariableUtils.walletText),
+      ),
       body: Center(
         child: Column(
           children: [
-            const SizedBox(
-              height: 30,
-            ),
-            const AdoroText(
+            SizeConfig.sH3,
+            AdoroText(
               'Deepanshu Sarmandal',
-              color: ColorUtils.black2E,
-              fontSize: 15,
+              fontSize: 13.sp,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            SizeConfig.sH2,
             CircleAvatar(
-              radius: 50,
-              backgroundImage: const AssetImage(
-                'assets/images/circle.png',
-              ),
-              child: Image.asset(
-                'assets/images/profile.png',
-                scale: 2.3,
-              ),
+              radius: 15.w,
+              backgroundImage: const AssetImage('assets/images/circle.png'),
+              child: Image.asset('assets/images/profile.png', scale: 2.3),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            const AdoroText(
+            SizeConfig.sH2,
+            AdoroText(
               'You have earned',
-              color: ColorUtils.black,
-              fontSize: 15,
+              // color: blackWhite,
+              fontSize: 12.sp,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            SizeConfig.sH1,
             const AdoroText(
               '75.5C',
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            SizeConfig.sH2,
             Container(
               height: 50,
               width: 200,
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      ColorUtils.linearGradient1,
-                      ColorUtils.linearGradient6,
-                      ColorUtils.linearGradient7
-                    ],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
+                gradient: LinearGradient(
+                  colors: [
+                    ColorUtils.linearGradient1,
+                    ColorUtils.linearGradient6,
+                    ColorUtils.linearGradient7
+                  ],
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
               child: const Center(
-                  child: AdoroText(
-                'Withdraw Money',
-                color: ColorUtils.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              )),
+                child: AdoroText(
+                  'Withdraw Money',
+                  color: ColorUtils.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            SizeConfig.sH2,
             const AdoroText('Withdraw Minimum limit Rs. 100 '),
-            const SizedBox(
-              height: 10,
-            ),
+            SizeConfig.sH1,
             const AdoroText('1 Cash Coin = 1 Rs '),
           ],
         ),

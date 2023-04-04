@@ -28,16 +28,15 @@ class InterestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    // Color? blackWhite = Theme.of(context).primaryTextTheme.labelMedium?.color;
 
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: GetBuilder<IntrestController>(
           init: IntrestController(),
-          initState: (_) {
-            WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-              await intrestController.memeCategoryApiCall();
-            });
+          initState: (_) async {
+            // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+            // });
+            await intrestController.memeCategoryApiCall();
           },
           builder: (intrestController) {
             return Padding(

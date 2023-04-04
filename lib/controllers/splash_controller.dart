@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialv/routes/route_helper.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 
 class SplashController extends GetxController {
   @override
   void onInit() {
+    getMode();
     Future.delayed(
       const Duration(seconds: 3),
       () => Get.offAllNamed(
@@ -17,5 +20,15 @@ class SplashController extends GetxController {
     );
 
     super.onInit();
+  }
+
+  getMode() {
+    ThemeMode _themeMode = ThemeMode.system;
+    logs("message:=====> $_themeMode");
+    // void changeTheme(ThemeMode themeMode) {
+    //   setState(() {
+    //     _themeMode = themeMode;
+    //   });
+    // }
   }
 }

@@ -12,15 +12,12 @@ import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/view/auth/login_screen.dart';
-import 'package:socialv/view/auth/otp_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 
 import 'commanWidget/noInternet_screen.dart';
-import 'view/auth/interest.dart';
-import 'view/sharePost/edit_profile.dart';
-import 'view/sharePost/share_post.dart';
+import 'view/drawer/setting.dart';
 import 'viewModel/auth_view_model.dart';
 
 Future<void> main() async {
@@ -79,7 +76,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return EditProfile();
+                      return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
                     }
@@ -100,6 +97,7 @@ class _MyAppState extends State<MyApp> {
   OtpController otpController = Get.put(OtpController());
   IntrestController intrest = Get.put(IntrestController());
   HomeController homeController = Get.put(HomeController());
+  SettingController settingController = Get.put(SettingController());
   BottomBarController bottomController = Get.put(BottomBarController());
 }
 

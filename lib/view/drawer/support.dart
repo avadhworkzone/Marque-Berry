@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
 
 class Support extends StatelessWidget {
   const Support({Key? key}) : super(key: key);
@@ -10,7 +14,10 @@ class Support extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: customAppbar('Support'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20.w),
+        child: CommonAppBar(title: VariableUtils.supportText),
+      ),
       body: Column(children: [
         Stack(
           children: [
@@ -39,18 +46,21 @@ class Support extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    AdoroText('Hi,Cheon Yeo Woon',
-                        fontSize: 20,
-                        color: ColorUtils.white,
-                        fontWeight: FontWeight.bold),
+                    AdoroText(
+                      'Hi,Cheon Yeo Woon',
+                      fontSize: 20,
+                      color: ColorUtils.white,
+                      fontWeight: FontWeightClass.fontWeightBold,
+                    ),
                     SizedBox(
                       height: 20,
                     ),
                     AdoroText(
-                        'Please fill this from,our team will reach out to you soon',
-                        fontSize: 17,
-                        color: ColorUtils.white,
-                        fontWeight: FontWeight.bold),
+                      'Please fill this from,our team will reach out to you soon',
+                      fontSize: 17,
+                      color: ColorUtils.white,
+                      fontWeight: FontWeightClass.fontWeightBold,
+                    ),
                   ],
                 ),
               ),
@@ -61,9 +71,10 @@ class Support extends StatelessWidget {
               right: 25,
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: ColorUtils.linearGradient5),
-                    color: Colors.white),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: ColorUtils.linearGradient5),
+                  color: ColorUtils.white,
+                ),
                 height: 350,
                 width: 300,
                 child: Padding(
@@ -75,16 +86,18 @@ class Support extends StatelessWidget {
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
-                            hintText: 'Fullname',
-                            hintStyle: TextStyle(color: ColorUtils.black92)),
+                          hintText: 'Fullname',
+                          hintStyle: TextStyle(color: ColorUtils.black92),
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
-                            hintText: 'E-mail',
-                            hintStyle: TextStyle(color: ColorUtils.black92)),
+                          hintText: 'E-mail',
+                          hintStyle: TextStyle(color: ColorUtils.black92),
+                        ),
                       ),
                       const SizedBox(
                         height: 30,
@@ -93,13 +106,17 @@ class Support extends StatelessWidget {
                         height: 150,
                         width: 200,
                         decoration: BoxDecoration(
-                            color: ColorUtils.white,
-                            border:
-                                Border.all(color: ColorUtils.linearGradient5)),
+                          color: ColorUtils.white,
+                          border: Border.all(
+                            color: ColorUtils.linearGradient5,
+                          ),
+                        ),
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: AdoroText('Your Message',
-                              color: ColorUtils.black92),
+                          child: AdoroText(
+                            'Your Message',
+                            color: ColorUtils.black92,
+                          ),
                         ),
                       )
                     ],
@@ -109,27 +126,32 @@ class Support extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        SizeConfig.sH2,
         InkWell(
           onTap: () {},
           child: Container(
             height: 40,
             width: 100,
             decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [
+              gradient: const LinearGradient(
+                colors: [
                   ColorUtils.linearGradient1,
                   ColorUtils.linearGradient6,
                   ColorUtils.linearGradient7,
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                borderRadius: BorderRadius.circular(30),
-                color: ColorUtils.linearGradient6),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(30),
+              color: ColorUtils.linearGradient6,
+            ),
             child: const Center(
-              child: AdoroText('Submit',
-                  fontSize: 17,
-                  color: ColorUtils.white,
-                  fontWeight: FontWeight.bold),
+              child: AdoroText(
+                'Submit',
+                fontSize: 17,
+                color: ColorUtils.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         )

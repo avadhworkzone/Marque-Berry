@@ -1,7 +1,13 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
 
 class ReferAndEarn extends StatelessWidget {
   const ReferAndEarn({Key? key}) : super(key: key);
@@ -10,7 +16,10 @@ class ReferAndEarn extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: customAppbar('Refer & Earn'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20.w),
+        child: CommonAppBar(title: VariableUtils.referEarnText),
+      ),
       body: Column(children: [
         Stack(
           children: [
@@ -60,9 +69,10 @@ class ReferAndEarn extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        blurRadius: 5,
-                        offset: const Offset(0, 5)),
+                      color: Colors.grey.withOpacity(0.5),
+                      blurRadius: 5,
+                      offset: const Offset(0, 5),
+                    ),
                   ],
                 ),
                 child: Column(
@@ -71,8 +81,10 @@ class ReferAndEarn extends StatelessWidget {
                     const Padding(
                       padding: EdgeInsets.only(left: 18.0, right: 18),
                       child: AdoroText(
-                          'Copy the link below & share it with your friends',
-                          textAlign: TextAlign.center),
+                        'Copy the link below & share it with your friends',
+                        color: ColorUtils.black,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     const SizedBox(
                       height: 15,
@@ -86,14 +98,35 @@ class ReferAndEarn extends StatelessWidget {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          // Image.asset(
-                          //   'assets/images/InterfaceLink.png',
-                          //   scale: 15,
-                          // ),
-                          Icon(Icons.link),
-                          AdoroText('https://www.webhood.net/'),
-                          Icon(Icons.shopping_bag_outlined)
+                        children: [
+                          SizeConfig.sW1,
+                          CommonImageScale(
+                            img: "assets/icons/link.png",
+                            scale: 1.2.w,
+                            color: ColorUtils.black,
+                          ),
+                          AdoroText(
+                            'https://www.webhood.net/',
+                            color: ColorUtils.black,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              FlutterClipboard.copy('https://www.webhood.net/')
+                                  .catchError((catchError) {})
+                                  .then((value) {
+                                showSnackBar(
+                                  message: "copied successfully",
+                                  snackbarSuccess: true,
+                                );
+                              });
+                            },
+                            child: CommonImageScale(
+                              img: "assets/icons/clipboard.png",
+                              scale: 1.5.w,
+                              color: ColorUtils.black,
+                            ),
+                          ),
+                          SizeConfig.sW2,
                         ],
                       ),
                     )

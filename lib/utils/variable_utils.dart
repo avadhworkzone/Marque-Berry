@@ -79,4 +79,14 @@ class VariableUtils {
   static const beneficiaryName = " Beneficiary Name";
   static const accountNumber = " Account Number";
   static const ifscCode = " IFSC Code";
+
+  /// DRAWER SCREEN
+  // static const note = " Note";
+  // static const notification = " Notification";
+  // static const result = "Results";
+  // static const referAndEarn = " Refer & Earn";
+  // static const settings = "settings";
+  // static const support = "Support";
+  // static const memeTemplate = "Meme Template";
+  // static const wallet = "Wallet";
 }
