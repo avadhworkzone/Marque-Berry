@@ -34,11 +34,29 @@ class EditProfile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.w, bottom: 5.w),
-                    child: Image(
-                        image: AssetImage("assets/images/profile.png"),
-                        height: 13.h),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.w, bottom: 5.w),
+                        child: Image(
+                            image: AssetImage("assets/images/profile.png"),
+                            height: 13.h),
+                      ),
+                      Positioned(
+                          left: 27.w,
+                          top: 14.w,
+                          child: Container(
+                            height: 4.h,
+                            width: 8.w,
+                            decoration: DecorationUtils.doneDecoration(context),
+                            child: Center(
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.edit, color: ColorUtils.white),
+                              ),
+                            ),
+                          )),
+                    ],
                   ),
                   Container(
                     height: 6.h,
