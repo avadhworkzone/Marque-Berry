@@ -89,4 +89,30 @@ class VariableUtils {
   // static const support = "Support";
   // static const memeTemplate = "Meme Template";
   // static const wallet = "Wallet";
+
+  static const note = " Note";
+
+  /// Refer & Earn
+
+  static const copiedSuccessfully = " copied successfully";
+  static const share = "Share";
+
+  /// Settings
+
+  static const notifications = "Notifications";
+  static const appTheme = "App Theme";
+  static const logout = "Logout";
+
+  /// Support
+  static const hiCheonYeoWoon = "Hi,Cheon Yeo Woon";
+  static const Email = "E-mail";
+  static const yourMessage = "Your Message";
+  static const submit = "Submit";
+
+  /// Wallet
+  static const deepanshuSarmandal = "Deepanshu Sarmandal";
+  static const youHaveEarned = "You have earned";
+  static const withdrawMoney = "Withdraw Money";
+  static const withdrawMinimumLimit = "Withdraw Minimum limit Rs. 100";
+  static const cashCoin = "1 Cash Coin = 1 Rs";
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
@@ -73,23 +74,23 @@ class ContestScreen extends StatelessWidget {
 
 Padding tabbarMethod(Size size, {required String title}) {
   return Padding(
-    padding: const EdgeInsets.only(left: 15.0, right: 15, top: 10),
+    padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 2.w),
     child: Container(
-      height: 230,
+      height: 31.h,
       width: size.width,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(5.w),
       ),
       child: Column(
         children: [
           ListTile(
             leading:
-                CircleAvatar(child: Image.asset('assets/images/brandName.png')),
+                CircleAvatar(child: Image.asset('assets/images/Profile1.png')),
             title: AdoroText(
               title,
               fontWeight: FontWeight.bold,
-              fontSize: 15,
+              fontSize: 12.sp,
             ),
             subtitle: const AdoroText(
               'Time Left : XX:YY',
@@ -97,18 +98,18 @@ Padding tabbarMethod(Size size, {required String title}) {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: EdgeInsets.symmetric(horizontal: 6.w),
             child: AdoroText(
               'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit...',
               color: ColorUtils.black92,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15, top: 10),
+            padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 4.w),
             child: Container(
-              height: 40,
+              height: 5.h,
               width: size.width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
                       ColorUtils.linearGradient1,
@@ -118,31 +119,31 @@ Padding tabbarMethod(Size size, {required String title}) {
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: const Center(
+                  borderRadius: BorderRadius.all(Radius.circular(3.w))),
+              child: Center(
                 child: AdoroText(
                   'APPLY NOW',
                   color: ColorUtils.white,
                   fontWeight: FontWeight.w500,
-                  fontSize: 15,
+                  fontSize: 12.sp,
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 10, right: 15),
+            padding: EdgeInsets.only(left: 5.w, top: 4.w, right: 5.w),
             child: Container(
               height: 40,
               width: size.width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   color: ColorUtils.greyFA,
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: const Center(
+                  borderRadius: BorderRadius.all(Radius.circular(3.w))),
+              child: Center(
                 child: AdoroText(
                   'KNOW MORE',
                   color: ColorUtils.black92,
                   fontWeight: FontWeight.w500,
-                  fontSize: 15,
+                  fontSize: 12.sp,
                 ),
               ),
             ),

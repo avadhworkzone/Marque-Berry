@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
 import '../../commanWidget/common_appbar.dart';
@@ -28,29 +29,27 @@ class DetailsScreen extends StatelessWidget {
             children: [
               ListTile(
                 leading: CircleAvatar(
-                    child: Image.asset('assets/images/brandName.png')),
-                title: const AdoroText(
+                    child: Image.asset('assets/images/Profile1.png')),
+                title: AdoroText(
                   'Brand Name',
-                  fontSize: 15,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
                 ),
-                subtitle: const AdoroText(
+                subtitle: AdoroText(
                   'Time Left : XX:YY',
                   color: ColorUtils.black92,
-                  fontSize: 15,
+                  fontSize: 12.sp,
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              SizeConfig.sH1,
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: ListView.builder(
                       itemCount: 7,
                       itemBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.all(3.0),
+                        return Padding(
+                          padding: EdgeInsets.all(1.w),
                           child: AdoroText(
                             'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequatduis enim velit mollit...',
                             color: ColorUtils.black92,
@@ -61,12 +60,11 @@ class DetailsScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 28.0, left: 15, right: 15),
+                padding: EdgeInsets.only(bottom: 5.w, left: 5.w, right: 5.w),
                 child: Container(
-                  height: 40,
+                  height: 6.h,
                   width: size.width,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
                           ColorUtils.linearGradient1,
@@ -76,13 +74,13 @@ class DetailsScreen extends StatelessWidget {
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: const Center(
+                      borderRadius: BorderRadius.all(Radius.circular(4.w))),
+                  child: Center(
                     child: AdoroText(
                       'APPLY NOW',
                       color: ColorUtils.white,
                       fontWeight: FontWeight.w500,
-                      fontSize: 15,
+                      fontSize: 12.sp,
                     ),
                   ),
                 ),
