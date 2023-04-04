@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
@@ -13,7 +14,10 @@ class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(VariableUtils.settingsText),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20.w),
+        child: CommonAppBar(title: VariableUtils.settingsText),
+      ),
       body: GetBuilder<SettingController>(builder: (settingController) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),

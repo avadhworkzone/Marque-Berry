@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/drawer/withdrawn_amount.dart';
 
 class Wallet extends StatelessWidget {
   const Wallet({Key? key}) : super(key: key);
@@ -46,29 +48,34 @@ class Wallet extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
             SizeConfig.sH2,
-            Container(
-              height: 50,
-              width: 200,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    ColorUtils.linearGradient1,
-                    ColorUtils.linearGradient6,
-                    ColorUtils.linearGradient7
-                  ],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
+            GestureDetector(
+              onTap: () {
+                Get.to(() => WithdrawlAmount());
+              },
+              child: Container(
+                height: 50,
+                width: 200,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      ColorUtils.linearGradient1,
+                      ColorUtils.linearGradient6,
+                      ColorUtils.linearGradient7
+                    ],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
                 ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
-              child: const Center(
-                child: AdoroText(
-                  'Withdraw Money',
-                  color: ColorUtils.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                child: const Center(
+                  child: AdoroText(
+                    'Withdraw Money',
+                    color: ColorUtils.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),

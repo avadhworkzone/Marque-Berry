@@ -7,7 +7,9 @@ import 'package:socialv/utils/tecell_text.dart';
 
 class CommonAppBar extends StatelessWidget {
   var title;
-  CommonAppBar({Key? key, this.title}) : super(key: key);
+
+  Color? color;
+  CommonAppBar({Key? key, this.title, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class CommonAppBar extends StatelessWidget {
     return AppBar(
       elevation: 0,
       centerTitle: true,
-      backgroundColor: whiteBlack,
+      backgroundColor: color ?? whiteBlack,
       leading: IconButton(
         splashRadius: 7.w,
         onPressed: () => Get.back(),
@@ -33,15 +35,25 @@ class CommonAppBar extends StatelessWidget {
   }
 }
 
-AppBar customAppbar(final String title) {
+AppBar customAppbar({required String title, Icon? icon}) {
   return AppBar(
-    elevation: 0,
     centerTitle: true,
+    elevation: 0,
     backgroundColor: ColorUtils.greyFA,
-    leading: IconButton(
-      onPressed: () => Get.back(),
-      icon: const Icon(Icons.arrow_back, color: ColorUtils.black2E),
+    title: AdoroText(
+      title,
+      fontSize: 18,
+      color: ColorUtils.black2E,
     ),
-    title: AdoroText(title, fontSize: 13.sp, color: ColorUtils.black2E),
+    leading: const Icon(
+      Icons.arrow_back,
+      color: ColorUtils.black2E,
+    ),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: icon,
+      ),
+    ],
   );
 }

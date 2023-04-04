@@ -90,10 +90,7 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                           child: Column(
                             children: [
                               Theme(
-                                data: ThemeData(
-                                    // accentColor: Colors.red,
-                                    // primaryColor: Colors.orange,
-                                    ),
+                                data: ThemeData(),
                                 child: PinCodeTextField(
                                   length: 6,
                                   controller: otp,
@@ -166,10 +163,21 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () async {
-                                    resendOTP(authViewModel: authViewModel);
+                                    if ((otpController.timer -
+                                            otpController.tick) ==
+                                        0) {
+                                      otpController.startTimer();
+                                      resendOTP(authViewModel: authViewModel);
+                                    }
                                   },
                                 text: ' ${VariableUtils.resendOTP}',
-                                style: TextStyle(color: ColorUtils.blueB9),
+                                style: TextStyle(
+                                  color: (otpController.timer -
+                                              otpController.tick) ==
+                                          0
+                                      ? ColorUtils.blueB9
+                                      : ColorUtils.greyFA,
+                                ),
                               ),
                             ],
                           ),
@@ -255,43 +263,43 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
     if (Get.arguments != null &&
         Get.arguments.containsKey('mobile') &&
         Get.arguments['mobile'] != "") {
-      if (Get.arguments['type'] == "login" &&
-          Get.arguments.containsKey('type')) {
-        loginReqModel.mobileNo = Get.arguments['mobile'];
-        await authViewModel.login(loginReqModel);
-        if (authViewModel.loginApiResponse.status == Status.COMPLETE) {
-          LoginResModel response = authViewModel.loginApiResponse.data;
+      loginReqModel.mobileNo = Get.arguments['mobile'];
+      await authViewModel.login(loginReqModel);
+      if (authViewModel.loginApiResponse.status == Status.COMPLETE) {
+        LoginResModel response = authViewModel.loginApiResponse.data;
 
-          if (response.status.toString() == "200") {
-            showSnackBar(
-              message: response.msg.toString(),
-            );
-          } else {
-            showSnackBar(
-              message: response.msg ?? VariableUtils.somethingWentWrong,
-            );
-          }
+        if (response.status.toString() == "200") {
+          showSnackBar(
+            message: response.msg.toString(),
+            snackbarSuccess: true,
+          );
+        } else {
+          showSnackBar(
+            message: response.msg ?? VariableUtils.somethingWentWrong,
+          );
         }
       }
-      if (Get.arguments['type'] == "register" &&
-          Get.arguments.containsKey('type')) {
-        registerReqModel.username = Get.arguments['username'];
-        registerReqModel.mobileNo = Get.arguments['mobile'];
-        await authViewModel.register(registerReqModel);
-        if (authViewModel.registerApiResponse.status == Status.COMPLETE) {
-          RegisterResModel response = authViewModel.registerApiResponse.data;
 
-          if (response.status.toString() == VariableUtils.status200) {
-            showSnackBar(
-              message: response.msg.toString(),
-            );
-          } else {
-            showSnackBar(
-              message: response.msg ?? VariableUtils.somethingWentWrong,
-            );
-          }
-        }
-      }
+      // if (Get.arguments['type'] == "register" &&
+      //     Get.arguments.containsKey('type')) {
+      //   registerReqModel.username = Get.arguments['username'];
+      //   registerReqModel.mobileNo = Get.arguments['mobile'];
+      //   await authViewModel.register(registerReqModel);
+      //   if (authViewModel.registerApiResponse.status == Status.COMPLETE) {
+      //     RegisterResModel response = authViewModel.registerApiResponse.data;
+      //
+      //     if (response.status.toString() == VariableUtils.status200) {
+      //       showSnackBar(
+      //         message: response.msg.toString(),
+      //         snackbarSuccess: true,
+      //       );
+      //     } else {
+      //       showSnackBar(
+      //         message: response.msg ?? VariableUtils.somethingWentWrong,
+      //       );
+      //     }
+      //   }
+      // }
     } else {
       logs("SOMETHING WRONG");
     }

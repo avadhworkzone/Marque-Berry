@@ -8,7 +8,6 @@ class BottomBarController extends GetxController {
 
   void pageChange(int index) {
     selectedIndex = index;
-    logs("INDEX======> $index");
     update();
   }
 }

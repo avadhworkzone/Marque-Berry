@@ -135,10 +135,10 @@ class EditTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-          hintText: hintText,
-          hintStyle: hintStyle),
+        border: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+        hintText: hintText,
+        hintStyle: hintStyle,
+      ),
     );
   }
 }

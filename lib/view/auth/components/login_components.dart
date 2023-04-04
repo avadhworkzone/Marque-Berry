@@ -69,9 +69,10 @@ class LoginComponents extends StatelessWidget {
                     LoginResModel response =
                         authViewModel.loginApiResponse.data;
 
-                    if (response.status.toString() == "200") {
+                    if (response.status.toString() == VariableUtils.status200) {
                       showSnackBar(
                         message: response.msg.toString(),
+                        snackbarSuccess: true,
                       );
                       Get.toNamed(
                         RouteHelper.getValidateOTPRoute(),

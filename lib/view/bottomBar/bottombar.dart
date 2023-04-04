@@ -9,12 +9,15 @@ import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
+
+import '../sharePost/share_post.dart';
 
 class BottomBar extends StatelessWidget {
   BottomBar({super.key});
 
-  List pageRoute = [Home(), Home(), Home(), const Profile()];
+  List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +148,9 @@ class BottomBar extends StatelessWidget {
       child: CommonImageScale(
         img: img,
         scale: scale,
-        color: Theme.of(context).textTheme.titleSmall!.color,
+        color: controller.selectedIndex == index
+            ? Theme.of(context).buttonColor
+            : Colors.grey,
       ),
     );
   }

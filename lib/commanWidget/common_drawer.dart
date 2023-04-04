@@ -15,6 +15,7 @@ import 'package:socialv/view/drawer/setting.dart';
 import 'package:socialv/view/drawer/support.dart';
 import 'package:socialv/view/drawer/template.dart';
 import 'package:socialv/view/drawer/wallet.dart';
+import 'package:socialv/view/profile/edit_profile.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class MyDrawer extends StatelessWidget {
                 ),
               ),
               ListTile(
+                onTap: () => Get.to(() => EditProfile()),
                 leading: CircleAvatar(
                   radius: 10.w,
                   backgroundColor: Colors.grey[400],

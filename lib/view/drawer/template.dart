@@ -26,7 +26,7 @@ class Template extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(20.w),
+        preferredSize: Size.fromHeight(15.w),
         child: CommonAppBar(title: VariableUtils.templateText),
       ),
       body: Padding(

@@ -1,22 +1,26 @@
 import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:socialv/controllers/intrest_controller.dart';
-import 'package:socialv/controllers/login_controller.dart';
-import 'package:socialv/controllers/validate_otp_controller.dart';
-import 'package:socialv/routes/route_helper.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/routes/route_constant.dart';
 import 'package:socialv/view/auth/login_screen.dart';
+import 'package:socialv/view/home/comments.dart';
 import 'package:socialv/view/home/home.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/routes/route_helper.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:socialv/view/profile/profile1_screen.dart';
+import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
+import 'package:socialv/controllers/login_controller.dart';
+import 'package:socialv/controllers/intrest_controller.dart';
+import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
-
+import 'package:socialv/controllers/validate_otp_controller.dart';
 import 'commanWidget/noInternet_screen.dart';
+
 import 'view/drawer/setting.dart';
 import 'viewModel/auth_view_model.dart';
 
@@ -61,7 +65,7 @@ class _MyAppState extends State<MyApp> {
           stream: isLightTheme.stream,
           builder: (context, AsyncSnapshot snapshot) {
             return GetMaterialApp(
-              theme: AppTheme.darkTheme,
+              theme: AppTheme.lightTheme,
               // PreferenceUtils.getLightMode() == "light"
               //     ? AppTheme.darkTheme
               //     : AppTheme.lightTheme,
@@ -69,7 +73,7 @@ class _MyAppState extends State<MyApp> {
               navigatorKey: Get.key,
               getPages: RouteHelper.routes,
               debugShowCheckedModeBanner: false,
-              // initialRoute: RouteConstant.inital,
+              initialRoute: RouteConstant.inital,
               smartManagement: SmartManagement.full,
               home: GetBuilder<ConnectivityViewModel>(
                 init: ConnectivityViewModel(),
@@ -109,10 +113,11 @@ class AppTheme {
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),
-    appBarTheme: const AppBarTheme(
-      brightness: Brightness.light,
-      iconTheme: IconThemeData(color: ColorUtils.black),
-    ),
+    // appBarTheme: const AppBarTheme(
+    //   brightness: Brightness.light,
+    //   iconTheme: IconThemeData(color: ColorUtils.black),
+    // ),
+    buttonColor: Colors.black,
     colorScheme: const ColorScheme.light(
       primary: ColorUtils.white,
       onPrimary: ColorUtils.white,
@@ -136,14 +141,15 @@ class AppTheme {
     // useMaterial3: true,
     fontFamily: 'Poppins',
     cardColor: ColorUtils.black2E,
+    buttonColor: Colors.white,
     scaffoldBackgroundColor: ColorUtils.black2E,
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),
-    appBarTheme: const AppBarTheme(
-      brightness: Brightness.light,
-      iconTheme: IconThemeData(color: ColorUtils.black),
-    ),
+    // appBarTheme: const AppBarTheme(
+    //   brightness: Brightness.light,
+    //   iconTheme: IconThemeData(color: ColorUtils.black),
+    // ),
     colorScheme: const ColorScheme.light(
       primary: ColorUtils.white,
       onPrimary: ColorUtils.white,

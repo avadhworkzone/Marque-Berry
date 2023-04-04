@@ -96,6 +96,7 @@ class RegisterComponents extends StatelessWidget {
                     if (response.status.toString() == VariableUtils.status200) {
                       showSnackBar(
                         message: response.msg.toString(),
+                        snackbarSuccess: true,
                       );
                       Get.toNamed(
                         RouteHelper.getValidateOTPRoute(),

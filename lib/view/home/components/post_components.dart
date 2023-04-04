@@ -7,6 +7,7 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/view/home/comments.dart';
 
 class PostComponents extends StatelessWidget {
   const PostComponents({Key? key}) : super(key: key);
@@ -87,10 +88,16 @@ class PostComponents extends StatelessWidget {
                           color: Theme.of(context).textTheme.titleMedium?.color,
                         ),
                         SizeConfig.sW2,
-                        CommonImageScale(
-                          img: IconsWidgets.chatImage,
-                          scale: 0.8.w,
-                          color: Theme.of(context).textTheme.titleMedium?.color,
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => Comments());
+                          },
+                          child: CommonImageScale(
+                            img: IconsWidgets.chatImage,
+                            scale: 0.8.w,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
+                          ),
                         ),
                         SizeConfig.sW2,
                         CommonImageScale(
