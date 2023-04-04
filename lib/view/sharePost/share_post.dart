@@ -55,7 +55,7 @@ class _SharePostState extends State<SharePost> {
                 SizeConfig.sW18,
                 Container(
                   height: 5.h,
-                  width: 25.w,
+                  width: 30.w,
                   decoration: DecorationUtils.welcomeDecoration(context),
                   child: TextButton(
                     onPressed: () {},
@@ -80,6 +80,7 @@ class _SharePostState extends State<SharePost> {
                         color: Theme.of(context).textTheme.titleSmall?.color,
                         fontSize: 15.sp,
                         fontWeight: FontWeightClass.fontWeightBold),
+                    SizeConfig.sH1,
                     Container(
                       height: 4.h,
                       width: 35.w,
@@ -132,6 +133,7 @@ class _SharePostState extends State<SharePost> {
               minLines: 6,
               maxLines: null,
               keyboardType: TextInputType.multiline,
+              color: ColorUtils.note,
               suffixIcon: Padding(
                 padding: EdgeInsets.only(
                   bottom: 35.w,
@@ -153,85 +155,91 @@ class _SharePostState extends State<SharePost> {
                 ),
               ),
             ),
-            SizeConfig.sH9,
-            Divider(
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                thickness: 2),
-            Row(
-              children: [
-                Icon(
-                  Icons.photo,
-                  color: Theme.of(context).textTheme.titleSmall?.color,
-                ),
-                AdoroText(VariableUtils.uploadAPhoto,
-                    color: Theme.of(context).textTheme.titleSmall?.color,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeightClass.fontWeight600),
-              ],
-            ),
-            Divider(
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                thickness: 2),
-            Row(
-              children: [
-                Icon(
-                  Icons.ondemand_video_sharp,
-                  color: Theme.of(context).textTheme.titleSmall?.color,
-                ),
-                AdoroText(VariableUtils.uploadAVideo,
-                    color: Theme.of(context).textTheme.titleSmall?.color,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeightClass.fontWeight600),
-              ],
-            ),
-            Divider(
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                thickness: 2),
-            Row(
-              children: [
-                Icon(
-                  Icons.gif_box,
-                  color: Theme.of(context).textTheme.titleSmall?.color,
-                ),
-                AdoroText(VariableUtils.uploadAGIF,
-                    color: Theme.of(context).textTheme.titleSmall?.color,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeightClass.fontWeight600),
-              ],
-            ),
-            Divider(
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                thickness: 2),
-            Row(
-              children: [
-                Icon(
-                  Icons.tag_faces,
-                  color: Theme.of(context).textTheme.titleSmall?.color,
-                ),
-                AdoroText(VariableUtils.chooseATemplate,
-                    color: Theme.of(context).textTheme.titleSmall?.color,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeightClass.fontWeight600),
-              ],
-            ),
-            Divider(
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                thickness: 2),
-            Row(
-              children: [
-                Icon(
-                  Icons.person_add_alt_sharp,
-                  color: Theme.of(context).textTheme.titleSmall?.color,
-                ),
-                AdoroText(VariableUtils.tagAFriend,
-                    color: Theme.of(context).textTheme.titleSmall?.color,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeightClass.fontWeight600),
-              ],
-            ),
+            SizeConfig.sH10,
+            UploadPhoto()
           ],
         ),
       ),
+    );
+  }
+}
+
+class UploadPhoto extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Divider(
+            color: Theme.of(context).textTheme.titleSmall?.color, thickness: 1),
+        Row(
+          children: [
+            Icon(
+              Icons.photo_outlined,
+              color: Theme.of(context).textTheme.titleSmall?.color,
+            ),
+            AdoroText(VariableUtils.uploadAPhoto,
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                fontSize: 11.sp,
+                fontWeight: FontWeightClass.fontWeight600),
+          ],
+        ),
+        Divider(
+            color: Theme.of(context).textTheme.titleSmall?.color, thickness: 1),
+        Row(
+          children: [
+            Icon(
+              Icons.ondemand_video_sharp,
+              color: Theme.of(context).textTheme.titleSmall?.color,
+            ),
+            AdoroText(VariableUtils.uploadAVideo,
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                fontSize: 11.sp,
+                fontWeight: FontWeightClass.fontWeight600),
+          ],
+        ),
+        Divider(
+            color: Theme.of(context).textTheme.titleSmall?.color, thickness: 1),
+        Row(
+          children: [
+            Icon(
+              Icons.gif_box,
+              color: Theme.of(context).textTheme.titleSmall?.color,
+            ),
+            AdoroText(VariableUtils.uploadAGIF,
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                fontSize: 11.sp,
+                fontWeight: FontWeightClass.fontWeight600),
+          ],
+        ),
+        Divider(
+            color: Theme.of(context).textTheme.titleSmall?.color, thickness: 1),
+        Row(
+          children: [
+            Icon(
+              Icons.tag_faces,
+              color: Theme.of(context).textTheme.titleSmall?.color,
+            ),
+            AdoroText(VariableUtils.chooseATemplate,
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                fontSize: 11.sp,
+                fontWeight: FontWeightClass.fontWeight600),
+          ],
+        ),
+        Divider(
+            color: Theme.of(context).textTheme.titleSmall?.color, thickness: 1),
+        Row(
+          children: [
+            Icon(
+              Icons.person_add_alt_sharp,
+              color: Theme.of(context).textTheme.titleSmall?.color,
+            ),
+            AdoroText(VariableUtils.tagAFriend,
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                fontSize: 11.sp,
+                fontWeight: FontWeightClass.fontWeight600),
+          ],
+        ),
+      ],
     );
   }
 }

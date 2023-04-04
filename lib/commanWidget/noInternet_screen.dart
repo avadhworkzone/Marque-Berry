@@ -23,20 +23,37 @@ class NoInterNetConnected extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 60.w,
-                child: OverflowBox(
-                  maxHeight: 60.w,
-                  minHeight: 60.w,
-                  child: Center(child: LottieWidgts.nointernet),
+              // SizedBox(
+              //   height: 60.w,
+              //   child: OverflowBox(
+              //     maxHeight: 60.w,
+              //     minHeight: 60.w,
+              //     child: Center(child: LottieWidgts.nointernet),
+              //   ),
+              // ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                child: AdoroText(
+                  VariableUtils.noInternetTitle,
+                  fontSize: 15.sp,
+                  textAlign: TextAlign.center,
+
+                  color: Colors.green,
+                  // color: Theme.of(context).textTheme.titleSmall?.color,
+                  fontWeight: FontWeightClass.fontWeightBold,
                 ),
               ),
-              SizeConfig.sH3,
-              AdoroText(
-                VariableUtils.noInternetText,
-                fontSize: 12.sp,
-                textAlign: TextAlign.center,
-                fontWeight: FontWeightClass.fontWeightBold,
+              SizeConfig.sH10,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: AdoroText(
+                  VariableUtils.pleaseChecksubtitle,
+                  fontSize: 15.sp,
+                  textAlign: TextAlign.center,
+                  color: Colors.red,
+                  // color: Theme.of(context).textTheme.titleSmall?.color,
+                  fontWeight: FontWeightClass.fontWeightBold,
+                ),
               )
             ],
           ),

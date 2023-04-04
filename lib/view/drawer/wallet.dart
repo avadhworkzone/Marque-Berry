@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -6,79 +8,111 @@ import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 
+import '../../commanWidget/noInternet_screen.dart';
+import '../../viewModel/connectivity_view_model.dart';
+
 class Wallet extends StatelessWidget {
-  const Wallet({Key? key}) : super(key: key);
+  Wallet({Key? key}) : super(key: key);
+  ConnectivityViewModel connectivityViewModel =
+      Get.find<ConnectivityViewModel>();
 
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(20.w),
-        child: CommonAppBar(title: VariableUtils.walletText),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            SizeConfig.sH3,
-            AdoroText(
-              'Deepanshu Sarmandal',
-              fontSize: 13.sp,
-            ),
-            SizeConfig.sH2,
-            CircleAvatar(
-              radius: 15.w,
-              backgroundImage: const AssetImage('assets/images/circle.png'),
-              child: Image.asset('assets/images/profile.png', scale: 2.3),
-            ),
-            SizeConfig.sH2,
-            AdoroText(
-              'You have earned',
-              // color: blackWhite,
-              fontSize: 12.sp,
-            ),
-            SizeConfig.sH1,
-            const AdoroText(
-              '75.5C',
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-            SizeConfig.sH2,
-            Container(
-              height: 50,
-              width: 200,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    ColorUtils.linearGradient1,
-                    ColorUtils.linearGradient6,
-                    ColorUtils.linearGradient7
+    return GetBuilder<ConnectivityViewModel>(
+      init: ConnectivityViewModel(),
+      initState: (_) {
+        connectivityViewModel.startMonitoring();
+      },
+      builder: (connectivityViewModel) {
+        if (connectivityViewModel.isOnline != null) {
+          if (connectivityViewModel.isOnline!) {
+            return Scaffold(
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(16.w),
+                child: CommonAppBar(title: VariableUtils.walletText),
+              ),
+              body: Center(
+                child: Column(
+                  children: [
+                    SizeConfig.sH3,
+                    AdoroText(
+                      VariableUtils.deepanshuSarmandal,
+                      fontSize: 14.sp,
+                    ),
+                    SizeConfig.sH2,
+                    CircleAvatar(
+                      radius: 15.w,
+                      backgroundImage:
+                          const AssetImage('assets/images/circle.png'),
+                      child:
+                          Image.asset('assets/images/profile.png', scale: 2.3),
+                    ),
+                    SizeConfig.sH2,
+                    AdoroText(
+                      VariableUtils.youHaveEarned,
+                      color: blackWhite,
+                      fontWeight: FontWeight.bold,
+                      // color: blackWhite,
+                      fontSize: 12.sp,
+                    ),
+                    SizeConfig.sH1,
+                    AdoroText(
+                      '75.5C',
+                      color: blackWhite,
+                      fontSize: 30.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    SizeConfig.sH2,
+                    Container(
+                      height: 7.h,
+                      width: 60.w,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            ColorUtils.linearGradient1,
+                            ColorUtils.linearGradient6,
+                            ColorUtils.linearGradient7
+                          ],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8.w),
+                        ),
+                      ),
+                      child: Center(
+                        child: AdoroText(
+                          VariableUtils.youHaveEarned,
+                          color: ColorUtils.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                    ),
+                    SizeConfig.sH3,
+                    AdoroText(
+                      VariableUtils.withdrawMinimumLimit,
+                      color: blackWhite,
+                    ),
+                    SizeConfig.sH1,
+                    AdoroText(
+                      VariableUtils.cashCoin,
+                      color: blackWhite,
+                    ),
                   ],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
                 ),
               ),
-              child: const Center(
-                child: AdoroText(
-                  'Withdraw Money',
-                  color: ColorUtils.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            SizeConfig.sH2,
-            const AdoroText('Withdraw Minimum limit Rs. 100 '),
-            SizeConfig.sH1,
-            const AdoroText('1 Cash Coin = 1 Rs '),
-          ],
-        ),
-      ),
+            );
+          } else {
+            return const NoInterNetConnected();
+          }
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }
