@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
 
 class TemplateModel {
   final String title;
@@ -22,7 +25,10 @@ class Template extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar('Meme Template'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20.w),
+        child: CommonAppBar(title: VariableUtils.templateText),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: GridView(
@@ -41,16 +47,10 @@ class Template extends StatelessWidget {
                       backgroundImage: const AssetImage(
                         'assets/images/background.png',
                       ),
-                      child: Image.asset(
-                        e.image,
-                        scale: 1.9,
-                      ),
+                      child: Image.asset(e.image, scale: 1.9),
                     ),
                     Spacer(),
-                    Text(
-                      e.title,
-                      style: const TextStyle(color: ColorUtils.black92),
-                    ),
+                    AdoroText(e.title),
                   ],
                 ),
               )

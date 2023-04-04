@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
 
 class Result extends StatelessWidget {
   const Result({Key? key}) : super(key: key);
@@ -9,7 +12,10 @@ class Result extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar('Results'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20.w),
+        child: CommonAppBar(title: VariableUtils.resultText),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -21,16 +27,16 @@ class Result extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AdoroText("• ",
-                            color: index == 0
-                                ? ColorUtils.grey
-                                : ColorUtils.result,
-                            fontSize: 30),
-                        const SizedBox(
-                          width: 10,
+                        AdoroText(
+                          "•",
+                          color:
+                              index == 0 ? ColorUtils.grey : ColorUtils.result,
+                          fontSize: 10.w,
                         ),
+                        SizeConfig.sW5,
                         const Expanded(
                           child: AdoroText(
                             'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',

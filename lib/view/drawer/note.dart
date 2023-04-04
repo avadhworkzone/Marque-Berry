@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
@@ -15,7 +16,10 @@ class Note extends StatelessWidget {
 
   Scaffold _bulidBody() {
     return Scaffold(
-      appBar: customAppbar('Note'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20.w),
+        child: CommonAppBar(title: 'Note'),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
@@ -30,9 +34,10 @@ class Note extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: AdoroText(
-                        'fghssk shjskdkdddjkh dksshjdjkk gfhdjjs hdhdj sjjsjs jhsjsjs hsjsj ythjfui hdjdj dyddidu yduud',
-                        color: ColorUtils.black92,
-                        fontSize: 15),
+                      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+                      color: ColorUtils.black92,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
               ],
