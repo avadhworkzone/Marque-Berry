@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
           stream: isLightTheme.stream,
           builder: (context, AsyncSnapshot snapshot) {
             return GetMaterialApp(
-              theme: AppTheme.lightTheme,
+              theme: AppTheme.darkTheme,
               // PreferenceUtils.getLightMode() == "light"
               //     ? AppTheme.darkTheme
               //     : AppTheme.lightTheme,
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return LoginScreen();
+                      return EditProfile();
                     } else {
                       return const NoInterNetConnected();
                     }
