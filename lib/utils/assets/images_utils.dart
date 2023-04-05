@@ -35,6 +35,7 @@ class IconsWidgets {
   //     Image.asset('$iconsbasePath/plug.png', scale: 2.5.w);
 
   static String imageNotFoundImages = '$iconsbasePath/image_not_found.png';
+  // static String userImages = '$iconsbasePath/user.png';
 
   ///APPBAR HOME
   static String drawerImage = '$iconsbasePath/drawer.png';
@@ -42,6 +43,7 @@ class IconsWidgets {
   static String searchImage = '$iconsbasePath/search.png';
 
   static String heartImage = '$iconsbasePath/heart.png';
+  static String heartFilledImage = '$iconsbasePath/heart_filled.png';
   static String chatImage = '$iconsbasePath/chat.png';
   static String sendImage = '$iconsbasePath/send.png';
 

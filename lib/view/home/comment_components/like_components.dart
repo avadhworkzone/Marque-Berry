@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
@@ -28,10 +29,10 @@ class LikeButton extends StatelessWidget {
             CommonImageScale(
               img: IconsWidgets.heartImage,
               scale: 1.3.w,
-              color: Theme.of(context).textTheme.titleMedium?.color,
+              color: ColorUtils.black92,
             ),
             SizeConfig.sW2,
-            AdoroText('$likecounter'),
+            AdoroText('$likecounter', color: ColorUtils.black92),
           ],
         ),
       ),

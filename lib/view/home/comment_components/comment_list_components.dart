@@ -32,6 +32,7 @@ class CommentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5.w),
       child: Container(
@@ -42,22 +43,20 @@ class CommentList extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
                 radius: replayData == false ? 8.w : 6.w,
-                backgroundImage: AssetImage(
-                  img,
-                ),
+                backgroundImage: AssetImage(img),
               ),
               title: AdoroText(
                 "$name",
                 maxLines: 1,
                 fontSize: 13.sp,
-                color: ColorUtils.black,
                 overflow: TextOverflow.ellipsis,
                 fontWeight: FontWeightClass.fontWeight700,
+                color: blackWhite,
               ),
               trailing: AdoroText(
                 "$time",
                 fontSize: 10.sp,
-                color: ColorUtils.black92,
+                color: Theme.of(context).textTheme.titleMedium?.color,
               ),
             ),
             SizeConfig.sH1,

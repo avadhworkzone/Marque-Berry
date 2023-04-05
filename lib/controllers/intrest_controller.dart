@@ -5,7 +5,7 @@ import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 
-class IntrestController extends GetxController {
+class InterestController extends GetxController {
   List selectedIndex = [];
 
   addIndex(index) {

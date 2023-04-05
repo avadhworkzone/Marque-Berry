@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -14,7 +15,7 @@ class EnterOtpScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
-        child: CommonAppBar(title: ''),
+        child: CommonAppBar(title: '', ontap: () => Get.back()),
       ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.center,

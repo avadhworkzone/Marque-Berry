@@ -12,6 +12,7 @@ class FansScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: customAppbar(
+        context: context,
         title: 'Fans',
         icon: const Icon(
           Icons.search_rounded,

@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 class PreferenceUtils {
   static GetStorage getStorage = GetStorage();
 
+  static String system = 'system';
   static String mode = 'mode';
   static String login = 'login';
   static String welcome = 'welcome';

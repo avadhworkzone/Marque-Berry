@@ -34,7 +34,9 @@ class ReferAndEarn extends StatelessWidget {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
-                child: CommonAppBar(title: VariableUtils.referEarnText),
+                child: CommonAppBar(
+                    title: VariableUtils.referEarnText,
+                    ontap: () => Get.back()),
               ),
               body: Column(children: [
                 Stack(
@@ -64,8 +66,8 @@ class ReferAndEarn extends StatelessWidget {
                           SizeConfig.sH2,
                           AdoroText(
                             VariableUtils.referEarnText,
-                            color: ColorUtils.white,
                             fontSize: 23.sp,
+                            color: ColorUtils.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ],

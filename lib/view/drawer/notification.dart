@@ -31,7 +31,10 @@ class NotificationScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(16.w),
-                  child: CommonAppBar(title: VariableUtils.notificationText),
+                  child: CommonAppBar(
+                    title: VariableUtils.notificationText,
+                    ontap: () => Get.back(),
+                  ),
                 ),
                 body: Padding(
                   padding: EdgeInsets.all(4.w),
@@ -50,7 +53,7 @@ class NotificationScreen extends StatelessWidget {
                                     "•",
                                     color: index == 0
                                         ? ColorUtils.grey
-                                        : ColorUtils.black2E,
+                                        : ColorUtils.result,
                                     fontSize: 20.sp,
                                   ),
                                   SizeConfig.sW5,

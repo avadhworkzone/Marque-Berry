@@ -7,13 +7,13 @@ class VariableUtils {
   /// API DATA
   static const status200 = '200';
   static const status500 = '500';
-  static const tryAfterSomeTime = 'tryAfterSomeTime';
-  static const somethingWentWrong = "somethingWentWrong";
+  static const tryAfterSomeTime = 'Try after some times..';
+  static const somethingWentWrong = "Something went wrong";
   static const noDataFound = "No data found";
   static const serverError = "Server error";
 
   ///
-  static const noInternetText = "noInternetText";
+  static const noInternetText = "Please check your internet \nconnection";
 
   ///  VIREN VAR ///
   ///DRAWER

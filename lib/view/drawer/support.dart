@@ -32,7 +32,8 @@ class Support extends StatelessWidget {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
-                child: CommonAppBar(title: VariableUtils.supportText),
+                child: CommonAppBar(
+                    title: VariableUtils.supportText, ontap: () => Get.back()),
               ),
               body: Column(children: [
                 Stack(

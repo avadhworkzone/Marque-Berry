@@ -23,7 +23,7 @@ class InterestScreen extends StatelessWidget {
   InterestScreen({Key? key}) : super(key: key);
 
   AuthViewModel authViewModel = Get.find<AuthViewModel>();
-  IntrestController intrestController = Get.find<IntrestController>();
+  InterestController interestController = Get.find<InterestController>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,12 @@ class InterestScreen extends StatelessWidget {
 
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: GetBuilder<IntrestController>(
-          init: IntrestController(),
+      child: GetBuilder<InterestController>(
+          init: InterestController(),
           initState: (_) async {
-            // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-            // });
-            await intrestController.memeCategoryApiCall();
+            await interestController.memeCategoryApiCall();
           },
-          builder: (intrestController) {
+          builder: (interestController) {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w),
               child: Column(
@@ -85,7 +83,7 @@ class InterestScreen extends StatelessWidget {
                           MemeCategoryResModel memeResponse =
                               authViewModel.memeCategoryApiResponse.data;
                           return InkWell(
-                            onTap: () => intrestController.addIndex(index),
+                            onTap: () => interestController.addIndex(index),
                             child: Stack(
                               children: [
                                 ClipRRect(
@@ -170,7 +168,7 @@ class InterestScreen extends StatelessWidget {
                                     // ),
                                   ),
                                 ),
-                                if (intrestController.selectedIndex
+                                if (interestController.selectedIndex
                                         .contains(index) ==
                                     true)
                                   Container(
@@ -193,7 +191,7 @@ class InterestScreen extends StatelessWidget {
                   ),
                   SizeConfig.sH2,
                   Center(
-                    child: intrestController.selectedIndex.length < 5
+                    child: interestController.selectedIndex.length < 5
                         ? CustomBtn(
                             onTap: null,
                             text: 'DONE',

@@ -10,4 +10,5 @@ abstract class BaseService {
   final String registerURL = 'signup';
   final String validateOTPURL = 'validateOTP';
   final String memeCategoriesURL = 'meme_categories';
+  final String feedCategoryURL = 'feed?category=';
 }

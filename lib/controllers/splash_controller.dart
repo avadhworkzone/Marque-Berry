@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -22,13 +23,13 @@ class SplashController extends GetxController {
     super.onInit();
   }
 
-  getMode() {
-    ThemeMode _themeMode = ThemeMode.system;
-    logs("message:=====> $_themeMode");
-    // void changeTheme(ThemeMode themeMode) {
-    //   setState(() {
-    //     _themeMode = themeMode;
-    //   });
-    // }
+  getMode() async {
+    if (PreferenceUtils.getInt(key: PreferenceUtils.system) == 0) {
+      var brightness = SchedulerBinding.instance.window.platformBrightness;
+      await PreferenceUtils.setString(
+        key: PreferenceUtils.mode,
+        value: brightness.name,
+      );
+    }
   }
 }

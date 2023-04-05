@@ -21,118 +21,116 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: GetBuilder<ConnectivityViewModel>(
-        init: ConnectivityViewModel(),
-        builder: (connectivityViewModel) {
-          if (connectivityViewModel.isOnline != null) {
-            if (connectivityViewModel.isOnline!) {
-              return GetBuilder<BottomBarController>(
-                init: BottomBarController(),
-                initState: (_) {},
-                builder: (bottomBarController) {
-                  return Scaffold(
-                    body: pageRoute[bottomBarController.selectedIndex],
-                    bottomNavigationBar: Container(
-                      height: 16.w,
-                      width: Get.width,
-                      decoration: BoxDecoration(
+    return GetBuilder<ConnectivityViewModel>(
+      init: ConnectivityViewModel(),
+      builder: (connectivityViewModel) {
+        if (connectivityViewModel.isOnline != null) {
+          if (connectivityViewModel.isOnline!) {
+            return GetBuilder<BottomBarController>(
+              init: BottomBarController(),
+              initState: (_) {},
+              builder: (bottomBarController) {
+                return Scaffold(
+                  body: pageRoute[bottomBarController.selectedIndex],
+                  bottomNavigationBar: Container(
+                    height: 16.w,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorUtils.black.withOpacity(0.5),
+                          blurRadius: 2.0,
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 13.w),
+                      child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: ColorUtils.black.withOpacity(0.5),
-                            blurRadius: 2.0,
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 13.w),
-                        child: Container(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          child: Row(
-                            children: [
-                              bottombarIcon(
-                                index: 0,
-                                img: IconsWidgets.homeImages,
-                                scale: 1.2.w,
-                                context: context,
-                                controller: bottomBarController,
-                              ),
-                              const Spacer(),
-                              bottombarIcon(
-                                index: 1,
-                                scale: 1.w,
-                                context: context,
-                                img: IconsWidgets.plusCircleImages,
-                                controller: bottomBarController,
-                              ),
-                              const Spacer(),
-                              bottombarIcon(
-                                index: 2,
-                                scale: 1.w,
-                                context: context,
-                                controller: bottomBarController,
-                                img: IconsWidgets.medalLightImages,
-                              ),
-                              const Spacer(),
-                              bottombarIcon(
-                                index: 3,
-                                scale: 1.w,
-                                context: context,
-                                img: IconsWidgets.userImages,
-                                controller: bottomBarController,
-                              ),
-                              // InkWell(
-                              //   onTap: () => bottomBarController.pageChange(1),
-                              //   child: CommonImageScale(
-                              //     img: IconsWidgets.plusCircleImages,
-                              //     scale: 1.w,
-                              //     color: Theme.of(context)
-                              //         .textTheme
-                              //         .titleSmall!
-                              //         .color,
-                              //   ),
-                              // ),
-                              // const Spacer(),
-                              // InkWell(
-                              //   onTap: () => bottomBarController.pageChange(2),
-                              //   child: CommonImageScale(
-                              //     img: IconsWidgets.medalLightImages,
-                              //     scale: 1.w,
-                              //     color: Theme.of(context)
-                              //         .textTheme
-                              //         .titleSmall!
-                              //         .color,
-                              //   ),
-                              // ),
-                              // const Spacer(),
-                              // InkWell(
-                              //   onTap: () => bottomBarController.pageChange(3),
-                              //   child: CommonImageScale(
-                              //     img: IconsWidgets.userImages,
-                              //     scale: 1.w,
-                              //     color: Theme.of(context)
-                              //         .textTheme
-                              //         .titleSmall!
-                              //         .color,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            bottombarIcon(
+                              index: 0,
+                              img: IconsWidgets.homeImages,
+                              scale: 1.2.w,
+                              context: context,
+                              controller: bottomBarController,
+                            ),
+                            const Spacer(),
+                            bottombarIcon(
+                              index: 1,
+                              scale: 1.w,
+                              context: context,
+                              img: IconsWidgets.plusCircleImages,
+                              controller: bottomBarController,
+                            ),
+                            const Spacer(),
+                            bottombarIcon(
+                              index: 2,
+                              scale: 1.w,
+                              context: context,
+                              controller: bottomBarController,
+                              img: IconsWidgets.medalLightImages,
+                            ),
+                            const Spacer(),
+                            bottombarIcon(
+                              index: 3,
+                              scale: 1.w,
+                              context: context,
+                              img: IconsWidgets.userImages,
+                              controller: bottomBarController,
+                            ),
+                            // InkWell(
+                            //   onTap: () => bottomBarController.pageChange(1),
+                            //   child: CommonImageScale(
+                            //     img: IconsWidgets.plusCircleImages,
+                            //     scale: 1.w,
+                            //     color: Theme.of(context)
+                            //         .textTheme
+                            //         .titleSmall!
+                            //         .color,
+                            //   ),
+                            // ),
+                            // const Spacer(),
+                            // InkWell(
+                            //   onTap: () => bottomBarController.pageChange(2),
+                            //   child: CommonImageScale(
+                            //     img: IconsWidgets.medalLightImages,
+                            //     scale: 1.w,
+                            //     color: Theme.of(context)
+                            //         .textTheme
+                            //         .titleSmall!
+                            //         .color,
+                            //   ),
+                            // ),
+                            // const Spacer(),
+                            // InkWell(
+                            //   onTap: () => bottomBarController.pageChange(3),
+                            //   child: CommonImageScale(
+                            //     img: IconsWidgets.userImages,
+                            //     scale: 1.w,
+                            //     color: Theme.of(context)
+                            //         .textTheme
+                            //         .titleSmall!
+                            //         .color,
+                            //   ),
+                            // ),
+                          ],
                         ),
                       ),
                     ),
-                  );
-                },
-              );
-            } else {
-              return const NoInterNetConnected();
-            }
+                  ),
+                );
+              },
+            );
           } else {
-            return const SizedBox();
+            return const NoInterNetConnected();
           }
-        },
-      ),
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 

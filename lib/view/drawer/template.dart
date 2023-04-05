@@ -43,7 +43,8 @@ class Template extends StatelessWidget {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
-                child: CommonAppBar(title: VariableUtils.templateText),
+                child: CommonAppBar(
+                    title: VariableUtils.templateText, ontap: () => Get.back()),
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 3.w),

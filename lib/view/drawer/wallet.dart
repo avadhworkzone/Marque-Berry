@@ -32,7 +32,8 @@ class Wallet extends StatelessWidget {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
-                child: CommonAppBar(title: VariableUtils.walletText),
+                child: CommonAppBar(
+                    title: VariableUtils.walletText, ontap: () => Get.back()),
               ),
               body: Center(
                 child: Column(

@@ -40,7 +40,8 @@ class Note extends StatelessWidget {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
-                child: CommonAppBar(title: VariableUtils.note),
+                child: CommonAppBar(
+                    title: VariableUtils.note, ontap: () => Get.back()),
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 3.w),
@@ -50,11 +51,14 @@ class Note extends StatelessWidget {
                     Container(
                       height: 6.h,
                       width: double.maxFinite,
-                      color: ColorUtils.white,
+                      // color: ColorUtils.white,
                       child: Row(
                         children: [
-                          AdoroText("•",
-                              fontSize: 20.sp, color: ColorUtils.black92),
+                          AdoroText(
+                            "•",
+                            fontSize: 20.sp,
+                            color: ColorUtils.black92,
+                          ),
                           SizeConfig.sW5,
                           Expanded(
                             child: Padding(
@@ -76,15 +80,16 @@ class Note extends StatelessWidget {
                       color: ColorUtils.note,
                       child: InkWell(
                         onTap: () {},
-                        child: CommonImageScale(
-                            img: 'assets/images/playmusic.png',
-                            scale: 1.w,
-                            color: ColorUtils.note),
-
-                        // Image.asset(
-                        //   'assets/images/playmusic.png',
-                        //   scale: 2,
-                        // ),
+                        child:
+                            // CommonImageScale(
+                            //   img: 'assets/images/playmusic.png',
+                            //   scale: 1.w,
+                            //   color: ColorUtils.transparent,
+                            // ),
+                            Image.asset(
+                          'assets/images/playmusic.png',
+                          scale: 0.5.w,
+                        ),
                       ),
                     )
                   ],

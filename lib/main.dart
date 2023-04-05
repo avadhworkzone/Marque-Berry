@@ -3,29 +3,23 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:socialv/routes/route_constant.dart';
-import 'package:socialv/view/auth/login_screen.dart';
-import 'package:socialv/view/drawer/campaign_screen.dart';
-import 'package:socialv/view/drawer/details_screen.dart';
-import 'package:socialv/view/drawer/note.dart';
-import 'package:socialv/view/home/comments.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:socialv/view/profile/profile1_screen.dart';
-import 'package:socialv/view/sharePost/share_post.dart';
+import 'package:socialv/view/drawer/setting.dart';
+import 'package:socialv/routes/route_constant.dart';
+import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/controllers/login_controller.dart';
+import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/controllers/intrest_controller.dart';
+import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 import 'package:socialv/controllers/validate_otp_controller.dart';
-import 'commanWidget/noInternet_screen.dart';
-
-import 'view/drawer/setting.dart';
-import 'viewModel/auth_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,10 +62,10 @@ class _MyAppState extends State<MyApp> {
           stream: isLightTheme.stream,
           builder: (context, AsyncSnapshot snapshot) {
             return GetMaterialApp(
-              theme: AppTheme.lightTheme,
-              // PreferenceUtils.getLightMode() == "light"
-              //     ? AppTheme.darkTheme
-              //     : AppTheme.lightTheme,
+              theme:
+                  PreferenceUtils.getString(key: PreferenceUtils.mode) == "dark"
+                      ? AppTheme.darkTheme
+                      : AppTheme.lightTheme,
               title: "ADORO",
               navigatorKey: Get.key,
               getPages: RouteHelper.routes,
@@ -83,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return DetailsScreen();
+                      return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
                     }
@@ -99,12 +93,14 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  LoginController login = Get.put(LoginController());
   AuthViewModel authViewModel = Get.put(AuthViewModel());
+  CategoryFeedViewModel categoryViewModel = Get.put(CategoryFeedViewModel());
+
   OtpController otpController = Get.put(OtpController());
-  IntrestController intrest = Get.put(IntrestController());
   HomeController homeController = Get.put(HomeController());
+  LoginController loginController = Get.put(LoginController());
   SettingController settingController = Get.put(SettingController());
+  InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
 }
 
@@ -113,6 +109,8 @@ class AppTheme {
     fontFamily: 'Poppins',
     cardColor: ColorUtils.white,
     scaffoldBackgroundColor: ColorUtils.white,
+
+    canvasColor: Colors.grey[200],
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),
@@ -120,7 +118,7 @@ class AppTheme {
     //   brightness: Brightness.light,
     //   iconTheme: IconThemeData(color: ColorUtils.black),
     // ),
-    buttonColor: Colors.black,
+    buttonColor: ColorUtils.black,
     colorScheme: const ColorScheme.light(
       primary: ColorUtils.white,
       onPrimary: ColorUtils.white,
@@ -144,7 +142,8 @@ class AppTheme {
     // useMaterial3: true,
     fontFamily: 'Poppins',
     cardColor: ColorUtils.black2E,
-    buttonColor: Colors.white,
+    canvasColor: ColorUtils.black2E,
+    buttonColor: ColorUtils.white,
     scaffoldBackgroundColor: ColorUtils.black2E,
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),

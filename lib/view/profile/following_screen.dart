@@ -11,6 +11,7 @@ class FollowingScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: customAppbar(
+        context: context,
         title: 'Following',
         icon: const Icon(
           Icons.search_rounded,

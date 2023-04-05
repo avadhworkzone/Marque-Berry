@@ -16,7 +16,7 @@ class WithdrawlAmount extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(20.w),
-        child: CommonAppBar(title: ''),
+        child: CommonAppBar(title: '',ontap: ()=> Get.back()),
       ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.center,

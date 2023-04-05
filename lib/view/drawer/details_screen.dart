@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
@@ -16,7 +17,7 @@ class DetailsScreen extends StatelessWidget {
       backgroundColor: ColorUtils.greyFA,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
-        child: CommonAppBar(title: ''),
+        child: CommonAppBar(title: '', ontap: () => Get.back()),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),

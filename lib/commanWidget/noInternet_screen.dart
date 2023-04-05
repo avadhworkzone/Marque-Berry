@@ -15,7 +15,7 @@ class NoInterNetConnected extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: ColorUtils.white,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: SizedBox(
           width: Get.width,
@@ -23,20 +23,17 @@ class NoInterNetConnected extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 60.w,
-                child: OverflowBox(
-                  maxHeight: 60.w,
-                  minHeight: 60.w,
-                  child: Center(child: LottieWidgts.nointernet),
-                ),
+              AdoroText(
+                'No internet connection',
+                fontSize: 20.sp,
+                color: Theme.of(context).buttonColor,
               ),
               SizeConfig.sH3,
               AdoroText(
                 VariableUtils.noInternetText,
-                fontSize: 12.sp,
+                fontSize: 15.sp,
+                color: Theme.of(context).buttonColor,
                 textAlign: TextAlign.center,
-                fontWeight: FontWeightClass.fontWeightBold,
               )
             ],
           ),

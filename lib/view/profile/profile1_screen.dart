@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -56,7 +57,7 @@ class ProfileScreen1 extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
-        child: CommonAppBar(title: 'Profile'),
+        child: CommonAppBar(title: 'Profile', ontap: () => Get.back()),
       ),
       body: SafeArea(
         child: Column(
@@ -123,10 +124,12 @@ class ProfileScreen1 extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    AdoroText('1.2k',
-                        color: ColorUtils.black2E,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    AdoroText(
+                      '1.2k',
+                      color: ColorUtils.black2E,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ],
                 ),
                 Column(
@@ -138,10 +141,12 @@ class ProfileScreen1 extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    AdoroText('1.1k',
-                        color: ColorUtils.black2E,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    AdoroText(
+                      '1.1k',
+                      color: ColorUtils.black2E,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ],
                 )
               ],

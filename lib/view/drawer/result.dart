@@ -30,7 +30,8 @@ class Result extends StatelessWidget {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
-                child: CommonAppBar(title: VariableUtils.resultText),
+                child: CommonAppBar(
+                    title: VariableUtils.resultText, ontap: () => Get.back()),
               ),
               body: Padding(
                 padding: EdgeInsets.all(3.w),

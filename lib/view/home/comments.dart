@@ -16,20 +16,21 @@ class Comments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color? canvasColor = Theme.of(context).canvasColor;
+
     return Material(
-      color: ColorUtils.grey[200],
+      color: canvasColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           PreferredSize(
             preferredSize: Size.fromHeight(22.w),
-            child: CommonAppBar(title: 'Comments', color: ColorUtils.grey[200]),
+            child: CommonAppBar(title: 'Comments', ontap: () => Get.back()),
           ),
           // SizeConfig.sH2,
           Expanded(
             child: ListView.builder(
-              // physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: commentsList.length,
               itemBuilder: (context, index) {
@@ -81,7 +82,16 @@ class Comments extends StatelessWidget {
             child: Container(
               height: 18.w,
               width: Get.width,
-              color: ColorUtils.white,
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorUtils.black.withOpacity(0.5),
+                    blurRadius: 2.0,
+                  ),
+                ],
+              ),
+              // color: ColorUtils.red29,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 3.w),
                 child: Row(

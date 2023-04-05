@@ -4,12 +4,20 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/typedef_utils.dart';
 
 class CommonAppBar extends StatelessWidget {
   var title;
 
   Color? color;
-  CommonAppBar({Key? key, this.title, this.color}) : super(key: key);
+
+  OnTab ontap;
+  CommonAppBar({
+    Key? key,
+    this.title,
+    this.color,
+    required this.ontap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,7 @@ class CommonAppBar extends StatelessWidget {
       backgroundColor: color ?? whiteBlack,
       leading: IconButton(
         splashRadius: 7.w,
-        onPressed: () => Get.back(),
+        onPressed: () => ontap(),
         icon: Icon(Icons.arrow_back, color: blackWhite),
       ),
       title: AdoroText(
@@ -35,19 +43,29 @@ class CommonAppBar extends StatelessWidget {
   }
 }
 
-AppBar customAppbar({required String title, Icon? icon}) {
+AppBar customAppbar({
+  required String title,
+  required BuildContext context,
+  Color? color,
+  Icon? icon,
+}) {
+  Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+  Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
+
   return AppBar(
     centerTitle: true,
     elevation: 0,
-    backgroundColor: ColorUtils.greyFA,
+    backgroundColor: color ?? whiteBlack,
     title: AdoroText(
       title,
-      fontSize: 18,
-      color: ColorUtils.black2E,
+      fontSize: 15.sp,
+      color: blackWhite,
+      fontWeight: FontWeightClass.fontWeightBold,
     ),
-    leading: const Icon(
-      Icons.arrow_back,
-      color: ColorUtils.black2E,
+    leading: IconButton(
+      onPressed: () => Get.back(),
+      splashRadius: 7.w,
+      icon: Icon(Icons.arrow_back, color: blackWhite),
     ),
     actions: [
       Padding(

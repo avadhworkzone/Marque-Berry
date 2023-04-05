@@ -6,28 +6,29 @@ import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 
-class CircularIndicator extends StatelessWidget {
-  const CircularIndicator({Key? key, this.isExpand}) : super(key: key);
-  final bool? isExpand;
-
-  @override
-  Widget build(BuildContext context) {
-    return isExpand == true
-        ? SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child: Lottie.asset('assets/lotties/loading.json', width: 20.w),
-          )
-        : Lottie.asset('assets/lotties/loading.json', width: 20.w);
-  }
-}
+// class CircularIndicator extends StatelessWidget {
+//   const CircularIndicator({Key? key, this.isExpand}) : super(key: key);
+//   final bool? isExpand;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return isExpand == true
+//         ? SizedBox(
+//             height: Get.height,
+//             width: Get.width,
+//             child: Lottie.asset('assets/lotties/loading.json', width: 20.w),
+//           )
+//         : Lottie.asset('assets/lotties/loading.json', width: 20.w);
+//   }
+// }
 
 class ServerError extends StatelessWidget {
   const ServerError({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: AdoroText(VariableUtils.serverError));
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    return AdoroText(VariableUtils.serverError, color: blackWhite);
   }
 }
 
@@ -36,7 +37,8 @@ class NoDataFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: AdoroText(VariableUtils.noDataFound));
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    return AdoroText(VariableUtils.noDataFound, color: blackWhite);
   }
 }
 
@@ -45,7 +47,8 @@ class SomethingWentWrong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: AdoroText(VariableUtils.somethingWentWrong));
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    return AdoroText(VariableUtils.somethingWentWrong, color: blackWhite);
   }
 }
 
@@ -54,7 +57,9 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: LottieWidgts.loaderPrimary);
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+
+    return CircularProgressIndicator(color: blackWhite);
   }
 }
 
@@ -63,6 +68,7 @@ class TryAfterSomeTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AdoroText(VariableUtils.tryAfterSomeTime);
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    return AdoroText(VariableUtils.tryAfterSomeTime, color: blackWhite);
   }
 }

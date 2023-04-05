@@ -12,6 +12,7 @@ class FollowRequestScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorUtils.note,
       appBar: customAppbar(
+          context: context,
           title: 'Follow request',
           icon: const Icon(
             Icons.search_rounded,
