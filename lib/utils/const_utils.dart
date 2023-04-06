@@ -26,3 +26,9 @@ String postTimeCalculate(date) {
     return "${(data / 7).toStringAsFixed(0)} w ago";
   }
 }
+
+class Category {
+  String? id;
+  String? name;
+  Category({this.id, this.name});
+}

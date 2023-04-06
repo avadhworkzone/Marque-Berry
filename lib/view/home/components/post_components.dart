@@ -2,16 +2,24 @@ import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/dislike_post_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/like_post_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/home/comment_components/like_screen.dart';
 import 'package:socialv/view/home/comments.dart';
+import 'package:socialv/viewModel/category_view_model.dart';
 
 class PostComponents extends StatelessWidget {
   String likecounter;
@@ -27,8 +35,13 @@ class PostComponents extends StatelessWidget {
   int? likeByMePeople = 0;
   List<LikedByPeople>? likeProfile;
 
+  CategoryFeedViewModel categoryFeedViewModel;
+
+  String postid;
+
   PostComponents({
     Key? key,
+    required this.postid,
     required this.name,
     required this.time,
     required this.title,
@@ -39,7 +52,11 @@ class PostComponents extends StatelessWidget {
     required this.contentImage,
     required this.likecounter,
     required this.commentcounter,
+    required this.categoryFeedViewModel,
   }) : super(key: key);
+
+  DisLikePostReqModel disLikePostReqModel = DisLikePostReqModel();
+  LikePostReqModel likePostReqModel = LikePostReqModel();
 
   @override
   Widget build(BuildContext context) {
@@ -164,18 +181,63 @@ class PostComponents extends StatelessWidget {
                     Row(
                       children: [
                         likeByMe == "You"
-                            ? CommonImageScale(
-                                img: IconsWidgets.heartFilledImage,
-                                scale: 1.w,
-                                color: ColorUtils.red29,
+                            ? InkWell(
+                                onTap: () async {
+                                  disLikePostReqModel.postId = postid;
+                                  await categoryFeedViewModel
+                                      .dislikePost(disLikePostReqModel);
+                                  logs("HERE 2.....");
+                                  if (categoryFeedViewModel
+                                          .dislikeApiResponse.status ==
+                                      Status.COMPLETE) {
+                                    final response = categoryFeedViewModel
+                                        .dislikeApiResponse.data;
+                                    logs("delete like 1");
+                                    if (response.status == 200) {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback(
+                                              (timeStamp) async {
+                                        await categoryFeedViewModel
+                                            .categoryTrending("trending");
+                                      });
+                                      logs("HERE 3.....");
+                                    }
+                                  }
+                                },
+                                child: CommonImageScale(
+                                  img: IconsWidgets.heartFilledImage,
+                                  scale: 1.w,
+                                  color: ColorUtils.red29,
+                                ),
                               )
-                            : CommonImageScale(
-                                img: IconsWidgets.heartImage,
-                                scale: 1.w,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.color,
+                            : InkWell(
+                                onTap: () async {
+                                  likePostReqModel.postId = postid;
+                                  await categoryFeedViewModel
+                                      .likePost(likePostReqModel);
+
+                                  if (categoryFeedViewModel
+                                          .likeApiResponse.status ==
+                                      Status.COMPLETE) {
+                                    final LikePostResModel response =
+                                        categoryFeedViewModel
+                                            .likeApiResponse.data;
+                                    logs("HERE.....");
+                                    if (response.status == 200) {
+                                      await categoryFeedViewModel
+                                          .categoryTrending("trending");
+                                      logs("HERE 1.....");
+                                    }
+                                  }
+                                },
+                                child: CommonImageScale(
+                                  img: IconsWidgets.heartImage,
+                                  scale: 1.w,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color,
+                                ),
                               ),
                         SizeConfig.sW2,
                         InkWell(

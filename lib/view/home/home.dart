@@ -1,26 +1,23 @@
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/view/home/components/tabbar.dart';
-import 'package:socialv/view/home/components/group_components.dart';
-import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
+import 'package:socialv/view/home/components/post_components.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
+
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
 
@@ -76,6 +73,7 @@ class Home extends StatelessWidget {
         return Column(
           children: [
             TabBarComponents(homeController: homeController),
+
             // if (categoryFeedViewModel.categoryApiResponse.status ==
             //         Status.LOADING ||
             //     categoryFeedViewModel.categoryApiResponse.status ==
@@ -108,10 +106,9 @@ class Home extends StatelessWidget {
             //     ),
             //   )
             // ]
-
             GetBuilder<CategoryFeedViewModel>(
               init: CategoryFeedViewModel(),
-              initState: (_) async {
+              initState: (_) {
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                   await categoryFeedViewModel.categoryTrending("trending");
                 });
@@ -139,10 +136,12 @@ class Home extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: categoryResponse.length,
                         itemBuilder: (context, index) {
-                          final dynamic postdata = categoryResponse[index];
+                          final postdata = categoryResponse[index];
                           return postdata.id == null
                               ? SizedBox()
                               : PostComponents(
+                                  postid: postdata.postId.toString(),
+                                  categoryFeedViewModel: categoryFeedViewModel,
                                   likeByMe: postdata.likedByMe.toString() ==
                                           'true'
                                       ? "You"
@@ -175,17 +174,17 @@ class Home extends StatelessWidget {
 
 // GroupComponents(),
 class HomeController extends GetxController {
-  List tabBarList = [
-    VariableUtils.relevantText,
-    VariableUtils.trendingText,
-    VariableUtils.freshText,
-    VariableUtils.newsText,
-    VariableUtils.dankText
-  ];
+  List tabBarList = [VariableUtils.relevantText, VariableUtils.trendingText];
 
   int tabCurrentIndex = 0;
   void tabChange(int index) {
     tabCurrentIndex = index;
     update();
+  }
+
+  setPreference() async {
+    for (int i = 0; i < PreferenceUtils.getCategory().length; i++) {
+      logs(PreferenceUtils.getCategory()[i].name.toString());
+    }
   }
 }

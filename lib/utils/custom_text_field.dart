@@ -7,20 +7,21 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 
 class CommonTextFieldContainer extends StatelessWidget {
-  const CommonTextFieldContainer(
-      {Key? key,
-      this.text,
-      this.suffixIcon,
-      this.color,
-      this.keyboardType,
-      this.prefixIcon,
-      this.minLines,
-      this.maxLines,
-      this.hintStyle,
-      this.hintText,
-      this.decoration,
-      this.textAlignVertical})
-      : super(key: key);
+  CommonTextFieldContainer({
+    Key? key,
+    this.text,
+    this.suffixIcon,
+    this.color,
+    this.keyboardType,
+    this.prefixIcon,
+    this.minLines,
+    this.maxLines,
+    this.hintStyle,
+    this.hintText,
+    this.decoration,
+    required this.controller,
+    this.textAlignVertical,
+  }) : super(key: key);
   final Widget? suffixIcon;
 
   final text;
@@ -33,29 +34,26 @@ class CommonTextFieldContainer extends StatelessWidget {
   final hintText;
   final textAlignVertical;
   final decoration;
+  TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: keyboardType,
-      minLines: minLines,
-      maxLines: maxLines,
-      textAlignVertical: textAlignVertical,
+      controller: controller,
+      cursorColor: Theme.of(context).textTheme.titleSmall?.color,
+      style: TextStyle(
+        color: Theme.of(context).textTheme.titleSmall?.color,
+      ),
       decoration: InputDecoration(
-        // filled: true,
-
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyFA),
-        ),
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(color: ColorUtils.greyFA),
-        ),
-        contentPadding: EdgeInsets.zero,
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        contentPadding: EdgeInsets.all(5.w),
         suffixIcon: suffixIcon,
         fillColor: color,
         hintStyle: hintStyle,
         hintText: hintText,
-        prefixIcon: prefixIcon,
+        // prefixIcon: prefixIcon,
       ),
     );
   }

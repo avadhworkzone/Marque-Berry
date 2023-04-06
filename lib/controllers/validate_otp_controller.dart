@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
-import 'package:socialv/utils/const_utils.dart';
 
 class OtpController extends GetxController {
   bool hasError = false;

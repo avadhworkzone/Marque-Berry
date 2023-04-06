@@ -7,10 +7,9 @@ import '../../utils/font_style_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
-import '../bottomBar/bottombar.dart';
 
 class TagAPeople extends StatelessWidget {
-  const TagAPeople({Key? key}) : super(key: key);
+  TagAPeople({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +35,7 @@ class TagAPeople extends StatelessWidget {
               ),
               SizeConfig.sH5,
               CommonTextFieldContainer(
+                controller: search,
                 textAlignVertical: TextAlignVertical.center,
                 hintText: "Search ...",
                 hintStyle:
@@ -52,4 +52,6 @@ class TagAPeople extends StatelessWidget {
       ),
     );
   }
+
+  var search = TextEditingController();
 }

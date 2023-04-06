@@ -65,7 +65,7 @@ class AuthViewModel extends GetxController {
   Future<void> memeCategory() async {
     logs('loading..');
     memeCategoryApiResponse = ApiResponse.loading('LOADING');
-    update();
+    // update();
     try {
       final response = await MemeCategoryRepo().memeCategory();
       memeCategoryApiResponse = ApiResponse.complete(response);

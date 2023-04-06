@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../utils/color_utils.dart';
-import '../../utils/custom_text_field.dart';
 import '../../utils/decoration_utils.dart';
 import '../../utils/size_config_utils.dart';
-import '../../utils/tecell_text.dart';
-import '../../utils/validation_utils.dart';
 import '../../utils/variable_utils.dart';
 import '../auth/components/edit_component.dart';
 

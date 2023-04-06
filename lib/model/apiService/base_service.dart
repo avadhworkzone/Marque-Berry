@@ -11,4 +11,8 @@ abstract class BaseService {
   final String validateOTPURL = 'validateOTP';
   final String memeCategoriesURL = 'meme_categories';
   final String feedCategoryURL = 'feed?category=';
+
+  final String likeURL = 'like';
+  final String dislikeURL = 'deleteLike';
+  final String createPostURL = 'createPost';
 }

@@ -51,7 +51,7 @@ class VariableUtils {
 
   ///InterestScreen
   static const welcomeToAdoro = "Welcome to adoro";
-  static const chooseOrMoreMemeCategories = "Choose 5 or more meme categories";
+  static const chooseOrMoreMemeCategories = "Choose 3 or more meme categories";
 
   ///InterestScreen
   static const dontReceiveTheOTP = "Dont Receive The OTP?";

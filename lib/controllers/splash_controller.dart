@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:socialv/routes/route_helper.dart';
-import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 
 class SplashController extends GetxController {

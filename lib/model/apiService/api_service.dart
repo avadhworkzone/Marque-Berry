@@ -6,6 +6,7 @@ import 'package:socialv/utils/shared_preference_utils.dart';
 import 'base_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -42,20 +43,20 @@ class ApiService extends BaseService {
       }
 
       ///------------------------------------ FILE UPLOAD METHOD -------------------------------------///
-      // else if (fileUpload) {
-      //   /// IN OPTIONS YOU CAN SET HEADER PARAMETER....
-      //   dio.FormData formData = new dio.FormData.fromMap(body!);
-      //
-      //   dio.Response result = await dio.Dio().post(url,
-      //       data: formData,
-      //       options: dio.Options(
-      //         // contentType: "form-data",
-      //         headers: header(status: APIHeaderType.fileUploadWithToken),
-      //       ));
-      //
-      //   response = returnResponse(result.statusCode!, jsonEncode(result.data));
-      //   logs("File Upload response......$response");
-      // }
+      else if (fileUpload) {
+        /// IN OPTIONS YOU CAN SET HEADER PARAMETER....
+        dio.FormData formData = new dio.FormData.fromMap(body!);
+
+        dio.Response result = await dio.Dio().post(url,
+            data: formData,
+            options: dio.Options(
+              // contentType: "form-data",
+              headers: header(status: APIHeaderType.fileUploadWithToken),
+            ));
+
+        response = returnResponse(result.statusCode!, jsonEncode(result.data));
+        logs("File Upload response......$response");
+      }
 
       ///------------------------------------ POST METHOD -------------------------------------///
 
@@ -116,11 +117,14 @@ Map<String, String> header({APIHeaderType? status}) {
   } else if (status == APIHeaderType.jsonBodyWithToken) {
     return {
       'Content-Type': 'application/json',
-      "Authorization": "a3f077a1-b766-4c8b-98f4-c2105f3539e9",
+      // "Authorization": "a3f077a1-b766-4c8b-98f4-c2105f3539e9",
+      "token": "${PreferenceUtils.getString(key: PreferenceUtils.token)}"
     };
   } else if (status == APIHeaderType.onlyToken) {
     return {
       // "Authorization": "a3f077a1-b766-4c8b-98f4-c2105f3539e9",
+      // "token":
+      //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY4MDc2MDcyOSwiZXhwIjoxNjgxNjI0NzI5fQ.NYNc3k2u14CmfeXyUGU4R9G8uSZQTQQRgTU_DhqtJ5A"
       "token": "${PreferenceUtils.getString(key: PreferenceUtils.token)}"
     };
   } else {
