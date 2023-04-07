@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/const_utils.dart';
 
@@ -7,8 +9,8 @@ class PreferenceUtils {
   static String system = 'system';
   static String mode = 'mode';
   static String login = 'login';
+  static String userid = 'userid';
   static String token = 'token';
-  static String welcome = 'welcome';
 
   /// SET STRING PREFERENCE
   static Future setString({
@@ -35,19 +37,23 @@ class PreferenceUtils {
   }
 
   ///
-
-  static List<Category> categoryList = [];
-  static String categoryListPreference = 'categoryList';
-
-  static Future setCategory({required String id, required String name}) async {
-    categoryList.add(Category(name: name, id: id));
-    await getStorage.write(
-      categoryListPreference,
-      categoryList.cast<Category>(),
-    );
+  static String welcome = 'welcome';
+  static Future setWelcome(int value) async {
+    await getStorage.write(welcome, value);
   }
 
-  static List<Category> getCategory() {
-    return getStorage.read(categoryListPreference) ?? [];
+  static int getWelcome() {
+    return getStorage.read(welcome) ?? 0;
+  }
+
+  ///
+  static String categoryListPreference = 'categoryList';
+
+  static Future setCategory(List<Category> value) async {
+    await getStorage.write(categoryListPreference, jsonEncode(value));
+  }
+
+  static String getCategory() {
+    return getStorage.read(categoryListPreference) ?? '';
   }
 }

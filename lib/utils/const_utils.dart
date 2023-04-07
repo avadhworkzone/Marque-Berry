@@ -9,6 +9,8 @@ logs(String message) {
   }
 }
 
+List<Category> categoryDataList = [];
+
 String postTimeCalculate(date) {
   DateTime date1 = DateTime.parse(date);
   DateTime date2 = DateTime.now();
@@ -30,5 +32,18 @@ String postTimeCalculate(date) {
 class Category {
   String? id;
   String? name;
+
   Category({this.id, this.name});
+
+  Category.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
+  }
 }

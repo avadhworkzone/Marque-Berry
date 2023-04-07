@@ -1,33 +1,33 @@
-class ValidateOTPResModel {
+class GetUserResDetail {
   int? status;
   String? msg;
-  String? token;
-  ValidateOTPData? data;
+  List<Data>? data;
 
-  ValidateOTPResModel({this.status, this.msg, this.token, this.data});
+  GetUserResDetail({this.status, this.msg, this.data});
 
-  ValidateOTPResModel.fromJson(Map<String, dynamic> json) {
+  GetUserResDetail.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
-    token = json['token'];
-    data = json['data'] != null
-        ? new ValidateOTPData.fromJson(json['data'])
-        : null;
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['msg'] = this.msg;
-    data['token'] = this.token;
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class ValidateOTPData {
+class Data {
   int? id;
   String? username;
   String? fullName;
@@ -35,46 +35,45 @@ class ValidateOTPData {
   String? mobileNo;
   int? otp;
   String? image;
-  String? coverPhoto;
+  Null? coverPhoto;
   String? bankName;
   String? beneficiaryName;
   String? accountNumber;
   String? ifscCode;
   String? isCategorySelected;
-  String? createdOn;
+  Null? createdOn;
 
-  ValidateOTPData({
-    this.id,
-    this.username,
-    this.fullName,
-    this.email,
-    this.mobileNo,
-    this.otp,
-    this.image,
-    this.coverPhoto,
-    this.bankName,
-    this.beneficiaryName,
-    this.accountNumber,
-    this.ifscCode,
-    this.isCategorySelected,
-    this.createdOn,
-  });
+  Data(
+      {this.id,
+      this.username,
+      this.fullName,
+      this.email,
+      this.mobileNo,
+      this.otp,
+      this.image,
+      this.coverPhoto,
+      this.bankName,
+      this.beneficiaryName,
+      this.accountNumber,
+      this.ifscCode,
+      this.isCategorySelected,
+      this.createdOn});
 
-  ValidateOTPData.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
-    fullName = json['full_name'] ?? "";
-    email = json['email'] ?? "";
+    fullName = json['full_name'];
+    email = json['email'];
     mobileNo = json['mobileNo'];
     otp = json['otp'];
-    image = json['image'] ?? "";
-    coverPhoto = json['cover_photo'] ?? "";
-    bankName = json['bankName'] ?? "";
-    beneficiaryName = json['beneficiaryName'] ?? "";
-    accountNumber = json['accountNumber'] ?? "";
-    ifscCode = json['ifscCode'] ?? "";
-    isCategorySelected = json['isCategorySelected'] ?? "";
-    createdOn = json['created_on'] ?? "";
+    image = json['image'];
+    coverPhoto = json['cover_photo'];
+    bankName = json['bankName'];
+    beneficiaryName = json['beneficiaryName'];
+    accountNumber = json['accountNumber'];
+    ifscCode = json['ifscCode'];
+    isCategorySelected = json['isCategorySelected'];
+    createdOn = json['created_on'];
   }
 
   Map<String, dynamic> toJson() {

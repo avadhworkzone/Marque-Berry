@@ -1,16 +1,25 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/home/home.dart';
+import 'package:socialv/utils/const_utils.dart' as categoryList;
 
 class TabBarComponents extends StatelessWidget {
   HomeController homeController;
 
-  TabBarComponents({Key? key, required this.homeController}) : super(key: key);
+  List<categoryList.Category> categoryDataList;
+
+  TabBarComponents(
+      {Key? key, required this.homeController, required this.categoryDataList})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,7 @@ class TabBarComponents extends StatelessWidget {
       height: 17.w,
       alignment: Alignment.center,
       child: ListView.builder(
-        itemCount: 5,
+        itemCount: 2 + categoryDataList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return GestureDetector(
@@ -40,9 +49,7 @@ class TabBarComponents extends StatelessWidget {
                   child: AdoroText(
                     index == 0 || index == 1
                         ? homeController.tabBarList[index]
-                        : PreferenceUtils.getCategory()[index - 2]
-                            .name
-                            .toString(),
+                        : categoryDataList[index - 2].name,
                     color: homeController.tabCurrentIndex == index
                         ? ColorUtils.white
                         : ColorUtils.black92,

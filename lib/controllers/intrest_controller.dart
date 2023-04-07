@@ -8,32 +8,31 @@ import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
 
 class InterestController extends GetxController {
-  List<Category> selectedIndex = [];
-  List tempIndex = [];
+  List<Category> selectedCategoryList = [];
+  List tempCategoryIndex = [];
 
   addIndex(String id, String name) {
-    logs("ISSSSSSS $id   $name ${selectedIndex.length}");
-    if (selectedIndex.isEmpty) {
-      selectedIndex.add(Category(name: name, id: id));
-      tempIndex.add(name);
-    } else if (tempIndex.contains(name) == true) {
-      selectedIndex.remove(Category(name: name, id: id));
-      tempIndex.remove(name);
+    if (selectedCategoryList.isEmpty) {
+      selectedCategoryList.add(Category(name: name, id: id));
+      tempCategoryIndex.add(name);
+    } else if (tempCategoryIndex.contains(name) == true) {
+      final containIndex =
+          selectedCategoryList.indexWhere((element) => element.name == name);
+      if (containIndex > -1) {
+        selectedCategoryList.removeAt(containIndex);
+      }
+      tempCategoryIndex.remove(name);
     } else {
-      selectedIndex.add(Category(name: name, id: id));
-      tempIndex.add(name);
+      selectedCategoryList.add(Category(name: name, id: id));
+      tempCategoryIndex.add(name);
     }
-    logs("message ${selectedIndex.length}   ${tempIndex.length}");
     update();
   }
 
   setPreference() async {
-    for (int i = 0; i < selectedIndex.length; i++) {
-      await PreferenceUtils.setCategory(
-        id: selectedIndex[i].id.toString(),
-        name: selectedIndex[i].name.toString(),
-      );
-    }
+    logs(PreferenceUtils.getString(key: PreferenceUtils.token) +
+        ' ------------');
+    await PreferenceUtils.setCategory(selectedCategoryList);
   }
 
   ///

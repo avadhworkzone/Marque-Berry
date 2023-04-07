@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
@@ -69,10 +71,19 @@ class Home extends StatelessWidget {
           SizeConfig.sW6,
         ],
       ),
-      body: GetBuilder<HomeController>(builder: (homeController) {
+      body: GetBuilder<HomeController>(initState: (_) {
+        if (PreferenceUtils.getCategory().isNotEmpty) {
+          categoryDataList = (jsonDecode(PreferenceUtils.getCategory()) as List)
+              .map((e) => Category.fromJson(e))
+              .toList();
+        }
+      }, builder: (homeController) {
         return Column(
           children: [
-            TabBarComponents(homeController: homeController),
+            TabBarComponents(
+              categoryDataList: categoryDataList,
+              homeController: homeController,
+            ),
 
             // if (categoryFeedViewModel.categoryApiResponse.status ==
             //         Status.LOADING ||
@@ -182,9 +193,9 @@ class HomeController extends GetxController {
     update();
   }
 
-  setPreference() async {
-    for (int i = 0; i < PreferenceUtils.getCategory().length; i++) {
-      logs(PreferenceUtils.getCategory()[i].name.toString());
-    }
-  }
+  // setPreference() async {
+  //   for (int i = 0; i < PreferenceUtils.getCategory().length; i++) {
+  //     logs(PreferenceUtils.getCategory()[i].name.toString());
+  //   }
+  // }
 }

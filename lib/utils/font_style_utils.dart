@@ -26,4 +26,9 @@ class FontTextStyle {
     fontSize: 12.sp,
     fontWeight: FontWeightClass.fontWeightBold,
   );
+  static TextStyle profileText = TextStyle(
+    color: ColorUtils.black92,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.bold,
+  );
 }

@@ -73,6 +73,8 @@ class CommonTextFormField extends StatelessWidget {
   final String allowInputFormatters;
   final TextEditingController controller;
 
+  TextStyle? textstyle;
+
   CommonTextFormField({
     Key? key,
     this.obscured,
@@ -81,6 +83,7 @@ class CommonTextFormField extends StatelessWidget {
     this.mobilelength,
     this.hintText,
     this.hintStyle,
+    this.textstyle,
     // this.enableSuggestions,
     required this.color,
     required this.validator,
@@ -95,11 +98,12 @@ class CommonTextFormField extends StatelessWidget {
       controller: controller,
       validator: (v) => validator(v),
       keyboardType: keyboardType ?? TextInputType.name,
-      style: TextStyle(
-        color: color ?? ColorUtils.greyFA,
-        fontWeight: FontWeightClass.fontWeight500,
-      ),
-      cursorColor: Theme.of(context).textTheme.titleSmall?.color,
+      style: textstyle ??
+          TextStyle(
+            color: color ?? ColorUtils.greyFA,
+            fontWeight: FontWeightClass.fontWeight500,
+          ),
+      cursorColor: color ?? Theme.of(context).textTheme.titleSmall?.color,
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(allowInputFormatters)),
         FilteringTextInputFormatter.deny(RegExp(denyInputFormatters)),

@@ -12,7 +12,9 @@ import 'package:socialv/routes/route_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:socialv/view/drawer/setting.dart';
 import 'package:socialv/routes/route_constant.dart';
+import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/view/sharePost/share_post.dart';
+import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/controllers/login_controller.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
@@ -22,6 +24,7 @@ import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 import 'package:socialv/controllers/validate_otp_controller.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
+import 'package:socialv/viewModel/profile_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +82,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return InterestScreen();
+                      return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
                     }
@@ -96,6 +99,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   AuthViewModel authViewModel = Get.put(AuthViewModel());
+  ProfileViewModel profileViewModel = Get.put(ProfileViewModel());
   CreatePostViewModel createPostViewModel = Get.put(CreatePostViewModel());
   CategoryFeedViewModel categoryViewModel = Get.put(CategoryFeedViewModel());
 
@@ -106,6 +110,8 @@ class _MyAppState extends State<MyApp> {
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());
+  EditProfileController editProfileController =
+      Get.put(EditProfileController());
 }
 
 class AppTheme {
@@ -167,6 +173,7 @@ class AppTheme {
       titleSmall: TextStyle(color: ColorUtils.white),
       titleMedium: TextStyle(color: ColorUtils.white),
       titleLarge: TextStyle(color: ColorUtils.blueB9),
+      displaySmall: TextStyle(color: ColorUtils.white),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: ColorUtils.white),

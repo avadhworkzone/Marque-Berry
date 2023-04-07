@@ -1,16 +1,18 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:better_player/better_player.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:socialv/commanWidget/custom_snackbar.dart';
-import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/controllers/bottomBar_controller.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/validation_utils.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
 
@@ -148,8 +150,7 @@ class _SharePostState extends State<SharePost> {
                                     ),
                                   ),
                                   icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: (PreferenceUtils.getCategory())
-                                      .map((items) {
+                                  items: categoryDataList.map((items) {
                                     return DropdownMenuItem(
                                       value: items.name,
                                       child: Text(
@@ -162,8 +163,7 @@ class _SharePostState extends State<SharePost> {
                                     );
                                   }).toList(),
                                   onChanged: (String? newValue) {
-                                    var index = PreferenceUtils.getCategory()
-                                        .firstWhere(
+                                    var index = categoryDataList.firstWhere(
                                       (element) => element.name == newValue,
                                     );
                                     setState(() {
@@ -179,6 +179,7 @@ class _SharePostState extends State<SharePost> {
                       ),
                     ],
                   ),
+
                   SizeConfig.sH5,
                   AdoroText(
                     VariableUtils.whatYouWantToTalkAbout,
@@ -204,12 +205,26 @@ class _SharePostState extends State<SharePost> {
                       color: ColorUtils.note,
                       child: Stack(
                         children: [
-                          Center(
-                            child: Image.file(
-                              File(sharePostController.sourcePath.toString()),
-                              fit: BoxFit.fill,
+                          if (sharePostController.sourceName == "image")
+                            Center(
+                              child: Image.file(
+                                File(sharePostController.sourcePath.toString()),
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
+                          if (sharePostController.sourceName == "video" ||
+                              sharePostController.sourceName == "gif")
+                            Padding(
+                              padding: EdgeInsets.all(4.w),
+                              child: AspectRatio(
+                                aspectRatio: 18 / 10,
+                                child: BetterPlayer.file(
+                                  sharePostController.sourcePath.toString(),
+                                ),
+                              ),
+                            ),
+                          // if (sharePostController.sourceName == "template")
+                          //   Text("DOCX"),
                           Positioned(
                             right: 0,
                             child: IconButton(
@@ -223,6 +238,7 @@ class _SharePostState extends State<SharePost> {
                         ],
                       ),
                     ),
+
                   SizeConfig.sH2,
                   // CommonTextFieldContainer(
                   //   controller: description,

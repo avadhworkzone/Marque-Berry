@@ -25,7 +25,7 @@ class AuthViewModel extends GetxController {
       final response = await LoginRepo().login(reqModel);
       loginApiResponse = ApiResponse.complete(response);
     } catch (e) {
-      logs('driverPostApiResponse ERROR :=> $e');
+      logs('loginApiResponse ERROR :=> $e');
       loginApiResponse = ApiResponse.error('ERROR');
     }
     update();
@@ -65,7 +65,7 @@ class AuthViewModel extends GetxController {
   Future<void> memeCategory() async {
     logs('loading..');
     memeCategoryApiResponse = ApiResponse.loading('LOADING');
-    // update();
+    update();
     try {
       final response = await MemeCategoryRepo().memeCategory();
       memeCategoryApiResponse = ApiResponse.complete(response);

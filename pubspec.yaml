@@ -39,8 +39,8 @@ dependencies:
 
   animated_toggle_switch: ^0.6.2
 
-  image_picker: ^0.8.7+1
   file_picker: ^5.2.7
+  better_player: ^0.0.83
 
 dev_dependencies:
   flutter_test:

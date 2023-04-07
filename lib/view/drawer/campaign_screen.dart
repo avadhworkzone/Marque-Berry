@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
 class CampaignScreen extends StatelessWidget {
@@ -8,34 +10,48 @@ class CampaignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color? whiteBlue = Theme.of(context).scaffoldBackgroundColor;
+    Color? whiteBlack = Theme.of(context).textTheme.titleSmall?.color;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: ColorUtils.note,
+        backgroundColor: whiteBlue,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
-          backgroundColor: ColorUtils.greyFA,
-          leading: const Icon(
-            Icons.arrow_back,
-            color: ColorUtils.black,
+          backgroundColor: whiteBlue,
+          leading: Container(
+            width: 10.w,
+            child: Icon(Icons.arrow_back, color: whiteBlack),
           ),
           title: const TabBar(
             labelColor: ColorUtils.blueB9,
+            indicatorColor: ColorUtils.blueB9,
             unselectedLabelColor: ColorUtils.black92,
             tabs: [
               Tab(
-                  child: Text(
-                'Campaign',
-              )),
+                child: AdoroText(
+                  'Campaign',
+                  color: ColorUtils.blueB9,
+                  fontWeight: FontWeightClass.fontWeight600,
+                ),
+              ),
               Tab(
-                  child: Text(
-                'Contest',
-              )),
+                child: AdoroText(
+                  'Contest',
+                  // color: ColorUtils.blueB9,
+                  fontWeight: FontWeightClass.fontWeight600,
+                ),
+              ),
             ],
           ),
+          actions: [SizeConfig.sW4],
         ),
         body: const TabBarView(
-          children: [CampaignScn(), ContestScreen()],
+          children: [
+            CampaignScn(),
+            ContestScreen(),
+          ],
         ),
       ),
     );
@@ -50,10 +66,11 @@ class CampaignScn extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return tabbarMethod(size, title: 'Brand Name');
-        });
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return tabbarMethod(size, title: 'Brand Name');
+      },
+    );
   }
 }
 
@@ -65,10 +82,11 @@ class ContestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return tabbarMethod(size, title: 'contest Name');
-        });
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return tabbarMethod(size, title: 'contest Name');
+      },
+    );
   }
 }
 
@@ -76,37 +94,37 @@ Padding tabbarMethod(Size size, {required String title}) {
   return Padding(
     padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 2.w),
     child: Container(
-      height: 31.h,
+      margin: EdgeInsets.only(bottom: 2.w),
       width: size.width,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5.w),
       ),
-      child: Column(
-        children: [
-          ListTile(
-            leading:
-                CircleAvatar(child: Image.asset('assets/images/Profile1.png')),
-            title: AdoroText(
-              title,
-              fontWeight: FontWeight.bold,
-              fontSize: 12.sp,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 6.w),
+        child: Column(
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: CircleAvatar(
+                child: Image.asset('assets/images/Profile1.png'),
+              ),
+              title: AdoroText(
+                title,
+                fontSize: 12.sp,
+                color: ColorUtils.black,
+                fontWeight: FontWeight.bold,
+              ),
+              subtitle: const AdoroText(
+                'Time Left : XX:YY',
+                color: ColorUtils.black92,
+              ),
             ),
-            subtitle: const AdoroText(
-              'Time Left : XX:YY',
-              color: ColorUtils.black92,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
-            child: AdoroText(
+            AdoroText(
               'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit...',
               color: ColorUtils.black92,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 4.w),
-            child: Container(
+            Container(
               height: 5.h,
               width: size.width,
               decoration: BoxDecoration(
@@ -129,10 +147,7 @@ Padding tabbarMethod(Size size, {required String title}) {
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 5.w, top: 4.w, right: 5.w),
-            child: Container(
+            Container(
               height: 40,
               width: size.width,
               decoration: BoxDecoration(
@@ -147,8 +162,8 @@ Padding tabbarMethod(Size size, {required String title}) {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/view/drawer/campaign_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/view/profile/profile.dart';
@@ -17,6 +18,7 @@ import '../sharePost/share_post.dart';
 class BottomBar extends StatelessWidget {
   BottomBar({super.key});
 
+  // List pageRoute = [Home(), SharePost(), CampaignScreen(), ProfileScreen1()];
   List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
 
   @override

@@ -38,7 +38,7 @@ class ValidateOtpScreen extends StatefulWidget {
 class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
   TextEditingController otp = TextEditingController(text: "");
 
-  StreamController<ErrorAnimationType>? errorController;
+  // StreamController<ErrorAnimationType>? errorController;
 
   final otpFormKey = GlobalKey<FormState>();
 
@@ -104,7 +104,7 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                   cursorColor: ColorUtils.black,
                                   animationType: AnimationType.fade,
                                   keyboardType: TextInputType.number,
-                                  errorAnimationController: errorController,
+                                  // errorAnimationController: errorController,
                                   pinTheme: PinTheme(
                                     shape: PinCodeFieldShape.box,
                                     borderRadius: BorderRadius.circular(5),
@@ -176,7 +176,7 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                               otpController.tick) ==
                                           0
                                       ? ColorUtils.blueB9
-                                      : ColorUtils.greyFA,
+                                      : ColorUtils.grey[300],
                                 ),
                               ),
                             ],
@@ -199,12 +199,18 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                 if (response.status.toString() == "200") {
                                   showSnackBar(
                                     message: "Login successfully",
+                                    snackbarSuccess: true,
                                   );
 
                                   PreferenceUtils.setString(
                                     key: PreferenceUtils.token,
                                     value: response.token.toString(),
                                   );
+                                  PreferenceUtils.setInt(
+                                    key: PreferenceUtils.userid,
+                                    value: response.data?.id ?? 0,
+                                  );
+
                                   PreferenceUtils.setInt(
                                     key: PreferenceUtils.login,
                                     value: 1,
@@ -213,15 +219,12 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
 
                                   Get.offAllNamed(RouteHelper.getDoneRoute());
                                 } else {
-                                  errorController!
-                                      .add(ErrorAnimationType.shake);
                                   otpController.changeerror(true);
                                   showSnackBar(
                                     message: VariableUtils.somethingWentWrong,
                                   );
                                 }
                               } else {
-                                errorController!.add(ErrorAnimationType.shake);
                                 otpController.changeerror(true);
                                 showSnackBar(
                                   message: VariableUtils.somethingWentWrong,
