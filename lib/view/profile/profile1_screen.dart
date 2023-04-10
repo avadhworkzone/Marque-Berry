@@ -4,8 +4,10 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/view/profile/edit_profile.dart';
 
 class ImagesModel {
   final String image;
@@ -150,13 +152,36 @@ class ProfileScreen1 extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      AdoroText('1.1k',
-                          fontWeight: FontWeight.bold, fontSize: 18),
+                      AdoroText(
+                        '1.1k',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ],
                   )
                 ],
               ),
               const SizedBox(height: 20),
+              InkWell(
+                onTap: () {
+                  Get.to(() => EditProfile());
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: Container(
+                    height: 15.w,
+                    width: Get.width,
+                    color: ColorUtils.white,
+                    child: Center(
+                      child: AdoroText(
+                        'Edit Profile',
+                        color: ColorUtils.black92,
+                        fontWeight: FontWeightClass.fontWeight600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               //   children: [
@@ -200,9 +225,9 @@ class ProfileScreen1 extends StatelessWidget {
               //     )
               //   ],
               // ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
+              const SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.w),

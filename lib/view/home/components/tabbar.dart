@@ -12,14 +12,21 @@ import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/const_utils.dart' as categoryList;
 
+import '../../../viewModel/category_view_model.dart';
+
 class TabBarComponents extends StatelessWidget {
   HomeController homeController;
 
   List<categoryList.Category> categoryDataList;
 
-  TabBarComponents(
-      {Key? key, required this.homeController, required this.categoryDataList})
-      : super(key: key);
+  CategoryFeedViewModel categoryFeedViewModel;
+
+  TabBarComponents({
+    Key? key,
+    required this.homeController,
+    required this.categoryDataList,
+    required this.categoryFeedViewModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,26 @@ class TabBarComponents extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => homeController.tabChange(index),
+            onTap: () {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+                if (index == 0) {
+                  homeController.tabNameChange("Relevant");
+                  await categoryFeedViewModel.categoryTrending("Relevant", '1');
+                } else if (index == 1) {
+                  homeController.tabNameChange("Trending");
+                  await categoryFeedViewModel.categoryTrending("Trending", '1');
+                } else {
+                  homeController.tabNameChange(
+                    categoryDataList[index - 2].name,
+                  );
+                  await categoryFeedViewModel.categoryTrending(
+                    categoryDataList[index - 2].name.toString(),
+                    '1',
+                  );
+                }
+              });
+              homeController.tabChange(index);
+            },
             child: Padding(
               padding: EdgeInsets.fromLTRB(
                 index == 0 ? 2.w : 0.5.w,

@@ -20,4 +20,8 @@ abstract class BaseService {
   final String getUserDetails =
       'getUserDetails?userId=${PreferenceUtils.getInt(key: PreferenceUtils.userid)}';
   final String updateUserDetails = 'updateUserDetails';
+
+  final String postCommentURL = 'postComment';
+  final String deleteCommentURL = 'deleteComment';
+  final String getAllcommentURL = 'getAllcomments';
 }

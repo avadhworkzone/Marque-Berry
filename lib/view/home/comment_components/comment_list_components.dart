@@ -1,5 +1,8 @@
+import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -42,8 +45,11 @@ class CommentList extends StatelessWidget {
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
-                radius: replayData == false ? 8.w : 6.w,
-                backgroundImage: AssetImage(img),
+                radius: 8.w,
+                backgroundImage: NetworkImage(img),
+                onBackgroundImageError: (_, __) {
+                  CommonImage(img: IconsWidgets.userImages, color: blackWhite);
+                },
               ),
               title: AdoroText(
                 "$name",
@@ -92,7 +98,10 @@ class CommentList extends StatelessWidget {
                 SizeConfig.sW2,
                 LikeButton(likecounter: likecount),
                 SizeConfig.sW2,
-                ReplayButton(replaycount: replaycount),
+                InkWell(
+                  onTap: () {},
+                  child: ReplayButton(replaycount: replaycount),
+                ),
               ],
             ),
           ],

@@ -6,6 +6,7 @@ class CategoryResModel {
   String? contentUrl;
   String? createdOn;
   int? noOfLikes;
+  int? comments;
   List<LikedByPeople>? likedByPeople;
   bool? likedByMe;
   List<Author>? author;
@@ -19,6 +20,7 @@ class CategoryResModel {
     this.createdOn,
     this.noOfLikes,
     this.likedByPeople,
+    this.comments,
     this.likedByMe,
     this.author,
   });
@@ -31,6 +33,7 @@ class CategoryResModel {
     contentUrl = json['content_url'];
     createdOn = json['created_on'];
     noOfLikes = json['noOfLikes'];
+    comments = json['comments'];
     if (json['likedByPeople'] != null) {
       likedByPeople = <LikedByPeople>[];
       json['likedByPeople'].forEach((v) {
@@ -54,7 +57,8 @@ class CategoryResModel {
     data['content_type'] = this.contentType;
     data['content_url'] = this.contentUrl;
     data['created_on'] = this.createdOn;
-    data['noOfLikes'] = this.noOfLikes;
+    data['noOfLikes'] = this.noOfLikes ?? 0;
+    data['comments'] = this.comments ?? 0;
     if (this.likedByPeople != null) {
       data['likedByPeople'] =
           this.likedByPeople!.map((v) => v.toJson()).toList();

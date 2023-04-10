@@ -12,7 +12,7 @@ class SplashController extends GetxController {
     // getMode();
     Future.delayed(
       const Duration(seconds: 3),
-      () => Get.to(
+      () => Get.offAll(
         () => PreferenceUtils.getInt(key: PreferenceUtils.login) == 0
             ? LoginScreen()
             : PreferenceUtils.getWelcome() == 0

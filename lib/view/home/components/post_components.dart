@@ -19,6 +19,7 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/home/comment_components/like_screen.dart';
 import 'package:socialv/view/home/comments.dart';
+import 'package:socialv/view/home/home.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 
 class PostComponents extends StatelessWidget {
@@ -28,7 +29,7 @@ class PostComponents extends StatelessWidget {
   String time;
   String title;
   String contentImage;
-  String commentcounter;
+  String commentcounter = '0';
   String profileImage;
 
   String likeByMe;
@@ -39,8 +40,14 @@ class PostComponents extends StatelessWidget {
 
   String postid;
 
+  int currentTabIndex;
+
+  HomeController homeController;
+
   PostComponents({
     Key? key,
+    required this.homeController,
+    required this.currentTabIndex,
     required this.postid,
     required this.name,
     required this.time,
@@ -126,9 +133,107 @@ class PostComponents extends StatelessWidget {
                     ),
                   ),
                 ),
-                trailing: Icon(
-                  Icons.more_horiz,
-                  color: Theme.of(context).textTheme.titleMedium?.color,
+                trailing: IconButton(
+                  onPressed: () {
+                    Get.bottomSheet(
+                      Container(
+                        decoration: BoxDecoration(
+                          color: ColorUtils.white,
+                          borderRadius: BorderRadius.circular(5.w),
+                        ),
+                        height: 70.w,
+                        width: 100.w,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 5.w, vertical: 5.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    height: 0.5.w,
+                                    width: 40.w,
+                                    color: ColorUtils.black92,
+                                  ),
+                                ],
+                              ),
+                              SizeConfig.sH3,
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/share.png",
+                                    scale: 1.5.w,
+                                    color: ColorUtils.black,
+                                  ),
+                                  SizeConfig.sW3,
+                                  AdoroText(
+                                    "Share via",
+                                    color: ColorUtils.black92,
+                                    fontSize: 14.sp,
+                                  ),
+                                ],
+                              ),
+                              SizeConfig.sH3,
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/link.png",
+                                    scale: 1.5.w,
+                                    color: ColorUtils.black,
+                                  ),
+                                  SizeConfig.sW3,
+                                  AdoroText(
+                                    "Copy link",
+                                    color: ColorUtils.black92,
+                                    fontSize: 13.sp,
+                                  ),
+                                ],
+                              ),
+                              SizeConfig.sH3,
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/share.png",
+                                    scale: 1.5.w,
+                                    color: ColorUtils.black,
+                                  ),
+                                  SizeConfig.sW3,
+                                  AdoroText(
+                                    "Unfollow",
+                                    color: ColorUtils.black92,
+                                    fontSize: 13.sp,
+                                  ),
+                                ],
+                              ),
+                              SizeConfig.sH3,
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/report.png",
+                                    scale: 1.5.w,
+                                    color: ColorUtils.black,
+                                  ),
+                                  SizeConfig.sW3,
+                                  AdoroText(
+                                    "Report post",
+                                    color: ColorUtils.black92,
+                                    fontSize: 13.sp,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.more_horiz,
+                    color: Theme.of(context).textTheme.titleMedium?.color,
+                  ),
                 ),
               ),
               Padding(
@@ -186,28 +291,25 @@ class PostComponents extends StatelessWidget {
                                   disLikePostReqModel.postId = postid;
                                   await categoryFeedViewModel
                                       .dislikePost(disLikePostReqModel);
-                                  logs("HERE 2.....");
+
                                   if (categoryFeedViewModel
                                           .dislikeApiResponse.status ==
                                       Status.COMPLETE) {
                                     final response = categoryFeedViewModel
                                         .dislikeApiResponse.data;
-                                    logs("delete like 1");
                                     if (response.status == 200) {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback(
-                                              (timeStamp) async {
-                                        await categoryFeedViewModel
-                                            .categoryTrending("trending");
-                                      });
-                                      logs("HERE 3.....");
+                                      await categoryFeedViewModel
+                                          .categoryTrending(
+                                        homeController.tabName,
+                                        "1",
+                                      );
                                     }
                                   }
                                 },
-                                child: CommonImageScale(
-                                  img: IconsWidgets.heartFilledImage,
+                                child: Image.asset(
+                                  IconsWidgets.heartFilledImage,
                                   scale: 1.w,
-                                  color: ColorUtils.red29,
+                                  color: Colors.red,
                                 ),
                               )
                             : InkWell(
@@ -225,8 +327,7 @@ class PostComponents extends StatelessWidget {
                                     logs("HERE.....");
                                     if (response.status == 200) {
                                       await categoryFeedViewModel
-                                          .categoryTrending("trending");
-                                      logs("HERE 1.....");
+                                          .categoryTrending("Savage", "1");
                                     }
                                   }
                                 },
@@ -242,7 +343,7 @@ class PostComponents extends StatelessWidget {
                         SizeConfig.sW2,
                         InkWell(
                           onTap: () {
-                            Get.to(() => Comments());
+                            Get.to(() => Comments(postId: postid));
                           },
                           child: CommonImageScale(
                             img: IconsWidgets.chatImage,
@@ -268,68 +369,70 @@ class PostComponents extends StatelessWidget {
                     SizeConfig.sH1,
                     DecorationUtils.dividerLine2(),
                     SizeConfig.sH1,
-                    Container(
-                      width: Get.width,
-                      child: Row(
-                        children: [
-                          if ((likeProfile?.length ?? 0) > 0)
-                            Container(
-                              width: (24 *
-                                  (likeProfile!.length > 3
-                                          ? 3
-                                          : likeProfile!.length)
-                                      .toDouble()),
-                              height: 24,
-                              child: Stack(
-                                children: List.generate(
-                                  (likeProfile!.length > 3
-                                      ? 3
-                                      : likeProfile!.length),
-                                  (index) => Positioned(
-                                    left: (((likeProfile!.length > 3
-                                                ? 2
-                                                : likeProfile!.length - 1)) -
-                                            index) *
-                                        18,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(24),
-                                      child: OctoImage(
-                                        fit: BoxFit.cover,
-                                        width: 24,
-                                        height: 24,
-                                        image: NetworkImage(
-                                          likeProfile?[index].image ?? "",
-                                        ),
-                                        progressIndicatorBuilder:
-                                            (context, progress) {
-                                          double? value;
-                                          var expectedBytes =
-                                              progress?.expectedTotalBytes;
-                                          if (progress != null &&
-                                              expectedBytes != null) {
-                                            value =
-                                                progress.cumulativeBytesLoaded /
-                                                    expectedBytes;
-                                          }
-                                          return Center(
-                                            child: CircularProgressIndicator(
-                                              value: value,
-                                              color: blackWhite,
-                                            ),
-                                          );
-                                        },
-                                        errorBuilder:
-                                            (context, error, stacktrace) =>
-                                                Container(
+                    if (likeProfile?.length != null)
+                      Container(
+                        width: Get.width,
+                        child: Row(
+                          children: [
+                            if ((likeProfile?.length ?? 0) > 0)
+                              Container(
+                                width: (24 *
+                                    (likeProfile!.length > 3
+                                            ? 3
+                                            : likeProfile!.length)
+                                        .toDouble()),
+                                height: 24,
+                                child: Stack(
+                                  children: List.generate(
+                                    (likeProfile!.length > 3
+                                        ? 3
+                                        : likeProfile!.length),
+                                    (index) => Positioned(
+                                      left: (((likeProfile!.length > 3
+                                                  ? 2
+                                                  : likeProfile!.length - 1)) -
+                                              index) *
+                                          18,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(24),
+                                        child: OctoImage(
+                                          fit: BoxFit.cover,
                                           width: 24,
                                           height: 24,
-                                          color: ColorUtils.greyFA
-                                              .withOpacity(0.2),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(1.w),
-                                            child: CommonImage(
-                                              img: IconsWidgets.userImages,
-                                              color: blackWhite,
+                                          image: NetworkImage(
+                                            likeProfile?[index].image ?? "",
+                                          ),
+                                          progressIndicatorBuilder:
+                                              (context, progress) {
+                                            double? value;
+                                            var expectedBytes =
+                                                progress?.expectedTotalBytes;
+                                            if (progress != null &&
+                                                expectedBytes != null) {
+                                              value = progress
+                                                      .cumulativeBytesLoaded /
+                                                  expectedBytes;
+                                            }
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                value: value,
+                                                color: blackWhite,
+                                              ),
+                                            );
+                                          },
+                                          errorBuilder:
+                                              (context, error, stacktrace) =>
+                                                  Container(
+                                            width: 24,
+                                            height: 24,
+                                            color: ColorUtils.greyFA
+                                                .withOpacity(0.2),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(1.w),
+                                              child: CommonImage(
+                                                img: IconsWidgets.userImages,
+                                                color: blackWhite,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -338,71 +441,66 @@ class PostComponents extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),
-                          if (likeProfile!.length == 1) SizeConfig.sW2,
-                          InkWell(
-                            onTap: () => Get.to(
-                              () => LikeScreen(likeProfile: likeProfile),
-                            ),
-                            //     LikeBottom(
-                            //   likeProfile: likeProfile,
-                            //   blackWhite: blackWhite,
-                            // ),
-                            child: Text.rich(
-                              TextSpan(
-                                style: TextStyle(fontSize: 9.sp),
-                                children: <InlineSpan>[
-                                  TextSpan(
-                                    text: 'Liked by ',
-                                    style: TextStyle(
-                                      fontSize: 9.sp,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge!
-                                          .color,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: "$likeByMe",
-                                    style: TextStyle(
-                                      fontSize: 9.sp,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .color,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' And ',
-                                    style: TextStyle(
-                                      fontSize: 9.sp,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge!
-                                          .color,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '$likecounter other',
-                                    style: TextStyle(
-                                      fontSize: 9.sp,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .color,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                            if (likeProfile!.length == 1) SizeConfig.sW2,
+                            InkWell(
+                              onTap: () => Get.to(
+                                () => LikeScreen(likeProfile: likeProfile),
                               ),
-                            ),
-                          )
-                        ],
+                              child: Text.rich(
+                                TextSpan(
+                                  style: TextStyle(fontSize: 9.sp),
+                                  children: <InlineSpan>[
+                                    TextSpan(
+                                      text: 'Liked by ',
+                                      style: TextStyle(
+                                        fontSize: 9.sp,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .color,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "$likeByMe",
+                                      style: TextStyle(
+                                        fontSize: 9.sp,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .color,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' And ',
+                                      style: TextStyle(
+                                        fontSize: 9.sp,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .color,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '$likecounter other',
+                                      style: TextStyle(
+                                        fontSize: 9.sp,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .color,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
                     SizeConfig.sH1,
                   ],
                 ),

@@ -22,6 +22,7 @@ class Home extends StatelessWidget {
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
+  HomeController homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -71,114 +72,134 @@ class Home extends StatelessWidget {
           SizeConfig.sW6,
         ],
       ),
-      body: GetBuilder<HomeController>(initState: (_) {
-        if (PreferenceUtils.getCategory().isNotEmpty) {
-          categoryDataList = (jsonDecode(PreferenceUtils.getCategory()) as List)
-              .map((e) => Category.fromJson(e))
-              .toList();
-        }
-      }, builder: (homeController) {
-        return Column(
-          children: [
-            TabBarComponents(
-              categoryDataList: categoryDataList,
-              homeController: homeController,
-            ),
-
-            // if (categoryFeedViewModel.categoryApiResponse.status ==
-            //         Status.LOADING ||
-            //     categoryFeedViewModel.categoryApiResponse.status ==
-            //         Status.INITIAL)
-            //   Expanded(child: Center(child: Loader())),
-            // if (categoryFeedViewModel.categoryApiResponse.status ==
-            //         Status.ERROR ||
-            //     categoryFeedViewModel.categoryApiResponse.data == null)
-            //   Expanded(child: Center(child: SomethingWentWrong())),
-            // if (categoryFeedViewModel.categoryApiResponse.status ==
-            //     Status.COMPLETE) ...[
-            //   Expanded(
-            //     child: SingleChildScrollView(
-            //       child: Padding(
-            //         padding: EdgeInsets.all(4.w),
-            //         child: Column(
-            //           children: [
-            //             ListView.builder(
-            //               physics: NeverScrollableScrollPhysics(),
-            //               shrinkWrap: true,
-            //               itemCount: 2,
-            //               itemBuilder: (context, index) {
-            //                 return PostComponents();
-            //               },
-            //             ),
-            //             GroupComponents(),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   )
-            // ]
-            GetBuilder<CategoryFeedViewModel>(
-              init: CategoryFeedViewModel(),
-              initState: (_) {
-                WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-                  await categoryFeedViewModel.categoryTrending("trending");
-                });
-              },
-              builder: (categoryFeedViewModel) {
-                if (categoryFeedViewModel.categoryApiResponse.status ==
-                        Status.LOADING ||
-                    categoryFeedViewModel.categoryApiResponse.status ==
-                        Status.INITIAL) {
-                  return Expanded(child: Center(child: Loader()));
-                } else if (categoryFeedViewModel.categoryApiResponse.status ==
-                        Status.ERROR ||
-                    categoryFeedViewModel.categoryApiResponse.data == null) {
-                  return Expanded(child: Center(child: SomethingWentWrong()));
-                }
-                List<CategoryResModel> categoryResponse =
-                    categoryFeedViewModel.categoryApiResponse.data;
-
-                return Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.all(4.w),
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: categoryResponse.length,
-                        itemBuilder: (context, index) {
-                          final postdata = categoryResponse[index];
-                          return postdata.id == null
-                              ? SizedBox()
-                              : PostComponents(
-                                  postid: postdata.postId.toString(),
-                                  categoryFeedViewModel: categoryFeedViewModel,
-                                  likeByMe: postdata.likedByMe.toString() ==
-                                          'true'
-                                      ? "You"
-                                      : (postdata.likedByPeople?[0].username ??
-                                          ""),
-                                  likeProfile: postdata.likedByPeople,
-                                  likeByMePeople: postdata.noOfLikes,
-                                  profileImage:
-                                      postdata.author![0].image.toString(),
-                                  name: postdata.author![0].username.toString(),
-                                  time: postTimeCalculate(postdata.createdOn),
-                                  contentImage: postdata.contentUrl.toString(),
-                                  title: postdata.content.toString(),
-                                  likecounter: postdata.noOfLikes.toString(),
-                                  commentcounter: postdata.noOfLikes.toString(),
-                                );
-                        },
-                      ),
-                    ),
-                  ),
+      body: GetBuilder<HomeController>(
+        initState: (_) {
+          if (PreferenceUtils.getCategory().isNotEmpty) {
+            categoryDataList =
+                (jsonDecode(PreferenceUtils.getCategory()) as List)
+                    .map((e) => Category.fromJson(e))
+                    .toList();
+            WidgetsBinding.instance.addPostFrameCallback(
+              (timeStamp) async {
+                await categoryFeedViewModel.categoryTrending(
+                  homeController.tabName,
+                  '1',
                 );
               },
-            )
-          ],
-        );
-      }),
+            );
+          }
+        },
+        builder: (homeController) {
+          return Column(
+            children: [
+              TabBarComponents(
+                categoryDataList: categoryDataList,
+                homeController: homeController,
+                categoryFeedViewModel: categoryFeedViewModel,
+              ),
+
+              // if (categoryFeedViewModel.categoryApiResponse.status ==
+              //         Status.LOADING ||
+              //     categoryFeedViewModel.categoryApiResponse.status ==
+              //         Status.INITIAL)
+              //   Expanded(child: Center(child: Loader())),
+              // if (categoryFeedViewModel.categoryApiResponse.status ==
+              //         Status.ERROR ||
+              //     categoryFeedViewModel.categoryApiResponse.data == null)
+              //   Expanded(child: Center(child: SomethingWentWrong())),
+              // if (categoryFeedViewModel.categoryApiResponse.status ==
+              //     Status.COMPLETE) ...[
+              //   Expanded(
+              //     child: SingleChildScrollView(
+              //       child: Padding(
+              //         padding: EdgeInsets.all(4.w),
+              //         child: Column(
+              //           children: [
+              //             ListView.builder(
+              //               physics: NeverScrollableScrollPhysics(),
+              //               shrinkWrap: true,
+              //               itemCount: 2,
+              //               itemBuilder: (context, index) {
+              //                 return PostComponents();
+              //               },
+              //             ),
+              //             GroupComponents(),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   )
+              // ]
+              GetBuilder<CategoryFeedViewModel>(
+                init: CategoryFeedViewModel(),
+                initState: (_) {},
+                builder: (categoryFeedViewModel) {
+                  if (categoryFeedViewModel.categoryApiResponse.status ==
+                          Status.LOADING ||
+                      categoryFeedViewModel.categoryApiResponse.status ==
+                          Status.INITIAL) {
+                    return Expanded(child: Center(child: Loader()));
+                  } else if (categoryFeedViewModel.categoryApiResponse.status ==
+                          Status.ERROR ||
+                      categoryFeedViewModel.categoryApiResponse.data == null) {
+                    return Expanded(child: Center(child: SomethingWentWrong()));
+                  }
+
+                  List<CategoryResModel> categoryResponse =
+                      categoryFeedViewModel.categoryApiResponse.data;
+
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.all(4.w),
+                        child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: categoryResponse.length,
+                          itemBuilder: (context, index) {
+                            final postdata = categoryResponse[index];
+                            return postdata.id == null
+                                ? SizedBox()
+                                : PostComponents(
+                                    homeController: homeController,
+                                    currentTabIndex:
+                                        homeController.tabCurrentIndex,
+                                    postid: postdata.id.toString(),
+                                    categoryFeedViewModel:
+                                        categoryFeedViewModel,
+                                    likeByMe:
+                                        postdata.likedByMe.toString() == 'true'
+                                            ? "You"
+                                            : (postdata.likedByPeople?[0]
+                                                    .username ??
+                                                ""),
+                                    likeProfile: postdata.likedByPeople,
+                                    likeByMePeople: postdata.noOfLikes,
+                                    profileImage:
+                                        postdata.author![0].image.toString(),
+                                    name:
+                                        postdata.author![0].username.toString(),
+                                    time: postTimeCalculate(postdata.createdOn),
+                                    contentImage:
+                                        postdata.contentUrl.toString(),
+                                    title: postdata.content.toString(),
+                                    likecounter:
+                                        (postdata.likedByPeople?.length ?? 0)
+                                            .toString(),
+                                    commentcounter:
+                                        (postdata.comments ?? 0).toString(),
+                                  );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -187,7 +208,20 @@ class Home extends StatelessWidget {
 class HomeController extends GetxController {
   List tabBarList = [VariableUtils.relevantText, VariableUtils.trendingText];
 
+  int parentId = 0;
   int tabCurrentIndex = 0;
+  String tabName = "Relevant";
+
+  void tabNameChange(name) {
+    tabName = name;
+    update();
+  }
+
+  void parentCommentIdChange(id) {
+    parentId = id;
+    update();
+  }
+
   void tabChange(int index) {
     tabCurrentIndex = index;
     update();
