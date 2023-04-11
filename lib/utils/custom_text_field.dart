@@ -70,6 +70,7 @@ class CommonTextFormField extends StatelessWidget {
   // final bool? enableSuggestions;
   final TextInputType? keyboardType;
   final String denyInputFormatters;
+  bool? denyInput = true;
   final String allowInputFormatters;
   final TextEditingController controller;
 
@@ -77,6 +78,7 @@ class CommonTextFormField extends StatelessWidget {
 
   CommonTextFormField({
     Key? key,
+    this.denyInput,
     this.obscured,
     this.lableTitle,
     this.keyboardType,
@@ -104,10 +106,14 @@ class CommonTextFormField extends StatelessWidget {
             fontWeight: FontWeightClass.fontWeight500,
           ),
       cursorColor: color ?? Theme.of(context).textTheme.titleSmall?.color,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(allowInputFormatters)),
-        FilteringTextInputFormatter.deny(RegExp(denyInputFormatters)),
-      ],
+      inputFormatters: denyInput == false
+          ? [
+              FilteringTextInputFormatter.allow(RegExp(allowInputFormatters)),
+              FilteringTextInputFormatter.deny(RegExp(denyInputFormatters)),
+            ]
+          : [
+              FilteringTextInputFormatter.allow(RegExp(allowInputFormatters)),
+            ],
       maxLength: mobilelength ?? 1000,
       decoration: InputDecoration(
         filled: true,

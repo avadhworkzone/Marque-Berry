@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/interest.dart';
+import 'package:socialv/view/auth/otp_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -13,6 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:socialv/view/drawer/setting.dart';
 import 'package:socialv/routes/route_constant.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
+import 'package:socialv/view/profile/pending_request.dart';
 import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
@@ -82,6 +84,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
+                      // return InterestScreen();
                       return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
@@ -140,6 +143,7 @@ class AppTheme {
       titleSmall: TextStyle(color: ColorUtils.black),
       titleMedium: TextStyle(color: ColorUtils.black92),
       titleLarge: TextStyle(color: ColorUtils.black92),
+      displaySmall: TextStyle(color: ColorUtils.blueB9),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: ColorUtils.white),

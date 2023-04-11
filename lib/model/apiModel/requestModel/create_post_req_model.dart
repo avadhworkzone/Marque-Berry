@@ -20,10 +20,10 @@ class CreatePostReqModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category_id'] = this.categoryId;
+    data['category_id'] = this.categoryId.toString();
     data['content'] = this.content;
     data['content_type'] = this.contentType;
-    data['content_url'] = this.contentUrl;
+    data['file'] = this.contentUrl;
     return data;
   }
 }

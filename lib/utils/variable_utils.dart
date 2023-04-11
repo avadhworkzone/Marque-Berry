@@ -47,7 +47,7 @@ class VariableUtils {
   ///  otp Screen
   static const otpVerification = "OTP Verification";
   static const weHaveSentDigitCode =
-      "We have sent a 4 digit code to your email address";
+      "We have sent a 6 digit code to your email address";
 
   ///InterestScreen
   static const welcomeToAdoro = "Welcome to adoro";

@@ -1,10 +1,10 @@
-class UpdateProfilePicResModel {
+class UpdateCoverPicResModel {
   String? status;
   String? message;
 
-  UpdateProfilePicResModel({this.status, this.message});
+  UpdateCoverPicResModel({this.status, this.message});
 
-  UpdateProfilePicResModel.fromJson(Map<String, dynamic> json) {
+  UpdateCoverPicResModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['msg'];
   }

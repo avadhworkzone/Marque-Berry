@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:socialv/model/apiModel/requestModel/user_category_req_model.dart';
 import 'package:socialv/model/repo/meme_category_repo.dart';
+import 'package:socialv/model/repo/user_category_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/model/repo/login_repo.dart';
 import 'package:socialv/model/repo/register_repo.dart';
@@ -14,6 +16,7 @@ class AuthViewModel extends GetxController {
   ApiResponse registerApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse validateOTPApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse memeCategoryApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse userCategoryApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== LOGIN VIEW MODEL ================================
 
@@ -72,6 +75,21 @@ class AuthViewModel extends GetxController {
     } catch (e) {
       logs('memeCategoryApiResponse ERROR :=> $e');
       memeCategoryApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== MEME CATEGORY VIEW MODEL ================================
+  Future<void> userCategory(UserCategoryReqModel reqModel) async {
+    logs('loading..');
+    userCategoryApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await UserCategoryRepo().userCategory(reqModel);
+      userCategoryApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('userCategoryApiResponse ERROR :=> $e');
+      userCategoryApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }

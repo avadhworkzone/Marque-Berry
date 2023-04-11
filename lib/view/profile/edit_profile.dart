@@ -6,10 +6,14 @@ import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/custom_btn.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/model/apiModel/requestModel/update_cover_pic_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/update_user_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
@@ -19,6 +23,7 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/validation_utils.dart';
 
+import '../../model/apiModel/responseModel/update_profile_pic_res_model.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/variable_utils.dart';
 import '../../utils/decoration_utils.dart';
@@ -40,17 +45,26 @@ class EditProfile extends StatelessWidget {
 
   UpdateUserReqDetail updateUserReqDetail = UpdateUserReqDetail();
   ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+
+  UpdateProfilePicReqModel updateProfilePicReqModel =
+      UpdateProfilePicReqModel();
+
+  UpdateCoverPicReqModel updateCoverPicReqModel = UpdateCoverPicReqModel();
+
   EditProfileController editProfileController =
       Get.find<EditProfileController>();
 
-  String coverPhoto = '';
+  String profilePic = '';
+  String coverPic = '';
+
   getUserProfile() async {
     await profileViewModel.getUserProfile();
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
       final GetUserResDetail response =
           profileViewModel.getUserProfileApiResponse.data;
       var profileData = response.data?[0];
-      coverPhoto = profileData?.coverPhoto ?? "";
+      profilePic = profileData?.image ?? "";
+      coverPic = profileData?.coverPhoto ?? "";
       fullName = TextEditingController(text: profileData?.fullName ?? "");
       username = TextEditingController(text: profileData?.username ?? "");
       mailId = TextEditingController(text: profileData?.email ?? "");
@@ -61,6 +75,92 @@ class EditProfile extends StatelessWidget {
       accountNumber =
           TextEditingController(text: profileData?.accountNumber ?? "");
       ifscCode = TextEditingController(text: profileData?.ifscCode ?? "");
+    }
+  }
+
+  updateProfileData() async {
+    updateUserReqDetail.userId =
+        PreferenceUtils.getInt(key: PreferenceUtils.userid).toString();
+
+    updateUserReqDetail.userName = username.text;
+    updateUserReqDetail.mobileNumber = mobilenumber.text;
+
+    updateUserReqDetail.fullName = fullName.text;
+    updateUserReqDetail.bankName = bankName.text;
+    updateUserReqDetail.beneficiaryName = beneficiaryName.text;
+
+    updateUserReqDetail.ifscCode = ifscCode.text;
+    updateUserReqDetail.accountNumber = accountNumber.text;
+
+    await profileViewModel.updateUserProfile(updateUserReqDetail);
+
+    if (profileViewModel.updateUserProfileApiResponse.status ==
+        Status.COMPLETE) {
+      final UpdateUserResDetail updateProfileResponse =
+          profileViewModel.updateUserProfileApiResponse.data;
+      if (updateProfileResponse.status.toString() == VariableUtils.status200) {
+        showSnackBar(
+          message:
+              updateProfileResponse.msg ?? VariableUtils.somethingWentWrong,
+          snackbarSuccess: true,
+        );
+      } else {
+        showSnackBar(
+          message:
+              updateProfileResponse.msg ?? VariableUtils.somethingWentWrong,
+        );
+      }
+    }
+  }
+
+  updateProfileImage() async {
+    updateProfilePicReqModel.profilePic =
+        editProfileController.profileImagePath;
+
+    await profileViewModel.updateUserProfilePic(updateProfilePicReqModel);
+
+    if (profileViewModel.updateUserProfilePicApiResponse.status ==
+        Status.COMPLETE) {
+      final UpdateProfilePicResModel updateProfilePicResModel =
+          profileViewModel.updateUserProfilePicApiResponse.data;
+      if (updateProfilePicResModel.status.toString() ==
+          VariableUtils.status200) {
+        showSnackBar(
+          message: updateProfilePicResModel.message ??
+              VariableUtils.somethingWentWrong,
+          snackbarSuccess: true,
+        );
+      } else {
+        showSnackBar(
+          message: updateProfilePicResModel.message ??
+              VariableUtils.somethingWentWrong,
+        );
+      }
+    }
+  }
+
+  updateCoverImage() async {
+    updateCoverPicReqModel.coverPhoto = editProfileController.coverImagePath;
+
+    await profileViewModel.updateUserCoverPic(updateCoverPicReqModel);
+
+    if (profileViewModel.updateUserProfilePicApiResponse.status ==
+        Status.COMPLETE) {
+      final UpdateCoverPicResModel updateCoverPicResModel =
+          profileViewModel.updateUserCoverPicApiResponse.data;
+
+      if (updateCoverPicResModel.status.toString() == VariableUtils.status200) {
+        showSnackBar(
+          message: updateCoverPicResModel.message ??
+              VariableUtils.somethingWentWrong,
+          snackbarSuccess: true,
+        );
+      } else {
+        showSnackBar(
+          message: updateCoverPicResModel.message ??
+              VariableUtils.somethingWentWrong,
+        );
+      }
     }
   }
 
@@ -75,6 +175,10 @@ class EditProfile extends StatelessWidget {
           builder: (editProfileController) {
             return GetBuilder<ProfileViewModel>(
               initState: (_) {
+                profilePic = '';
+                coverPic = '';
+                editProfileController.clearData();
+
                 getUserProfile();
               },
               init: ProfileViewModel(),
@@ -85,9 +189,6 @@ class EditProfile extends StatelessWidget {
                         Status.INITIAL) return Center(child: Loader());
                 if (profileViewModel.getUserProfileApiResponse.status ==
                     Status.ERROR) return Center(child: SomethingWentWrong());
-
-                final GetUserResDetail response =
-                    profileViewModel.getUserProfileApiResponse.data;
 
                 return SingleChildScrollView(
                   child: Column(
@@ -103,162 +204,173 @@ class EditProfile extends StatelessWidget {
                               onTap: () => Get.back(),
                               child: Icon(
                                 Icons.arrow_back,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.color,
+                                color: blackWhite,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      Container(
-                        height: 25.h,
-                        width: double.maxFinite,
-                        decoration: DecorationUtils.buttonDecoration(context),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Stack(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(4.w),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20.w),
-                                    child: CircleAvatar(
-                                      backgroundColor: ColorUtils.white,
-                                      radius: 16.w,
-                                      child: editProfileController.sourcePath !=
-                                              ""
-                                          ? Image.file(
+                      Stack(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              var data =
+                                  await editProfileController.pickCoverImage();
+                              if (data != "") {
+                                await updateCoverImage();
+                              }
+                            },
+                            child: Container(
+                              height: 25.h,
+                              width: double.maxFinite,
+                              decoration: editProfileController
+                                          .coverImagePath ==
+                                      ""
+                                  ? DecorationUtils.buttonDecoration(context)
+                                  : coverPic != ""
+                                      ? BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(coverPic),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                      : BoxDecoration(
+                                          image: DecorationImage(
+                                            image: FileImage(
                                               File(
                                                 editProfileController
-                                                    .sourcePath,
-                                              ),
-                                              fit: BoxFit.cover,
-                                            )
-                                          : OctoImage(
-                                              image: NetworkImage(
-                                                  coverPhoto ?? ""),
-                                              progressIndicatorBuilder:
-                                                  (context, progress) {
-                                                double? value;
-                                                var expectedBytes = progress
-                                                    ?.expectedTotalBytes;
-                                                if (progress != null &&
-                                                    expectedBytes != null) {
-                                                  value = progress
-                                                          .cumulativeBytesLoaded /
-                                                      expectedBytes;
-                                                }
-                                                return Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    value: value,
-                                                    color: blackWhite,
-                                                  ),
-                                                );
-                                              },
-                                              errorBuilder: (context, error,
-                                                      stacktrace) =>
-                                                  ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20.w),
-                                                child: Image.asset(
-                                                  IconsWidgets.userImages,
-                                                  color: ColorUtils.black,
-                                                  scale: 0.28.w,
-                                                ),
+                                                    .coverImagePath,
                                               ),
                                             ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  right: 0.w,
-                                  bottom: 10.w,
-                                  child: Container(
-                                    width: 8.w,
-                                    height: 8.w,
-                                    child: IconButton(
-                                      splashRadius: 5.w,
-                                      onPressed: () {
-                                        editProfileController.pickFile();
-                                      },
-                                      icon: Icon(
-                                        Icons.edit,
-                                        size: 4.w,
-                                        color: ColorUtils.white,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                            ),
+                          ),
+                          Container(
+                            height: 25.h,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Stack(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(4.w),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(20.w),
+                                        child: CircleAvatar(
+                                          backgroundColor: ColorUtils.white,
+                                          radius: 16.w,
+                                          child: editProfileController
+                                                      .profileImagePath !=
+                                                  ""
+                                              ? Image.file(
+                                                  File(
+                                                    editProfileController
+                                                        .profileImagePath,
+                                                  ),
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : OctoImage(
+                                                  image: NetworkImage(
+                                                      profilePic ?? ""),
+                                                  progressIndicatorBuilder:
+                                                      (context, progress) {
+                                                    double? value;
+                                                    var expectedBytes = progress
+                                                        ?.expectedTotalBytes;
+                                                    if (progress != null &&
+                                                        expectedBytes != null) {
+                                                      value = progress
+                                                              .cumulativeBytesLoaded /
+                                                          expectedBytes;
+                                                    }
+                                                    return Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        value: value,
+                                                        color: blackWhite,
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorBuilder: (context, error,
+                                                          stacktrace) =>
+                                                      ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20.w),
+                                                    child: Image.asset(
+                                                      IconsWidgets.userImages,
+                                                      color: ColorUtils.black,
+                                                      scale: 0.28.w,
+                                                    ),
+                                                  ),
+                                                ),
+                                        ),
                                       ),
                                     ),
-                                    decoration:
-                                        DecorationUtils.doneDecoration(context),
+                                    Positioned(
+                                      right: 0.w,
+                                      bottom: 10.w,
+                                      child: Container(
+                                        width: 8.w,
+                                        height: 8.w,
+                                        child: IconButton(
+                                          splashRadius: 5.w,
+                                          onPressed: () {
+                                            editProfileController
+                                                .pickProfileImage();
+                                          },
+                                          icon: Icon(
+                                            Icons.edit,
+                                            size: 4.w,
+                                            color: ColorUtils.white,
+                                          ),
+                                        ),
+                                        decoration:
+                                            DecorationUtils.doneDecoration(
+                                                context),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 6.h,
+                                  width: 50.w,
+                                  decoration: DecorationUtils.welcomeDecoration(
+                                      context),
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      if (editProfileController
+                                              .profileImagePath !=
+                                          "") {
+                                        await updateProfileImage();
+                                        await updateCoverImage();
+                                        // } else if (editProfileController
+                                        //         .coverImagePath !=
+                                        //     "") {
+                                        //   await updateCoverImage();
+                                      } else if (editProfileController
+                                              .profileImagePath !=
+                                          "") {
+                                        await updateProfileImage();
+                                      }
+                                    },
+                                    child: Text(
+                                      VariableUtils.updateProfile,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                            Container(
-                              height: 6.h,
-                              width: 50.w,
-                              decoration:
-                                  DecorationUtils.welcomeDecoration(context),
-                              child: TextButton(
-                                onPressed: () async {
-                                  updateUserReqDetail.userId =
-                                      PreferenceUtils.getInt(
-                                              key: PreferenceUtils.userid)
-                                          .toString();
-
-                                  updateUserReqDetail.userName = username.text;
-                                  updateUserReqDetail.mobileNumber =
-                                      mobilenumber.text;
-
-                                  updateUserReqDetail.fullName = fullName.text;
-                                  updateUserReqDetail.bankName = bankName.text;
-                                  updateUserReqDetail.beneficiaryName =
-                                      beneficiaryName.text;
-
-                                  updateUserReqDetail.ifscCode = ifscCode.text;
-                                  updateUserReqDetail.accountNumber =
-                                      accountNumber.text;
-
-                                  await profileViewModel
-                                      .updateUserProfile(updateUserReqDetail);
-
-                                  if (profileViewModel
-                                          .updateUserProfileApiResponse
-                                          .status ==
-                                      Status.COMPLETE) {
-                                    final UpdateUserResDetail
-                                        updateProfileResponse = profileViewModel
-                                            .updateUserProfileApiResponse.data;
-                                    if (updateProfileResponse.status
-                                            .toString() ==
-                                        VariableUtils.status200) {
-                                      showSnackBar(
-                                        message: response.msg ??
-                                            VariableUtils.somethingWentWrong,
-                                        snackbarSuccess: true,
-                                      );
-                                    } else {
-                                      showSnackBar(
-                                        message: response.msg ??
-                                            VariableUtils.somethingWentWrong,
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Text(
-                                  VariableUtils.updateProfile,
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       SizeConfig.sH4,
                       Container(
@@ -384,7 +496,24 @@ class EditProfile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizeConfig.sH4,
+                      SizeConfig.sH2,
+                      CustomBtn(
+                        onTap: () async {
+                          if (username.text.isEmpty ||
+                              mailId.text.isEmpty ||
+                              bankName.text.isEmpty ||
+                              ifscCode.text.isEmpty ||
+                              accountNumber.text.isEmpty ||
+                              fullName.text.isEmpty ||
+                              beneficiaryName.text.isEmpty) {
+                            showSnackBar(message: "Fields is required");
+                          } else {
+                            await updateProfileData();
+                          }
+                        },
+                        text: 'Update account',
+                      ),
+                      SizeConfig.sH2,
                     ],
                   ),
                 );
@@ -395,24 +524,58 @@ class EditProfile extends StatelessWidget {
       ),
     );
   }
-
-  uploadImage() {}
 }
 
 class EditProfileController extends GetxController {
-  String sourcePath = "";
+  String profileImagePath = "";
+  String coverImagePath = "";
+  // String sourcePath = "";
 
-  pickFile() async {
-    sourcePath = "";
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-    );
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      sourcePath = file.path!;
-    } else {
-      sourcePath = "";
+  pickProfileImage() async {
+    profileImagePath = "";
+
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+      );
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        profileImagePath = file.path!;
+      } else {
+        profileImagePath = "";
+      }
+    } catch (e) {
+      showSnackBar(
+        message: "Profile image not selected.",
+      );
     }
     update();
+  }
+
+  Future<String> pickCoverImage() async {
+    coverImagePath = "";
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+      );
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        coverImagePath = file.path!;
+      } else {
+        coverImagePath = "";
+      }
+    } catch (e) {
+      showSnackBar(
+        message: "Cover image not selected.",
+      );
+    }
+
+    update();
+    return coverImagePath;
+  }
+
+  clearData() {
+    profileImagePath = "";
+    coverImagePath = "";
   }
 }

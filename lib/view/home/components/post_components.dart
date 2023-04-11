@@ -16,7 +16,6 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/home/comment_components/like_screen.dart';
 import 'package:socialv/view/home/comments.dart';
 import 'package:socialv/view/home/home.dart';
@@ -181,7 +180,7 @@ class PostComponents extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     "assets/icons/link.png",
-                                    scale: 1.5.w,
+                                    scale: 1.2.w,
                                     color: ColorUtils.black,
                                   ),
                                   SizeConfig.sW3,
@@ -196,8 +195,8 @@ class PostComponents extends StatelessWidget {
                               Row(
                                 children: [
                                   Image.asset(
-                                    "assets/icons/share.png",
-                                    scale: 1.5.w,
+                                    "assets/icons/unfollow.png",
+                                    scale: 1.2.w,
                                     color: ColorUtils.black,
                                   ),
                                   SizeConfig.sW3,
@@ -213,7 +212,7 @@ class PostComponents extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     "assets/icons/report.png",
-                                    scale: 1.5.w,
+                                    scale: 1.3.w,
                                     color: ColorUtils.black,
                                   ),
                                   SizeConfig.sW3,
@@ -359,10 +358,16 @@ class PostComponents extends StatelessWidget {
                           color: Theme.of(context).textTheme.titleMedium?.color,
                         ),
                         Spacer(),
-                        AdoroText(
-                          "$commentcounter Comments",
-                          fontSize: 10.sp,
-                          color: Theme.of(context).textTheme.titleMedium?.color,
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => Comments(postId: postid));
+                          },
+                          child: AdoroText(
+                            "$commentcounter Comments",
+                            fontSize: 10.sp,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
+                          ),
                         )
                       ],
                     ),
@@ -512,8 +517,10 @@ class PostComponents extends StatelessWidget {
     );
   }
 
-  LikeBottom(
-      {required List<LikedByPeople>? likeProfile, required Color? blackWhite}) {
+  LikeBottom({
+    required List<LikedByPeople>? likeProfile,
+    required Color? blackWhite,
+  }) {
     Get.bottomSheet(
       Container(
         height: 140.w,

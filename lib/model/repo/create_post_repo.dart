@@ -10,7 +10,7 @@ class CreatePostRepo extends BaseService {
       apiType: APIType.aPost,
       body: reqModel.toJson(),
       url: '$baseURL$createPostURL',
-      fileUpload: true,
+      createPostData: true,
     );
     return CreatePostResModel.fromJson(response);
   }

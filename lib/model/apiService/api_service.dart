@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 
 import 'base_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -16,11 +16,13 @@ import 'package:socialv/model/apis/api_exception.dart';
 class ApiService extends BaseService {
   var response;
 
-  Future<dynamic> getResponse(
-      {@required APIType? apiType,
-      @required String? url,
-      Map<String, dynamic>? body,
-      bool fileUpload = false}) async {
+  Future<dynamic> getResponse({
+    @required APIType? apiType,
+    @required String? url,
+    Map<String, dynamic>? body,
+    bool fileUpload = false,
+    bool createPostData = false,
+  }) async {
     try {
       logs("URL ---> ${Uri.parse(url!)}");
       logs('BODY :=> ${jsonEncode(body)}');
@@ -44,18 +46,61 @@ class ApiService extends BaseService {
 
       ///------------------------------------ FILE UPLOAD METHOD -------------------------------------///
       else if (fileUpload) {
-        /// IN OPTIONS YOU CAN SET HEADER PARAMETER....
-        dio.FormData formData = new dio.FormData.fromMap(body!);
+        logs("body:=====> $body");
+        var request = http.MultipartRequest(
+          "POST",
+          Uri.parse(url),
+        );
+        var pic = await http.MultipartFile.fromPath(
+          body!.keys.toList().first,
+          body.values.toList().first,
+        );
+        request.files.add(pic);
+        request.headers.addAll(
+          {"token": PreferenceUtils.getString(key: PreferenceUtils.token)},
+        );
 
-        dio.Response result = await dio.Dio().post(url,
-            data: formData,
-            options: dio.Options(
-              // contentType: "form-data",
-              headers: header(status: APIHeaderType.fileUploadWithToken),
-            ));
+        if (createPostData == true) {
+          request.fields.addAll({});
+        }
+        var result = await request.send();
+        var responseData = await result.stream.toBytes();
+        var responseString = String.fromCharCodes(responseData);
+        print("FILE UPLOAD STATUS ==  $responseString");
+        response = returnResponse(result.statusCode, responseString);
+        logs("response......$response");
+      }
 
-        response = returnResponse(result.statusCode!, jsonEncode(result.data));
-        logs("File Upload response......$response");
+      ///------------------------------------ CREATE POST METHOD -------------------------------------///
+      else if (createPostData) {
+        logs("body:=====> $body");
+        var request = http.MultipartRequest(
+          "POST",
+          Uri.parse(url),
+        );
+        var pic = await http.MultipartFile.fromPath(
+          "content_url",
+          body!["file"],
+        );
+        request.files.add(pic);
+        request.headers.addAll(
+          {
+            "token": PreferenceUtils.getString(key: PreferenceUtils.token),
+          },
+        );
+
+        body.keys.toList().forEach((element) {
+          if (element != "file") {
+            request.fields.addAll({element: body[element]});
+          }
+        });
+
+        var result = await request.send();
+        var responseData = await result.stream.toBytes();
+        var responseString = String.fromCharCodes(responseData);
+        print("FILE UPLOAD STATUS ==  $responseString");
+        response = returnResponse(result.statusCode, responseString);
+        logs("response......$response");
       }
 
       ///------------------------------------ POST METHOD -------------------------------------///

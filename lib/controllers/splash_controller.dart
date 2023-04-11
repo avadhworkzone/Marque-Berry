@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/done_screen.dart';
 import 'package:socialv/view/auth/login_screen.dart';

@@ -45,7 +45,7 @@ class CommentList extends StatelessWidget {
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
-                radius: 8.w,
+                radius: 6.w,
                 backgroundImage: NetworkImage(img),
                 onBackgroundImageError: (_, __) {
                   CommonImage(img: IconsWidgets.userImages, color: blackWhite);
@@ -65,7 +65,7 @@ class CommentList extends StatelessWidget {
                 color: Theme.of(context).textTheme.titleMedium?.color,
               ),
             ),
-            SizeConfig.sH1,
+            SizeConfig.sH2,
             RichText(
               text: TextSpan(
                 style: TextStyle(

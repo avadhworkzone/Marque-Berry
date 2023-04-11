@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../commanWidget/custom_btn.dart';
 import '../../utils/assets/images_utils.dart';
-import '../../utils/color_utils.dart';
 import '../../utils/decoration_utils.dart';
 import '../../utils/size_config_utils.dart';
 import 'interest.dart';

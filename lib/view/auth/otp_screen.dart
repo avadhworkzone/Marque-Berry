@@ -4,8 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:sizer/sizer.dart';
@@ -15,7 +13,6 @@ import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/otp_res_model.dart';
-import 'package:socialv/model/apiModel/responseModel/register_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -28,7 +25,6 @@ import '../../utils/color_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
-import 'done_screen.dart';
 
 class ValidateOtpScreen extends StatefulWidget {
   @override
@@ -176,7 +172,7 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                               otpController.tick) ==
                                           0
                                       ? ColorUtils.blueB9
-                                      : ColorUtils.grey[300],
+                                      : ColorUtils.grey[250],
                                 ),
                               ),
                             ],

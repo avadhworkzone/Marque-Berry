@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  dio: ^5.1.1
+#  dio: ^5.1.1
 
   # connectivity :-
   connectivity_plus: ^2.3.6

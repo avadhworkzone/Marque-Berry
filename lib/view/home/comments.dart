@@ -39,6 +39,7 @@ class Comments extends StatelessWidget {
   }
 
   ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     Color? canvasColor = Theme.of(context).canvasColor;
@@ -88,24 +89,58 @@ class Comments extends StatelessWidget {
                     child: ListView.builder(
                       controller: scrollController,
                       shrinkWrap: true,
-                      itemCount: response.data?.length ?? 0,
+                      itemCount: response.data
+                              ?.where((element) => element.parentId == "0")
+                              .toList()
+                              .length ??
+                          0,
                       itemBuilder: (context, index) {
                         final commentdata = response.data![index];
+
+                        final subComments = response.data!
+                            .where((element) =>
+                                element.parentId ==
+                                commentdata.commentId.toString())
+                            .toList();
+
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.w),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              CommentList(
-                                likecount: (likecount ?? 0).toString(),
-                                replaycount: 0,
-                                time: "2 W ago",
-                                name: commentdata.username ?? "",
-                                img: commentdata.image ?? "",
-                                mentione: '',
-                                replayData: false,
-                                message: commentdata.comment ?? "",
-                              ),
+                              if (commentdata.parentId == "0")
+                                CommentList(
+                                  likecount: (likecount ?? 0).toString(),
+                                  replaycount: 0,
+                                  time: "2 W ago",
+                                  name: commentdata.username ?? "",
+                                  img: commentdata.image ?? "",
+                                  mentione: '',
+                                  replayData: false,
+                                  message: commentdata.comment ?? "",
+                                ),
+                              if (subComments.length > 0)
+                                Column(
+                                  children: List.generate(
+                                    subComments.length,
+                                    (subIndex) => Container(
+                                      width: 80.w,
+                                      padding: EdgeInsets.only(top: 5.w),
+                                      child: CommentList(
+                                        likecount: (likecount ?? 0).toString(),
+                                        replaycount: 0,
+                                        time: "2 W ago",
+                                        name: subComments[subIndex].username ??
+                                            "",
+                                        img: subComments[subIndex].image ?? "",
+                                        mentione: '',
+                                        replayData: false,
+                                        message:
+                                            subComments[subIndex].comment ?? "",
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               SizeConfig.sH1,
                               DecorationUtils.dividerLine2(),
                               SizeConfig.sH1,
@@ -214,30 +249,30 @@ class Comments extends StatelessWidget {
   }
 
   var commentController = TextEditingController();
-  //
-  // List<Map<String, dynamic>> commentsList = [
-  //   {
-  //     "likecount": "19",
-  //     "replaycount": 0,
-  //     "time": "8 min ago",
-  //     "name": 'Jane_Cooper',
-  //     "img": "assets/icons/user1.png",
-  //     "mentione": "@ira_membrit",
-  //     "replayData": false,
-  //     "message":
-  //         'Loving 😍 your work and profile 👨 Top Marks. Once you are confident enough to develop',
-  //   },
-  //   {
-  //     "img": "assets/icons/user2.png",
-  //     "name": 'con Trariweis',
-  //     "time": "6 min ago",
-  //     "message": 'Nice 👌 Work, love your content ',
-  //     "likecount": "19",
-  //     "replaycount": 1,
-  //     "mentione": '',
-  //     "replayData": false,
-  //   },
-  // ];
+//
+// List<Map<String, dynamic>> commentsList = [
+//   {
+//     "likecount": "19",
+//     "replaycount": 0,
+//     "time": "8 min ago",
+//     "name": 'Jane_Cooper',
+//     "img": "assets/icons/user1.png",
+//     "mentione": "@ira_membrit",
+//     "replayData": false,
+//     "message":
+//         'Loving 😍 your work and profile 👨 Top Marks. Once you are confident enough to develop',
+//   },
+//   {
+//     "img": "assets/icons/user2.png",
+//     "name": 'con Trariweis',
+//     "time": "6 min ago",
+//     "message": 'Nice 👌 Work, love your content ',
+//     "likecount": "19",
+//     "replaycount": 1,
+//     "mentione": '',
+//     "replayData": false,
+//   },
+// ];
 }
 
 /// device show kar

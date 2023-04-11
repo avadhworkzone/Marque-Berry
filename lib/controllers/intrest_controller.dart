@@ -30,8 +30,6 @@ class InterestController extends GetxController {
   }
 
   setPreference() async {
-    logs(PreferenceUtils.getString(key: PreferenceUtils.token) +
-        ' ------------');
     await PreferenceUtils.setCategory(selectedCategoryList);
   }
 
