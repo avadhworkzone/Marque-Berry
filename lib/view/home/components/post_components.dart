@@ -37,7 +37,7 @@ class PostComponents extends StatelessWidget {
 
   CategoryFeedViewModel categoryFeedViewModel;
 
-  String postid;
+  int? postid = 0;
 
   int currentTabIndex;
 
@@ -284,65 +284,31 @@ class PostComponents extends StatelessWidget {
                     SizeConfig.sH2,
                     Row(
                       children: [
-                        likeByMe == "You"
-                            ? InkWell(
-                                onTap: () async {
-                                  disLikePostReqModel.postId = postid;
-                                  await categoryFeedViewModel
-                                      .dislikePost(disLikePostReqModel);
-
-                                  if (categoryFeedViewModel
-                                          .dislikeApiResponse.status ==
-                                      Status.COMPLETE) {
-                                    final response = categoryFeedViewModel
-                                        .dislikeApiResponse.data;
-                                    if (response.status == 200) {
-                                      await categoryFeedViewModel
-                                          .categoryTrending(
-                                        homeController.tabName,
-                                        "1",
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Image.asset(
-                                  IconsWidgets.heartFilledImage,
-                                  scale: 1.w,
-                                  color: Colors.red,
-                                ),
-                              )
-                            : InkWell(
-                                onTap: () async {
-                                  likePostReqModel.postId = postid;
-                                  await categoryFeedViewModel
-                                      .likePost(likePostReqModel);
-
-                                  if (categoryFeedViewModel
-                                          .likeApiResponse.status ==
-                                      Status.COMPLETE) {
-                                    final LikePostResModel response =
-                                        categoryFeedViewModel
-                                            .likeApiResponse.data;
-                                    logs("HERE.....");
-                                    if (response.status == 200) {
-                                      await categoryFeedViewModel
-                                          .categoryTrending("Savage", "1");
-                                    }
-                                  }
-                                },
-                                child: CommonImageScale(
-                                  img: IconsWidgets.heartImage,
-                                  scale: 1.w,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.color,
-                                ),
+                        // categoryFeedViewModel.likeUnlink.containsKey(postid)
+                        //     ?
+                        categoryFeedViewModel.likeUnlink[postid] == true
+                            ? LikeWidget(
+                                disLikePostReqModel: disLikePostReqModel,
+                                postid: postid ?? 0,
+                                categoryFeedViewModel: categoryFeedViewModel)
+                            : UnlikeWidget(
+                                likePostReqModel: likePostReqModel,
+                                postid: postid ?? 0,
+                                categoryFeedViewModel: categoryFeedViewModel,
                               ),
+                        // : UnlikeWidget(
+                        //     likePostReqModel: likePostReqModel,
+                        //     postid: postid,
+                        //     categoryFeedViewModel: categoryFeedViewModel),
                         SizeConfig.sW2,
                         InkWell(
                           onTap: () {
-                            Get.to(() => Comments(postId: postid));
+                            Get.to(
+                              () => Comments(
+                                postId: postid,
+                                profileImage: profileImage,
+                              ),
+                            );
                           },
                           child: CommonImageScale(
                             img: IconsWidgets.chatImage,
@@ -360,7 +326,12 @@ class PostComponents extends StatelessWidget {
                         Spacer(),
                         InkWell(
                           onTap: () {
-                            Get.to(() => Comments(postId: postid));
+                            Get.to(
+                              () => Comments(
+                                postId: postid,
+                                profileImage: profileImage,
+                              ),
+                            );
                           },
                           child: AdoroText(
                             "$commentcounter Comments",
@@ -621,6 +592,66 @@ class PostComponents extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LikeWidget extends StatelessWidget {
+  const LikeWidget({
+    super.key,
+    required this.disLikePostReqModel,
+    required this.postid,
+    required this.categoryFeedViewModel,
+  });
+
+  final DisLikePostReqModel disLikePostReqModel;
+  final int postid;
+  final CategoryFeedViewModel categoryFeedViewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        disLikePostReqModel.postId = postid.toString();
+        logs(" ============= LIKE WIDGET ${categoryFeedViewModel.likeUnlink}");
+        await categoryFeedViewModel.dislikePost(disLikePostReqModel);
+        await categoryFeedViewModel.changeLikeUnlike(postid, false);
+      },
+      child: Image.asset(
+        IconsWidgets.heartFilledImage,
+        scale: 1.w,
+        color: Colors.red,
+      ),
+    );
+  }
+}
+
+class UnlikeWidget extends StatelessWidget {
+  const UnlikeWidget({
+    super.key,
+    required this.likePostReqModel,
+    required this.postid,
+    required this.categoryFeedViewModel,
+  });
+
+  final LikePostReqModel likePostReqModel;
+  final int postid;
+  final CategoryFeedViewModel categoryFeedViewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        likePostReqModel.postId = postid.toString();
+        categoryFeedViewModel.changeLikeUnlike(postid, true);
+        logs(" =======------ LIKE WIDGET ${categoryFeedViewModel.likeUnlink}");
+        await categoryFeedViewModel.likePost(likePostReqModel);
+      },
+      child: CommonImageScale(
+        img: IconsWidgets.heartImage,
+        scale: 1.w,
+        color: Theme.of(context).textTheme.titleMedium?.color,
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/enum_utils.dart';
 
 class FeedCategoryRepo extends BaseService {
-  Future<List<CategoryResModel>> feedCategory({
+  Future<CategoryResModel> feedCategory({
     required String category,
     required String pageNumber,
   }) async {
@@ -17,7 +17,8 @@ class FeedCategoryRepo extends BaseService {
       url: '$baseURL$feedCategoryURL$category&pageNumber=$pageNumber',
     );
 
-    logs('RES ---->${response.runtimeType}');
-    return (response as List).map((e) => CategoryResModel.fromJson(e)).toList();
+    // logs('RES ---->${response.runtimeType}');
+    // return (response as List).map((e) => CategoryResModel.fromJson(e)).toList();
+    return CategoryResModel.fromJson(response);
   }
 }

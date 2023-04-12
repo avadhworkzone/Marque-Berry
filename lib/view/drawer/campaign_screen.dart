@@ -1,74 +1,143 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/model/apiModel/requestModel/apply_now_campaign_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/apply_now_contest_req_model.dart';
+import 'package:socialv/model/apiModel/responseModel/compaign_contest_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 
-class CampaignScreen extends StatelessWidget {
-  const CampaignScreen({Key? key}) : super(key: key);
+import '../../model/apiModel/responseModel/apply_now_contest_res_model.dart';
+import 'details_screen.dart';
+
+class CampaignScreen extends StatefulWidget {
+  CampaignScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CampaignScreen> createState() => _CampaignScreenState();
+}
+
+class _CampaignScreenState extends State<CampaignScreen> {
+  @override
+  void initState() {
+    campaignContestApiCall();
+    super.initState();
+  }
+
+  CampaignContestViewModel campaignContestViewModel =
+      Get.find<CampaignContestViewModel>();
+
+  campaignContestApiCall() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await campaignContestViewModel.getCampaignContest();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     Color? whiteBlue = Theme.of(context).scaffoldBackgroundColor;
     Color? whiteBlack = Theme.of(context).textTheme.titleSmall?.color;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: whiteBlue,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: whiteBlue,
-          leading: Container(
-            width: 10.w,
-            child: Icon(Icons.arrow_back, color: whiteBlack),
-          ),
-          title: const TabBar(
-            labelColor: ColorUtils.blueB9,
-            indicatorColor: ColorUtils.blueB9,
-            unselectedLabelColor: ColorUtils.black92,
-            tabs: [
-              Tab(
-                child: AdoroText(
-                  'Campaign',
-                  color: ColorUtils.blueB9,
-                  fontWeight: FontWeightClass.fontWeight600,
-                ),
+    return GetBuilder<CampaignContestViewModel>(
+      builder: (campaignContestViewModel) {
+        return DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            backgroundColor: ColorUtils.grey[100], //whiteBlue,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              elevation: 0,
+              backgroundColor: whiteBlue,
+              leading: Container(
+                width: 10.w,
+                child: Icon(Icons.arrow_back, color: whiteBlack),
               ),
-              Tab(
-                child: AdoroText(
-                  'Contest',
-                  // color: ColorUtils.blueB9,
-                  fontWeight: FontWeightClass.fontWeight600,
-                ),
+              title: const TabBar(
+                labelColor: ColorUtils.blueB9,
+                indicatorColor: ColorUtils.blueB9,
+                unselectedLabelColor: ColorUtils.black92,
+                tabs: [
+                  Tab(
+                    child: AdoroText(
+                      'Campaign',
+                      fontWeight: FontWeightClass.fontWeight600,
+                    ),
+                  ),
+                  Tab(
+                    child: AdoroText(
+                      'Contest',
+                      fontWeight: FontWeightClass.fontWeight600,
+                    ),
+                  ),
+                ],
               ),
-            ],
+              actions: [SizeConfig.sW6],
+            ),
+            body: TabBarView(
+              children: [
+                CampaignScn(campaignContestViewModel: campaignContestViewModel),
+                ContestScreen(
+                  campaignContestViewModel: campaignContestViewModel,
+                ),
+              ],
+            ),
           ),
-          actions: [SizeConfig.sW4],
-        ),
-        body: const TabBarView(
-          children: [
-            CampaignScn(),
-            ContestScreen(),
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
 ///Campaign Screen
 class CampaignScn extends StatelessWidget {
-  const CampaignScn({Key? key}) : super(key: key);
+  CampaignContestViewModel campaignContestViewModel;
+
+  CampaignScn({Key? key, required this.campaignContestViewModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    if (campaignContestViewModel.getCampaignContestApiResponse.status ==
+            Status.LOADING ||
+        campaignContestViewModel.getCampaignContestApiResponse.data == null) {
+      return Center(child: Loader());
+    } else if (campaignContestViewModel.getCampaignContestApiResponse.status ==
+        Status.ERROR) {
+      return Center(child: SomethingWentWrong());
+    }
+    final CampaignContestResModel campaignContestResponse =
+        campaignContestViewModel.getCampaignContestApiResponse.data;
+
+    if (campaignContestResponse.campaign?.length == 0) {
+      return Center(child: Text('No campaign available'));
+    }
     return ListView.builder(
-      itemCount: 5,
+      shrinkWrap: true,
+      itemCount: campaignContestResponse.campaign?.length ?? 0,
       itemBuilder: (context, index) {
-        return tabbarMethod(size, title: 'Brand Name');
+        final dataIndex = campaignContestResponse.campaign![index];
+        return TabBarMethod(
+          campaignContestViewModel: campaignContestViewModel,
+          method: 'campaign',
+          size: size,
+          title: dataIndex.firstAward ?? "",
+          createOn: dataIndex.createdOn ?? "",
+          applied: dataIndex.applied ?? "false",
+          image: dataIndex.image ?? "",
+          description: dataIndex.description ?? "",
+          campaignContestId: dataIndex.id.toString() ?? "",
+        );
       },
     );
   }
@@ -76,95 +145,319 @@ class CampaignScn extends StatelessWidget {
 
 ///Contest Screen
 class ContestScreen extends StatelessWidget {
-  const ContestScreen({Key? key}) : super(key: key);
+  CampaignContestViewModel campaignContestViewModel;
+  ContestScreen({
+    Key? key,
+    required this.campaignContestViewModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    if (campaignContestViewModel.getCampaignContestApiResponse.status ==
+        Status.LOADING) {
+      return Center(child: Loader());
+    } else if (campaignContestViewModel.getCampaignContestApiResponse.status ==
+        Status.ERROR) {
+      return Center(child: SomethingWentWrong());
+    }
+    final CampaignContestResModel contestContestResponse =
+        campaignContestViewModel.getCampaignContestApiResponse.data;
+
+    if (contestContestResponse.contest?.length == 0) {
+      return Center(child: Text('No contest available'));
+    }
     return ListView.builder(
-      itemCount: 5,
+      shrinkWrap: true,
+      itemCount: contestContestResponse.contest?.length ?? 0,
       itemBuilder: (context, index) {
-        return tabbarMethod(size, title: 'contest Name');
+        final dataIndex = contestContestResponse.contest?[index];
+        return TabBarMethod(
+          method: 'contest',
+          size: size,
+          createOn: dataIndex?.createdOn ?? "",
+          applied: dataIndex?.applied ?? "false",
+          title: dataIndex?.firstAward ?? '',
+          image: dataIndex?.image ?? '',
+          description: dataIndex?.description ?? "",
+          campaignContestId: dataIndex?.id.toString() ?? "",
+          campaignContestViewModel: campaignContestViewModel,
+        );
       },
     );
   }
 }
 
-Padding tabbarMethod(Size size, {required String title}) {
-  return Padding(
-    padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 2.w),
-    child: Container(
-      margin: EdgeInsets.only(bottom: 2.w),
-      width: size.width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5.w),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 6.w),
-        child: Column(
-          children: [
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: CircleAvatar(
-                child: Image.asset('assets/images/Profile1.png'),
-              ),
-              title: AdoroText(
-                title,
-                fontSize: 12.sp,
-                color: ColorUtils.black,
-                fontWeight: FontWeight.bold,
-              ),
-              subtitle: const AdoroText(
-                'Time Left : XX:YY',
-                color: ColorUtils.black92,
-              ),
+class TabBarMethod extends StatelessWidget {
+  Size size;
+  String title;
+  String image;
+  String method;
+  String description;
+  String createOn;
+  String applied;
+
+  String campaignContestId;
+
+  CampaignContestViewModel campaignContestViewModel;
+
+  TabBarMethod({
+    Key? key,
+    required this.size,
+    required this.title,
+    required this.method,
+    required this.description,
+    required this.image,
+    required this.applied,
+    required this.createOn,
+    required this.campaignContestId,
+    required this.campaignContestViewModel,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<CampaignScreenController>(
+      builder: (campaignScreenController) {
+        return Padding(
+          padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 2.w),
+          child: Container(
+            margin: EdgeInsets.only(bottom: 2.w),
+            width: size.width,
+            decoration: BoxDecoration(
+              color: ColorUtils.white,
+              borderRadius: BorderRadius.circular(5.w),
             ),
-            AdoroText(
-              'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit...',
-              color: ColorUtils.black92,
-            ),
-            Container(
-              height: 5.h,
-              width: size.width,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      ColorUtils.linearGradient1,
-                      ColorUtils.linearGradient6,
-                      ColorUtils.linearGradient7
-                    ],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 6.w),
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.w),
+                      child: Container(
+                        height: 10.w,
+                        width: 10.w,
+                        color: ColorUtils.greyFA,
+                        child: OctoImage(
+                          fit: BoxFit.cover,
+                          width: 24,
+                          height: 24,
+                          image: NetworkImage(image ?? ""),
+                          progressIndicatorBuilder: (context, progress) {
+                            double? value;
+                            var expectedBytes = progress?.expectedTotalBytes;
+                            if (progress != null && expectedBytes != null) {
+                              value = progress.cumulativeBytesLoaded /
+                                  expectedBytes;
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: value,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.color,
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stacktrace) =>
+                              Container(
+                            width: 24,
+                            height: 24,
+                            color: ColorUtils.grey[200],
+                            child: Padding(
+                              padding: EdgeInsets.all(1.w),
+                              child: CommonImage(
+                                img: IconsWidgets.userImages,
+                                color: ColorUtils.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: AdoroText(
+                      title,
+                      fontSize: 12.sp,
+                      color: ColorUtils.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    subtitle: AdoroText(
+                      'Time Left : ${postTimeCalculate(createOn, "")}',
+                      color: ColorUtils.black92,
+                    ),
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(3.w))),
-              child: Center(
-                child: AdoroText(
-                  'APPLY NOW',
-                  color: ColorUtils.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12.sp,
-                ),
+                  SizeConfig.sH1,
+                  AdoroText(
+                    '$description',
+                    maxLines: 4,
+                    color: ColorUtils.black92,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizeConfig.sH1,
+                  InkWell(
+                    onTap: () {
+                      if (method == "contest") {
+                        applyContest(
+                          applied: applied,
+                          campaignScreenController: campaignScreenController,
+                          campaignId: campaignContestId,
+                        );
+                      } else if (method == "campaign") {
+                        applyCampaign(
+                          applied: applied,
+                          campaignScreenController: campaignScreenController,
+                          contestId: campaignContestId,
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 5.h,
+                      width: size.width,
+                      decoration: applied == "false"
+                          ? BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  ColorUtils.linearGradient1,
+                                  ColorUtils.linearGradient6,
+                                  ColorUtils.linearGradient7
+                                ],
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                              ),
+                              borderRadius: BorderRadius.circular(3.w),
+                            )
+                          : BoxDecoration(color: Colors.grey[100]),
+                      child: Center(
+                        child: AdoroText(
+                          'APPLY NOW',
+                          color: applied == "false"
+                              ? ColorUtils.white
+                              : ColorUtils.black92,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizeConfig.sH1,
+                  InkWell(
+                    onTap: () => Get.to(
+                      () => DetailsScreen(
+                        applied: applied,
+                        campaignId: campaignContestId,
+                      ),
+                    ),
+                    child: Container(
+                      height: 40,
+                      width: size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(3.w),
+                        ),
+                      ),
+                      child: Center(
+                        child: AdoroText(
+                          'KNOW MORE',
+                          color: ColorUtils.black92,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizeConfig.sH2,
+                ],
               ),
             ),
-            Container(
-              height: 40,
-              width: size.width,
-              decoration: BoxDecoration(
-                  color: ColorUtils.greyFA,
-                  borderRadius: BorderRadius.all(Radius.circular(3.w))),
-              child: Center(
-                child: AdoroText(
-                  'KNOW MORE',
-                  color: ColorUtils.black92,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12.sp,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+          ),
+        );
+      },
+    );
+  }
+
+  ApplyContestReqModel applyContestReqModel = ApplyContestReqModel();
+  applyContest({
+    required String applied,
+    required CampaignScreenController campaignScreenController,
+    required String campaignId,
+  }) async {
+    if (applied == "false") {
+      String path = await campaignScreenController.pickCampaignImage();
+      logs(path);
+      applyContestReqModel.media = path;
+      applyContestReqModel.campaignId = campaignId;
+      await campaignContestViewModel.applyContest(applyContestReqModel);
+
+      if (campaignContestViewModel.applyContestApiResponse.status ==
+          Status.COMPLETE) {
+        final ApplyContestResModel response =
+            campaignContestViewModel.applyContestApiResponse.data;
+        showSnackBar(
+          message: response.msg ?? "apply successfully",
+          snackbarSuccess: true,
+        );
+      }
+    } else if (applied == "true") {
+      showSnackBar(message: "Already applied");
+    }
+  }
+
+  ApplyCampaignReqModel applyCampaignReqModel = ApplyCampaignReqModel();
+  applyCampaign({
+    required String applied,
+    required CampaignScreenController campaignScreenController,
+    required String contestId,
+  }) async {
+    if (applied == "false") {
+      String path = await campaignScreenController.pickContestImage();
+      applyCampaignReqModel.media = path;
+      applyCampaignReqModel.contestId = contestId;
+
+      await campaignContestViewModel.applyCampaign(applyCampaignReqModel);
+
+      if (campaignContestViewModel.applyCampaignApiResponse.status ==
+          Status.COMPLETE) {
+        final CampaignContestResModel response =
+            campaignContestViewModel.applyCampaignApiResponse.data;
+        showSnackBar(
+          message: response.msg ?? "apply successfully",
+          snackbarSuccess: true,
+        );
+      }
+    } else if (applied == "true") {
+      showSnackBar(message: "Already applied");
+    }
+  }
+}
+
+class CampaignScreenController extends GetxController {
+  String campaignImagePath = "";
+  String contestImagePath = "";
+
+  Future<String> pickCampaignImage() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      campaignImagePath = file.path!;
+    }
+    update();
+    return campaignImagePath;
+  }
+
+  Future<String> pickContestImage() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      contestImagePath = file.path!;
+    }
+    update();
+    return contestImagePath;
+  }
 }

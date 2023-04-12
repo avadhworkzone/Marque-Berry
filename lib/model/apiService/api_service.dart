@@ -22,6 +22,8 @@ class ApiService extends BaseService {
     Map<String, dynamic>? body,
     bool fileUpload = false,
     bool createPostData = false,
+    bool applyCampaignData = false,
+    bool applyContestData = false,
   }) async {
     try {
       logs("URL ---> ${Uri.parse(url!)}");
@@ -82,6 +84,60 @@ class ApiService extends BaseService {
           "content_url",
           body!["file"],
         );
+        request.files.add(pic);
+        request.headers.addAll(
+          {
+            "token": PreferenceUtils.getString(key: PreferenceUtils.token),
+          },
+        );
+
+        body.keys.toList().forEach((element) {
+          if (element != "file") {
+            request.fields.addAll({element: body[element]});
+          }
+        });
+
+        var result = await request.send();
+        var responseData = await result.stream.toBytes();
+        var responseString = String.fromCharCodes(responseData);
+        print("FILE UPLOAD STATUS ==  $responseString");
+        response = returnResponse(result.statusCode, responseString);
+        logs("response......$response");
+      }
+
+      ///------------------------------------ APPLY CAMPAIGN POST METHOD -------------------------------------///
+      else if (applyCampaignData) {
+        logs("body:=====> $body");
+        var request = http.MultipartRequest("POST", Uri.parse(url));
+        var pic = await http.MultipartFile.fromPath("media", body!["file"]);
+
+        request.files.add(pic);
+        request.headers.addAll(
+          {
+            "token": PreferenceUtils.getString(key: PreferenceUtils.token),
+          },
+        );
+
+        body.keys.toList().forEach((element) {
+          if (element != "file") {
+            request.fields.addAll({element: body[element]});
+          }
+        });
+
+        var result = await request.send();
+        var responseData = await result.stream.toBytes();
+        var responseString = String.fromCharCodes(responseData);
+        print("FILE UPLOAD STATUS ==  $responseString");
+        response = returnResponse(result.statusCode, responseString);
+        logs("response......$response");
+      }
+
+      ///------------------------------------ APPLY CONTEST POST METHOD -------------------------------------///
+      else if (applyContestData) {
+        logs("body:=====> $body");
+        var request = http.MultipartRequest("POST", Uri.parse(url));
+
+        var pic = await http.MultipartFile.fromPath("media", body!["file"]);
         request.files.add(pic);
         request.headers.addAll(
           {

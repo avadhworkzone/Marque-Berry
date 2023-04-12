@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
@@ -17,15 +18,24 @@ import 'package:socialv/view/home/comment_components/comment_list_components.dar
 import 'package:socialv/view/home/home.dart';
 
 import '../../commanWidget/common_appbar.dart';
+import '../../commanWidget/common_image.dart';
 import '../../model/apiModel/responseModel/post_comment_res_model.dart';
 import '../../model/apis/api_response.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../viewModel/category_view_model.dart';
 
 class Comments extends StatelessWidget {
-  String postId;
+  int? postId = 0;
   int? likecount;
 
-  Comments({Key? key, required this.postId, this.likecount}) : super(key: key);
+  String profileImage = "";
+
+  Comments({
+    Key? key,
+    this.likecount,
+    required this.postId,
+    required this.profileImage,
+  }) : super(key: key);
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
@@ -34,7 +44,7 @@ class Comments extends StatelessWidget {
 
   postCommentApiCall() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await categoryFeedViewModel.getAllComments(postId);
+      await categoryFeedViewModel.getAllComments(postId.toString());
     });
   }
 
@@ -45,7 +55,7 @@ class Comments extends StatelessWidget {
     Color? canvasColor = Theme.of(context).canvasColor;
 
     return Material(
-      color: canvasColor,
+      color: Colors.grey[100],
       child: GetBuilder<HomeController>(builder: (home) {
         return GetBuilder<CategoryFeedViewModel>(
           initState: (_) {
@@ -173,16 +183,20 @@ class Comments extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 6.w,
-                            child: Image.asset(
-                              "assets/icons/user4.png",
-                              fit: BoxFit.fill,
-                            ),
+                            backgroundColor: Colors.grey[100],
+                            backgroundImage: NetworkImage(profileImage),
+                            onBackgroundImageError: (_, __) {
+                              CommonImage(
+                                img: IconsWidgets.userImages,
+                                color: ColorUtils.black,
+                              );
+                            },
                           ),
                           SizeConfig.sW3,
                           Expanded(
                             child: CommonTextFormField(
                               validator: (v) => emptyValidation(v),
-                              color: Colors.black,
+                              color: ColorUtils.black,
                               hintText: 'write a comment...',
                               hintStyle: TextStyle(
                                 color: ColorUtils.black92,
@@ -203,10 +217,9 @@ class Comments extends StatelessWidget {
                                 showSnackBar(message: 'Field is required');
                                 return;
                               }
-                              logs("postId:=====> $postId");
                               postCommentReqModel.parentId =
                                   (home.parentId ?? 0).toString();
-                              postCommentReqModel.postId = postId;
+                              postCommentReqModel.postId = postId.toString();
                               postCommentReqModel.comment =
                                   commentController.text;
                               await categoryFeedViewModel

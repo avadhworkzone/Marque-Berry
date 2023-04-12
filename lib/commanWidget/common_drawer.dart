@@ -119,7 +119,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
-                  Get.to(() => Setting());
+                  // Get.to(() => Setting());
                 },
                 context: context,
                 title: VariableUtils.settingsText,

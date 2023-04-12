@@ -28,4 +28,11 @@ abstract class BaseService {
 
   final String userCategoryURL = 'user_category';
   final String getPendingRequestListURL = 'getpendingRequestList';
+
+  final String getFollowerListURL = 'getFollowerList';
+  final String getAllCampaignAndContestAppURL = 'getAllcampaignAndContestApp';
+
+  final String applyCampaignURL = 'applyCampaign';
+  final String applyContestURL = 'applyContest';
+  final String getCampaignByIdURL = 'sgetCampaignById?id=2';
 }

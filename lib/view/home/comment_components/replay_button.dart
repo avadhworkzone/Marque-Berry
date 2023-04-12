@@ -4,7 +4,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
 class ReplayButton extends StatelessWidget {
-  int replaycount = 0;
+  int? replaycount = 0;
   ReplayButton({Key? key, required this.replaycount}) : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class ReplayButton extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 4.5.w,
-          vertical: 2.7.w,
+          vertical: 2.1.w,
         ),
         child: replaycount == 0
             ? AdoroText("REPLY", color: ColorUtils.black92)

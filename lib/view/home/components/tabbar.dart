@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
@@ -41,19 +43,54 @@ class TabBarComponents extends StatelessWidget {
             onTap: () {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                 if (index == 0) {
-                  homeController.tabNameChange("Relevant");
-                  await categoryFeedViewModel.categoryTrending("Relevant", '1');
+                  homeController.tabNameChange("relevant");
+                  categoryFeedViewModel.pageNumberIndex = 0;
+                  categoryFeedViewModel.isPageLoading = false;
+                  await categoryFeedViewModel.categoryTrending("relevant");
+                  // if (categoryFeedViewModel.categoryApiResponse.status ==
+                  //     Status.COMPLETE) {
+                  //   CategoryResModel categoryResponse =
+                  //       categoryFeedViewModel.categoryApiResponse.data;
+                  //   if (categoryResponse.data != null) {
+                  //     homeController.categoryListUpdate(
+                  //       categoryResponse.data!,
+                  //     );
+                  //   }
+                  // }
                 } else if (index == 1) {
-                  homeController.tabNameChange("Trending");
-                  await categoryFeedViewModel.categoryTrending("Trending", '1');
+                  homeController.tabNameChange("trending");
+                  categoryFeedViewModel.pageNumberIndex = 0;
+                  categoryFeedViewModel.isPageLoading = false;
+                  await categoryFeedViewModel.categoryTrending("trending");
+                  // if (categoryFeedViewModel.categoryApiResponse.status ==
+                  //     Status.COMPLETE) {
+                  //   CategoryResModel categoryResponse =
+                  //       categoryFeedViewModel.categoryApiResponse.data;
+                  //   if (categoryResponse.data != null) {
+                  //     homeController.categoryListUpdate(
+                  //       categoryResponse.data!,
+                  //     );
+                  //   }
+                  // }
                 } else {
                   homeController.tabNameChange(
                     categoryDataList[index - 2].name,
                   );
+                  categoryFeedViewModel.pageNumberIndex = 0;
+                  categoryFeedViewModel.isPageLoading = false;
                   await categoryFeedViewModel.categoryTrending(
                     categoryDataList[index - 2].name.toString(),
-                    '1',
                   );
+                  // if (categoryFeedViewModel.categoryApiResponse.status ==
+                  //     Status.COMPLETE) {
+                  //   CategoryResModel categoryResponse =
+                  //       categoryFeedViewModel.categoryApiResponse.data;
+                  //   if (categoryResponse.data != null) {
+                  //     homeController.categoryListUpdate(
+                  //       categoryResponse.data!,
+                  //     );
+                  //   }
+                  // }
                 }
               });
               homeController.tabChange(index);

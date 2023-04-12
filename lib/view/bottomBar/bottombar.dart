@@ -2,22 +2,22 @@
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
-import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
-
+import '../drawer/campaign_screen.dart';
 import '../sharePost/share_post.dart';
 
 class BottomBar extends StatelessWidget {
   BottomBar({super.key});
 
-  // List pageRoute = [Home(), SharePost(), CampaignScreen(), ProfileScreen1()];
-  List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
+  List pageRoute = [Home(), SharePost(), CampaignScreen(), ProfileScreen1()];
+  // List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
 
   @override
   Widget build(BuildContext context) {

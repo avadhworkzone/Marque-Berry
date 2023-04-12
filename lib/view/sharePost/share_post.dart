@@ -14,6 +14,7 @@ import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
 
@@ -440,19 +441,22 @@ class UploadPhoto extends StatelessWidget {
           color: Theme.of(context).textTheme.titleSmall?.color,
           thickness: 1,
         ),
-        Row(
-          children: [
-            Icon(
-              Icons.person_add_alt_sharp,
-              color: Theme.of(context).textTheme.titleSmall?.color,
-            ),
-            AdoroText(
-              VariableUtils.tagAFriend,
-              color: Theme.of(context).textTheme.titleSmall?.color,
-              fontSize: 11.sp,
-              fontWeight: FontWeightClass.fontWeight600,
-            ),
-          ],
+        InkWell(
+          onTap: () => Get.to(() => TagAPeople()),
+          child: Row(
+            children: [
+              Icon(
+                Icons.person_add_alt_sharp,
+                color: Theme.of(context).textTheme.titleSmall?.color,
+              ),
+              AdoroText(
+                VariableUtils.tagAFriend,
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                fontSize: 11.sp,
+                fontWeight: FontWeightClass.fontWeight600,
+              ),
+            ],
+          ),
         ),
       ],
     );

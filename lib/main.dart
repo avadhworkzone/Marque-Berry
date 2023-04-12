@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/interest.dart';
 import 'package:socialv/view/auth/otp_screen.dart';
+import 'package:socialv/view/drawer/campaign_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -19,6 +20,7 @@ import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/controllers/login_controller.dart';
+import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/controllers/intrest_controller.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
@@ -26,6 +28,7 @@ import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 import 'package:socialv/controllers/validate_otp_controller.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
+import 'package:socialv/viewModel/follow_request_view_model.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
 
 Future<void> main() async {
@@ -84,7 +87,6 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      // return InterestScreen();
                       return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
@@ -106,6 +108,12 @@ class _MyAppState extends State<MyApp> {
   CreatePostViewModel createPostViewModel = Get.put(CreatePostViewModel());
   CategoryFeedViewModel categoryViewModel = Get.put(CategoryFeedViewModel());
 
+  CampaignContestViewModel campaignContestViewModel =
+      Get.put(CampaignContestViewModel());
+
+  FollowRequestViewModel followRequestViewModel =
+      Get.put(FollowRequestViewModel());
+
   OtpController otpController = Get.put(OtpController());
   HomeController homeController = Get.put(HomeController());
   LoginController loginController = Get.put(LoginController());
@@ -113,16 +121,21 @@ class _MyAppState extends State<MyApp> {
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());
+
+  CampaignScreenController campaignScreenController =
+      Get.put(CampaignScreenController());
+
   EditProfileController editProfileController =
       Get.put(EditProfileController());
 }
 
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY4MTIwODM3NiwiZXhwIjoxNjgyMDcyMzc2fQ.0ui6YLqzLpSj9hb84ErHGNn55ST0osUYEO-uBH-RdoU
+// https://api.postman.com/collections/2554210-f52106ae-9e3d-47a0-b2e3-d7eb1c319143?access_key=PMAT-01GPJBWJMNT4JBECTXF38YV17R
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Poppins',
     cardColor: ColorUtils.white,
     scaffoldBackgroundColor: ColorUtils.white,
-
     canvasColor: Colors.grey[200],
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
@@ -155,7 +168,7 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     // useMaterial3: true,
     fontFamily: 'Poppins',
-    cardColor: ColorUtils.black2E,
+    // cardColor: ColorUtils.black2E,
     canvasColor: ColorUtils.black2E,
     buttonColor: ColorUtils.white,
     scaffoldBackgroundColor: ColorUtils.black2E,

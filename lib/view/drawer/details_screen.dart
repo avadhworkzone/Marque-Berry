@@ -8,29 +8,39 @@ import 'package:socialv/utils/tecell_text.dart';
 import '../../commanWidget/common_appbar.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
+  String applied;
+  String campaignId;
+
+  DetailsScreen({
+    Key? key,
+    required this.campaignId,
+    required this.applied,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: ColorUtils.greyFA,
+      backgroundColor: ColorUtils.grey[100],
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
-        child: CommonAppBar(title: '', ontap: () => Get.back()),
+        child: CommonAppBar(title: 'Details', ontap: () => Get.back()),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.w),
         child: Container(
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-              color: ColorUtils.white, borderRadius: BorderRadius.circular(20)),
+            color: ColorUtils.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
           child: Column(
             children: [
               ListTile(
                 leading: CircleAvatar(
-                    child: Image.asset('assets/images/Profile1.png')),
+                  child: Image.asset('assets/images/Profile1.png'),
+                ),
                 title: AdoroText(
                   'Brand Name',
                   fontSize: 12.sp,
@@ -47,35 +57,43 @@ class DetailsScreen extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: ListView.builder(
-                      itemCount: 7,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.all(1.w),
-                          child: AdoroText(
-                            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequatduis enim velit mollit...',
-                            color: ColorUtils.black92,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        );
-                      }),
+                    itemCount: 7,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.all(1.w),
+                        child: AdoroText(
+                          'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequatduis enim velit mollit...',
+                          color: ColorUtils.black92,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 5.w, left: 5.w, right: 5.w),
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
                 child: Container(
                   height: 6.h,
                   width: size.width,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          ColorUtils.linearGradient1,
-                          ColorUtils.linearGradient6,
-                          ColorUtils.linearGradient7
-                        ],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(4.w))),
+                  decoration: applied == "false"
+                      ? BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              ColorUtils.linearGradient1,
+                              ColorUtils.linearGradient6,
+                              ColorUtils.linearGradient7
+                            ],
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4.w),
+                          ),
+                        )
+                      : BoxDecoration(
+                          color: Colors.grey[100],
+                        ),
                   child: Center(
                     child: AdoroText(
                       'APPLY NOW',
