@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -34,19 +32,14 @@ class ValidateOtpScreen extends StatefulWidget {
 class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
   TextEditingController otp = TextEditingController(text: "");
 
-  // StreamController<ErrorAnimationType>? errorController;
-
   final otpFormKey = GlobalKey<FormState>();
 
   LoginReqModel loginReqModel = LoginReqModel();
-
-  RegisterReqModel registerReqModel = RegisterReqModel();
+  ValidateOTPReqModel validateOTPReqModel = ValidateOTPReqModel();
+//  RegisterReqModel registerReqModel = RegisterReqModel();
 
   AuthViewModel authViewModel = Get.find<AuthViewModel>();
-
   OtpController otpController = Get.find<OtpController>();
-
-  ValidateOTPReqModel validateOTPReqModel = ValidateOTPReqModel();
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +71,10 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                         AdoroText(
                           VariableUtils.weHaveSentDigitCode,
                           fontSize: 11.sp,
+                          textAlign: TextAlign.center,
                           color: Theme.of(context).textTheme.titleMedium?.color,
                         ),
-                        SizeConfig.sH2,
+                        SizeConfig.sH5,
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 6.w),
                           child: Column(
@@ -106,11 +100,11 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     borderRadius: BorderRadius.circular(5),
                                     fieldHeight: 15.w,
                                     fieldWidth: 12.w,
-                                    activeColor: ColorUtils.grey[300],
-                                    activeFillColor: ColorUtils.grey[300],
-                                    selectedFillColor: ColorUtils.grey[300],
-                                    inactiveColor: ColorUtils.grey[300],
-                                    inactiveFillColor: ColorUtils.grey[300],
+                                    activeColor: ColorUtils.grey[200],
+                                    activeFillColor: ColorUtils.grey[200],
+                                    selectedFillColor: ColorUtils.grey[200],
+                                    inactiveColor: ColorUtils.grey[200],
+                                    inactiveFillColor: ColorUtils.grey[200],
                                     selectedColor: ColorUtils.black,
                                   ),
                                   pastedTextStyle: TextStyle(
@@ -123,26 +117,14 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                             ],
                           ),
                         ),
+                        SizeConfig.sH1,
                         AdoroText(
                           (otpController.timer - otpController.tick) < 10
                               ? "00: 0${otpController.timer - otpController.tick}"
                               : "00: ${otpController.timer - otpController.tick}",
                           color: ColorUtils.green4E,
+                          fontWeight: FontWeightClass.fontWeight600,
                         ),
-                        if (otpController.hasError == true)
-                          Column(
-                            children: [
-                              SizeConfig.sH3,
-                              Center(
-                                child: AdoroText(
-                                  "Please fill all the cell",
-                                  fontSize: 12,
-                                  color: ColorUtils.red29,
-                                  fontWeight: FontWeightClass.fontWeight400,
-                                ),
-                              ),
-                            ],
-                          ),
                         SizeConfig.sH3,
                         RichText(
                           text: TextSpan(
@@ -168,17 +150,22 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                   },
                                 text: ' ${VariableUtils.resendOTP}',
                                 style: TextStyle(
+                                  fontWeight: (otpController.timer -
+                                              otpController.tick) ==
+                                          0
+                                      ? FontWeightClass.fontWeightBold
+                                      : FontWeightClass.fontWeightNormal,
                                   color: (otpController.timer -
                                               otpController.tick) ==
                                           0
                                       ? ColorUtils.blueB9
-                                      : ColorUtils.grey[250],
+                                      : ColorUtils.grey[500],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizeConfig.sH7,
+                        SizeConfig.sH5,
                         CustomBtn(
                           onTap: () async {
                             if (otpFormKey.currentState!.validate()) {
@@ -211,17 +198,14 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     key: PreferenceUtils.login,
                                     value: 1,
                                   );
-                                  otpController.changeerror(false);
 
                                   Get.offAllNamed(RouteHelper.getDoneRoute());
                                 } else {
-                                  otpController.changeerror(true);
                                   showSnackBar(
                                     message: VariableUtils.somethingWentWrong,
                                   );
                                 }
                               } else {
-                                otpController.changeerror(true);
                                 showSnackBar(
                                   message: VariableUtils.somethingWentWrong,
                                 );

@@ -3,7 +3,6 @@ import 'package:socialv/model/apiModel/responseModel/apply_now_contest_res_model
 import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/model/apiService/api_service.dart';
 import 'package:socialv/model/apiService/base_service.dart';
-import '../apiModel/responseModel/compaign_contest_res_model.dart';
 
 class ApplyContestRepo extends BaseService {
   Future<ApplyContestResModel> applyContest(

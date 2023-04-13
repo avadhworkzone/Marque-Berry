@@ -1,17 +1,14 @@
 import 'package:get/get.dart';
-import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
-import 'package:socialv/model/repo/get_follow_list_repo.dart';
-import 'package:socialv/model/repo/update_user_profile_pic_repo.dart';
-import 'package:socialv/model/repo/update_user_profile_repo.dart';
+import 'package:socialv/model/repo/get_follower_list_repo.dart';
+import 'package:socialv/model/repo/get_following_list_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/model/repo/get_user_profile_repo.dart';
 
 class FollowRequestViewModel extends GetxController {
   ApiResponse getFollowerListApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse getFollowingListApiResponse = ApiResponse.initial('INITIAL');
 
-  /// ======================== GET USER VIEW MODEL ================================
+  /// ======================== GET FOLLOWING USER VIEW MODEL ================================
 
   Future<void> getFollowerList() async {
     logs('loading..');
@@ -26,6 +23,23 @@ class FollowRequestViewModel extends GetxController {
     }
     update();
   }
+
+  /// ======================== GET FOLLOWER VIEW MODEL ================================
+
+  Future<void> getFollowingList() async {
+    logs('loading..');
+    getFollowingListApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await GetFollowingListRepo().getFollowingList();
+      getFollowingListApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('getFollowingListApiResponse ERROR :=> $e');
+      getFollowingListApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
   //
   // /// ======================== VALIDATE OTP VIEW MODEL ================================
   // Future<void> validateOTP(ValidateOTPReqModel reqModel) async {

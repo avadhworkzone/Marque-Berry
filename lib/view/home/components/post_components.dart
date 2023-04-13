@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
-import 'package:socialv/model/apiModel/responseModel/dislike_post_res_model.dart';
-import 'package:socialv/model/apiModel/responseModel/like_post_res_model.dart';
-import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
@@ -242,7 +239,7 @@ class PostComponents extends StatelessWidget {
                   children: [
                     SizeConfig.sH1,
                     AdoroText(
-                      title ?? "",
+                      "title  :$postid" ?? "",
                       maxLines: 2,
                       fontWeight: FontWeight.w500,
                       overflow: TextOverflow.ellipsis,

@@ -8,6 +8,7 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
+import 'package:socialv/view/profile/following_screen.dart';
 
 class ImagesModel {
   final String image;
@@ -108,11 +109,11 @@ class ProfileScreen1 extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
-              const AdoroText(
-                '@ritik_raj1',
-                color: ColorUtils.black92,
-                fontSize: 15,
-              ),
+              // const AdoroText(
+              //   '@ritik_raj1',
+              //   color: ColorUtils.black92,
+              //   fontSize: 15,
+              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -130,34 +131,54 @@ class ProfileScreen1 extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Column(
-                    children: const [
-                      AdoroText('Followers', color: ColorUtils.black92),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      AdoroText(
-                        '1.2k',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Get.to(
+                        () => FollowerFollowing(
+                          followingCounter: 1,
+                          title: 'Followers',
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: const [
+                        AdoroText('Followers', color: ColorUtils.black92),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        AdoroText(
+                          '1.2k',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: const [
-                      AdoroText(
-                        'Following',
-                        color: ColorUtils.black92,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      AdoroText(
-                        '1.1k',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Get.to(
+                        () => FollowerFollowing(
+                          followingCounter: 0,
+                          title: 'Following',
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: const [
+                        AdoroText(
+                          'Following',
+                          color: ColorUtils.black92,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        AdoroText(
+                          '1.1k',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

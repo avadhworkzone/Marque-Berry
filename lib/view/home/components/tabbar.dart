@@ -1,15 +1,8 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
-import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/const_utils.dart' as categoryList;

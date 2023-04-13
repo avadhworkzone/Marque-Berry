@@ -30,6 +30,8 @@ abstract class BaseService {
   final String getPendingRequestListURL = 'getpendingRequestList';
 
   final String getFollowerListURL = 'getFollowerList';
+  final String getFollowingListURL = 'getFollowingList';
+
   final String getAllCampaignAndContestAppURL = 'getAllcampaignAndContestApp';
 
   final String applyCampaignURL = 'applyCampaign';

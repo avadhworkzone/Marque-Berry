@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:convert';
-import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 
 import 'base_service.dart';

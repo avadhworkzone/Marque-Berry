@@ -3,23 +3,21 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/commanWidget/custom_btn.dart';
-import 'package:socialv/commanWidget/loader.dart';
-import 'package:socialv/model/apiModel/requestModel/user_category_req_model.dart';
-import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
-import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/view/message/message_list.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/view/home/components/tabbar.dart';
-import 'package:socialv/view/message/message_list.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/view/home/components/post_components.dart';
+import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);

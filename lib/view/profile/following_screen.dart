@@ -1,125 +1,391 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/decoration_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/viewModel/follow_request_view_model.dart';
 
-class FollowingScreen extends StatelessWidget {
-  const FollowingScreen({Key? key}) : super(key: key);
-  final isCheck = true;
+import '../../commanWidget/common_image.dart';
+import '../../utils/assets/images_utils.dart';
+
+class FollowerFollowing extends StatelessWidget {
+  int followingCounter;
+
+  String title;
+
+  FollowerFollowing({
+    Key? key,
+    required this.followingCounter,
+    required this.title,
+  }) : super(key: key);
+
+  FollowerFollowingController followerFollowingController =
+      Get.find<FollowerFollowingController>();
+
+  FollowRequestViewModel followRequestViewModel =
+      Get.find<FollowRequestViewModel>();
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: customAppbar(
         context: context,
-        title: 'Following',
+        title: title ?? "",
         icon: const Icon(
           Icons.search_rounded,
           color: ColorUtils.black2E,
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            height: 100,
-            width: size.width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  ColorUtils.linearGradient1,
-                  ColorUtils.linearGradient6,
-                  ColorUtils.linearGradient7
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            // padding: const EdgeInsets.symmetric(horizontal: 20),
-            margin: const EdgeInsets.only(bottom: 630),
-            child: DefaultTabController(
-              length: 2,
-              child: TabBar(
-                tabs: [
-                  Tab(
-                    child: AdoroText(
-                      'Following'.toUpperCase(),
-                    ),
-                  ),
-                  Tab(
-                    child: AdoroText(
-                      'Followers'.toUpperCase(),
-                      color: ColorUtils.black92,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 60,
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ColorUtils.white),
-              height: size.height,
-              width: size.width,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: GetBuilder<FollowRequestViewModel>(
+        builder: (followRequestViewModel) {
+          return GetBuilder<FollowerFollowingController>(
+            initState: (_) {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+                followerFollowingController.changeTabIndex(followingCounter);
+                await followRequestViewModel.getFollowerList();
+                await followRequestViewModel.getFollowingList();
+              });
+            },
+            builder: (followerFollowingController) {
+              return Container(
+                child: Stack(
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    FollowTabBar(
+                      followerFollowingController: followerFollowingController,
                     ),
-                    AdoroText(
-                      'Following'.toUpperCase(),
-                      color: ColorUtils.black2E,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: 6,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Row(
-                              children: [
-                                const Text(
-                                  'jane_ui Ux',
-                                  style: TextStyle(color: ColorUtils.black2E),
-                                ),
-                                Checkbox(value: isCheck, onChanged: (value) {})
-                              ],
-                            ),
-                            subtitle: const Text(
-                              '@ jane_copper',
-                              style: TextStyle(color: ColorUtils.black92),
-                            ),
-                            leading: CircleAvatar(
-                              child: Image.asset('assets/images/Profile1.png'),
-                            ),
-                            trailing: const Icon(
-                              Icons.more_vert,
-                              color: ColorUtils.black92,
-                            ),
-                            contentPadding: const EdgeInsets.all(10),
-                          );
-                        },
+                    Positioned(
+                      top: 17.w,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.w),
+                          color: ColorUtils.white,
+                        ),
+                        height: Get.height,
+                        width: Get.width,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                          ),
+                          child:
+                              followerFollowingController.currentTabIndex == 0
+                                  ? FollowingList(
+                                      followRequestViewModel:
+                                          followRequestViewModel,
+                                    )
+                                  : FollowerList(
+                                      followRequestViewModel:
+                                          followRequestViewModel,
+                                    ),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class FollowTabBar extends StatelessWidget {
+  FollowerFollowingController followerFollowingController;
+
+  FollowTabBar({super.key, required this.followerFollowingController});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: Get.width,
+      margin: const EdgeInsets.only(bottom: 630),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            ColorUtils.linearGradient1,
+            ColorUtils.linearGradient6,
+            ColorUtils.linearGradient7
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 19.w,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: Get.width / 2,
+                  child: Center(
+                    child: InkWell(
+                      onTap: () {
+                        followerFollowingController.changeTabIndex(0);
+                      },
+                      child: AdoroText(
+                        "FOLLOWING",
+                        fontSize: 13.sp,
+                        color: followerFollowingController.currentTabIndex == 0
+                            ? ColorUtils.white
+                            : Color(0xFF8BAFE7),
+                        fontWeight: FontWeightClass.fontWeight600,
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                SizedBox(
+                  width: Get.width / 2,
+                  child: Center(
+                    child: InkWell(
+                      onTap: () {
+                        followerFollowingController.changeTabIndex(1);
+                      },
+                      child: AdoroText(
+                        "FOLLOWER",
+                        fontSize: 13.sp,
+                        color: followerFollowingController.currentTabIndex == 0
+                            ? Color(0xFF8BAFE7)
+                            : ColorUtils.white,
+                        fontWeight: FontWeightClass.fontWeight600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class FollowerList extends StatelessWidget {
+  FollowRequestViewModel followRequestViewModel;
+
+  FollowerList({super.key, required this.followRequestViewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    if (followRequestViewModel.getFollowerListApiResponse.status ==
+            Status.LOADING ||
+        followRequestViewModel.getFollowerListApiResponse.status ==
+            Status.INITIAL) {
+      return Center(child: Loader());
+    } else if (followRequestViewModel.getFollowerListApiResponse.status ==
+        Status.ERROR) {
+      return Center(child: SomethingWentWrong());
+    } else {
+      GetFollowerListResModel getFollowerListResModel =
+          followRequestViewModel.getFollowerListApiResponse.data;
+      if (getFollowerListResModel.data!.isEmpty) {
+        return Column(
+          children: [
+            Container(
+              height: 75.h,
+              child: Center(child: Text("No follower")),
+            ),
+          ],
+        );
+      }
+
+      return ListView.builder(
+        padding: EdgeInsets.only(bottom: 40.w),
+        itemCount: getFollowerListResModel.data?.length,
+        itemBuilder: (context, index) {
+          final followingData = getFollowerListResModel.data?[index];
+          return Column(
+            children: [
+              ListTile(
+                title: Text(
+                  followingData?.username ?? "",
+                  style: TextStyle(color: ColorUtils.black2E),
+                ),
+                subtitle: Text(
+                  followingData?.status ?? "",
+                  // followingData?.fullName ?? "",
+                  style: TextStyle(color: ColorUtils.black92),
+                ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.w),
+                  child: Container(
+                    height: 10.w,
+                    width: 10.w,
+                    color: ColorUtils.greyFA,
+                    child: OctoImage(
+                      fit: BoxFit.cover,
+                      width: 24,
+                      height: 24,
+                      image: NetworkImage(followingData?.image ?? ""),
+                      progressIndicatorBuilder: (context, progress) {
+                        double? value;
+                        var expectedBytes = progress?.expectedTotalBytes;
+                        if (progress != null && expectedBytes != null) {
+                          value =
+                              progress.cumulativeBytesLoaded / expectedBytes;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: value,
+                            color:
+                                Theme.of(context).textTheme.titleSmall?.color,
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, error, stacktrace) => Container(
+                        width: 24,
+                        height: 24,
+                        color: ColorUtils.grey[200],
+                        child: Padding(
+                          padding: EdgeInsets.all(1.w),
+                          child: CommonImage(
+                            img: IconsWidgets.userImages,
+                            color: ColorUtils.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.more_vert,
+                  color: ColorUtils.black92,
+                ),
+                contentPadding: EdgeInsets.all(0.w),
+              ),
+              DecorationUtils.dividerLine2(),
+            ],
+          );
+        },
+      );
+    }
+  }
+}
+
+//
+
+class FollowingList extends StatelessWidget {
+  FollowRequestViewModel followRequestViewModel;
+
+  FollowingList({super.key, required this.followRequestViewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    if (followRequestViewModel.getFollowerListApiResponse.status ==
+            Status.LOADING ||
+        followRequestViewModel.getFollowerListApiResponse.status ==
+            Status.INITIAL) {
+      return Center(child: Loader());
+    } else if (followRequestViewModel.getFollowerListApiResponse.status ==
+        Status.ERROR) {
+      return Center(child: SomethingWentWrong());
+    } else {
+      GetFollowerListResModel getFollowerListResModel =
+          followRequestViewModel.getFollowerListApiResponse.data;
+
+      if (getFollowerListResModel.data!.isEmpty) {
+        return Column(
+          children: [
+            Container(
+              height: 75.h,
+              child: Center(child: Text("No following")),
+            ),
+          ],
+        );
+      }
+
+      return ListView.builder(
+        padding: EdgeInsets.only(bottom: 40.w),
+        itemCount: getFollowerListResModel.data?.length,
+        itemBuilder: (context, index) {
+          final followingData = getFollowerListResModel.data?[index];
+          return Column(
+            children: [
+              ListTile(
+                title: Text(
+                  followingData?.username ?? "",
+                  style: TextStyle(color: ColorUtils.black2E),
+                ),
+                subtitle: AdoroText(
+                  followingData?.fullName ?? "",
+                  color: ColorUtils.black92,
+                ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.w),
+                  child: Container(
+                    height: 10.w,
+                    width: 10.w,
+                    color: ColorUtils.greyFA,
+                    child: OctoImage(
+                      fit: BoxFit.cover,
+                      width: 24,
+                      height: 24,
+                      image: NetworkImage(followingData?.image ?? ""),
+                      progressIndicatorBuilder: (context, progress) {
+                        double? value;
+                        var expectedBytes = progress?.expectedTotalBytes;
+                        if (progress != null && expectedBytes != null) {
+                          value =
+                              progress.cumulativeBytesLoaded / expectedBytes;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: value,
+                            color:
+                                Theme.of(context).textTheme.titleSmall?.color,
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, error, stacktrace) => Container(
+                        width: 24,
+                        height: 24,
+                        color: ColorUtils.grey[200],
+                        child: Padding(
+                          padding: EdgeInsets.all(1.w),
+                          child: CommonImage(
+                            img: IconsWidgets.userImages,
+                            color: ColorUtils.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.more_vert,
+                  color: ColorUtils.black92,
+                ),
+                contentPadding: EdgeInsets.all(0.w),
+              ),
+              DecorationUtils.dividerLine2(),
+            ],
+          );
+        },
+      );
+    }
+  }
+}
+
+class FollowerFollowingController extends GetxController {
+  int currentTabIndex = 0;
+
+  void changeTabIndex(index) {
+    currentTabIndex = index;
+    update();
   }
 }

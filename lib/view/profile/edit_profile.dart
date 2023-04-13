@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_btn.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
@@ -17,7 +16,6 @@ import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.
 import 'package:socialv/model/apiModel/responseModel/update_user_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -29,7 +27,6 @@ import '../../utils/variable_utils.dart';
 import '../../utils/decoration_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../viewModel/profile_view_model.dart';
-import '../auth/components/edit_component.dart';
 
 class EditProfile extends StatelessWidget {
   EditProfile({Key? key}) : super(key: key);

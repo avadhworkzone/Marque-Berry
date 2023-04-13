@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/interest.dart';
-import 'package:socialv/view/auth/otp_screen.dart';
 import 'package:socialv/view/drawer/campaign_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,7 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:socialv/view/drawer/setting.dart';
 import 'package:socialv/routes/route_constant.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
-import 'package:socialv/view/profile/pending_request.dart';
+import 'package:socialv/view/profile/following_screen.dart';
 import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
@@ -121,6 +120,9 @@ class _MyAppState extends State<MyApp> {
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());
+
+  FollowerFollowingController followerFollowingController =
+      Get.put(FollowerFollowingController());
 
   CampaignScreenController campaignScreenController =
       Get.put(CampaignScreenController());

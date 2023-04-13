@@ -1,17 +1,10 @@
 import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/get_campaign_id_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
 import 'package:socialv/model/repo/apply_campaign_repo.dart';
 import 'package:socialv/model/repo/apply_contest_repo.dart';
 import 'package:socialv/model/repo/campaign_contest_repo.dart';
-import 'package:socialv/model/repo/get_follow_list_repo.dart';
-import 'package:socialv/model/repo/update_user_profile_pic_repo.dart';
-import 'package:socialv/model/repo/update_user_profile_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/model/repo/get_user_profile_repo.dart';
-
 import '../model/apiModel/requestModel/apply_now_campaign_req_model.dart';
 import '../model/apiModel/requestModel/apply_now_contest_req_model.dart';
 import '../model/repo/get_campaign_id_repo.dart';

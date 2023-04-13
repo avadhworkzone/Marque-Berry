@@ -103,7 +103,7 @@ class CommonTextFormField extends StatelessWidget {
       style: textstyle ??
           TextStyle(
             color: color ?? ColorUtils.greyFA,
-            fontWeight: FontWeightClass.fontWeight500,
+            fontWeight: FontWeightClass.fontWeight600,
           ),
       cursorColor: color ?? Theme.of(context).textTheme.titleSmall?.color,
       inputFormatters: denyInput == false

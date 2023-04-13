@@ -8,6 +8,7 @@ import 'package:socialv/model/apiModel/responseModel/login_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/custom_text_field.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/validation_utils.dart';
@@ -23,7 +24,6 @@ class LoginComponents extends StatelessWidget {
   var loginContact = TextEditingController();
 
   LoginReqModel loginReqModel = LoginReqModel();
-  // AuthViewModel authViewModel = Get.find<AuthViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,8 @@ class LoginComponents extends StatelessWidget {
           AdoroText(
             VariableUtils.welcomeBack,
             fontSize: 15.sp,
+            fontWeight: FontWeightClass.fontWeight600,
             color: Theme.of(context).textTheme.titleSmall?.color,
-            fontWeight: FontWeight.bold,
           ),
           AdoroText(
             VariableUtils.youHaveBeenMissed,
@@ -48,11 +48,11 @@ class LoginComponents extends StatelessWidget {
             color: Theme.of(context).textTheme.titleMedium?.color,
           ),
           CommonTextFormField(
-            color: Theme.of(context).textTheme.titleSmall?.color,
-            validator: (v) => mobileValidation(v),
-            controller: loginContact,
             mobilelength: 10,
+            controller: loginContact,
             keyboardType: TextInputType.number,
+            validator: (v) => mobileValidation(v),
+            color: Theme.of(context).textTheme.titleSmall?.color,
             denyInputFormatters: RegularExpression.noSpaceAllowPattern,
             allowInputFormatters: RegularExpression.contactKeyboardPattern,
           ),

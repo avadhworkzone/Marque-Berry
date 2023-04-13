@@ -2,25 +2,18 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 class OtpController extends GetxController {
-  bool hasError = false;
-
-  changeerror(val) {
-    hasError = val;
-    update();
-  }
-
   String currentText = "";
   changeotp(val) {
     currentText = val;
   }
 
   Timer? textTimer;
-  late DateTime startTime;
   String showTime = "00:30";
 
   int timer = 30;
   int tick = 0;
   final String data = "00:00";
+
   startTimer() {
     textTimer?.cancel();
     // timer = 30;

@@ -61,8 +61,8 @@ class DecorationUtils {
         end: Alignment.bottomRight,
       ),
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(5.w),
-        topRight: Radius.circular(5.w),
+        topLeft: Radius.circular(7.w),
+        topRight: Radius.circular(7.w),
       ),
     );
   }

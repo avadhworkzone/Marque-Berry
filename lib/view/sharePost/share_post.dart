@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:better_player/better_player.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -12,7 +10,6 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';

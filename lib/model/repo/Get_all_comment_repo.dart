@@ -9,7 +9,7 @@ class GetAllCommentRepo extends BaseService {
     var response = await ApiService().getResponse(
       apiType: APIType.aGet,
       body: body,
-      url: '$baseURL$getAllCommentURL?post_id=${postId}',
+      url: '$baseURL$getAllCommentURL?post_id=$postId',
     );
     return GetAllCommentResModel.fromJson(response);
   }

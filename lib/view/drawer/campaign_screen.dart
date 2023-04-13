@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/model/apiModel/requestModel/apply_now_campaign_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/apply_now_contest_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/compaign_contest_res_model.dart';
@@ -44,6 +45,9 @@ class _CampaignScreenState extends State<CampaignScreen> {
     });
   }
 
+  final BottomBarController bottomBarController =
+      Get.find<BottomBarController>();
+
   @override
   Widget build(BuildContext context) {
     Color? whiteBlue = Theme.of(context).scaffoldBackgroundColor;
@@ -58,14 +62,16 @@ class _CampaignScreenState extends State<CampaignScreen> {
               automaticallyImplyLeading: false,
               elevation: 0,
               backgroundColor: whiteBlue,
-              leading: Container(
-                width: 10.w,
-                child: Icon(Icons.arrow_back, color: whiteBlack),
+              leading: IconButton(
+                splashRadius: 6.w,
+                onPressed: () {
+                  bottomBarController.pageChange(0);
+                },
+                icon: Icon(Icons.arrow_back, color: whiteBlack),
               ),
               title: const TabBar(
-                labelColor: ColorUtils.blueB9,
-                indicatorColor: ColorUtils.blueB9,
-                unselectedLabelColor: ColorUtils.black92,
+                // labelColor: ColorUtils.blueB9,
+                // unselectedLabelColor: ColorUtils.black92,
                 tabs: [
                   Tab(
                     child: AdoroText(
@@ -81,7 +87,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
                   ),
                 ],
               ),
-              actions: [SizeConfig.sW6],
+              actions: [SizeConfig.sW9],
             ),
             body: TabBarView(
               children: [
@@ -172,6 +178,8 @@ class ContestScreen extends StatelessWidget {
       itemCount: contestContestResponse.contest?.length ?? 0,
       itemBuilder: (context, index) {
         final dataIndex = contestContestResponse.contest?[index];
+        logs(dataIndex?.firstAward ?? "");
+
         return TabBarMethod(
           method: 'contest',
           size: size,
@@ -299,16 +307,16 @@ class TabBarMethod extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       if (method == "contest") {
-                        applyContest(
+                        campaignScreenController.applyContest(
                           applied: applied,
-                          campaignScreenController: campaignScreenController,
                           campaignId: campaignContestId,
+                          campaignContestViewModel: campaignContestViewModel,
                         );
                       } else if (method == "campaign") {
-                        applyCampaign(
+                        campaignScreenController.applyCampaign(
                           applied: applied,
-                          campaignScreenController: campaignScreenController,
                           contestId: campaignContestId,
+                          campaignContestViewModel: campaignContestViewModel,
                         );
                       }
                     },
@@ -345,8 +353,14 @@ class TabBarMethod extends StatelessWidget {
                   InkWell(
                     onTap: () => Get.to(
                       () => DetailsScreen(
+                        method: method,
                         applied: applied,
+                        image: image,
+                        time: 'Time Left : ${postTimeCalculate(createOn, "")}',
+                        description: description,
                         campaignId: campaignContestId,
+                        title: title,
+                        campaignContestViewModel: campaignContestViewModel,
                       ),
                     ),
                     child: Container(
@@ -377,87 +391,86 @@ class TabBarMethod extends StatelessWidget {
       },
     );
   }
-
-  ApplyContestReqModel applyContestReqModel = ApplyContestReqModel();
-  applyContest({
-    required String applied,
-    required CampaignScreenController campaignScreenController,
-    required String campaignId,
-  }) async {
-    if (applied == "false") {
-      String path = await campaignScreenController.pickCampaignImage();
-      logs(path);
-      applyContestReqModel.media = path;
-      applyContestReqModel.campaignId = campaignId;
-      await campaignContestViewModel.applyContest(applyContestReqModel);
-
-      if (campaignContestViewModel.applyContestApiResponse.status ==
-          Status.COMPLETE) {
-        final ApplyContestResModel response =
-            campaignContestViewModel.applyContestApiResponse.data;
-        showSnackBar(
-          message: response.msg ?? "apply successfully",
-          snackbarSuccess: true,
-        );
-      }
-    } else if (applied == "true") {
-      showSnackBar(message: "Already applied");
-    }
-  }
-
-  ApplyCampaignReqModel applyCampaignReqModel = ApplyCampaignReqModel();
-  applyCampaign({
-    required String applied,
-    required CampaignScreenController campaignScreenController,
-    required String contestId,
-  }) async {
-    if (applied == "false") {
-      String path = await campaignScreenController.pickContestImage();
-      applyCampaignReqModel.media = path;
-      applyCampaignReqModel.contestId = contestId;
-
-      await campaignContestViewModel.applyCampaign(applyCampaignReqModel);
-
-      if (campaignContestViewModel.applyCampaignApiResponse.status ==
-          Status.COMPLETE) {
-        final CampaignContestResModel response =
-            campaignContestViewModel.applyCampaignApiResponse.data;
-        showSnackBar(
-          message: response.msg ?? "apply successfully",
-          snackbarSuccess: true,
-        );
-      }
-    } else if (applied == "true") {
-      showSnackBar(message: "Already applied");
-    }
-  }
 }
 
 class CampaignScreenController extends GetxController {
-  String campaignImagePath = "";
-  String contestImagePath = "";
-
   Future<String> pickCampaignImage() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
+    try {
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.image);
 
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      campaignImagePath = file.path!;
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        return file.path!;
+      } else
+        return '';
+    } catch (e) {
+      return '';
     }
-    update();
-    return campaignImagePath;
   }
 
-  Future<String> pickContestImage() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
+  ApplyContestReqModel applyContestReqModel = ApplyContestReqModel();
+  ApplyCampaignReqModel applyCampaignReqModel = ApplyCampaignReqModel();
 
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      contestImagePath = file.path!;
+  applyContest({
+    required String applied,
+    // required CampaignScreenController campaignScreenController,
+    required CampaignContestViewModel campaignContestViewModel,
+    required String campaignId,
+  }) async {
+    if (applied == "false") {
+      String path = await pickCampaignImage();
+      logs(path);
+
+      if (path != '') {
+        applyContestReqModel.media = path;
+        applyContestReqModel.campaignId = campaignId;
+        await campaignContestViewModel.applyContest(applyContestReqModel);
+
+        if (campaignContestViewModel.applyContestApiResponse.status ==
+            Status.COMPLETE) {
+          final ApplyContestResModel response =
+              campaignContestViewModel.applyContestApiResponse.data;
+          showSnackBar(
+            message: response.msg ?? "apply successfully",
+            snackbarSuccess: true,
+          );
+        }
+      } else {
+        showSnackBar(message: "Image not selected");
+      }
+    } else if (applied == "true") {
+      showSnackBar(message: "Already applied");
     }
-    update();
-    return contestImagePath;
+  }
+
+  applyCampaign({
+    required String applied,
+    required CampaignContestViewModel campaignContestViewModel,
+    required String contestId,
+  }) async {
+    if (applied == "false") {
+      String path = await pickCampaignImage();
+      if (path != '') {
+        applyCampaignReqModel.media = path;
+        applyCampaignReqModel.contestId = contestId;
+
+        await campaignContestViewModel.applyCampaign(applyCampaignReqModel);
+
+        if (campaignContestViewModel.applyCampaignApiResponse.status ==
+            Status.COMPLETE) {
+          final CampaignContestResModel response =
+              campaignContestViewModel.applyCampaignApiResponse.data;
+          showSnackBar(
+            message: response.msg ?? "apply successfully",
+            snackbarSuccess: true,
+          );
+        }
+      } else {
+        showSnackBar(message: "Image not selected");
+      }
+    } else if (applied == "true") {
+      showSnackBar(message: "Already applied");
+    }
   }
 }

@@ -1,9 +1,7 @@
-import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
