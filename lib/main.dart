@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/interest.dart';
+import 'package:socialv/view/auth/login_screen.dart';
 import 'package:socialv/view/drawer/campaign_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,6 +16,7 @@ import 'package:socialv/view/drawer/setting.dart';
 import 'package:socialv/routes/route_constant.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/view/profile/following_screen.dart';
+import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
@@ -117,6 +119,7 @@ class _MyAppState extends State<MyApp> {
   HomeController homeController = Get.put(HomeController());
   LoginController loginController = Get.put(LoginController());
   SettingController settingController = Get.put(SettingController());
+  ProfileController profileController = Get.put(ProfileController());
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());
@@ -133,11 +136,14 @@ class _MyAppState extends State<MyApp> {
 
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY4MTIwODM3NiwiZXhwIjoxNjgyMDcyMzc2fQ.0ui6YLqzLpSj9hb84ErHGNn55ST0osUYEO-uBH-RdoU
 // https://api.postman.com/collections/2554210-f52106ae-9e3d-47a0-b2e3-d7eb1c319143?access_key=PMAT-01GPJBWJMNT4JBECTXF38YV17R
+
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Poppins',
-    cardColor: ColorUtils.white,
+
+    cardColor: ColorUtils.grey.withOpacity(0.12),
     scaffoldBackgroundColor: ColorUtils.white,
+
     canvasColor: Colors.grey[200],
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
@@ -170,10 +176,12 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     // useMaterial3: true,
     fontFamily: 'Poppins',
-    // cardColor: ColorUtils.black2E,
+
+    cardColor: ColorUtils.black2E,
+    scaffoldBackgroundColor: ColorUtils.black2E,
+
     canvasColor: ColorUtils.black2E,
     buttonColor: ColorUtils.white,
-    scaffoldBackgroundColor: ColorUtils.black2E,
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),

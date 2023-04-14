@@ -85,7 +85,7 @@ class CategoryData {
     data['content_type'] = this.contentType;
     data['content_url'] = this.contentUrl;
     data['category_id'] = this.categoryId;
-    data['created_on'] = this.createdOn;
+    data['created_on'] = this.createdOn ?? "";
     data['comments'] = this.comments;
     if (this.author != null) {
       data['author'] = this.author!.map((v) => v.toJson()).toList();

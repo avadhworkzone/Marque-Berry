@@ -41,6 +41,7 @@ dependencies:
 
   file_picker: ^5.2.7
   better_player: ^0.0.83
+  gif_view: ^0.3.1
 
 dev_dependencies:
   flutter_test:

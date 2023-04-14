@@ -38,7 +38,7 @@ class VariableUtils {
 
   ///  Login Screen
   static const welcomeBack = "Welcome back!";
-  static const youHaveBeenMissed = "you have been missed for long Time";
+  static const youHaveBeenMissed = "you Have Been Missed For Long Time";
   static const mobileNumber = "Mobile Number";
   static const welcomeCreator = "Welcome Creator";
   static const joinTheWorld = "Join the world of creators";
@@ -55,7 +55,7 @@ class VariableUtils {
   static const chooseOrMoreMemeCategories = "Choose 3 or more meme categories";
 
   ///InterestScreen
-  static const dontReceiveTheOTP = "Dont Receive The OTP?";
+  static const dontReceiveTheOTP = "Didn\'t Receive The OTP?";
   static const resendOTP = " RESEND OTP";
 
   ///SharePostScreen
@@ -105,7 +105,7 @@ class VariableUtils {
   static const logout = "Logout";
 
   /// Support
-  static const hiCheonYeoWoon = "Hi,Cheon Yeo Woon";
+  static const hiCheonYeoWoon = 'Hi, Ritik';
   static const Email = "E-mail";
   static const yourMessage = "Your Message";
   static const submit = "Submit";

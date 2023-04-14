@@ -6,22 +6,22 @@ import 'package:socialv/utils/color_utils.dart';
 
 class DecorationUtils {
   /// BOTTOM BAR DECORATION
-  static BoxDecoration bottomBarDecoration(BuildContext context) {
-    return BoxDecoration(
-      borderRadius: BorderRadius.only(
-        topRight: Radius.circular(6.w),
-        topLeft: Radius.circular(6.w),
-      ),
-      color: Theme.of(context).cardColor,
-      boxShadow: const [
-        BoxShadow(
-          color: Colors.black38,
-          spreadRadius: 0,
-          blurRadius: 10,
-        ),
-      ],
-    );
-  }
+  // static BoxDecoration bottomBarDecoration(BuildContext context) {
+  //   return BoxDecoration(
+  //     borderRadius: BorderRadius.only(
+  //       topRight: Radius.circular(6.w),
+  //       topLeft: Radius.circular(6.w),
+  //     ),
+  //     color: Theme.of(context).cardColor,
+  //     boxShadow: const [
+  //       BoxShadow(
+  //         color: Colors.black38,
+  //         spreadRadius: 0,
+  //         blurRadius: 10,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   static BoxDecoration buttonDecoration(BuildContext context) {
     return BoxDecoration(

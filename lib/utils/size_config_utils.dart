@@ -10,6 +10,7 @@ class SizeConfig {
   static Widget sH3 = SizedBox(height: 3.h);
   static Widget sH4 = SizedBox(height: 4.h);
   static Widget sH5 = SizedBox(height: 5.h);
+  static Widget sH6 = SizedBox(height: 6.h);
   static Widget sH7 = SizedBox(height: 7.h);
   static Widget sH9 = SizedBox(height: 9.h);
   static Widget sH10 = SizedBox(height: 10.h);

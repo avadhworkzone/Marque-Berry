@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
@@ -16,8 +18,14 @@ class ImagesModel {
   ImagesModel({required this.image});
 }
 
-class ProfileScreen1 extends StatelessWidget {
+class ProfileScreen1 extends StatefulWidget {
   ProfileScreen1({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen1> createState() => _ProfileScreen1State();
+}
+
+class _ProfileScreen1State extends State<ProfileScreen1> {
   final List<ImagesModel> imagesList = [
     ImagesModel(
       image:
@@ -59,254 +67,330 @@ class ProfileScreen1 extends StatelessWidget {
   final BottomBarController bottomBarController =
       Get.find<BottomBarController>();
 
-  final isCheck = true;
-  @override
+  ProfileController profileController = Get.find<ProfileController>();
+
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return WillPopScope(
       onWillPop: () async {
         bottomBarController.pageChange(0);
         return Future.value(false);
       },
       child: Scaffold(
+        backgroundColor: greyFABlack32,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(15.w),
           child: CommonAppBar(
+            color: ColorUtils.transparent,
             title: 'Profile',
             ontap: () {
               bottomBarController.pageChange(0);
             },
           ),
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Stack(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 30),
-                    child: Image.asset('assets/images/bgProfile.png'),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 50,
-                    right: 70,
-                    child: CircleAvatar(
-                      radius: 40,
-                      child: Image.asset(
-                        'assets/images/profileimages.png',
+        body: GetBuilder<ProfileController>(builder: (profileController) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                SizeConfig.sH2,
+                Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 9.w),
+                      child: Image.asset('assets/images/bgProfile.png'),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 36.w,
+                      child: CircleAvatar(
+                        radius: 12.w,
+                        child: Image.asset(
+                          'assets/images/profileimages.png',
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizeConfig.sH2,
-              const AdoroText(
-                'Ritik Raj',
-                // color: ColorUtils.black2E,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-              // const AdoroText(
-              //   '@ritik_raj1',
-              //   color: ColorUtils.black92,
-              //   fontSize: 15,
-              // ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: const [
-                      AdoroText('Posts', color: ColorUtils.black92),
-                      SizedBox(height: 10),
-                      AdoroText(
-                        '1,286',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(
-                        () => FollowerFollowing(
-                          followingCounter: 1,
-                          title: 'Followers',
-                        ),
-                      );
-                    },
-                    child: Column(
-                      children: const [
-                        AdoroText('Followers', color: ColorUtils.black92),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AdoroText(
-                          '1.2k',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(
-                        () => FollowerFollowing(
-                          followingCounter: 0,
-                          title: 'Following',
-                        ),
-                      );
-                    },
-                    child: Column(
-                      children: const [
-                        AdoroText(
-                          'Following',
-                          color: ColorUtils.black92,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AdoroText(
-                          '1.1k',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 20),
-              InkWell(
-                onTap: () {
-                  Get.to(() => EditProfile());
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: Container(
-                    height: 15.w,
-                    width: Get.width,
-                    color: ColorUtils.white,
-                    child: Center(
-                      child: AdoroText(
-                        'Edit Profile',
-                        color: ColorUtils.black92,
-                        fontWeight: FontWeightClass.fontWeight600,
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     InkWell(
-              //       onTap: () {},
-              //       child: Container(
-              //           height: 40,
-              //           width: 150,
-              //           decoration: BoxDecoration(
-              //               gradient: const LinearGradient(
-              //                 colors: [
-              //                   ColorUtils.linearGradient1,
-              //                   ColorUtils.linearGradient6,
-              //                   ColorUtils.linearGradient7
-              //                 ],
-              //                 begin: Alignment.topLeft,
-              //                 end: Alignment.bottomRight,
-              //               ),
-              //               borderRadius: BorderRadius.circular(10)),
-              //           child: const Center(
-              //             child: AdoroText('Confirm',
-              //                 fontSize: 17,
-              //                 color: ColorUtils.white,
-              //                 fontWeight: FontWeight.bold),
-              //           )),
-              //     ),
-              //     InkWell(
-              //       onTap: () {},
-              //       child: Container(
-              //           height: 40,
-              //           width: 130,
-              //           decoration: BoxDecoration(
-              //               color: ColorUtils.black92,
-              //               borderRadius: BorderRadius.circular(10)),
-              //           child: const Center(
-              //             child: AdoroText('Delete ',
-              //                 fontSize: 17,
-              //                 color: ColorUtils.white,
-              //                 fontWeight: FontWeight.bold),
-              //           )),
-              //     )
-              //   ],
-              // ),
-              const SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: Column(
+                // Text(PreferenceUtils.getString(key: "username")),
+                // SizeConfig.sH1,
+                AdoroText(
+                  "${PreferenceUtils.getString(key: "username") ?? ""}",
+                  textAlign: TextAlign.center,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.bold,
+                  color: blackWhite,
+                ),
+                SizeConfig.sH2,
+                Container(
+                  height: 22.w,
+                  padding: EdgeInsets.symmetric(vertical: 3.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const DefaultTabController(
-                        length: 2,
-                        child: TabBar(
-                          tabs: [
-                            Tab(
-                              child: AdoroText(
-                                'All Post',
-                                color: ColorUtils.black92,
+                      InkWell(
+                        child: Container(
+                          width: 28.w,
+                          child: Column(
+                            children: [
+                              AdoroText('Posts', color: black92White),
+                              SizeConfig.sH05,
+                              AdoroText(
+                                '86',
+                                fontSize: 15.sp,
+                                color: blackWhite,
+                                fontWeight: FontWeightClass.fontWeightBold,
                               ),
-                            ),
-                            Tab(
-                              child: AdoroText(
-                                'Mentions',
-                                color: ColorUtils.black92,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: GridView(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 8,
-                            ),
-                            children: imagesList
-                                .map((e) => Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 85,
-                                          width: 210,
-                                          child: Image.network(
-                                            e.image,
-                                            fit: BoxFit.fill,
-                                          ),
-                                        )
-                                      ],
-                                    ))
-                                .toList(),
+                            ],
                           ),
                         ),
-                      )
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(
+                            () => FollowerFollowing(
+                              followingCounter: 1,
+                              title: 'Followers',
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 28.w,
+                          child: Column(
+                            children: [
+                              AdoroText('Followers', color: black92White),
+                              SizeConfig.sH05,
+                              AdoroText(
+                                '86',
+                                fontSize: 16.sp,
+                                color: blackWhite,
+                                fontWeight: FontWeightClass.fontWeightBold,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(
+                            () => FollowerFollowing(
+                              followingCounter: 0,
+                              title: 'Following',
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 28.w,
+                          child: Column(
+                            children: [
+                              AdoroText('following', color: black92White),
+                              SizeConfig.sH05,
+                              AdoroText(
+                                '86',
+                                color: blackWhite,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeightClass.fontWeightBold,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
+                SizeConfig.sH2,
+                InkWell(
+                  onTap: () {
+                    Get.to(() => EditProfile());
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Container(
+                      height: 15.w,
+                      width: Get.width,
+                      color: whiteBlack2E,
+                      child: Center(
+                        child: AdoroText(
+                          'Edit Profile',
+                          color: black92White,
+                          fontWeight: FontWeightClass.fontWeight600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizeConfig.sH3,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 5.w,
+                    vertical: 3.w,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2.w),
+                      color: whiteBlack2E,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 4.5.w,
+                        vertical: 3.5.w,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 12.w,
+                            width: 90.w,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () => profileController.changeTab(0),
+                                  child: Container(
+                                    child: Column(
+                                      children: [
+                                        Spacer(),
+                                        Container(
+                                          width: 40.w,
+                                          child: Center(
+                                            child: AdoroText(
+                                              "All posts",
+                                              color:
+                                                  profileController.tabIndex ==
+                                                          0
+                                                      ? ColorUtils.blueB9
+                                                      : black92White,
+                                              fontWeight:
+                                                  FontWeightClass.fontWeight700,
+                                            ),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          height: 0.5.w,
+                                          width: 40.w,
+                                          color: profileController.tabIndex == 0
+                                              ? ColorUtils.blueB9
+                                              : ColorUtils.black92
+                                                  .withOpacity(0.2),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () => profileController.changeTab(1),
+                                  child: Container(
+                                    child: Column(
+                                      children: [
+                                        Spacer(),
+                                        Container(
+                                          width: 40.w,
+                                          child: Center(
+                                            child: AdoroText(
+                                              "Mentions",
+                                              fontWeight:
+                                                  FontWeightClass.fontWeight700,
+                                              color:
+                                                  profileController.tabIndex ==
+                                                          1
+                                                      ? ColorUtils.blueB9
+                                                      : black92White,
+                                            ),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          height: 0.5.w,
+                                          width: 40.w,
+                                          color: profileController.tabIndex == 1
+                                              ? ColorUtils.blueB9
+                                              : black92White,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizeConfig.sH2,
+                          Container(
+                            width: 90.w,
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: imagesList.length,
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 3.2.w,
+                                crossAxisSpacing: 3.2.w,
+                              ),
+                              itemBuilder: (c, i) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(1.5.w),
+                                  child: Image.network(
+                                    imagesList[i].image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Container(
+                //   height: 150.w,
+                //   width: 100.w,
+                //   child: Column(
+                //     children: [
+                //       TabBar(
+                //         controller: _tabController,
+                //         tabs: [
+                //           Tab(
+                //             child: AdoroText('All Post',
+                //                 color: ColorUtils.black92),
+                //           ),
+                //           Tab(
+                //             child: AdoroText('Mentions',
+                //                 color: ColorUtils.black92),
+                //           ),
+                //         ],
+                //       ),
+                //       TabBarView(
+                //         controller: _tabController,
+                //         children: [
+                //           const Center(
+                //               child: const Text('Content of Tab One')),
+                //           const Center(
+                //               child: const Text('Content of Tab Two'))
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
+          );
+        }),
       ),
     );
+  }
+}
+
+class ProfileController extends GetxController {
+  int tabIndex = 0;
+  changeTab(value) {
+    tabIndex = value;
+    update();
   }
 }

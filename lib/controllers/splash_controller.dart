@@ -8,7 +8,7 @@ import 'package:socialv/view/bottomBar/bottombar.dart';
 class SplashController extends GetxController {
   @override
   void onInit() {
-    // getMode();
+    getMode();
     Future.delayed(
       const Duration(seconds: 3),
       () => Get.offAll(

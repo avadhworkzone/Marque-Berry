@@ -12,6 +12,9 @@ class PreferenceUtils {
   static String userid = 'userid';
   static String token = 'token';
 
+  static String username = 'username';
+  static String profile = 'profile';
+
   /// SET STRING PREFERENCE
   static Future setString({
     required String key,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -19,6 +20,8 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
+import '../../commanWidget/custom_btn.dart';
+
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
@@ -30,12 +33,18 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: greyFABlack32,
       drawer: MyDrawer(),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: ColorUtils.transparent,
         automaticallyImplyLeading: false,
         leading: Builder(
           builder: (context) {
@@ -43,7 +52,7 @@ class Home extends StatelessWidget {
               child: CommonImageWidth(
                 img: IconsWidgets.drawerImage,
                 width: 25.w,
-                color: Theme.of(context).textTheme.titleSmall!.color,
+                color: blackWhite,
               ),
               onTap: () => Scaffold.of(context).openDrawer(),
             );
@@ -60,7 +69,7 @@ class Home extends StatelessWidget {
               img: IconsWidgets.searchImage,
               width: 7.w,
               height: 7.w,
-              color: Theme.of(context).textTheme.titleSmall!.color,
+              color: blackWhite,
             ),
             // IconsWidgets.messageImage,
           ),
@@ -71,7 +80,7 @@ class Home extends StatelessWidget {
               img: IconsWidgets.messageImage,
               width: 7.w,
               height: 7.w,
-              color: Theme.of(context).textTheme.titleSmall!.color,
+              color: blackWhite,
             ),
           ),
           SizeConfig.sW6,
@@ -101,13 +110,6 @@ class Home extends StatelessWidget {
                 homeController: homeController,
                 categoryFeedViewModel: categoryFeedViewModel,
               ),
-
-              // CustomBtn(
-              //   onTap: () {
-              //     logs(PreferenceUtils.getString(key: 'token'));
-              //   },
-              //   text: 'text',
-              // ),
 
               // if (categoryFeedViewModel.categoryApiResponse.status ==
               //         Status.LOADING ||
@@ -213,8 +215,9 @@ class Home extends StatelessWidget {
                                                   .author![0].username
                                                   .toString(),
                                               time: postTimeCalculate(
-                                                  categoryIndex.createdOn,
-                                                  'ago'),
+                                                categoryIndex.createdOn,
+                                                'ago',
+                                              ),
                                               contentImage: categoryIndex
                                                   .contentUrl
                                                   .toString(),

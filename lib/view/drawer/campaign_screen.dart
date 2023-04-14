@@ -17,6 +17,8 @@ import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/auth/done_screen.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 
 import '../../model/apiModel/responseModel/apply_now_contest_res_model.dart';
@@ -50,24 +52,26 @@ class _CampaignScreenState extends State<CampaignScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color? whiteBlue = Theme.of(context).scaffoldBackgroundColor;
-    Color? whiteBlack = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return GetBuilder<CampaignContestViewModel>(
       builder: (campaignContestViewModel) {
         return DefaultTabController(
           length: 2,
           child: Scaffold(
-            backgroundColor: ColorUtils.grey[100], //whiteBlue,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               elevation: 0,
-              backgroundColor: whiteBlue,
+              backgroundColor: whiteBlack2E,
               leading: IconButton(
                 splashRadius: 6.w,
                 onPressed: () {
                   bottomBarController.pageChange(0);
                 },
-                icon: Icon(Icons.arrow_back, color: whiteBlack),
+                icon: Icon(Icons.arrow_back, color: blackWhite),
               ),
               title: const TabBar(
                 // labelColor: ColorUtils.blueB9,
@@ -124,9 +128,15 @@ class CampaignScn extends StatelessWidget {
     }
     final CampaignContestResModel campaignContestResponse =
         campaignContestViewModel.getCampaignContestApiResponse.data;
-
+    if (campaignContestResponse.status.toString() == VariableUtils.status500) {
+      return Center(
+        child: AdoroText(
+          campaignContestResponse.msg ?? VariableUtils.somethingWentWrong,
+        ),
+      );
+    }
     if (campaignContestResponse.campaign?.length == 0) {
-      return Center(child: Text('No campaign available'));
+      return Center(child: AdoroText('No campaign available'));
     }
     return ListView.builder(
       shrinkWrap: true,
@@ -170,8 +180,16 @@ class ContestScreen extends StatelessWidget {
     final CampaignContestResModel contestContestResponse =
         campaignContestViewModel.getCampaignContestApiResponse.data;
 
+    if (contestContestResponse.status.toString() == VariableUtils.status500) {
+      return Center(
+        child: AdoroText(
+          contestContestResponse.msg ?? VariableUtils.somethingWentWrong,
+        ),
+      );
+    }
+
     if (contestContestResponse.contest?.length == 0) {
-      return Center(child: Text('No contest available'));
+      return Center(child: AdoroText('No contest available'));
     }
     return ListView.builder(
       shrinkWrap: true,
@@ -224,6 +242,11 @@ class TabBarMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return GetBuilder<CampaignScreenController>(
       builder: (campaignScreenController) {
         return Padding(
@@ -262,10 +285,7 @@ class TabBarMethod extends StatelessWidget {
                             return Center(
                               child: CircularProgressIndicator(
                                 value: value,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.color,
+                                color: blackWhite,
                               ),
                             );
                           },
@@ -286,9 +306,8 @@ class TabBarMethod extends StatelessWidget {
                       ),
                     ),
                     title: AdoroText(
-                      title,
+                      '[title]',
                       fontSize: 12.sp,
-                      color: ColorUtils.black,
                       fontWeight: FontWeight.bold,
                     ),
                     subtitle: AdoroText(
@@ -298,9 +317,8 @@ class TabBarMethod extends StatelessWidget {
                   ),
                   SizeConfig.sH1,
                   AdoroText(
-                    '$description',
+                    'description',
                     maxLines: 4,
-                    color: ColorUtils.black92,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizeConfig.sH1,
@@ -431,10 +449,18 @@ class CampaignScreenController extends GetxController {
             Status.COMPLETE) {
           final ApplyContestResModel response =
               campaignContestViewModel.applyContestApiResponse.data;
-          showSnackBar(
-            message: response.msg ?? "apply successfully",
-            snackbarSuccess: true,
-          );
+
+          if (response.status.toString() == VariableUtils.status200) {
+            Get.to(() => DoneScreen());
+            showSnackBar(
+              message: response.msg ?? "apply successfully",
+              snackbarSuccess: true,
+            );
+          } else {
+            showSnackBar(
+              message: response.msg ?? VariableUtils.somethingWentWrong,
+            );
+          }
         }
       } else {
         showSnackBar(message: "Image not selected");
@@ -461,10 +487,17 @@ class CampaignScreenController extends GetxController {
             Status.COMPLETE) {
           final CampaignContestResModel response =
               campaignContestViewModel.applyCampaignApiResponse.data;
-          showSnackBar(
-            message: response.msg ?? "apply successfully",
-            snackbarSuccess: true,
-          );
+          if (response.status.toString() == VariableUtils.status200) {
+            Get.to(() => DoneScreen());
+            showSnackBar(
+              message: response.msg ?? "apply successfully",
+              snackbarSuccess: true,
+            );
+          } else {
+            showSnackBar(
+              message: response.msg ?? VariableUtils.somethingWentWrong,
+            );
+          }
         }
       } else {
         showSnackBar(message: "Image not selected");

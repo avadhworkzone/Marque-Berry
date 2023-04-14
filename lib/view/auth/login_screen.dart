@@ -39,13 +39,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return GetBuilder<LoginController>(
       init: LoginController(),
       builder: (loginController) {
         return GetBuilder<AuthViewModel>(
           builder: (authViewModel) {
             return Scaffold(
-              backgroundColor: Theme.of(context).cardColor,
+              backgroundColor: whiteBlack2E,
               body: Stack(
                 children: [
                   SingleChildScrollView(
@@ -111,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   width: Get.width,
                                   height: Get.height - 31.h,
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).cardColor,
+                                    color: whiteBlack2E,
                                     borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(7.w),
                                     ),

@@ -41,51 +41,51 @@ class Note extends StatelessWidget {
                     title: VariableUtils.note, ontap: () => Get.back()),
               ),
               body: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 3.w),
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SizeConfig.sH1,
-                    Container(
-                      height: 6.h,
-                      width: double.maxFinite,
-                      // color: ColorUtils.white,
-                      child: Row(
-                        children: [
-                          AdoroText(
+                    Row(
+                      children: [
+                        Container(
+                          width: 10.w,
+                          child: AdoroText(
                             "•",
+                            textAlign: TextAlign.center,
                             fontSize: 20.sp,
                             color: ColorUtils.black92,
                           ),
-                          SizeConfig.sW5,
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 2.w),
-                              child: AdoroText(
-                                'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-                                color: ColorUtils.black92,
-                                fontSize: 11.sp,
-                              ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 2.w),
+                            child: AdoroText(
+                              'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+                              color: ColorUtils.black92,
+                              fontSize: 11.sp,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    SizeConfig.sH3,
+                        ),
+                      ],
+                    ), // SizeConfig.sH3,
                     Container(
-                      height: 25.h,
-                      width: 80.w,
-                      color: ColorUtils.note,
-                      child: InkWell(
-                        onTap: () {},
-                        child:
-                            // CommonImageScale(
-                            //   img: 'assets/images/playmusic.png',
-                            //   scale: 1.w,
-                            //   color: ColorUtils.transparent,
-                            // ),
-                            Image.asset(
-                          'assets/images/playmusic.png',
-                          scale: 0.5.w,
+                      width: 85.w,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 2.w,
+                          vertical: 3.w,
+                        ),
+                        child: Container(
+                          height: 25.h,
+                          width: 80.w,
+                          color: ColorUtils.note,
+                          child: InkWell(
+                            onTap: () {},
+                            child: Image.asset(
+                              'assets/images/playmusic.png',
+                              scale: 0.5.w,
+                            ),
+                          ),
                         ),
                       ),
                     )

@@ -185,16 +185,26 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     snackbarSuccess: true,
                                   );
 
-                                  PreferenceUtils.setString(
+                                  await PreferenceUtils.setString(
                                     key: PreferenceUtils.token,
                                     value: response.token.toString(),
                                   );
-                                  PreferenceUtils.setInt(
+
+                                  await PreferenceUtils.setString(
+                                    key: PreferenceUtils.username,
+                                    value: response.data?.username ?? "",
+                                  );
+                                  await PreferenceUtils.setString(
+                                    key: PreferenceUtils.profile,
+                                    value: response.data?.image ?? "",
+                                  );
+
+                                  await PreferenceUtils.setInt(
                                     key: PreferenceUtils.userid,
                                     value: response.data?.id ?? 0,
                                   );
 
-                                  PreferenceUtils.setInt(
+                                  await PreferenceUtils.setInt(
                                     key: PreferenceUtils.login,
                                     value: 1,
                                   );

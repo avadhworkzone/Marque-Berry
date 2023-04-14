@@ -46,10 +46,19 @@ class Wallet extends StatelessWidget {
                     SizeConfig.sH2,
                     CircleAvatar(
                       radius: 15.w,
-                      backgroundImage:
-                          const AssetImage('assets/images/circle.png'),
-                      child:
-                          Image.asset('assets/images/profile.png', scale: 2.3),
+                      child: Stack(
+                        children: [
+                          Image.asset('assets/images/circle.png'),
+                          Padding(
+                            padding: EdgeInsets.all(2.w),
+                            child: Image.asset("assets/images/profile2.png"),
+                          )
+                        ],
+                      ),
+
+                      // child: Image.asset(
+                      //   'assets/images/profile.png',
+                      // ),
                     ),
                     SizeConfig.sH2,
                     AdoroText(

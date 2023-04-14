@@ -63,48 +63,54 @@ class PostComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color greyBlack2E = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return Padding(
-      padding: EdgeInsets.only(bottom: 2.w),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 5,
-              color: Colors.grey.shade300,
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(1.5.w),
+      padding: EdgeInsets.symmetric(vertical: 1.05.w),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(2.w),
+        child: Container(
+          decoration: BoxDecoration(
+            color: whiteBlack2E,
+            boxShadow: [
+              BoxShadow(blurRadius: 5, color: Colors.grey),
+            ],
+          ),
           child: Column(
             children: [
+              SizeConfig.sH2,
               ListTile(
-                title: AdoroText(
-                  name ?? "",
-                  maxLines: 1,
-                  fontSize: 12.sp,
-                  color: Theme.of(context).textTheme.titleSmall!.color,
-                  overflow: TextOverflow.ellipsis,
-                  fontWeight: FontWeightClass.fontWeight600,
-                ),
+                title: (name ?? "") != ""
+                    ? AdoroText(
+                        name ?? "",
+                        maxLines: 1,
+                        fontSize: 12.sp,
+                        color: Theme.of(context).textTheme.titleSmall!.color,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeightClass.fontWeight600,
+                      )
+                    : SizedBox(),
                 subtitle: AdoroText(
                   time ?? "",
                   maxLines: 1,
                   fontSize: 9.sp,
-                  color: Theme.of(context).textTheme.titleMedium!.color,
+                  color: black92White,
                   overflow: TextOverflow.ellipsis,
                 ),
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(15.w),
                   child: Container(
-                    color: ColorUtils.greyFA.withOpacity(0.2),
+                    color: Colors.grey[200],
                     child: OctoImage(
                       fit: BoxFit.cover,
                       width: 15.w,
                       height: 15.w,
                       image: NetworkImage(profileImage),
+                      // color: black92White,
                       progressIndicatorBuilder: (context, progress) {
                         double? value;
                         var expectedBytes = progress?.expectedTotalBytes;
@@ -226,10 +232,7 @@ class PostComponents extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: Icon(
-                    Icons.more_horiz,
-                    color: Theme.of(context).textTheme.titleMedium?.color,
-                  ),
+                  icon: Icon(Icons.more_horiz, color: black92White),
                 ),
               ),
               Padding(
@@ -238,18 +241,20 @@ class PostComponents extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizeConfig.sH1,
-                    AdoroText(
-                      "title  :$postid" ?? "",
-                      maxLines: 2,
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                      color: Theme.of(context).textTheme.titleMedium?.color,
-                    ),
-                    SizeConfig.sH2,
+                    (title ?? "") == ""
+                        ? SizedBox()
+                        : AdoroText(
+                            "${title ?? ""}",
+                            maxLines: 2,
+                            fontWeight: FontWeight.w500,
+                            overflow: TextOverflow.ellipsis,
+                            color: black92White,
+                          ),
+                    SizeConfig.sH1,
                     ClipRRect(
                       borderRadius: BorderRadius.circular(2.w),
                       child: Container(
-                        height: 60.w,
+                        height: 75.w,
                         width: Get.width,
                         child: OctoImage(
                           fit: BoxFit.cover,
@@ -293,10 +298,6 @@ class PostComponents extends StatelessWidget {
                                 postid: postid ?? 0,
                                 categoryFeedViewModel: categoryFeedViewModel,
                               ),
-                        // : UnlikeWidget(
-                        //     likePostReqModel: likePostReqModel,
-                        //     postid: postid,
-                        //     categoryFeedViewModel: categoryFeedViewModel),
                         SizeConfig.sW2,
                         InkWell(
                           onTap: () {
@@ -310,15 +311,14 @@ class PostComponents extends StatelessWidget {
                           child: CommonImageScale(
                             img: IconsWidgets.chatImage,
                             scale: 0.8.w,
-                            color:
-                                Theme.of(context).textTheme.titleMedium?.color,
+                            color: black92White,
                           ),
                         ),
                         SizeConfig.sW2,
                         CommonImageScale(
                           img: IconsWidgets.sendImage,
                           scale: 1.w,
-                          color: Theme.of(context).textTheme.titleMedium?.color,
+                          color: black92White,
                         ),
                         Spacer(),
                         InkWell(
@@ -333,8 +333,7 @@ class PostComponents extends StatelessWidget {
                           child: AdoroText(
                             "$commentcounter Comments",
                             fontSize: 10.sp,
-                            color:
-                                Theme.of(context).textTheme.titleMedium?.color,
+                            color: black92White,
                           ),
                         )
                       ],
@@ -368,43 +367,47 @@ class PostComponents extends StatelessWidget {
                                           18,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(24),
-                                        child: OctoImage(
-                                          fit: BoxFit.cover,
+                                        child: Container(
                                           width: 24,
                                           height: 24,
-                                          image: NetworkImage(
-                                            likeProfile?[index].image ?? "",
-                                          ),
-                                          progressIndicatorBuilder:
-                                              (context, progress) {
-                                            double? value;
-                                            var expectedBytes =
-                                                progress?.expectedTotalBytes;
-                                            if (progress != null &&
-                                                expectedBytes != null) {
-                                              value = progress
-                                                      .cumulativeBytesLoaded /
-                                                  expectedBytes;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: value,
-                                                color: blackWhite,
-                                              ),
-                                            );
-                                          },
-                                          errorBuilder:
-                                              (context, error, stacktrace) =>
-                                                  Container(
+                                          color: Colors.grey[200],
+                                          child: OctoImage(
+                                            fit: BoxFit.cover,
                                             width: 24,
                                             height: 24,
-                                            color: ColorUtils.greyFA
-                                                .withOpacity(0.2),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(1.w),
-                                              child: CommonImage(
-                                                img: IconsWidgets.userImages,
-                                                color: blackWhite,
+                                            image: NetworkImage(
+                                              likeProfile?[index].image ?? "",
+                                            ),
+                                            progressIndicatorBuilder:
+                                                (context, progress) {
+                                              double? value;
+                                              var expectedBytes =
+                                                  progress?.expectedTotalBytes;
+                                              if (progress != null &&
+                                                  expectedBytes != null) {
+                                                value = progress
+                                                        .cumulativeBytesLoaded /
+                                                    expectedBytes;
+                                              }
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  value: value,
+                                                  color: blackWhite,
+                                                ),
+                                              );
+                                            },
+                                            errorBuilder:
+                                                (context, error, stacktrace) =>
+                                                    Container(
+                                              width: 24,
+                                              height: 24,
+                                              child: Padding(
+                                                padding: EdgeInsets.all(1.w),
+                                                child: CommonImage(
+                                                  img: IconsWidgets.userImages,
+                                                  color: blackWhite,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -427,10 +430,7 @@ class PostComponents extends StatelessWidget {
                                       text: 'Liked by ',
                                       style: TextStyle(
                                         fontSize: 9.sp,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge!
-                                            .color,
+                                        color: black92Blue,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -438,10 +438,7 @@ class PostComponents extends StatelessWidget {
                                       text: "$likeByMe",
                                       style: TextStyle(
                                         fontSize: 9.sp,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .color,
+                                        color: black92White,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -449,10 +446,7 @@ class PostComponents extends StatelessWidget {
                                       text: ' And ',
                                       style: TextStyle(
                                         fontSize: 9.sp,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge!
-                                            .color,
+                                        color: black92Blue,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -460,10 +454,7 @@ class PostComponents extends StatelessWidget {
                                       text: '$likecounter other',
                                       style: TextStyle(
                                         fontSize: 9.sp,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .color,
+                                        color: black92White,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

@@ -1,13 +1,17 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:better_player/better_player.dart';
 import 'package:get/get.dart';
+import 'package:gif_view/gif_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
@@ -15,6 +19,7 @@ import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
 
+import '../../model/apiModel/responseModel/create_post_res_model.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
@@ -29,20 +34,12 @@ class SharePost extends StatefulWidget {
   State<SharePost> createState() => _SharePostState();
 }
 
-class _SharePostState extends State<SharePost> {
+class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   String dropdownName = '';
   String dropdownvalue = '';
 
   final description = TextEditingController();
   SharePostController sharePostController = Get.find<SharePostController>();
-
-  // var items = [
-  //   'Item 1',
-  //   'Item 2',
-  //   'Item 3',
-  //   'Item 4',
-  //   'Item 5',
-  // ];
 
   final bottomBarController = Get.find<BottomBarController>();
   CreatePostReqModel createPostReqModel = CreatePostReqModel();
@@ -50,10 +47,17 @@ class _SharePostState extends State<SharePost> {
 
   @override
   Widget build(BuildContext context) {
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
+    bool isSending = false;
+    String _selectedFile = '';
     return GetBuilder<CreatePostViewModel>(builder: (createPostViewModel) {
       return GetBuilder<SharePostController>(builder: (sharePostController) {
         return Material(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: whiteBlack2E,
           child: SafeArea(
             child: Stack(
               children: [
@@ -74,18 +78,14 @@ class _SharePostState extends State<SharePost> {
                               icon: Icon(
                                 Icons.close,
                                 size: 8.w,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.color,
+                                color: blackWhite,
                               ),
                             ),
                             AdoroText(
                               VariableUtils.sharePost,
                               fontSize: 15.sp,
                               fontWeight: FontWeightClass.fontWeightBold,
-                              color:
-                                  Theme.of(context).textTheme.titleSmall?.color,
+                              color: blackWhite,
                             ),
                             SizeConfig.sW18,
                             Container(
@@ -96,7 +96,9 @@ class _SharePostState extends State<SharePost> {
                               child: TextButton(
                                 onPressed: () {
                                   createPostApi(
-                                      createPostReqModel, sharePostController);
+                                    createPostReqModel,
+                                    sharePostController,
+                                  );
                                 },
                                 child: Text(
                                   VariableUtils.Post,
@@ -125,11 +127,8 @@ class _SharePostState extends State<SharePost> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AdoroText(
-                                  VariableUtils.ritikRaj,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.color,
+                                  "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
+                                  color: blackWhite,
                                   fontSize: 15.sp,
                                   fontWeight: FontWeightClass.fontWeightBold,
                                 ),
@@ -146,29 +145,32 @@ class _SharePostState extends State<SharePost> {
                                   child: Row(
                                     children: [
                                       SizeConfig.sW2,
-                                      Icon(Icons.add_box_outlined),
+                                      Icon(
+                                        Icons.add_box_outlined,
+                                        color: ColorUtils.black,
+                                      ),
                                       SizeConfig.sW2,
                                       DropdownButton(
                                         hint: Text(
                                           dropdownName == ""
-                                              ? "select"
+                                              ? "Category"
                                               : dropdownName,
                                           style: TextStyle(
                                             color: ColorUtils.black,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        icon: const Icon(
-                                            Icons.keyboard_arrow_down),
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: ColorUtils.black,
+                                        ),
                                         items: categoryDataList.map((items) {
                                           return DropdownMenuItem(
                                             value: items.name,
-                                            child: Text(
+                                            child: AdoroText(
                                               items.name ?? "",
-                                              style: TextStyle(
-                                                color: ColorUtils.black,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                              color: blackWhite,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           );
                                         }).toList(),
@@ -196,14 +198,14 @@ class _SharePostState extends State<SharePost> {
                         SizeConfig.sH5,
                         AdoroText(
                           VariableUtils.whatYouWantToTalkAbout,
-                          color: Theme.of(context).textTheme.titleSmall?.color,
+                          color: blackWhite,
                           fontSize: 13.sp,
                           fontWeight: FontWeightClass.fontWeight600,
                         ),
                         SizeConfig.sH2,
 
                         CommonTextFormField(
-                          color: Theme.of(context).textTheme.titleSmall?.color,
+                          color: blackWhite,
                           validator: () {},
                           controller: description,
                           allowInputFormatters:
@@ -227,8 +229,7 @@ class _SharePostState extends State<SharePost> {
                                       fit: BoxFit.fill,
                                     ),
                                   ),
-                                if (sharePostController.sourceName == "video" ||
-                                    sharePostController.sourceName == "gif")
+                                if (sharePostController.sourceName == "video")
                                   Padding(
                                     padding: EdgeInsets.all(4.w),
                                     child: AspectRatio(
@@ -238,6 +239,12 @@ class _SharePostState extends State<SharePost> {
                                             .toString(),
                                       ),
                                     ),
+                                  ),
+                                if (sharePostController.sourceName == "gif")
+                                  GifView.memory(
+                                    _selectedFile.toString() as Uint8List,
+                                    height: 200,
+                                    width: 200,
                                   ),
                                 // if (sharePostController.sourceName == "template")
                                 //   Text("DOCX"),
@@ -253,7 +260,26 @@ class _SharePostState extends State<SharePost> {
                                 ),
                               ],
                             ),
-                          ),
+                          )
+                        else
+                          Container(height: 55.w),
+                        // ElevatedButton(
+                        //   onPressed: () async {
+                        //     FilePickerResult? result =
+                        //         await FilePicker.platform.pickFiles(
+                        //       type: FileType.custom,
+                        //       allowedExtensions: ['gif'],
+                        //     );
+                        //     if (result != null) {
+                        //       PlatformFile selectedFile = result.files.first;
+                        //       setState(() {
+                        //         _selectedFile =
+                        //             File(result.files.first) as String;
+                        //       });
+                        //     }
+                        //   },
+                        //   child: Text('Select GIF'),
+                        // ),
 
                         SizeConfig.sH2,
                         // CommonTextFieldContainer(
@@ -326,9 +352,20 @@ class _SharePostState extends State<SharePost> {
           createPostViewModel.createPostApiResponse.status == Status.INITIAL) {
       } else if (createPostViewModel.createPostApiResponse.status ==
           Status.COMPLETE) {
+        final CreatePostResModel createPostResModel =
+            createPostViewModel.createPostApiResponse.data;
+
+        bottomBarController.pageChange(0);
+
         showSnackBar(
-          message: "Post create successfully",
+          message: createPostResModel.msg ?? "Post added successfully",
           snackbarSuccess: true,
+        );
+      } else if (createPostViewModel.createPostApiResponse.status ==
+          Status.ERROR) {
+        bottomBarController.pageChange(0);
+        showSnackBar(
+          message: VariableUtils.somethingWentWrong,
         );
       }
     }
@@ -342,120 +379,96 @@ class UploadPhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return Column(
       children: [
-        Divider(
-          color: Theme.of(context).textTheme.titleSmall?.color,
-          thickness: 1,
+        Divider(color: blackWhite, thickness: 1),
+        commonUploadTile(
+          title: VariableUtils.uploadAPhoto,
+          sharePostController: sharePostController,
+          uploadType: "image",
+          icon: 'assets/icons/image.png',
         ),
-        InkWell(
-          onTap: () {
-            sharePostController.pickFile("image");
-          },
-          child: Row(
-            children: [
-              Icon(
-                Icons.photo_outlined,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-              ),
-              AdoroText(VariableUtils.uploadAPhoto,
-                  color: Theme.of(context).textTheme.titleSmall?.color,
-                  fontSize: 11.sp,
-                  fontWeight: FontWeightClass.fontWeight600),
-            ],
-          ),
+        Divider(color: blackWhite, thickness: 1),
+        commonUploadTile(
+          sharePostController: sharePostController,
+          uploadType: "video",
+          icon: 'assets/icons/video.png',
+          title: VariableUtils.uploadAVideo,
         ),
-        Divider(
-          color: Theme.of(context).textTheme.titleSmall?.color,
-          thickness: 1,
+        Divider(color: blackWhite, thickness: 1),
+        commonUploadTile(
+          sharePostController: sharePostController,
+          uploadType: 'gif',
+          icon: 'assets/icons/gif.png',
+          title: VariableUtils.uploadAGIF,
         ),
-        InkWell(
-          onTap: () {
-            sharePostController.pickFile("video");
-          },
-          child: Row(
-            children: [
-              Icon(
-                Icons.ondemand_video_sharp,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-              ),
-              AdoroText(
-                VariableUtils.uploadAVideo,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                fontSize: 11.sp,
-                fontWeight: FontWeightClass.fontWeight600,
-              ),
-            ],
-          ),
+        Divider(color: blackWhite, thickness: 1),
+        commonUploadTile(
+          sharePostController: sharePostController,
+          uploadType: 'template',
+          icon: 'assets/icons/choose.png',
+          title: VariableUtils.chooseATemplate,
         ),
-        Divider(
-          color: Theme.of(context).textTheme.titleSmall?.color,
-          thickness: 1,
-        ),
-        InkWell(
-          onTap: () {
-            sharePostController.pickFile("gif");
-          },
-          child: Row(
-            children: [
-              Icon(
-                Icons.gif_box,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-              ),
-              AdoroText(
-                VariableUtils.uploadAGIF,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                fontSize: 11.sp,
-                fontWeight: FontWeightClass.fontWeight600,
-              ),
-            ],
-          ),
-        ),
-        Divider(
-          color: Theme.of(context).textTheme.titleSmall?.color,
-          thickness: 1,
-        ),
-        InkWell(
-          onTap: () {
-            sharePostController.pickFile("template");
-          },
-          child: Row(
-            children: [
-              Icon(
-                Icons.tag_faces,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-              ),
-              AdoroText(
-                VariableUtils.chooseATemplate,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                fontSize: 11.sp,
-                fontWeight: FontWeightClass.fontWeight600,
-              ),
-            ],
-          ),
-        ),
-        Divider(
-          color: Theme.of(context).textTheme.titleSmall?.color,
-          thickness: 1,
-        ),
-        InkWell(
-          onTap: () => Get.to(() => TagAPeople()),
-          child: Row(
-            children: [
-              Icon(
-                Icons.person_add_alt_sharp,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-              ),
-              AdoroText(
-                VariableUtils.tagAFriend,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-                fontSize: 11.sp,
-                fontWeight: FontWeightClass.fontWeight600,
-              ),
-            ],
-          ),
+        Divider(color: blackWhite, thickness: 1),
+        commonUploadTile(
+          sharePostController: sharePostController,
+          uploadType: 'tag',
+          icon: 'assets/icons/tag.png',
+          title: VariableUtils.tagAFriend,
         ),
       ],
+    );
+  }
+}
+
+class commonUploadTile extends StatelessWidget {
+  final String uploadType;
+  final SharePostController sharePostController;
+  final String icon;
+  final String title;
+
+  commonUploadTile({
+    super.key,
+    required this.sharePostController,
+    required this.uploadType,
+    required this.icon,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
+    return InkWell(
+      splashColor: ColorUtils.transparent,
+      highlightColor: ColorUtils.transparent,
+      onTap: () {
+        if (uploadType == "tag") {
+          Get.to(() => TagAPeople());
+        } else {
+          sharePostController.pickFile("uploadType");
+        }
+      },
+      child: Row(
+        children: [
+          CommonImageScale(img: icon, color: blackWhite, scale: 1.2.w),
+          SizeConfig.sW2,
+          AdoroText(
+            title,
+            fontSize: 11.sp,
+            color: black92White,
+            fontWeight: FontWeightClass.fontWeight600,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -465,24 +478,30 @@ class SharePostController extends GetxController {
   String sourceName = "";
 
   pickFile(String extension) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: extension == "image"
-          ? ['jpg', 'jpeg', 'png']
-          : extension == "video"
-              ? ['mp4', 'mov', 'wmv', 'avi', 'mpg', '3gp', 'mkv']
-              : extension == "gif"
-                  ? ['gif']
-                  : ['pdf', 'doc', 'docx', 'xlsx', 'xltx'],
-    );
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      sourcePath = file.path!;
-    } else {
-      sourcePath = "";
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: extension == "image"
+            ? ['jpg', 'jpeg', 'png']
+            : extension == "video"
+                ? ['mp4', 'mov', 'wmv', 'avi', 'mpg', '3gp', 'mkv']
+                : extension == "gif"
+                    ? ['gif']
+                    : ['pdf', 'doc', 'docx', 'xlsx', 'xltx'],
+      );
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        sourcePath = file.path!;
+      } else {
+        sourcePath = "";
+      }
+      sourceName = extension;
+      update();
+    } catch (e) {
+      sourceName = "";
+      showSnackBar(message: "Permission is required.");
+      logs("message:=====> $e");
     }
-    sourceName = extension;
-    update();
   }
 
   clearSourcePath() {
