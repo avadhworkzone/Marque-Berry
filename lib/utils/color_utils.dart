@@ -10,11 +10,13 @@ class ColorUtils {
   static const white = Color(0xFFFFFFFF);
 
   static const blueB9 = Color(0xFF2F65B9);
+
   static const blueE7 = Color(0xFF8BAFE7);
 
   static const black = Color(0xFF000000);
   // static const black3C = Color(0xFF0D253C);
   static const black92 = Color(0xFF6F7F92);
+
   static const black2E = Color(0xFF07142E);
 
   ///  linearGradient Color

@@ -7,6 +7,9 @@ import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/interest.dart';
 import 'package:socialv/view/auth/login_screen.dart';
 import 'package:socialv/view/drawer/campaign_screen.dart';
+import 'package:socialv/view/drawer/notification.dart';
+import 'package:socialv/view/drawer/template.dart';
+import 'package:socialv/view/drawer/upload_template.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -88,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return SplashScreen();
+                      return UploadTemplate();
                     } else {
                       return const NoInterNetConnected();
                     }
