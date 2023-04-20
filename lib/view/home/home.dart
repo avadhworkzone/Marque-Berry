@@ -34,8 +34,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
@@ -63,19 +63,17 @@ class Home extends StatelessWidget {
           width: 25.w,
         ),
         actions: [
-          // GestureDetector(child: IconsWidgets.searchImage),
-          GestureDetector(
-            child: CommonImageHeightWidth(
-              img: IconsWidgets.searchImage,
-              width: 7.w,
-              height: 7.w,
-              color: blackWhite,
-            ),
-            // IconsWidgets.messageImage,
+          CommonImageHeightWidth(
+            img: IconsWidgets.searchImage,
+            width: 7.w,
+            height: 7.w,
+            color: blackWhite,
           ),
           SizeConfig.sW3,
           GestureDetector(
-            onTap: () => Get.to(() => MessageList()),
+            onTap: () => Get.to(
+              () => MessageList(),
+            ),
             child: CommonImageHeightWidth(
               img: IconsWidgets.messageImage,
               width: 7.w,
@@ -208,12 +206,23 @@ class Home extends StatelessWidget {
                                               likeByMePeople: categoryIndex
                                                       .likedByPeople?.length ??
                                                   0,
-                                              profileImage: categoryIndex
-                                                  .author![0].image
-                                                  .toString(),
-                                              name: categoryIndex
-                                                  .author![0].username
-                                                  .toString(),
+                                              profileImage: (categoryIndex
+                                                              .author
+                                                              ?.isEmpty ??
+                                                          true) ==
+                                                      true
+                                                  ? ""
+                                                  : categoryIndex
+                                                          .author![0].image ??
+                                                      "",
+                                              name: (categoryIndex.author
+                                                              ?.isEmpty ??
+                                                          true) ==
+                                                      true
+                                                  ? ""
+                                                  : categoryIndex
+                                                      .author![0].username
+                                                      .toString(),
                                               time: postTimeCalculate(
                                                 categoryIndex.createdOn,
                                                 'ago',

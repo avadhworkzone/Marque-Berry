@@ -47,7 +47,7 @@ AppBar customAppbar({
   required String title,
   required BuildContext context,
   Color? color,
-  Icon? icon,
+  Widget? icon,
 }) {
   Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
   Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;

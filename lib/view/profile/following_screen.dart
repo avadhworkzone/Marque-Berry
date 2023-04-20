@@ -34,6 +34,12 @@ class FollowerFollowing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return Scaffold(
       appBar: customAppbar(
         context: context,
@@ -65,7 +71,7 @@ class FollowerFollowing extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.w),
-                          color: ColorUtils.white,
+                          color: whiteBlack2E,
                         ),
                         height: Get.height,
                         width: Get.width,
@@ -182,6 +188,12 @@ class FollowerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     if (followRequestViewModel.getFollowerListApiResponse.status ==
             Status.LOADING ||
         followRequestViewModel.getFollowerListApiResponse.status ==
@@ -198,7 +210,9 @@ class FollowerList extends StatelessWidget {
           children: [
             Container(
               height: 75.h,
-              child: Center(child: Text("No follower")),
+              child: Center(
+                child: AdoroText("No follower", color: blackWhite),
+              ),
             ),
           ],
         );
@@ -214,12 +228,11 @@ class FollowerList extends StatelessWidget {
               ListTile(
                 title: Text(
                   followingData?.username ?? "",
-                  style: TextStyle(color: ColorUtils.black2E),
+                  style: TextStyle(color: blackWhite),
                 ),
                 subtitle: Text(
                   followingData?.status ?? "",
-                  // followingData?.fullName ?? "",
-                  style: TextStyle(color: ColorUtils.black92),
+                  style: TextStyle(color: blackWhite),
                 ),
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10.w),
@@ -242,8 +255,7 @@ class FollowerList extends StatelessWidget {
                         return Center(
                           child: CircularProgressIndicator(
                             value: value,
-                            color:
-                                Theme.of(context).textTheme.titleSmall?.color,
+                            color: blackWhite,
                           ),
                         );
                       },
@@ -286,6 +298,11 @@ class FollowingList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     if (followRequestViewModel.getFollowerListApiResponse.status ==
             Status.LOADING ||
         followRequestViewModel.getFollowerListApiResponse.status ==
@@ -303,7 +320,12 @@ class FollowingList extends StatelessWidget {
           children: [
             Container(
               height: 75.h,
-              child: Center(child: Text("No following")),
+              child: Center(
+                child: AdoroText(
+                  "No following",
+                  color: blackWhite,
+                ),
+              ),
             ),
           ],
         );
@@ -319,12 +341,10 @@ class FollowingList extends StatelessWidget {
               ListTile(
                 title: Text(
                   followingData?.username ?? "",
-                  style: TextStyle(color: ColorUtils.black2E),
+                  style: TextStyle(color: blackWhite),
                 ),
-                subtitle: AdoroText(
-                  followingData?.fullName ?? "",
-                  color: ColorUtils.black92,
-                ),
+                subtitle:
+                    AdoroText(followingData?.fullName ?? "", color: blackWhite),
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10.w),
                   child: Container(

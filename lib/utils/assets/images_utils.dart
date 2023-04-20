@@ -27,9 +27,6 @@ class ImagesWidgets {
     '$imagesbasePath/Vector.png',
     scale: 1.1.w,
   );
-  static Image ProfileImage = Image.asset(
-    '$imagesbasePath/Profile1.png',
-  );
 }
 
 class SvgWidgets {

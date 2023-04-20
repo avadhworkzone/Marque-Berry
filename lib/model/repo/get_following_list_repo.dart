@@ -1,4 +1,3 @@
-import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_following_list_res_model.dart';
 import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/model/apiService/api_service.dart';

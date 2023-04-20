@@ -36,5 +36,10 @@ abstract class BaseService {
 
   final String applyCampaignURL = 'applyCampaign';
   final String applyContestURL = 'applyContest';
-  final String getCampaignByIdURL = 'sgetCampaignById?id=2';
+  final String getCampaignByIdURL = 'getCampaignById?id=2';
+
+  final String uploadTemplateURL = 'uploadTemplate';
+  final String listTemplatesURL = 'listTemplates';
+  final String getMyTemplatesURL = 'getMyTemplates';
+  final String getTrendingTemplatesURL = 'getTrendingTemplates';
 }

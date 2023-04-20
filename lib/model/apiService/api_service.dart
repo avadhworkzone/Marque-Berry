@@ -23,6 +23,7 @@ class ApiService extends BaseService {
     bool createPostData = false,
     bool applyCampaignData = false,
     bool applyContestData = false,
+    bool uploadTemplateData = false,
   }) async {
     try {
       logs("URL ---> ${Uri.parse(url!)}");
@@ -158,6 +159,34 @@ class ApiService extends BaseService {
         logs("response......$response");
       }
 
+      ///------------------------------------ UPLOAD TEMPLATE POST METHOD -------------------------------------///
+      else if (uploadTemplateData) {
+        logs("body:=====> $body");
+        var request = http.MultipartRequest("POST", Uri.parse(url));
+
+        var pic = await http.MultipartFile.fromPath("template", body!["file"]);
+        request.files.add(pic);
+        request.headers.addAll(
+          {
+            "token": PreferenceUtils.getString(key: PreferenceUtils.token),
+          },
+        );
+
+        body.keys.toList().forEach((element) {
+          if (element != "file") {
+            request.fields.addAll({element: body[element]});
+          }
+        });
+
+        var result = await request.send();
+        var responseData = await result.stream.toBytes();
+        var responseString = String.fromCharCodes(responseData);
+
+        print("FILE UPLOAD STATUS ==  $responseString");
+        response = returnResponse(result.statusCode, responseString);
+        logs("response......$response");
+      }
+
       ///------------------------------------ POST METHOD -------------------------------------///
 
       else if (apiType == APIType.aPost) {
@@ -217,14 +246,11 @@ Map<String, String> header({APIHeaderType? status}) {
   } else if (status == APIHeaderType.jsonBodyWithToken) {
     return {
       'Content-Type': 'application/json',
-      // "Authorization": "a3f077a1-b766-4c8b-98f4-c2105f3539e9",
       "token": "${PreferenceUtils.getString(key: PreferenceUtils.token)}"
     };
   } else if (status == APIHeaderType.onlyToken) {
     return {
       // "Authorization": "a3f077a1-b766-4c8b-98f4-c2105f3539e9",
-      // "token":
-      //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY4MDc2MDcyOSwiZXhwIjoxNjgxNjI0NzI5fQ.NYNc3k2u14CmfeXyUGU4R9G8uSZQTQQRgTU_DhqtJ5A"
       "token": "${PreferenceUtils.getString(key: PreferenceUtils.token)}"
     };
   } else {

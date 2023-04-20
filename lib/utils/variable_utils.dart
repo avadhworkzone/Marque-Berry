@@ -128,13 +128,4 @@ class VariableUtils {
   static const Follow = "  Follow  ";
 
   static const uploadTemplate = "  Upload Template  ";
-
-  /// Result
-  static const result = "  Result  ";
-  static const brandName = "  Brand Name  ";
-  static const campaignName = "  Campaign Name ";
-  static const viewResult = "  View Result ";
-
-  /// View Result
-  static const price = "  ₹500 ";
 }

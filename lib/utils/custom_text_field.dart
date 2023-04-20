@@ -192,7 +192,7 @@ class SearchTextFormField extends StatelessWidget {
       maxLength: mobilelength ?? 1000,
       decoration: InputDecoration(
         filled: true,
-        fillColor: ColorUtils.white,
+        fillColor: Theme.of(context).scaffoldBackgroundColor,
         hintText: hintText,
         hintStyle: hintStyle,
         counterText: "",
@@ -200,12 +200,30 @@ class SearchTextFormField extends StatelessWidget {
           padding: EdgeInsets.all(2.w),
           child: InkWell(
             onTap: () {},
-            child: Icon(Icons.search, color: ColorUtils.black),
+            child: Icon(
+              Icons.search,
+              color: Theme.of(context).textTheme.titleMedium?.color,
+            ),
           ),
         ),
-        border: underlineInputBorder,
-        focusedBorder: underlineInputBorder,
-        enabledBorder: underlineInputBorder,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).textTheme.titleMedium?.color ??
+                ColorUtils.black,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).textTheme.titleMedium?.color ??
+                ColorUtils.black,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).textTheme.titleMedium?.color ??
+                ColorUtils.black,
+          ),
+        ),
         contentPadding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 3.w),
       ),
     );

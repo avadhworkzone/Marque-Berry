@@ -66,12 +66,12 @@ class CampaignContestViewModel extends GetxController {
 
   /// ======================== GET CAMPAIGN CONTEST VIEW MODEL ================================
 
-  Future<void> getCampaignId(GetCampaignIdReqModel reqModel) async {
+  Future<void> getCampaignId(GetCampaignIdReqModel reqModel, String id) async {
     logs('loading..');
     getCampaignIdApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
-      final response = await GetCampaignIdRepo().getCampaign(reqModel);
+      final response = await GetCampaignIdRepo().getCampaign(reqModel, id);
       getCampaignIdApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('getCampaignIdApiResponse ERROR :=> $e');

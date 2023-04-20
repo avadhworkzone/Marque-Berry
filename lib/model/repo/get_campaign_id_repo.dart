@@ -6,11 +6,13 @@ import '../apiModel/responseModel/get_campaign_id_res_model.dart';
 
 class GetCampaignIdRepo extends BaseService {
   Future<GetCampaignIdResModel> getCampaign(
-      GetCampaignIdReqModel reqModel) async {
+    GetCampaignIdReqModel reqModel,
+    String id,
+  ) async {
     var response = await ApiService().getResponse(
       apiType: APIType.aPost,
       body: reqModel.toJson(),
-      url: '$baseURL$getCampaignByIdURL',
+      url: '$baseURL$getCampaignByIdURL?id=$id',
     );
 
     return GetCampaignIdResModel.fromJson(response);

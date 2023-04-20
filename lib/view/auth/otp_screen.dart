@@ -195,6 +195,10 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     value: response.data?.username ?? "",
                                   );
                                   await PreferenceUtils.setString(
+                                    key: PreferenceUtils.fullname,
+                                    value: response.data?.fullName ?? "",
+                                  );
+                                  await PreferenceUtils.setString(
                                     key: PreferenceUtils.profile,
                                     value: response.data?.image ?? "",
                                   );

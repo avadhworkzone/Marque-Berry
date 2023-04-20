@@ -54,8 +54,6 @@ class _CampaignScreenState extends State<CampaignScreen> {
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return GetBuilder<CampaignContestViewModel>(
       builder: (campaignContestViewModel) {
@@ -74,8 +72,6 @@ class _CampaignScreenState extends State<CampaignScreen> {
                 icon: Icon(Icons.arrow_back, color: blackWhite),
               ),
               title: const TabBar(
-                // labelColor: ColorUtils.blueB9,
-                // unselectedLabelColor: ColorUtils.black92,
                 tabs: [
                   Tab(
                     child: AdoroText(
@@ -152,7 +148,7 @@ class CampaignScn extends StatelessWidget {
           applied: dataIndex.applied ?? "false",
           image: dataIndex.image ?? "",
           description: dataIndex.description ?? "",
-          campaignContestId: dataIndex.id.toString() ?? "",
+          campaignContestId: dataIndex.id.toString(),
         );
       },
     );
@@ -242,10 +238,7 @@ class TabBarMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return GetBuilder<CampaignScreenController>(
       builder: (campaignScreenController) {
@@ -274,7 +267,7 @@ class TabBarMethod extends StatelessWidget {
                           fit: BoxFit.cover,
                           width: 24,
                           height: 24,
-                          image: NetworkImage(image ?? ""),
+                          image: NetworkImage(image),
                           progressIndicatorBuilder: (context, progress) {
                             double? value;
                             var expectedBytes = progress?.expectedTotalBytes;
@@ -306,7 +299,7 @@ class TabBarMethod extends StatelessWidget {
                       ),
                     ),
                     title: AdoroText(
-                      '[title]',
+                      '$title',
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -412,6 +405,9 @@ class TabBarMethod extends StatelessWidget {
 }
 
 class CampaignScreenController extends GetxController {
+  ApplyContestReqModel applyContestReqModel = ApplyContestReqModel();
+  ApplyCampaignReqModel applyCampaignReqModel = ApplyCampaignReqModel();
+
   Future<String> pickCampaignImage() async {
     try {
       FilePickerResult? result =
@@ -427,12 +423,8 @@ class CampaignScreenController extends GetxController {
     }
   }
 
-  ApplyContestReqModel applyContestReqModel = ApplyContestReqModel();
-  ApplyCampaignReqModel applyCampaignReqModel = ApplyCampaignReqModel();
-
   applyContest({
     required String applied,
-    // required CampaignScreenController campaignScreenController,
     required CampaignContestViewModel campaignContestViewModel,
     required String campaignId,
   }) async {

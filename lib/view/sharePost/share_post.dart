@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:better_player/better_player.dart';
 import 'package:get/get.dart';
-import 'package:gif_view/gif_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -36,7 +34,7 @@ class SharePost extends StatefulWidget {
 
 class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   String dropdownName = '';
-  String dropdownvalue = '';
+  String dropdownValue = '';
 
   final description = TextEditingController();
   SharePostController sharePostController = Get.find<SharePostController>();
@@ -52,8 +50,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
-    bool isSending = false;
-    String _selectedFile = '';
     return GetBuilder<CreatePostViewModel>(builder: (createPostViewModel) {
       return GetBuilder<SharePostController>(builder: (sharePostController) {
         return Material(
@@ -183,7 +179,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                           setState(() {
                                             dropdownName =
                                                 index.name.toString();
-                                            dropdownvalue = index.id.toString();
+                                            dropdownValue = index.id.toString();
                                           });
                                         },
                                       ),
@@ -194,7 +190,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
-
                         SizeConfig.sH5,
                         AdoroText(
                           VariableUtils.whatYouWantToTalkAbout,
@@ -203,7 +198,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                           fontWeight: FontWeightClass.fontWeight600,
                         ),
                         SizeConfig.sH2,
-
                         CommonTextFormField(
                           color: blackWhite,
                           validator: () {},
@@ -214,7 +208,27 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                               RegularExpression.onlyFirstSpaceNoAllowPattern,
                         ),
                         SizeConfig.sH2,
-                        if (sharePostController.sourcePath != "")
+                        if (sharePostController.sourcePath != "" &&
+                            sharePostController.sourceName == "template")
+                          Row(
+                            children: [
+                              Expanded(
+                                child: AdoroText(
+                                  sharePostController.name.split("/").last,
+                                  color: blackWhite,
+                                ),
+                              ),
+                              IconButton(
+                                splashRadius: 6.w,
+                                onPressed: () {
+                                  sharePostController.clearSourcePath();
+                                },
+                                icon: Icon(Icons.close, color: blackWhite),
+                              ),
+                            ],
+                          ),
+                        if (sharePostController.sourcePath != "" &&
+                            sharePostController.sourceName != "template")
                           Container(
                             height: 50.w,
                             width: Get.width,
@@ -224,30 +238,20 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                 if (sharePostController.sourceName == "image")
                                   Center(
                                     child: Image.file(
-                                      File(sharePostController.sourcePath
-                                          .toString()),
+                                      File(sharePostController.sourcePath),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
-                                if (sharePostController.sourceName == "video")
+                                if (sharePostController.sourceName == "video" ||
+                                    sharePostController.sourceName == "gif")
                                   Padding(
                                     padding: EdgeInsets.all(4.w),
                                     child: AspectRatio(
                                       aspectRatio: 18 / 10,
                                       child: BetterPlayer.file(
-                                        sharePostController.sourcePath
-                                            .toString(),
-                                      ),
+                                          sharePostController.sourcePath),
                                     ),
                                   ),
-                                if (sharePostController.sourceName == "gif")
-                                  GifView.memory(
-                                    _selectedFile.toString() as Uint8List,
-                                    height: 200,
-                                    width: 200,
-                                  ),
-                                // if (sharePostController.sourceName == "template")
-                                //   Text("DOCX"),
                                 Positioned(
                                   right: 0,
                                   child: IconButton(
@@ -263,50 +267,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                           )
                         else
                           Container(height: 55.w),
-                        // ElevatedButton(
-                        //   onPressed: () async {
-                        //     FilePickerResult? result =
-                        //         await FilePicker.platform.pickFiles(
-                        //       type: FileType.custom,
-                        //       allowedExtensions: ['gif'],
-                        //     );
-                        //     if (result != null) {
-                        //       PlatformFile selectedFile = result.files.first;
-                        //       setState(() {
-                        //         _selectedFile =
-                        //             File(result.files.first) as String;
-                        //       });
-                        //     }
-                        //   },
-                        //   child: Text('Select GIF'),
-                        // ),
-
                         SizeConfig.sH2,
-                        // CommonTextFieldContainer(
-                        //   controller: description,
-                        //   color: ColorUtils.note,
-                        //   suffixIcon: Padding(
-                        //     padding: EdgeInsets.only(
-                        //       bottom: 35.w,
-                        //     ),
-                        //     child: IconButton(
-                        //       onPressed: () {},
-                        //       splashRadius: 6.w,
-                        //       icon: Icon(
-                        //         Icons.close,
-                        //         size: 3.h,
-                        //         color: Theme.of(context).textTheme.titleSmall?.color,
-                        //       ),
-                        //     ),
-                        //   ),
-                        //   prefixIcon: Padding(
-                        //     padding: EdgeInsets.only(top: 40.w, right: 5.w),
-                        //     child: Icon(
-                        //       Icons.person_add_alt_sharp,
-                        //       color: ColorUtils.black92,
-                        //     ),
-                        //   ),
-                        // ),
                         UploadPhoto(sharePostController: sharePostController),
                         SizeConfig.sH3,
                       ],
@@ -326,7 +287,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
 
   createPostApi(CreatePostReqModel createPostReqModel,
       SharePostController sharePostController) async {
-    if (dropdownvalue == "") {
+    if (dropdownValue == "") {
       showSnackBar(
         message: "Category not selected",
         snackbarSuccess: false,
@@ -343,7 +304,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
       );
     } else {
       createPostReqModel.content = description.text;
-      createPostReqModel.categoryId = int.parse(dropdownvalue);
+      createPostReqModel.categoryId = int.parse(dropdownValue);
       createPostReqModel.contentUrl = sharePostController.sourcePath;
       createPostReqModel.contentType = sharePostController.sourceName;
 
@@ -454,7 +415,7 @@ class commonUploadTile extends StatelessWidget {
         if (uploadType == "tag") {
           Get.to(() => TagAPeople());
         } else {
-          sharePostController.pickFile("uploadType");
+          sharePostController.pickFile(uploadType);
         }
       },
       child: Row(
@@ -475,6 +436,7 @@ class commonUploadTile extends StatelessWidget {
 
 class SharePostController extends GetxController {
   String sourcePath = "";
+  String name = "";
   String sourceName = "";
 
   pickFile(String extension) async {
@@ -491,9 +453,12 @@ class SharePostController extends GetxController {
       );
       if (result != null) {
         PlatformFile file = result.files.first;
+        PlatformFile fileName = result.files.last;
         sourcePath = file.path!;
+        name = fileName.path!;
       } else {
         sourcePath = "";
+        name = "";
       }
       sourceName = extension;
       update();

@@ -30,10 +30,8 @@ class RegisterComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color? whiteBlack2E = Theme.of(context).cardColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92BlueB9 = Theme.of(context).textTheme.titleLarge?.color;
 
     return Form(
       key: registerKey,

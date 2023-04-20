@@ -8,11 +8,13 @@ class PreferenceUtils {
 
   static String system = 'system';
   static String mode = 'mode';
+  static String notification = 'notification';
   static String login = 'login';
   static String userid = 'userid';
   static String token = 'token';
 
   static String username = 'username';
+  static String fullname = 'fullname';
   static String profile = 'profile';
 
   /// SET STRING PREFERENCE
@@ -25,6 +27,18 @@ class PreferenceUtils {
 
   static String getString({required String key}) {
     return getStorage.read(key) ?? "";
+  }
+
+  /// SET BOOl PREFERENCE
+  static Future setBool({
+    required String key,
+    required bool value,
+  }) async {
+    await getStorage.write(key, value);
+  }
+
+  static bool getBool({required String key}) {
+    return getStorage.read(key) ?? false;
   }
 
   /// SET INT PREFERENCE
