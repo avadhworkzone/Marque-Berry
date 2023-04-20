@@ -2,6 +2,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/common_image.dart';
@@ -156,31 +157,42 @@ class ReferAndEarn extends StatelessWidget {
                     ],
                   ),
                   SizeConfig.sH5,
-                  Container(
-                    height: 6.h,
-                    width: 40.w,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          ColorUtils.linearGradient1,
-                          ColorUtils.linearGradient6,
-                          ColorUtils.linearGradient7
-                        ],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(6.w),
-                      ),
+                  InkWell(
+                    onTap: () {
+                      Share.share(
+                        "https://www.webhood.net/",
+                      );
+                    },
+                    child: Container(
+                      width: 35.w,
+                      child: Image.asset("assets/icons/share_btn.png"),
                     ),
-                    child: Center(
-                        child: AdoroText(
-                      VariableUtils.share,
-                      color: ColorUtils.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.sp,
-                    )),
                   ),
+                  // Container(
+                  //   height: 6.h,
+                  //   width: 40.w,
+                  //   decoration: BoxDecoration(
+                  //     gradient: LinearGradient(
+                  //       colors: [
+                  //         ColorUtils.linearGradient1,
+                  //         ColorUtils.linearGradient6,
+                  //         ColorUtils.linearGradient7
+                  //       ],
+                  //       begin: Alignment.bottomLeft,
+                  //       end: Alignment.topRight,
+                  //     ),
+                  //     borderRadius: BorderRadius.all(
+                  //       Radius.circular(6.w),
+                  //     ),
+                  //   ),
+                  //   child: Center(
+                  //       child: AdoroText(
+                  //     VariableUtils.share,
+                  //     color: ColorUtils.white,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 15.sp,
+                  //   )),
+                  // ),
                   SizeConfig.sH7,
                   Padding(
                     padding: EdgeInsets.only(left: 7.w, right: 7.w),

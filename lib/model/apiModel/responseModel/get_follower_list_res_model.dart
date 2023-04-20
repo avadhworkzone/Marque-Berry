@@ -1,7 +1,7 @@
 class GetFollowerListResModel {
   int? status;
   String? msg;
-  List<Data>? data;
+  List<TagData>? data;
 
   GetFollowerListResModel({this.status, this.msg, this.data});
 
@@ -9,9 +9,9 @@ class GetFollowerListResModel {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <TagData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new TagData.fromJson(v));
       });
     }
   }
@@ -27,16 +27,16 @@ class GetFollowerListResModel {
   }
 }
 
-class Data {
+class TagData {
   int? id;
   String? username;
   String? fullName;
   String? image;
   String? status;
 
-  Data({this.id, this.username, this.fullName, this.image, this.status});
+  TagData({this.id, this.username, this.fullName, this.image, this.status});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  TagData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
     fullName = json['full_name'];

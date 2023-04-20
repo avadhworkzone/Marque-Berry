@@ -55,3 +55,13 @@ class Category {
     return data;
   }
 }
+
+///
+String chatId(String id1, String id2) {
+  logs('id1 length => ${id1.length} id2 length=> ${id2.length}');
+  if (id1.compareTo(id2) > 0) {
+    return id1 + '-' + id2;
+  } else {
+    return id2 + '-' + id1;
+  }
+}

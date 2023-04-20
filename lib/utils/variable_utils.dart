@@ -116,4 +116,16 @@ class VariableUtils {
   static const withdrawMoney = "Withdraw Money";
   static const withdrawMinimumLimit = "Withdraw Minimum limit Rs. 100";
   static const cashCoin = "1 Cash Coin = 1 Rs";
+
+  /// Notification
+  static const SeeAllRequests = "See all requests (00) ";
+  static const ritiKraj = "ritikraj2022 ";
+  static const requestedTo = "requested to ";
+  static const followYou = " follow you · 2hrs";
+  static const Confirm = " Confirm ";
+  static const Delete = " Delete ";
+  static const SuggestedForYou = "  Suggested for you  ";
+  static const Follow = "  Follow  ";
+
+  static const uploadTemplate = "  Upload Template  ";
 }

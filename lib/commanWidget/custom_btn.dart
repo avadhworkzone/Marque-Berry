@@ -51,6 +51,51 @@ class CustomBtn extends StatelessWidget {
   }
 }
 
+class UploadBtn extends StatelessWidget {
+  final tpdf.OnTab? onTap;
+  final String text;
+  final double? radius;
+  final double? height;
+  final double? width;
+  final double? fontSize;
+  final BoxDecoration? decoration;
+  final Color? bgColor;
+  final Color? textColor;
+
+  const UploadBtn({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.radius,
+    this.height,
+    this.width,
+    this.fontSize,
+    this.bgColor,
+    this.textColor,
+    this.decoration,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height,
+        width: width,
+        decoration: decoration ?? DecorationUtils.buttonDecoration(context),
+        child: Center(
+          child: AdoroText(
+            text,
+            fontSize: fontSize,
+            color: textColor ?? ColorUtils.white,
+            fontWeight: FontWeightClass.fontWeightBold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class BorderBtn extends StatelessWidget {
   final tpdf.OnTab? onTap;
   final String text;

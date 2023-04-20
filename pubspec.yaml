@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-#  dio: ^5.1.1
 
   # connectivity :-
   connectivity_plus: ^2.3.6
@@ -25,7 +24,11 @@ dependencies:
   sizer: ^2.0.15
   lottie: ^2.3.1
   http: ^0.13.5
+
+  # firebase_core
   firebase_core: ^2.8.0
+  cloud_firestore: ^4.5.1
+  firebase_storage: ^11.1.0
 
   # PIN-CODE-FIELD
   pin_code_fields: ^7.4.0
@@ -41,7 +44,8 @@ dependencies:
 
   file_picker: ^5.2.7
   better_player: ^0.0.83
-  gif_view: ^0.3.1
+  share_plus: ^6.3.2
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +55,6 @@ dev_dependencies:
 
 #dependency_overrides:
 #  firebase_core_platform_interface: 4.5.1
-
 
 flutter:
 

@@ -125,18 +125,19 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                   fontWeight: FontWeight.bold,
                   color: blackWhite,
                 ),
-                SizeConfig.sH2,
                 Container(
                   height: 22.w,
-                  padding: EdgeInsets.symmetric(vertical: 3.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InkWell(
+                        onTap: () {},
                         child: Container(
                           width: 28.w,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizeConfig.sH05,
                               AdoroText('Posts', color: black92White),
                               SizeConfig.sH05,
                               AdoroText(
@@ -145,6 +146,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                                 color: blackWhite,
                                 fontWeight: FontWeightClass.fontWeightBold,
                               ),
+                              SizeConfig.sH05,
                             ],
                           ),
                         ),
@@ -161,7 +163,9 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                         child: Container(
                           width: 28.w,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizeConfig.sH05,
                               AdoroText('Followers', color: black92White),
                               SizeConfig.sH05,
                               AdoroText(
@@ -170,6 +174,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                                 color: blackWhite,
                                 fontWeight: FontWeightClass.fontWeightBold,
                               ),
+                              SizeConfig.sH05,
                             ],
                           ),
                         ),
@@ -186,7 +191,9 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                         child: Container(
                           width: 28.w,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizeConfig.sH05,
                               AdoroText('following', color: black92White),
                               SizeConfig.sH05,
                               AdoroText(
@@ -195,6 +202,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                                 fontSize: 15.sp,
                                 fontWeight: FontWeightClass.fontWeightBold,
                               ),
+                              SizeConfig.sH05,
                             ],
                           ),
                         ),
@@ -203,12 +211,12 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                   ),
                 ),
                 SizeConfig.sH2,
-                InkWell(
-                  onTap: () {
-                    Get.to(() => EditProfile());
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(() => EditProfile());
+                    },
                     child: Container(
                       height: 15.w,
                       width: Get.width,
@@ -309,7 +317,8 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                                           width: 40.w,
                                           color: profileController.tabIndex == 1
                                               ? ColorUtils.blueB9
-                                              : black92White,
+                                              : ColorUtils.black92
+                                                  .withOpacity(0.2),
                                         ),
                                       ],
                                     ),

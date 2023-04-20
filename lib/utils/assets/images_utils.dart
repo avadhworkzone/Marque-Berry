@@ -20,6 +20,13 @@ class ImagesWidgets {
     '$imagesbasePath/verifieduser.png',
     scale: 1.5.w,
   );
+  static Image UserImage = Image.asset(
+    '$imagesbasePath/profile.png',
+  );
+  static Image vectorImage = Image.asset(
+    '$imagesbasePath/Vector.png',
+    scale: 1.1.w,
+  );
 }
 
 class SvgWidgets {

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/typedef_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -34,18 +35,14 @@ class MyDrawer extends StatelessWidget {
         backgroundColor: whiteBlack2E,
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () => Get.back(),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Align(
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: blackWhite,
-                    ),
-                    alignment: Alignment.topLeft,
-                  ),
+              IconButton(
+                splashRadius: 7.w,
+                onPressed: () => Get.back(),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: blackWhite,
                 ),
               ),
               ListTile(
@@ -58,20 +55,21 @@ class MyDrawer extends StatelessWidget {
                   backgroundImage: AssetImage("assets/icons/user1.png"),
                 ),
                 title: AdoroText(
-                  "Deepanshu Sarmandal",
+                  PreferenceUtils.getString(key: 'username') ?? "",
                   color: blackWhite,
                   fontWeight: FontWeightClass.fontWeight600,
                 ),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 6.0),
                   child: AdoroText(
-                    "@deepanshu",
+                    PreferenceUtils.getString(key: 'fullname') ?? "",
                     fontWeight: FontWeightClass.fontWeight500,
                   ),
                 ),
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => NotificationScreen());
                 },
                 context: context,
@@ -80,6 +78,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => Result());
                 },
                 context: context,
@@ -88,6 +87,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => Note());
                 },
                 context: context,
@@ -96,6 +96,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => Wallet());
                 },
                 context: context,
@@ -104,6 +105,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => Template());
                 },
                 context: context,
@@ -112,6 +114,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => ReferAndEarn());
                 },
                 context: context,
@@ -120,6 +123,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => Support());
                 },
                 context: context,
@@ -128,6 +132,7 @@ class MyDrawer extends StatelessWidget {
               ),
               drawerData(
                 onTap: () {
+                  Get.back();
                   Get.to(() => Setting());
                 },
                 context: context,

@@ -59,9 +59,16 @@ class EditProfile extends StatelessWidget {
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
       final GetUserResDetail response =
           profileViewModel.getUserProfileApiResponse.data;
+
       var profileData = response.data?[0];
       profilePic = profileData?.image ?? "";
       coverPic = profileData?.coverPhoto ?? "";
+
+      PreferenceUtils.setString(
+          key: 'username', value: profileData?.username ?? "");
+      PreferenceUtils.setString(
+          key: 'fullname', value: profileData?.fullName ?? "");
+
       fullName = TextEditingController(text: profileData?.fullName ?? "");
       username = TextEditingController(text: profileData?.username ?? "");
       mailId = TextEditingController(text: profileData?.email ?? "");
@@ -496,6 +503,7 @@ class EditProfile extends StatelessWidget {
                       SizeConfig.sH2,
                       CustomBtn(
                         onTap: () async {
+                          FocusScope.of(context).unfocus();
                           if (username.text.isEmpty ||
                               mailId.text.isEmpty ||
                               bankName.text.isEmpty ||

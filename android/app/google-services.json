@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "203176417957",
-    "project_id": "socialv-flutter",
-    "storage_bucket": "socialv-flutter.appspot.com"
+    "project_number": "331861768056",
+    "project_id": "adoro-demo-ffcf5",
+    "storage_bucket": "adoro-demo-ffcf5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:203176417957:android:6d2dde980112558149cb4c",
+        "mobilesdk_app_id": "1:331861768056:android:42801fc04f34a9f285fa8d",
         "android_client_info": {
           "package_name": "com.iconic.socialv"
         }
       },
       "oauth_client": [
         {
-          "client_id": "203176417957-85qj4djghloja46aci7smcjtd701ea4m.apps.googleusercontent.com",
+          "client_id": "331861768056-1b8pl2m2236kevll9k1digsucs45d3tl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDgYJs0fijqzbOGCzZ_HTM8-t7NTrjOSmw"
+          "current_key": "AIzaSyAT5-280waN4DG4qpf5Ynm81MsJCgAueCw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "203176417957-85qj4djghloja46aci7smcjtd701ea4m.apps.googleusercontent.com",
+              "client_id": "331861768056-1b8pl2m2236kevll9k1digsucs45d3tl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

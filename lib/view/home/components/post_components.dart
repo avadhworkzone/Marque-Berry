@@ -110,7 +110,6 @@ class PostComponents extends StatelessWidget {
                       width: 15.w,
                       height: 15.w,
                       image: NetworkImage(profileImage),
-                      // color: black92White,
                       progressIndicatorBuilder: (context, progress) {
                         double? value;
                         var expectedBytes = progress?.expectedTotalBytes;
@@ -129,7 +128,7 @@ class PostComponents extends StatelessWidget {
                         padding: EdgeInsets.all(2.w),
                         child: CommonImage(
                           img: IconsWidgets.userImages,
-                          color: blackWhite,
+                          color: ColorUtils.black,
                         ),
                       ),
                     ),
@@ -277,7 +276,7 @@ class PostComponents extends StatelessWidget {
                             padding: EdgeInsets.all(7.w),
                             child: CommonImage(
                               img: IconsWidgets.userImages,
-                              color: blackWhite,
+                              color: ColorUtils.black,
                             ),
                           ),
                         ),
@@ -406,7 +405,7 @@ class PostComponents extends StatelessWidget {
                                                 padding: EdgeInsets.all(1.w),
                                                 child: CommonImage(
                                                   img: IconsWidgets.userImages,
-                                                  color: blackWhite,
+                                                  color: ColorUtils.black,
                                                 ),
                                               ),
                                             ),
