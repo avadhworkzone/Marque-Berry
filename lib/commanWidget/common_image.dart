@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CommonImage extends StatelessWidget {
   String img;
@@ -54,17 +55,24 @@ class CommonImageWidth extends StatelessWidget {
   String img;
   double width;
   Color? color;
+  double height;
 
   CommonImageWidth({
     Key? key,
     required this.img,
     required this.width,
     required this.color,
+    required this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(img, width: width, color: color);
+    return Image.asset(
+      img,
+      width: width,
+      height: height,
+      color: color,
+    );
   }
 }
 
@@ -84,6 +92,9 @@ class CommonImageHeightWidth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(img, width: width, height: height, color: color);
+    return Padding(
+      padding: EdgeInsets.only(right: 2.w),
+      child: Image.asset(img, width: width, height: height, color: color),
+    );
   }
 }

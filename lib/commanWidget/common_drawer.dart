@@ -156,7 +156,12 @@ class MyDrawer extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(3.w, 0.5.w, 3.w, 0),
       child: ListTile(
-        leading: CommonImageWidth(img: image, width: 5.5.w, color: blackWhite),
+        leading: CommonImageWidth(
+          img: image,
+          width: 5.5.w,
+          color: blackWhite,
+          height: 1.w,
+        ),
         minLeadingWidth: 5.w,
         title: AdoroText(
           title,

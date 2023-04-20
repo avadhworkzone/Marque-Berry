@@ -49,11 +49,7 @@ class Home extends StatelessWidget {
         leading: Builder(
           builder: (context) {
             return GestureDetector(
-              child: CommonImageWidth(
-                img: IconsWidgets.drawerImage,
-                width: 25.w,
-                color: blackWhite,
-              ),
+              child: Image.asset(IconsWidgets.menuImage, scale: 3),
               onTap: () => Scaffold.of(context).openDrawer(),
             );
           },
@@ -69,7 +65,7 @@ class Home extends StatelessWidget {
             height: 7.w,
             color: blackWhite,
           ),
-          SizeConfig.sW3,
+          SizeConfig.sW2,
           GestureDetector(
             onTap: () => Get.to(
               () => MessageList(),
@@ -167,7 +163,9 @@ class Home extends StatelessWidget {
                   return categoryPostList.isEmpty
                       ? Expanded(
                           child: Center(
-                            child: AdoroText("No data available"),
+                            child: AdoroText(
+                              "No data available",
+                            ),
                           ),
                         )
                       : Expanded(

@@ -23,6 +23,9 @@ class ImagesWidgets {
   static Image UserImage = Image.asset(
     '$imagesbasePath/profile.png',
   );
+  static Image profileImage = Image.asset(
+    '$imagesbasePath/profile1.png',
+  );
   static Image vectorImage = Image.asset(
     '$imagesbasePath/Vector.png',
     scale: 1.1.w,
@@ -46,6 +49,7 @@ class IconsWidgets {
 
   ///APPBAR HOME
   static String drawerImage = '$iconsbasePath/drawer.png';
+  static String menuImage = '$iconsbasePath/menu.png';
   static String messageImage = '$iconsbasePath/message.png';
   static String searchImage = '$iconsbasePath/search.png';
 

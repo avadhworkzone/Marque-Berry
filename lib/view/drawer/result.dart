@@ -106,7 +106,7 @@ class Result extends StatelessWidget {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(16.w),
               child: CommonAppBar(
-                title: VariableUtils.result,
+                title: VariableUtils.resultText,
                 ontap: () => Get.back(),
               ),
             ),
@@ -128,7 +128,7 @@ class Result extends StatelessWidget {
                           children: [
                             SizeConfig.sW2,
                             CircleAvatar(
-                              child: ImagesWidgets.ProfileImage,
+                              child: ImagesWidgets.profileImage,
                             ),
                             SizeConfig.sW2,
                             Column(

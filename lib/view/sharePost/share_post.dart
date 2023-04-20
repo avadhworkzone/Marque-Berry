@@ -77,13 +77,16 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                 color: blackWhite,
                               ),
                             ),
-                            AdoroText(
-                              VariableUtils.sharePost,
-                              fontSize: 15.sp,
-                              fontWeight: FontWeightClass.fontWeightBold,
-                              color: blackWhite,
+                            Padding(
+                              padding: EdgeInsets.only(left: 14.w),
+                              child: AdoroText(
+                                VariableUtils.sharePost,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeightClass.fontWeightBold,
+                                color: blackWhite,
+                              ),
                             ),
-                            SizeConfig.sW18,
+                            SizeConfig.sW4,
                             Container(
                               height: 5.h,
                               width: 30.w,
@@ -191,15 +194,16 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                           ],
                         ),
                         SizeConfig.sH5,
-                        AdoroText(
-                          VariableUtils.whatYouWantToTalkAbout,
-                          color: blackWhite,
-                          fontSize: 13.sp,
-                          fontWeight: FontWeightClass.fontWeight600,
-                        ),
+                        // AdoroText(
+                        //   VariableUtils.whatYouWantToTalkAbout,
+                        //   color: blackWhite,
+                        //   fontSize: 13.sp,
+                        //   fontWeight: FontWeightClass.fontWeight600,
+                        // ),
                         SizeConfig.sH2,
                         CommonTextFormField(
                           color: blackWhite,
+                          hintText: VariableUtils.whatYouWantToTalkAbout,
                           validator: () {},
                           controller: description,
                           allowInputFormatters:
@@ -420,7 +424,7 @@ class commonUploadTile extends StatelessWidget {
       },
       child: Row(
         children: [
-          CommonImageScale(img: icon, color: blackWhite, scale: 1.2.w),
+          CommonImageScale(img: icon, color: black92White, scale: 1.2.w),
           SizeConfig.sW2,
           AdoroText(
             title,
