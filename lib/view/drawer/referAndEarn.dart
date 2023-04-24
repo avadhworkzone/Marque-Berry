@@ -50,12 +50,13 @@ class ReferAndEarn extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              ColorUtils.linearGradient1,
+                              ColorUtils.linearGradient3,
                               ColorUtils.linearGradient6,
                               ColorUtils.linearGradient7
                             ],
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
+                            stops: [0, 0.3, 0.8],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
                           borderRadius: BorderRadius.vertical(
                             bottom: Radius.circular(10.w),

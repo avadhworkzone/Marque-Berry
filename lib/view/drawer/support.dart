@@ -51,8 +51,9 @@ class Support extends StatelessWidget {
                               ColorUtils.linearGradient6,
                               ColorUtils.linearGradient7
                             ],
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
+                            stops: [0, 0.5, 1],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
                         ),
                         child: Padding(

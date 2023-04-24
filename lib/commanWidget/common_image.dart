@@ -55,14 +55,12 @@ class CommonImageWidth extends StatelessWidget {
   String img;
   double width;
   Color? color;
-  // double height;
 
   CommonImageWidth({
     Key? key,
     required this.img,
     required this.width,
     required this.color,
-    // required this.height,
   }) : super(key: key);
 
   @override
@@ -70,7 +68,6 @@ class CommonImageWidth extends StatelessWidget {
     return Image.asset(
       img,
       width: width,
-      // height: height,
       color: color,
     );
   }

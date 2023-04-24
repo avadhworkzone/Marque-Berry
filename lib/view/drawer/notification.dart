@@ -152,12 +152,13 @@ class Ritikraj extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CircleAvatar(
           radius: 5.w,
           child: ImagesWidgets.UserImage,
         ),
-        SizeConfig.sW1,
+        SizeConfig.sW3,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -182,48 +183,54 @@ class Ritikraj extends StatelessWidget {
           ],
         ),
         SizeConfig.sW1,
-        Container(
-          height: 5.h,
-          width: 24.w,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                ColorUtils.linearGradient1,
-                ColorUtils.linearGradient6,
-                ColorUtils.linearGradient7
-              ],
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
+        Padding(
+          padding: EdgeInsets.only(top: 3.w),
+          child: Container(
+            height: 4.h,
+            width: 23.w,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  ColorUtils.linearGradient1,
+                  ColorUtils.linearGradient6,
+                  ColorUtils.linearGradient7
+                ],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(2.w),
+              ),
             ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(2.w),
-            ),
-          ),
-          child: Center(
-            child: AdoroText(
-              VariableUtils.Confirm,
-              color: ColorUtils.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 12.sp,
+            child: Center(
+              child: AdoroText(
+                VariableUtils.Confirm,
+                color: ColorUtils.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 11.sp,
+              ),
             ),
           ),
         ),
         SizeConfig.sW1,
-        Container(
-          height: 5.h,
-          width: 24.w,
-          decoration: BoxDecoration(
-            color: ColorUtils.black92,
-            borderRadius: BorderRadius.all(
-              Radius.circular(2.w),
+        Padding(
+          padding: EdgeInsets.only(top: 3.w),
+          child: Container(
+            height: 4.h,
+            width: 23.w,
+            decoration: BoxDecoration(
+              color: ColorUtils.black92,
+              borderRadius: BorderRadius.all(
+                Radius.circular(2.w),
+              ),
             ),
-          ),
-          child: Center(
-            child: AdoroText(
-              VariableUtils.Delete,
-              color: ColorUtils.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 14.sp,
+            child: Center(
+              child: AdoroText(
+                VariableUtils.Delete,
+                color: ColorUtils.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 11.sp,
+              ),
             ),
           ),
         ),
@@ -252,8 +259,8 @@ class UserNameFollow extends StatelessWidget {
           ),
         ),
         Container(
-          height: 5.h,
-          width: 30.w,
+          height: 4.h,
+          width: 23.w,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -273,7 +280,7 @@ class UserNameFollow extends StatelessWidget {
               VariableUtils.Follow,
               color: ColorUtils.white,
               fontWeight: FontWeight.bold,
-              fontSize: 13.sp,
+              fontSize: 11.sp,
             ),
           ),
         ),
@@ -302,8 +309,8 @@ class UserNameCircleAvatar extends StatelessWidget {
           ),
         ),
         Container(
-          height: 5.h,
-          width: 30.w,
+          height: 4.h,
+          width: 23.w,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -323,7 +330,7 @@ class UserNameCircleAvatar extends StatelessWidget {
               VariableUtils.Follow,
               color: ColorUtils.white,
               fontWeight: FontWeight.bold,
-              fontSize: 13.sp,
+              fontSize: 11.sp,
             ),
           ),
         ),
@@ -352,8 +359,8 @@ class UserNameContainer extends StatelessWidget {
           ),
         ),
         Container(
-          height: 5.h,
-          width: 30.w,
+          height: 4.h,
+          width: 23.w,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -373,7 +380,7 @@ class UserNameContainer extends StatelessWidget {
               VariableUtils.Follow,
               color: ColorUtils.white,
               fontWeight: FontWeight.bold,
-              fontSize: 13.sp,
+              fontSize: 11.sp,
             ),
           ),
         ),

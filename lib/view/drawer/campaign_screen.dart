@@ -310,7 +310,8 @@ class TabBarMethod extends StatelessWidget {
                   ),
                   SizeConfig.sH1,
                   AdoroText(
-                    'description',
+                    'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat'
+                    'duis enim velit mollit...',
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -350,7 +351,7 @@ class TabBarMethod extends StatelessWidget {
                           : BoxDecoration(color: Colors.grey[100]),
                       child: Center(
                         child: AdoroText(
-                          'APPLY NOW',
+                          applied == "false" ? 'APPLY NOW' : "APPLIED",
                           color: applied == "false"
                               ? ColorUtils.white
                               : ColorUtils.black92,
