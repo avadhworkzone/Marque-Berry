@@ -444,6 +444,7 @@ class CampaignScreenController extends GetxController {
 
           if (response.status.toString() == VariableUtils.status200) {
             Get.to(() => DoneScreen());
+
             showSnackBar(
               message: response.msg ?? "apply successfully",
               snackbarSuccess: true,

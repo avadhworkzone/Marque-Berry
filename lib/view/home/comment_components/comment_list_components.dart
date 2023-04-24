@@ -18,6 +18,7 @@ class CommentList extends StatelessWidget {
   String likecount;
   int replaycount = 0;
   bool replayData = false;
+  VoidCallback replayMessage;
 
   CommentList({
     Key? key,
@@ -29,6 +30,7 @@ class CommentList extends StatelessWidget {
     required this.replaycount,
     required this.replayData,
     required this.mentione,
+    required this.replayMessage,
   }) : super(key: key);
 
   @override
@@ -44,6 +46,7 @@ class CommentList extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
                 radius: 6.w,
+                backgroundColor: Colors.grey[100],
                 backgroundImage: NetworkImage(img),
                 onBackgroundImageError: (_, __) {
                   CommonImage(img: IconsWidgets.userImages, color: blackWhite);
@@ -97,7 +100,7 @@ class CommentList extends StatelessWidget {
                 LikeButton(likecounter: likecount),
                 SizeConfig.sW2,
                 InkWell(
-                  onTap: () {},
+                  onTap: () => replayMessage(),
                   child: ReplayButton(replaycount: replaycount),
                 ),
               ],

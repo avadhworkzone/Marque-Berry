@@ -50,12 +50,19 @@ class Comments extends StatelessWidget {
 
   ScrollController scrollController = ScrollController();
 
+  FocusNode focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     Color? canvasColor = Theme.of(context).canvasColor;
 
     return Material(
-      color: Colors.grey[100],
+      // color: Colors.grey[100],
       child: GetBuilder<HomeController>(builder: (home) {
         return GetBuilder<CategoryFeedViewModel>(
           initState: (_) {
@@ -107,11 +114,11 @@ class Comments extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final commentdata = response.data![index];
 
-                        final subComments = response.data!
-                            .where((element) =>
-                                element.parentId ==
-                                commentdata.commentId.toString())
-                            .toList();
+                        // final subComments = response.data!
+                        //     .where((element) =>
+                        //         element.parentId ==
+                        //         commentdata.commentId.toString())
+                        //     .toList();
 
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.w),
@@ -122,35 +129,97 @@ class Comments extends StatelessWidget {
                                 CommentList(
                                   likecount: (likecount ?? 0).toString(),
                                   replaycount: 0,
-                                  time: "2 W ago",
+                                  time: postTimeCalculate(
+                                    commentdata.createdOn.toString(),
+                                    '',
+                                  ),
+                                  replayMessage: () {
+                                    commentTextEditing.text =
+                                        "@${commentdata.username} ";
+
+                                    /// main comment
+                                    home.parentCommentIdChange(
+                                      commentdata.commentId,
+                                    );
+
+                                    FocusScope.of(context)
+                                        .requestFocus(focusNode);
+                                    commentTextEditing.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: commentTextEditing
+                                                .text.length));
+                                  },
                                   name: commentdata.username ?? "",
                                   img: commentdata.image ?? "",
                                   mentione: '',
                                   replayData: false,
                                   message: commentdata.comment ?? "",
                                 ),
-                              if (subComments.length > 0)
-                                Column(
-                                  children: List.generate(
-                                    subComments.length,
-                                    (subIndex) => Container(
-                                      width: 80.w,
-                                      padding: EdgeInsets.only(top: 5.w),
-                                      child: CommentList(
-                                        likecount: (likecount ?? 0).toString(),
-                                        replaycount: 0,
-                                        time: "2 W ago",
-                                        name: subComments[subIndex].username ??
-                                            "",
-                                        img: subComments[subIndex].image ?? "",
-                                        mentione: '',
-                                        replayData: false,
-                                        message:
-                                            subComments[subIndex].comment ?? "",
-                                      ),
+                              for (int i = 0;
+                                  i < commentdata.childComment!.length;
+                                  i++)
+                                Container(
+                                  width: 80.w,
+                                  padding: EdgeInsets.only(top: 5.w),
+                                  child: CommentList(
+                                    replayMessage: () {
+                                      /// sub comment
+                                      home.parentCommentIdChange(
+                                          commentdata.parentId);
+
+                                      commentTextEditing.text =
+                                          "@${commentdata.childComment?[i].username} ";
+                                      FocusScope.of(context)
+                                          .requestFocus(focusNode);
+
+                                      commentTextEditing.selection =
+                                          TextSelection.fromPosition(
+                                        TextPosition(
+                                            offset:
+                                                commentTextEditing.text.length),
+                                      );
+                                    },
+                                    likecount: (likecount ?? 0).toString(),
+                                    replaycount: 0,
+                                    time: postTimeCalculate(
+                                      commentdata.childComment?[i].createdOn,
+                                      '',
                                     ),
+                                    name:
+                                        commentdata.childComment?[i].username ??
+                                            "",
+                                    img: commentdata.childComment?[i].image ??
+                                        "",
+                                    mentione: '',
+                                    replayData: true,
+                                    message:
+                                        commentdata.childComment?[i].comment ??
+                                            "",
                                   ),
                                 ),
+
+                              // if (subComments.length > 0)
+                              //   Column(
+                              //     children: List.generate(
+                              //       subComments.length,
+                              //       (subIndex) => Container(
+                              //         width: 80.w,
+                              //         padding: EdgeInsets.only(top: 5.w),
+                              //         child: CommentList(
+                              //           likecount: (likecount ?? 0).toString(),
+                              //           replaycount: 0,
+                              //           time: "2 W ago",
+                              //           name: subComments[subIndex].username ??
+                              //               "",
+                              //           img: subComments[subIndex].image ?? "",
+                              //           mentione: '',
+                              //           replayData: false,
+                              //           message:
+                              //               subComments[subIndex].comment ?? "",
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
                               SizeConfig.sH1,
                               DecorationUtils.dividerLine2(),
                               SizeConfig.sH1,
@@ -195,25 +264,28 @@ class Comments extends StatelessWidget {
                           SizeConfig.sW3,
                           Expanded(
                             child: CommonTextFormField(
+                              focusNode: focusNode,
+                              textstyle: TextStyle(color: blackWhite),
                               validator: (v) => emptyValidation(v),
-                              color: ColorUtils.black,
+                              color: blackWhite,
                               hintText: 'write a comment...',
                               hintStyle: TextStyle(
                                 color: ColorUtils.black92,
                                 fontSize: 12.sp,
                               ),
-                              controller: commentController,
+                              controller: commentTextEditing,
+                              denyInput: false,
                               denyInputFormatters: RegularExpression
                                   .onlyFirstSpaceNoAllowPattern,
                               allowInputFormatters:
-                                  RegularExpression.nameKeyboardPattern,
+                                  RegularExpression.allKeyboardPattern,
                             ),
                           ),
                           SizeConfig.sW1,
                           TextButton(
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
-                              if (commentController.text.isEmpty) {
+                              if (commentTextEditing.text.isEmpty) {
                                 showSnackBar(message: 'Field is required');
                                 return;
                               }
@@ -221,7 +293,7 @@ class Comments extends StatelessWidget {
                                   (home.parentId ?? 0).toString();
                               postCommentReqModel.postId = postId.toString();
                               postCommentReqModel.comment =
-                                  commentController.text;
+                                  commentTextEditing.text;
                               await categoryFeedViewModel
                                   .postComments(postCommentReqModel);
                               if (categoryFeedViewModel
@@ -236,7 +308,7 @@ class Comments extends StatelessWidget {
                                   snackbarSuccess: true,
                                 );
                                 postCommentApiCall();
-                                commentController.clear();
+                                commentTextEditing.clear();
 
                                 scrollController.animateTo(
                                   scrollController.position.maxScrollExtent +
@@ -261,7 +333,7 @@ class Comments extends StatelessWidget {
     );
   }
 
-  var commentController = TextEditingController();
+  var commentTextEditing = TextEditingController();
 //
 // List<Map<String, dynamic>> commentsList = [
 //   {

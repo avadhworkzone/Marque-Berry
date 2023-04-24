@@ -12,6 +12,7 @@ class RegularExpression {
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
   static String nameKeyboardPattern = "[A-z]";
+  static String allKeyboardPattern = "[a-zA-Z0-9#!_@\$%^&*-.()&'\"?!;:<> ]";
   static String searchKeyboardPattern = "[A-z-/]";
   static String contactKeyboardPattern = "[0-9]";
   static String fullNameKeyboardPattern = "[A-z ]";

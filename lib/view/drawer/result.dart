@@ -88,6 +88,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
+import 'package:socialv/view/drawer/view_result.dart';
 
 import '../../commanWidget/common_appbar.dart';
 import '../../utils/assets/images_utils.dart';
@@ -150,29 +151,32 @@ class Result extends StatelessWidget {
                               ],
                             ),
                             SizeConfig.sW2,
-                            Container(
-                              height: 5.h,
-                              width: 30.w,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    ColorUtils.linearGradient1,
-                                    ColorUtils.linearGradient6,
-                                    ColorUtils.linearGradient7
-                                  ],
-                                  begin: Alignment.bottomLeft,
-                                  end: Alignment.topRight,
+                            InkWell(
+                              onTap: () => Get.to(ViewResult()),
+                              child: Container(
+                                height: 5.h,
+                                width: 30.w,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      ColorUtils.linearGradient1,
+                                      ColorUtils.linearGradient6,
+                                      ColorUtils.linearGradient7
+                                    ],
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(2.w),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(2.w),
-                                ),
-                              ),
-                              child: Center(
-                                child: AdoroText(
-                                  VariableUtils.viewResult,
-                                  color: ColorUtils.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13.sp,
+                                child: Center(
+                                  child: AdoroText(
+                                    VariableUtils.viewResult,
+                                    color: ColorUtils.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13.sp,
+                                  ),
                                 ),
                               ),
                             ),

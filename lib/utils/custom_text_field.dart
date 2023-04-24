@@ -76,9 +76,12 @@ class CommonTextFormField extends StatelessWidget {
 
   TextStyle? textstyle;
 
+  FocusNode? focusNode;
+
   CommonTextFormField({
     Key? key,
     this.denyInput,
+    this.focusNode,
     this.obscured,
     this.lableTitle,
     this.keyboardType,
@@ -98,6 +101,7 @@ class CommonTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      focusNode: focusNode,
       validator: (v) => validator(v),
       keyboardType: keyboardType ?? TextInputType.name,
       style: textstyle ??
