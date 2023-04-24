@@ -77,31 +77,49 @@ class Wallet extends StatelessWidget {
                     ),
                     SizeConfig.sH2,
                     Container(
-                      height: 7.h,
-                      width: 60.w,
+                      height: 5.h,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            ColorUtils.linearGradient1,
-                            ColorUtils.linearGradient6,
-                            ColorUtils.linearGradient7
-                          ],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
+                          image: DecorationImage(
+                        image: AssetImage(
+                          "assets/images/Rectangle.png",
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.w),
-                        ),
-                      ),
+                      )),
                       child: Center(
                         child: AdoroText(
-                          VariableUtils.youHaveEarned,
+                          VariableUtils.withdrawMoney,
                           color: ColorUtils.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),
+
+                    // Container(
+                    //   height: 5.h,
+                    //   width: 60.w,
+                    //   decoration: BoxDecoration(
+                    //     gradient: LinearGradient(
+                    //       colors: [
+                    //         ColorUtils.linearGradient1,
+                    //         ColorUtils.linearGradient6,
+                    //         ColorUtils.linearGradient7
+                    //       ],
+                    //       begin: Alignment.topLeft,
+                    //       end: Alignment.bottomRight,
+                    //     ),
+                    //     borderRadius: BorderRadius.all(
+                    //       Radius.circular(8.w),
+                    //     ),
+                    //   ),
+                    //   child: Center(
+                    //     child: AdoroText(
+                    //       VariableUtils.withdrawMoney,
+                    //       color: ColorUtils.white,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 12.sp,
+                    //     ),
+                    //   ),
+                    // ),
                     SizeConfig.sH3,
                     AdoroText(
                       VariableUtils.withdrawMinimumLimit,
