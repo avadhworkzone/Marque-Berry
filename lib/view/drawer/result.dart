@@ -134,7 +134,7 @@ class Result extends StatelessWidget {
                           children: [
                             SizeConfig.sW2,
                             CircleAvatar(
-                              child: ImagesWidgets.UserImage,
+                              child: ImagesWidgets.userImage,
                             ),
                             SizeConfig.sW2,
                             Column(
