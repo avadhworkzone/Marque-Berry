@@ -16,58 +16,58 @@ class WithdrawlAmount extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(20.w),
-        child: CommonAppBar(title: '',ontap: ()=> Get.back()),
+        child: CommonAppBar(title: '', ontap: () => Get.back()),
       ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 100,
+          SizedBox(
+            height: 20.h,
           ),
-          const AdoroText(
+          AdoroText(
             'Deepanshu Sarmandal',
-            fontSize: 20,
+            fontSize: 13.sp,
             color: ColorUtils.black2E,
             fontWeight: FontWeight.w300,
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: 5.h,
           ),
-          const AdoroText(
-            'Enter the withdrawl amount',
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-            fontSize: 20,
+          AdoroText(
+            'Enter the withdrawal amount',
+            color: ColorUtils.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 13.sp,
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 2.h,
           ),
           Container(
-            height: 100,
-            width: 250,
+            height: 11.h,
+            width: 75.w,
             decoration: BoxDecoration(
                 color: ColorUtils.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(color: ColorUtils.grey, blurRadius: 3)
+                borderRadius: BorderRadius.circular(6.w),
+                boxShadow: [
+                  BoxShadow(color: ColorUtils.grey, blurRadius: 2.w)
                 ]),
             child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+              padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 2.w),
               child: Stack(
                 children: [
                   const TextField(
                     // focusNode: FocusScope.of(context).unfocus(),
                     decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Withdrawl Amount',
-                    ),
+                        border: InputBorder.none,
+                        hintText: 'withdrawal Amount',
+                        hintStyle: TextStyle(color: Colors.grey)),
                   ),
                   Positioned(
-                      top: 40,
+                      top: 10.w,
                       child: Container(
-                        height: 2,
-                        width: 320,
-                        decoration: const BoxDecoration(
+                        height: 0.3.h,
+                        width: 65.w,
+                        decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
                                 ColorUtils.linearGradient1,
@@ -78,62 +78,54 @@ class WithdrawlAmount extends StatelessWidget {
                               end: Alignment.topRight,
                             ),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
+                                BorderRadius.all(Radius.circular(2.w))),
                       ))
                 ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 5.h,
           ),
           GestureDetector(
             onTap: () => Get.to(() => EnterOtpScreen()),
             child: Container(
-              height: 45,
-              width: 130,
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      ColorUtils.linearGradient1,
-                      ColorUtils.linearGradient6,
-                      ColorUtils.linearGradient7
-                    ],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: const Center(
+              height: 4.h,
+              width: 23.w,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                        "assets/images/Rectangle.png",
+                      ),
+                      fit: BoxFit.cover),
+                  borderRadius: BorderRadius.all(Radius.circular(5.w))),
+              child: Center(
                   child: AdoroText(
                 'Next',
                 color: ColorUtils.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 11.sp,
               )),
             ),
           ),
           const Spacer(),
           Container(
-            height: 180,
+            height: 20.h,
             width: size.width,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    ColorUtils.linearGradient1,
-                    ColorUtils.linearGradient6,
-                    ColorUtils.linearGradient7
-                  ],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                ),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/images/Ellipse.png",
+                    ),
+                    fit: BoxFit.fill),
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(165),
-                    topRight: Radius.circular(165))),
-            child: const Center(
+                    topLeft: Radius.circular(10.w),
+                    topRight: Radius.circular(10.w))),
+            child: Center(
                 child: AdoroText(
               'adoro',
               color: ColorUtils.white,
-              fontSize: 40,
+              fontSize: 25.sp,
               fontWeight: FontWeight.bold,
             )),
           )

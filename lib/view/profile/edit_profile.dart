@@ -341,10 +341,26 @@ class EditProfile extends StatelessWidget {
                                   ],
                                 ),
                                 Container(
-                                  height: 6.h,
+                                  height: 5.h,
                                   width: 50.w,
-                                  decoration: DecorationUtils.welcomeDecoration(
-                                      context),
+
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/images/rectangleedit.png"))),
+                                  // decoration: BoxDecoration(
+                                  //   borderRadius: BorderRadius.circular(6.w),
+                                  //   gradient: LinearGradient(
+                                  //     colors: [
+                                  //       ColorUtils.linearGradient3,
+                                  //       ColorUtils.linearGradient6,
+                                  //       ColorUtils.linearGradient7
+                                  //     ],
+                                  //     stops: [0, 0.4, 0.8],
+                                  //     begin: Alignment.bottomLeft,
+                                  //     end: Alignment.topRight,
+                                  //   ),
+                                  // ),
                                   child: TextButton(
                                     onPressed: () async {
                                       if (editProfileController
@@ -365,7 +381,7 @@ class EditProfile extends StatelessWidget {
                                     child: Text(
                                       VariableUtils.updateProfile,
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 11.sp,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

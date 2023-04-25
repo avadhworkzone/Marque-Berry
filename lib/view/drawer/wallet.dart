@@ -7,6 +7,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/drawer/withdrawn_amount.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
 import '../../viewModel/connectivity_view_model.dart';
@@ -76,20 +77,24 @@ class Wallet extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     SizeConfig.sH2,
-                    Container(
-                      height: 5.h,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage(
-                          "assets/images/Rectangle.png",
-                        ),
-                      )),
-                      child: Center(
-                        child: AdoroText(
-                          VariableUtils.withdrawMoney,
-                          color: ColorUtils.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
+
+                    InkWell(
+                      onTap: () => Get.to(WithdrawlAmount()),
+                      child: Container(
+                        height: 5.h,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/Rectangle.png",
+                          ),
+                        )),
+                        child: Center(
+                          child: AdoroText(
+                            VariableUtils.withdrawMoney,
+                            color: ColorUtils.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.sp,
+                          ),
                         ),
                       ),
                     ),

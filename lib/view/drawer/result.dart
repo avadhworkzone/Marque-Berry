@@ -118,9 +118,9 @@ class Result extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: Column(
                     children: [
-                      SizeConfig.sH4,
+                      SizeConfig.sH3,
                       Container(
-                        height: 10.h,
+                        height: 8.h,
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                             color: ColorUtils.white,
@@ -129,7 +129,7 @@ class Result extends StatelessWidget {
                           children: [
                             SizeConfig.sW2,
                             CircleAvatar(
-                              child: ImagesWidgets.profileImage,
+                              child: ImagesWidgets.UserImage,
                             ),
                             SizeConfig.sW2,
                             Column(
@@ -138,24 +138,24 @@ class Result extends StatelessWidget {
                                 SizeConfig.sH1,
                                 AdoroText(
                                   VariableUtils.brandName,
-                                  fontSize: 13.sp,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeightClass.fontWeightBold,
                                   color: ColorUtils.black,
                                 ),
                                 AdoroText(
                                   VariableUtils.campaignName,
-                                  fontSize: 13.sp,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeightClass.fontWeightBold,
                                   color: ColorUtils.black92,
                                 ),
                               ],
                             ),
-                            SizeConfig.sW2,
+                            SizeConfig.sW7,
                             InkWell(
                               onTap: () => Get.to(ViewResult()),
                               child: Container(
-                                height: 5.h,
-                                width: 30.w,
+                                height: 4.h,
+                                width: 24.w,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -163,8 +163,8 @@ class Result extends StatelessWidget {
                                       ColorUtils.linearGradient6,
                                       ColorUtils.linearGradient7
                                     ],
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.topRight,
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
                                   ),
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(2.w),
@@ -175,7 +175,7 @@ class Result extends StatelessWidget {
                                     VariableUtils.viewResult,
                                     color: ColorUtils.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 13.sp,
+                                    fontSize: 11.sp,
                                   ),
                                 ),
                               ),
