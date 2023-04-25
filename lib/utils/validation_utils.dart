@@ -12,6 +12,7 @@ class RegularExpression {
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
   static String nameKeyboardPattern = "[A-z]";
+  static String allKeyboardPattern = "[a-zA-Z0-9#!_@\$%^&*-.()&'\"?!;:<> ]";
   static String searchKeyboardPattern = "[A-z-/]";
   static String contactKeyboardPattern = "[0-9]";
   static String fullNameKeyboardPattern = "[A-z ]";
@@ -41,22 +42,16 @@ class RegularExpression {
 // }
 
 class ValidationMsg {
-  static String isRequired = "isRequired";
-  static String passwordLength = 'passwordLength';
-  static String modelNumberLength = 'modelNumberLength';
-  static String voucherCodeLength = 'voucherCodeLength';
-  static String pinLength = 'pinLength';
-  static String maxClientLength = 'maxClientLength12';
-  static String pleaseEnterValidEmail = "pleaseEnterValidEmail";
-  static String enterValidName = "enterValidName";
-  static String enterValidDate = "enterValidDate";
-  static String passwordDoesNotMatch = 'passwordDoesNotMatch';
-  //
-
-  static String numberIsInvalid = 'Card is invalid';
-  static String cvvInvalid = 'CVV is invalid';
-  static String cardExpired = 'Card has expired';
-  static String invalidInput = 'invalid input';
+  static String isRequired = "Field is required";
+  // static String passwordLength = 'passwordLength';
+  // static String modelNumberLength = 'modelNumberLength';
+  // static String voucherCodeLength = 'voucherCodeLength';
+  // static String pinLength = 'pinLength';
+  // static String maxClientLength = 'maxClientLength12';
+  // static String pleaseEnterValidEmail = "pleaseEnterValidEmail";
+  // static String enterValidName = "enterValidName";
+  // static String enterValidDate = "enterValidDate";
+  // static String passwordDoesNotMatch = 'passwordDoesNotMatch';
 }
 
 emptyValidation(value) {
@@ -71,17 +66,17 @@ userValidation(value) {
     return ValidationMsg.isRequired.tr;
   }
   if (!RegExp(RegularExpression.alphabetSpacePattern).hasMatch(value!)) {
-    return ValidationMsg.enterValidName.tr;
+    return "Enter valid name";
   }
   return null;
 }
 
-emailValidation(value) {
+mobileValidation(value) {
   if (value.toString().isEmpty) {
     return ValidationMsg.isRequired.tr;
   }
-  if (!RegExp(RegularExpression.emailValidationPattern).hasMatch(value!)) {
-    return ValidationMsg.pleaseEnterValidEmail.tr;
+  if (value.toString().length < 10) {
+    return "Mobile number must be 10 char";
   }
   return null;
 }
@@ -90,42 +85,7 @@ passwordValidation(value) {
   if (value.toString().isEmpty) {
     return ValidationMsg.isRequired.tr;
   } else if (value.toString().length < 6) {
-    return ValidationMsg.passwordLength.tr;
+    return "password must be more then 6 char";
   }
   return null;
 }
-
-confirmPasswordValidation(value, password) {
-  if (value.toString().isEmpty) {
-    return ValidationMsg.isRequired.tr;
-  } else if (password != value) {
-    return ValidationMsg.passwordDoesNotMatch.tr;
-  }
-  return null;
-}
-
-cityValidation(value) {
-  if (value.toString().isEmpty) {
-    return ValidationMsg.isRequired.tr;
-  }
-  return null;
-}
-
-pincodeValidation(value) {
-  if (value.toString().isEmpty) {
-    return ValidationMsg.isRequired.tr;
-  } else if (value.toString().length < 6) {
-    return ValidationMsg.pinLength.tr;
-  }
-  return null;
-}
-
-clientNumberValidate(value) {
-  if (value.toString().length > 12) {
-    return ValidationMsg.maxClientLength.tr;
-  }
-  return null;
-}
-
-// "Client number length is a maximum of 12."
-// "ग्राहक संख्या की लंबाई अधिकतम 12 है।"

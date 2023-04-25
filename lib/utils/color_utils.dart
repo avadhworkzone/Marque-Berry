@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ColorUtils {
-  /// All Blue Shadow Colors
-  static const primaryColor = Color(0xFF0DB96F);
-
   /// All grey Shadow Colors
   static const grey = Colors.grey;
   static const greyFA = Color(0xFFF8F9FA);
-  static const greyD9 = Color(0xFFD9D9D9);
+  // static const greyD9 = Color(0xFFD9D9D9);
 
   /// All White Shadow Colors
   static const white = Color(0xFFFFFFFF);
+
   static const blueB9 = Color(0xFF2F65B9);
+
   static const blueE7 = Color(0xFF8BAFE7);
 
   static const black = Color(0xFF000000);
-  static const black3C = Color(0xFF0D253C);
+  // static const black3C = Color(0xFF0D253C);
   static const black92 = Color(0xFF6F7F92);
+
   static const black2E = Color(0xFF07142E);
 
   ///  linearGradient Color
@@ -32,4 +32,9 @@ class ColorUtils {
   static const red29 = Color(0xFFF93E29);
   static const green4E = Color(0xFF3AB74E);
   static const transparent = Colors.transparent;
+
+  //
+  static const referEarn = Color(0xFFF0F0F0);
+  static const result = Color(0xFF35A700);
+  static const note = Color(0xFFD9D9D9);
 }
