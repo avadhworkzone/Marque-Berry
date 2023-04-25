@@ -11,7 +11,7 @@ class UpdateUserCoverPicRepo extends BaseService {
     var response = await ApiService().getResponse(
       apiType: APIType.aPost,
       body: reqModel.toJson(),
-      url: '$baseURL$uploadProfilePicURL',
+      url: '$baseURL$uploadCoverPhotoURL',
       fileUpload: true,
     );
     return UpdateCoverPicResModel.fromJson(response);

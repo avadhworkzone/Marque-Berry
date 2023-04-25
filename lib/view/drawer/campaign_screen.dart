@@ -70,7 +70,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
                 ),
                 title: TabBar(
                   labelColor: black92Blue,
-                  unselectedLabelColor: ColorUtils.white,
+                  unselectedLabelColor: black92White,
                   indicatorColor: ColorUtils.blueB9,
                   tabs: [
                     Tab(child: Text('Campaign')),

@@ -27,8 +27,8 @@ class ImagesWidgets {
     '$imagesbasePath/verifieduser.png',
     scale: 1.5.w,
   );
-  static Image UserImage = Image.asset(
-    '$imagesbasePath/profile.png',
+  static Image userImage = Image.asset(
+    '$imagesbasePath/profile3.png',
   );
   static Image profileImage = Image.asset(
     '$imagesbasePath/profile1.png',
@@ -52,6 +52,7 @@ class IconsWidgets {
   //     Image.asset('$iconsbasePath/plug.png', scale: 2.5.w);
 
   static String imageNotFoundImages = '$iconsbasePath/image_not_found.png';
+  static String adoroTextImages = '$iconsbasePath/adoro_text.png';
   // static String userImages = '$iconsbasePath/user.png';
 
   ///APPBAR HOME

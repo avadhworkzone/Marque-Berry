@@ -292,7 +292,7 @@ class Comments extends StatelessWidget {
                                 return;
                               }
                               postCommentReqModel.parentId =
-                                  (home.parentId ?? 0).toString();
+                                  (home.parentId).toString();
                               postCommentReqModel.postId = postId.toString();
                               postCommentReqModel.comment =
                                   commentTextEditing.text;

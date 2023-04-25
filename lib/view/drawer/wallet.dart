@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:flutter/material.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
+import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/view/drawer/withdrawn_amount.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
@@ -35,7 +34,9 @@ class Wallet extends StatelessWidget {
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
                 child: CommonAppBar(
-                    title: VariableUtils.walletText, ontap: () => Get.back()),
+                  title: VariableUtils.walletText,
+                  ontap: () => Get.back(),
+                ),
               ),
               body: Center(
                 child: Column(
@@ -82,21 +83,26 @@ class Wallet extends StatelessWidget {
                     SizeConfig.sH2,
 
                     InkWell(
+                      splashColor: ColorUtils.transparent,
+                      highlightColor: ColorUtils.transparent,
                       onTap: () => Get.to(WithdrawlAmount()),
                       child: Container(
                         height: 5.h,
+                        width: 53.w,
                         decoration: BoxDecoration(
+
                             image: DecorationImage(
                           image: AssetImage(
                             ImagesWidgets.RectangleImage,
-                          ),
-                        )),
+
+                          ),),
+                        ),
                         child: Center(
                           child: AdoroText(
                             VariableUtils.withdrawMoney,
+                            fontSize: 12.sp,
                             color: ColorUtils.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 12.sp,
                           ),
                         ),
                       ),

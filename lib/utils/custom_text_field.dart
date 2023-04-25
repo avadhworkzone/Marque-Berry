@@ -69,9 +69,10 @@ class CommonTextFormField extends StatelessWidget {
   final hintStyle;
   // final bool? enableSuggestions;
   final TextInputType? keyboardType;
-  final String denyInputFormatters;
   bool? denyInput = true;
-  final String allowInputFormatters;
+
+  final String? denyInputFormatters;
+  final String? allowInputFormatters;
   final TextEditingController controller;
 
   TextStyle? textstyle;
@@ -93,8 +94,8 @@ class CommonTextFormField extends StatelessWidget {
     required this.color,
     required this.validator,
     required this.controller,
-    required this.denyInputFormatters,
-    required this.allowInputFormatters,
+    this.denyInputFormatters,
+    this.allowInputFormatters,
   }) : super(key: key);
 
   @override
@@ -110,14 +111,22 @@ class CommonTextFormField extends StatelessWidget {
             fontWeight: FontWeightClass.fontWeight600,
           ),
       cursorColor: color ?? Theme.of(context).textTheme.titleSmall?.color,
-      inputFormatters: denyInput == false
-          ? [
-              FilteringTextInputFormatter.allow(RegExp(allowInputFormatters)),
-              FilteringTextInputFormatter.deny(RegExp(denyInputFormatters)),
-            ]
-          : [
-              FilteringTextInputFormatter.allow(RegExp(allowInputFormatters)),
-            ],
+      inputFormatters:
+          allowInputFormatters == null || denyInputFormatters == null
+              ? []
+              : denyInput == false
+                  ? [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(allowInputFormatters!),
+                      ),
+                      FilteringTextInputFormatter.deny(
+                          RegExp(denyInputFormatters!)),
+                    ]
+                  : [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(allowInputFormatters!),
+                      ),
+                    ],
       maxLength: mobilelength ?? 1000,
       decoration: InputDecoration(
         filled: true,

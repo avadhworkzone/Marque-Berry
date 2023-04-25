@@ -166,7 +166,7 @@ class Ritikraj extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 5.w,
-          child: ImagesWidgets.UserImage,
+          child: ImagesWidgets.userImage,
         ),
         SizeConfig.sW3,
         Column(
@@ -262,7 +262,7 @@ class UserNameFollow extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 6.w,
-          child: ImagesWidgets.UserImage,
+          child: ImagesWidgets.userImage,
         ),
         Padding(
           padding: EdgeInsets.only(right: 20.w),
@@ -317,7 +317,7 @@ class UserNameCircleAvatar extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 6.w,
-          child: ImagesWidgets.UserImage,
+          child: ImagesWidgets.userImage,
         ),
         Padding(
           padding: EdgeInsets.only(right: 20.w),
@@ -372,7 +372,7 @@ class UserNameContainer extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 6.w,
-          child: ImagesWidgets.UserImage,
+          child: ImagesWidgets.userImage,
         ),
         Padding(
           padding: EdgeInsets.only(right: 20.w),

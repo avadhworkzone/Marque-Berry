@@ -142,7 +142,17 @@ class BottomBar extends StatelessWidget {
     required BottomBarController controller,
   }) {
     return InkWell(
-      onTap: () => controller.pageChange(index),
+      onTap: () {
+        if (index == 1) {
+          Get.to(
+            () => SharePost(),
+            duration: Duration(milliseconds: 500),
+            transition: Transition.leftToRight,
+          );
+        } else {
+          controller.pageChange(index);
+        }
+      },
       child: CommonImageScale(
         img: img,
         scale: scale,
