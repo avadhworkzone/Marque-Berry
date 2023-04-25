@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -11,6 +13,7 @@ import '../../commanWidget/noInternet_screen.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/variable_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Note extends StatelessWidget {
   Note({
@@ -76,16 +79,22 @@ class Note extends StatelessWidget {
                           vertical: 3.w,
                         ),
                         child: Container(
-                          height: 25.h,
-                          width: 80.w,
-                          color: ColorUtils.note,
+                          height: 22.h,
+                          width: 70.w,
+                          // color: ColorUtils.note,
+
                           child: InkWell(
-                            onTap: () {},
-                            child: Image.asset(
-                              'assets/images/playmusic.png',
-                              scale: 0.5.w,
-                            ),
-                          ),
+                              onTap: () {},
+                              child: Image(
+                                image: NetworkImage(
+                                    'https://www.bollywoodhungama.com/wp-content/uploads/2022/11/Pathaan-5.jpg'),
+                                fit: BoxFit.fill,
+                              )
+                              // Image.asset(
+                              //   'assets/images/playmusic.png',
+                              //   scale: 0.5.w,
+                              // ),
+                              ),
                         ),
                       ),
                     )

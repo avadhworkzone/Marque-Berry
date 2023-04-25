@@ -12,6 +12,8 @@ import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/view/profile/following_screen.dart';
 
+import '../../utils/decoration_utils.dart';
+
 class ImagesModel {
   final String image;
 
@@ -103,6 +105,24 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                     Container(
                       margin: EdgeInsets.only(bottom: 9.w),
                       child: Image.asset('assets/images/bgProfile.png'),
+                    ),
+                    Positioned(
+                      right: 3.w,
+                      top: 2.w,
+                      child: Container(
+                        width: 8.w,
+                        height: 8.w,
+                        child: IconButton(
+                          splashRadius: 5.w,
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.edit,
+                            size: 4.w,
+                            color: ColorUtils.white,
+                          ),
+                        ),
+                        decoration: DecorationUtils.doneDecoration(context),
+                      ),
                     ),
                     Positioned(
                       bottom: 0,
