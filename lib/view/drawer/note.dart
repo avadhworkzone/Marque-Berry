@@ -84,7 +84,12 @@ class Note extends StatelessWidget {
                           // color: ColorUtils.note,
 
                           child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                launchUrl(
+                                  Uri.parse(
+                                      'https://www.youtube.com/watch?v=4xl9KfUg8Lc'),
+                                );
+                              },
                               child: Image(
                                 image: NetworkImage(
                                     'https://www.bollywoodhungama.com/wp-content/uploads/2022/11/Pathaan-5.jpg'),

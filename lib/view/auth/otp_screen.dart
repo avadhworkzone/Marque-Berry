@@ -16,6 +16,7 @@ import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/auth/done_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import '../../commanWidget/custom_btn.dart';
 import '../../model/apiModel/responseModel/login_res_model.dart';
@@ -212,7 +213,9 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     key: PreferenceUtils.login,
                                     value: 1,
                                   );
-
+                                  Get.to(() => DoneScreen(
+                                        isCampaign: false,
+                                      ));
                                   Get.offAllNamed(RouteHelper.getDoneRoute());
                                 } else {
                                   showSnackBar(

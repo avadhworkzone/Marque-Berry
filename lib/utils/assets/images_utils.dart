@@ -11,6 +11,13 @@ String lottiebasePath = 'assets/lotties';
 class ImagesWidgets {
   /// LOGO & SPLASH
   static String logoImage = '$imagesbasePath/logo.png';
+  static String circleImage = '$imagesbasePath/circle.png';
+  static String profile2Image = '$imagesbasePath/profile2.png';
+  static String RectangleImage = '$imagesbasePath/Rectangle.png';
+  static String ellipseImage = '$imagesbasePath/Ellipse.png';
+  static String bgProfileImage = '$imagesbasePath/bgProfile.png';
+  static String profileimagesImage = '$imagesbasePath/profileimages.png';
+
   static Image logoISImage = Image.asset(logoImage, scale: 3.6.w);
   static Image adoroImage = Image.asset(
     '$imagesbasePath/adoro.png',
@@ -72,6 +79,11 @@ class IconsWidgets {
   static String plusCircleImages = '$iconsbasePath/plus_circle.png';
   static String medalLightImages = '$iconsbasePath/medal_light.png';
   static String userImages = '$iconsbasePath/user.png';
+
+  static String submit_btnImages = '$iconsbasePath/submit_btn.png';
+  static String clipboardImages = '$iconsbasePath/clipboard.png';
+  static String share_btnImages = '$iconsbasePath/share_btn.png';
+  static String linkImages = '$iconsbasePath/link.png';
 
   // static Image plusCircleImages = Image.asset(
   //   '$iconsbasePath/plus_circle.png',

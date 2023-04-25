@@ -47,7 +47,8 @@ class Home extends StatelessWidget {
         leading: Builder(
           builder: (context) {
             return GestureDetector(
-              child: Image.asset(IconsWidgets.menuImage, scale: 3),
+              child: Image.asset(IconsWidgets.menuImage,
+                  color: blackWhite, scale: 3),
               onTap: () => Scaffold.of(context).openDrawer(),
             );
           },

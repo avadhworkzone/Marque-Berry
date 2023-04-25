@@ -105,6 +105,11 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return SafeArea(
         child: Scaffold(
       appBar: PreferredSize(
@@ -150,6 +155,11 @@ class NotificationScreen extends StatelessWidget {
 class Ritikraj extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +176,7 @@ class Ritikraj extends StatelessWidget {
               VariableUtils.ritiKraj,
               fontSize: 12.sp,
               fontWeight: FontWeightClass.fontWeightBold,
-              color: ColorUtils.black,
+              color: blackWhite,
             ),
             AdoroText(
               VariableUtils.requestedTo,
@@ -242,6 +252,11 @@ class Ritikraj extends StatelessWidget {
 class UserNameFollow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -255,7 +270,7 @@ class UserNameFollow extends StatelessWidget {
             VariableUtils.Username,
             fontSize: 12.sp,
             fontWeight: FontWeightClass.fontWeightBold,
-            color: ColorUtils.black2E,
+            color: blackWhite,
           ),
         ),
         Container(
@@ -292,6 +307,11 @@ class UserNameFollow extends StatelessWidget {
 class UserNameCircleAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -305,7 +325,7 @@ class UserNameCircleAvatar extends StatelessWidget {
             VariableUtils.Username,
             fontSize: 12.sp,
             fontWeight: FontWeightClass.fontWeightBold,
-            color: ColorUtils.black2E,
+            color: blackWhite,
           ),
         ),
         Container(
@@ -342,6 +362,11 @@ class UserNameCircleAvatar extends StatelessWidget {
 class UserNameContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -355,7 +380,7 @@ class UserNameContainer extends StatelessWidget {
             VariableUtils.Username,
             fontSize: 12.sp,
             fontWeight: FontWeightClass.fontWeightBold,
-            color: ColorUtils.black2E,
+            color: blackWhite,
           ),
         ),
         Container(

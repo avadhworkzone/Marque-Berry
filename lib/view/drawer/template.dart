@@ -20,6 +20,7 @@ import 'package:socialv/viewModel/template_view_model.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
 import '../../model/apis/api_response.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
 import '../template/browser_template.dart';
 import '../template/download_template_listview.dart';
@@ -99,7 +100,9 @@ class Template extends StatelessWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: AssetImage("assets/images/circle.png"),
+                                image: AssetImage(
+                                  ImagesWidgets.circleImage,
+                                ),
                               ),
                             ),
                             child: Padding(

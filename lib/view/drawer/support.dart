@@ -9,6 +9,7 @@ import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
 
 class Support extends StatelessWidget {
@@ -262,7 +263,9 @@ class Support extends StatelessWidget {
                           width: 40.w,
                           height: 13.w,
                           margin: EdgeInsets.only(bottom: 8.w),
-                          child: Image.asset("assets/icons/submit_btn.png"),
+                          child: Image.asset(
+                            IconsWidgets.submit_btnImages,
+                          ),
                         ),
                       ),
                     ],

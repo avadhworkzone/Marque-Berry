@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/utils/const_utils.dart';
 
 import '../../commanWidget/custom_btn.dart';
 import '../../utils/assets/images_utils.dart';
@@ -11,7 +12,7 @@ import 'interest.dart';
 class DoneScreen extends StatelessWidget {
   bool? isCampaign = false;
 
-  DoneScreen({super.key, this.isCampaign});
+  DoneScreen({super.key, this.isCampaign = false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class DoneScreen extends StatelessWidget {
           SizeConfig.sH10,
           CustomBtn(
             onTap: () {
+              logs("message   $isCampaign");
               if (isCampaign == false) {
                 Get.to(() => InterestScreen());
               } else {

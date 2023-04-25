@@ -10,6 +10,7 @@ import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/drawer/withdrawn_amount.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
 
 class Wallet extends StatelessWidget {
@@ -49,17 +50,19 @@ class Wallet extends StatelessWidget {
                       radius: 15.w,
                       child: Stack(
                         children: [
-                          Image.asset('assets/images/circle.png'),
+                          Image(
+                              image: AssetImage(
+                            ImagesWidgets.circleImage,
+                          )),
+                          // ImagesWidgets.circleImage,
                           Padding(
                             padding: EdgeInsets.all(2.w),
-                            child: Image.asset("assets/images/profile2.png"),
+                            child: Image.asset(
+                              ImagesWidgets.profile2Image,
+                            ),
                           )
                         ],
                       ),
-
-                      // child: Image.asset(
-                      //   'assets/images/profile.png',
-                      // ),
                     ),
                     SizeConfig.sH2,
                     AdoroText(
@@ -71,7 +74,7 @@ class Wallet extends StatelessWidget {
                     ),
                     SizeConfig.sH1,
                     AdoroText(
-                      '75.5C',
+                      VariableUtils.wallet75,
                       color: blackWhite,
                       fontSize: 30.sp,
                       fontWeight: FontWeight.bold,
@@ -85,7 +88,7 @@ class Wallet extends StatelessWidget {
                         decoration: BoxDecoration(
                             image: DecorationImage(
                           image: AssetImage(
-                            "assets/images/Rectangle.png",
+                            ImagesWidgets.RectangleImage,
                           ),
                         )),
                         child: Center(

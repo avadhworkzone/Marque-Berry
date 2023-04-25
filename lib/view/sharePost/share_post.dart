@@ -18,6 +18,7 @@ import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
 
 import '../../model/apiModel/responseModel/create_post_res_model.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
@@ -95,7 +96,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(4.w),
                                       image: DecorationImage(
                                           image: AssetImage(
-                                            "assets/images/Rectangle.png",
+                                            ImagesWidgets.RectangleImage,
                                           ),
                                           fit: BoxFit.cover)),
                                   child: TextButton(
@@ -154,11 +155,9 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(20.w),
                                   child: Container(
-                                    height: 20.w,
-                                    width: 20.w,
-                                    child: Image.asset(
-                                        "assets/images/profile.png"),
-                                  ),
+                                      height: 20.w,
+                                      width: 20.w,
+                                      child: ImagesWidgets.UserImage),
                                 ),
                                 SizeConfig.sW4,
                                 Column(

@@ -12,6 +12,7 @@ import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/view/profile/following_screen.dart';
 
+import '../../utils/assets/images_utils.dart';
 import '../../utils/decoration_utils.dart';
 
 class ImagesModel {
@@ -104,7 +105,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(bottom: 9.w),
-                      child: Image.asset('assets/images/bgProfile.png'),
+                      child: Image.asset(ImagesWidgets.bgProfileImage),
                     ),
                     Positioned(
                       right: 3.w,
@@ -130,7 +131,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                       child: CircleAvatar(
                         radius: 12.w,
                         child: Image.asset(
-                          'assets/images/profileimages.png',
+                          ImagesWidgets.profileimagesImage,
                         ),
                       ),
                     ),

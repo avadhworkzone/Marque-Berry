@@ -116,6 +116,12 @@ class VariableUtils {
   static const withdrawMoney = "Withdraw Money";
   static const withdrawMinimumLimit = "Withdraw Minimum limit Rs. 100";
   static const cashCoin = "1 Cash Coin = 1 Rs";
+  static const wallet75 = "75.5C";
+  static const enterTheWithdrawalAmount = "Enter the withdrawal amount";
+  static const next = "Next";
+  static const adoro = "adoro";
+  static const enterTheOTP = "Enter the OTP";
+  static const verify = "Verify";
 
   /// Notification
   static const SeeAllRequests = "See all requests (00) ";

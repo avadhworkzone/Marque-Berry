@@ -5,11 +5,20 @@ import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
+import '../../utils/assets/images_utils.dart';
+import '../../utils/variable_utils.dart';
+
 class EnterOtpScreen extends StatelessWidget {
   const EnterOtpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -24,17 +33,17 @@ class EnterOtpScreen extends StatelessWidget {
             height: 20.h,
           ),
           AdoroText(
-            'Deepanshu Sarmandal',
+            VariableUtils.deepanshuSarmandal,
             fontSize: 13.sp,
-            color: ColorUtils.black2E,
+            color: blackWhite,
             fontWeight: FontWeight.w300,
           ),
           SizedBox(
             height: 5.h,
           ),
           AdoroText(
-            'Enter the OTP',
-            color: Colors.black,
+            VariableUtils.enterTheOTP,
+            color: blackWhite,
             fontWeight: FontWeight.bold,
             fontSize: 13.sp,
           ),
@@ -93,13 +102,13 @@ class EnterOtpScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
-                      "assets/images/Rectangle.png",
+                      ImagesWidgets.RectangleImage,
                     ),
                     fit: BoxFit.cover),
                 borderRadius: BorderRadius.all(Radius.circular(5.w))),
             child: Center(
                 child: AdoroText(
-              'Verify',
+              VariableUtils.verify,
               color: ColorUtils.white,
               fontWeight: FontWeight.bold,
               fontSize: 11.sp,
@@ -112,7 +121,7 @@ class EnterOtpScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
-                      "assets/images/Ellipse.png",
+                      ImagesWidgets.ellipseImage,
                     ),
                     fit: BoxFit.fill),
                 borderRadius: BorderRadius.only(
@@ -120,7 +129,7 @@ class EnterOtpScreen extends StatelessWidget {
                     topRight: Radius.circular(10.w))),
             child: Center(
                 child: AdoroText(
-              'adoro',
+              VariableUtils.adoro,
               color: ColorUtils.white,
               fontSize: 25.sp,
               fontWeight: FontWeight.bold,

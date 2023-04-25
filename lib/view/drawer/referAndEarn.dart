@@ -13,6 +13,7 @@ import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
 
 class ReferAndEarn extends StatelessWidget {
@@ -120,7 +121,7 @@ class ReferAndEarn extends StatelessWidget {
                                   children: [
                                     SizeConfig.sW1,
                                     CommonImageScale(
-                                      img: "assets/icons/link.png",
+                                      img: IconsWidgets.linkImages,
                                       scale: 1.2.w,
                                       color: ColorUtils.black,
                                     ),
@@ -142,7 +143,7 @@ class ReferAndEarn extends StatelessWidget {
                                         });
                                       },
                                       child: CommonImageScale(
-                                        img: "assets/icons/clipboard.png",
+                                        img: IconsWidgets.clipboardImages,
                                         scale: 1.5.w,
                                         color: ColorUtils.black,
                                       ),
@@ -166,7 +167,9 @@ class ReferAndEarn extends StatelessWidget {
                     },
                     child: Container(
                       width: 35.w,
-                      child: Image.asset("assets/icons/share_btn.png"),
+                      child: Image.asset(
+                        IconsWidgets.share_btnImages,
+                      ),
                     ),
                   ),
                   // Container(
