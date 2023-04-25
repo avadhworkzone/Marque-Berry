@@ -84,9 +84,9 @@ class PostComponents extends StatelessWidget {
             children: [
               SizeConfig.sH2,
               ListTile(
-                title: (name ?? "") != ""
+                title: (name) != ""
                     ? AdoroText(
-                        name ?? "",
+                        name,
                         maxLines: 1,
                         fontSize: 12.sp,
                         color: Theme.of(context).textTheme.titleSmall!.color,
@@ -95,7 +95,7 @@ class PostComponents extends StatelessWidget {
                       )
                     : SizedBox(),
                 subtitle: AdoroText(
-                  time ?? "",
+                  time,
                   maxLines: 1,
                   fontSize: 9.sp,
                   color: black92White,
@@ -240,10 +240,10 @@ class PostComponents extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizeConfig.sH1,
-                    (title ?? "") == ""
+                    (title) == ""
                         ? SizedBox()
                         : AdoroText(
-                            "${title ?? ""}",
+                            "$title",
                             maxLines: 2,
                             fontWeight: FontWeight.w500,
                             overflow: TextOverflow.ellipsis,

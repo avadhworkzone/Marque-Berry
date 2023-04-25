@@ -58,9 +58,9 @@ class CommonImageWidth extends StatelessWidget {
 
   CommonImageWidth({
     Key? key,
+    this.color,
     required this.img,
     required this.width,
-    required this.color,
   }) : super(key: key);
 
   @override

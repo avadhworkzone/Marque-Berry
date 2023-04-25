@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
@@ -80,7 +79,7 @@ class DetailsScreen extends StatelessWidget {
                         fit: BoxFit.cover,
                         width: 24,
                         height: 24,
-                        image: NetworkImage(image ?? ""),
+                        image: NetworkImage(image),
                         progressIndicatorBuilder: (context, progress) {
                           double? value;
                           var expectedBytes = progress?.expectedTotalBytes;
@@ -117,7 +116,7 @@ class DetailsScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   subtitle: AdoroText(
-                    "${time ?? ""}",
+                    "${time}",
                     color: ColorUtils.black92,
                     fontSize: 12.sp,
                   ),

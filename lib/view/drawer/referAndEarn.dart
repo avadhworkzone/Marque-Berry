@@ -159,6 +159,8 @@ class ReferAndEarn extends StatelessWidget {
                   ),
                   SizeConfig.sH5,
                   InkWell(
+                    splashColor: ColorUtils.transparent,
+                    highlightColor: ColorUtils.transparent,
                     onTap: () {
                       Share.share(
                         "https://www.webhood.net/",

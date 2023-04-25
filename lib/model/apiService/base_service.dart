@@ -21,6 +21,7 @@ abstract class BaseService {
       'getUserDetails?userId=${PreferenceUtils.getInt(key: PreferenceUtils.userid)}';
   final String updateUserDetails = 'updateUserDetails';
   final String uploadProfilePicURL = 'upload_profile_pic';
+  final String uploadCoverPhotoURL = 'upload_cover_photo';
 
   final String postCommentURL = 'postComment';
   final String deleteCommentURL = 'deleteComment';

@@ -128,11 +128,12 @@ class _MyAppState extends State<MyApp> {
   ChattingController chattingController = Get.put(ChattingController());
   TemplateController templateController = Get.put(TemplateController());
 
+  ProfileController profileController = Get.put(ProfileController());
   OtpController otpController = Get.put(OtpController());
   HomeController homeController = Get.put(HomeController());
   LoginController loginController = Get.put(LoginController());
   SettingController settingController = Get.put(SettingController());
-  ProfileController profileController = Get.put(ProfileController());
+
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());

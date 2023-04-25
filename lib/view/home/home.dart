@@ -47,14 +47,19 @@ class Home extends StatelessWidget {
         leading: Builder(
           builder: (context) {
             return GestureDetector(
-              child: Image.asset(IconsWidgets.menuImage, scale: 3),
               onTap: () => Scaffold.of(context).openDrawer(),
+              child: CommonImageScale(
+                img: IconsWidgets.menuImage,
+                scale: 1.w,
+                color: blackWhite,
+              ),
             );
           },
         ),
-        title: Image.asset(
-          "assets/icons/adoro_text.png",
+        titleSpacing: 0,
+        title: CommonImageWidth(
           width: 25.w,
+          img: IconsWidgets.adoroTextImages,
         ),
         actions: [
           CommonImageHeightWidth(
@@ -75,7 +80,7 @@ class Home extends StatelessWidget {
               color: blackWhite,
             ),
           ),
-          SizeConfig.sW6,
+          SizeConfig.sW5,
         ],
       ),
       body: GetBuilder<HomeController>(
@@ -176,7 +181,7 @@ class Home extends StatelessWidget {
                                   child: ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: categoryPostList.length ?? 0,
+                                    itemCount: categoryPostList.length,
                                     itemBuilder: (context, index) {
                                       final categoryIndex =
                                           categoryPostList[index];

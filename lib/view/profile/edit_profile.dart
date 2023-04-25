@@ -16,6 +16,7 @@ import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.
 import 'package:socialv/model/apiModel/responseModel/update_user_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -216,57 +217,54 @@ class EditProfile extends StatelessWidget {
                       ),
                       Stack(
                         children: [
-                          InkWell(
-                            onTap: () async {
-                              var data =
-                                  await editProfileController.pickCoverImage();
-                              if (data != "") {
-                                await updateCoverImage();
-                              }
-                            },
-                            child: Container(
-                              height: 25.h,
-                              width: double.maxFinite,
-                              decoration: editProfileController
-                                          .coverImagePath ==
-                                      ""
-                                  ? DecorationUtils.buttonDecoration(context)
-                                  : coverPic != ""
-                                      ? BoxDecoration(
-                                          image: DecorationImage(
-                                            image: NetworkImage(coverPic),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        )
-                                      : BoxDecoration(
-                                          image: DecorationImage(
-                                            image: FileImage(
-                                              File(
-                                                editProfileController
-                                                    .coverImagePath,
-                                              ),
+                          // var data =
+                          //     await editProfileController.pickCoverImage();
+                          // if (data != "") {
+                          //   await updateCoverImage();
+                          // }
+                          Container(
+                            height: 25.h,
+                            width: double.maxFinite,
+                            decoration:
+                                editProfileController.coverImagePath == ""
+                                    ? DecorationUtils.buttonDecoration(context)
+                                    : coverPic != ""
+                                        ? BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(coverPic),
+                                              fit: BoxFit.cover,
                                             ),
-                                            fit: BoxFit.cover,
+                                          )
+                                        : BoxDecoration(
+                                            image: DecorationImage(
+                                              image: FileImage(
+                                                File(
+                                                  editProfileController
+                                                      .coverImagePath,
+                                                ),
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                            ),
                           ),
                           Container(
                             height: 25.h,
+                            padding: EdgeInsets.only(right: 5.w, left: 8.w),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Stack(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(4.w),
-                                      child: ClipRRect(
+                                Container(
+                                  width: 38.w,
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
                                         borderRadius:
-                                            BorderRadius.circular(20.w),
-                                        child: CircleAvatar(
-                                          backgroundColor: ColorUtils.white,
-                                          radius: 16.w,
+                                            BorderRadius.circular(30.w),
+                                        child: Container(
+                                          height: 30.w,
+                                          width: 30.w,
+                                          color: ColorUtils.white,
                                           child: editProfileController
                                                       .profileImagePath !=
                                                   ""
@@ -314,75 +312,67 @@ class EditProfile extends StatelessWidget {
                                                 ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      right: 0.w,
-                                      bottom: 10.w,
-                                      child: Container(
-                                        width: 8.w,
-                                        height: 8.w,
-                                        child: IconButton(
-                                          splashRadius: 5.w,
-                                          onPressed: () {
-                                            editProfileController
-                                                .pickProfileImage();
-                                          },
-                                          icon: Icon(
-                                            Icons.edit,
-                                            size: 4.w,
-                                            color: ColorUtils.white,
+                                      Positioned(
+                                        right: 6.w,
+                                        bottom: 3.w,
+                                        child: Container(
+                                          width: 8.w,
+                                          height: 8.w,
+                                          child: IconButton(
+                                            splashRadius: 5.w,
+                                            onPressed: () {
+                                              editProfileController
+                                                  .pickProfileImage();
+                                            },
+                                            icon: Icon(
+                                              Icons.edit,
+                                              size: 4.w,
+                                              color: ColorUtils.white,
+                                            ),
                                           ),
+                                          decoration:
+                                              DecorationUtils.doneDecoration(
+                                                  context),
                                         ),
-                                        decoration:
-                                            DecorationUtils.doneDecoration(
-                                                context),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    // if (editProfileController
+                                    //         .profileImagePath !=
+                                    //     "") {
+                                    //   await updateProfileImage();
+                                    //   await updateCoverImage();
+                                    //   // } else if (editProfileController
+                                    //   //         .coverImagePath !=
+                                    //   //     "") {
+                                    //   //   await updateCoverImage();
+                                    // } else if (editProfileController
+                                    //         .profileImagePath !=
+                                    //     "") {
+                                    await updateProfileImage();
+                                    // }
+                                  },
+                                  child: Container(
+                                    height: 5.h,
+                                    width: 40.w,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          "assets/images/rectangleedit.png",
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Container(
-                                  height: 5.h,
-                                  width: 50.w,
-
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/images/rectangleedit.png"))),
-                                  // decoration: BoxDecoration(
-                                  //   borderRadius: BorderRadius.circular(6.w),
-                                  //   gradient: LinearGradient(
-                                  //     colors: [
-                                  //       ColorUtils.linearGradient3,
-                                  //       ColorUtils.linearGradient6,
-                                  //       ColorUtils.linearGradient7
-                                  //     ],
-                                  //     stops: [0, 0.4, 0.8],
-                                  //     begin: Alignment.bottomLeft,
-                                  //     end: Alignment.topRight,
-                                  //   ),
-                                  // ),
-                                  child: TextButton(
-                                    onPressed: () async {
-                                      if (editProfileController
-                                              .profileImagePath !=
-                                          "") {
-                                        await updateProfileImage();
-                                        await updateCoverImage();
-                                        // } else if (editProfileController
-                                        //         .coverImagePath !=
-                                        //     "") {
-                                        //   await updateCoverImage();
-                                      } else if (editProfileController
-                                              .profileImagePath !=
-                                          "") {
-                                        await updateProfileImage();
-                                      }
-                                    },
-                                    child: Text(
-                                      VariableUtils.updateProfile,
-                                      style: TextStyle(
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.bold,
+                                    child: Center(
+                                      child: Text(
+                                        VariableUtils.updateProfile,
+                                        style: TextStyle(
+                                          fontSize: 11.sp,
+                                          color: ColorUtils.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -571,28 +561,6 @@ class EditProfileController extends GetxController {
       );
     }
     update();
-  }
-
-  Future<String> pickCoverImage() async {
-    coverImagePath = "";
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.image,
-      );
-      if (result != null) {
-        PlatformFile file = result.files.first;
-        coverImagePath = file.path!;
-      } else {
-        coverImagePath = "";
-      }
-    } catch (e) {
-      showSnackBar(
-        message: "Cover image not selected.",
-      );
-    }
-
-    update();
-    return coverImagePath;
   }
 
   clearData() {

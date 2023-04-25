@@ -55,14 +55,14 @@ class MyDrawer extends StatelessWidget {
                   backgroundImage: AssetImage("assets/icons/user1.png"),
                 ),
                 title: AdoroText(
-                  PreferenceUtils.getString(key: 'username') ?? "",
+                  PreferenceUtils.getString(key: 'username'),
                   color: blackWhite,
                   fontWeight: FontWeightClass.fontWeight600,
                 ),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 6.0),
                   child: AdoroText(
-                    PreferenceUtils.getString(key: 'fullname') ?? "",
+                    PreferenceUtils.getString(key: 'fullname'),
                     fontWeight: FontWeightClass.fontWeight500,
                   ),
                 ),

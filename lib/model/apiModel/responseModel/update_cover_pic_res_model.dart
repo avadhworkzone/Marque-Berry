@@ -5,7 +5,7 @@ class UpdateCoverPicResModel {
   UpdateCoverPicResModel({this.status, this.message});
 
   UpdateCoverPicResModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
+    status = json['status'].toString();
     message = json['msg'];
   }
 

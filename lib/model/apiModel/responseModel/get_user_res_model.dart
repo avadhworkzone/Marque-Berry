@@ -35,13 +35,13 @@ class Data {
   String? mobileNo;
   int? otp;
   String? image;
-  Null? coverPhoto;
+  String? coverPhoto;
   String? bankName;
   String? beneficiaryName;
   String? accountNumber;
   String? ifscCode;
   String? isCategorySelected;
-  Null? createdOn;
+  String? createdOn;
 
   Data(
       {this.id,
@@ -64,16 +64,16 @@ class Data {
     username = json['username'];
     fullName = json['full_name'];
     email = json['email'];
-    mobileNo = json['mobileNo'];
-    otp = json['otp'];
-    image = json['image'];
-    coverPhoto = json['cover_photo'];
-    bankName = json['bankName'];
-    beneficiaryName = json['beneficiaryName'];
-    accountNumber = json['accountNumber'];
-    ifscCode = json['ifscCode'];
-    isCategorySelected = json['isCategorySelected'];
-    createdOn = json['created_on'];
+    mobileNo = json['mobileNo'] ?? "";
+    otp = json['otp'] ?? "";
+    image = json['image'] ?? "";
+    coverPhoto = json['cover_photo'] ?? "";
+    bankName = json['bankName'] ?? "";
+    beneficiaryName = json['beneficiaryName'] ?? "";
+    accountNumber = json['accountNumber'] ?? "";
+    ifscCode = json['ifscCode'] ?? "";
+    isCategorySelected = json['isCategorySelected'] ?? "";
+    createdOn = json['created_on'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

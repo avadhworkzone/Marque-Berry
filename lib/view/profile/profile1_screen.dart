@@ -1,17 +1,26 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/view/profile/following_screen.dart';
+import 'package:socialv/viewModel/profile_view_model.dart';
 
+import '../../commanWidget/custom_snackbar.dart';
+import '../../model/apiModel/requestModel/update_cover_pic_req_model.dart';
 import '../../utils/decoration_utils.dart';
 
 class ImagesModel {
@@ -71,6 +80,8 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
 
   ProfileController profileController = Get.find<ProfileController>();
 
+  UpdateCoverPicReqModel updateCoverPicReqModel = UpdateCoverPicReqModel();
+
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
@@ -103,25 +114,42 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                 Stack(
                   children: [
                     Container(
+                      height: 38.w,
+                      width: Get.width,
                       margin: EdgeInsets.only(bottom: 9.w),
-                      child: Image.asset('assets/images/bgProfile.png'),
+                      child: profileController.coverImagePath != ""
+                          ? Image.file(
+                              File(
+                                profileController.coverImagePath,
+                              ),
+                              fit: BoxFit.fill,
+                            )
+                          : Image.asset(
+                              'assets/images/bgProfile.png',
+                              fit: BoxFit.fill,
+                            ),
                     ),
                     Positioned(
-                      right: 3.w,
+                      right: 2.w,
                       top: 2.w,
-                      child: Container(
-                        width: 8.w,
-                        height: 8.w,
-                        child: IconButton(
-                          splashRadius: 5.w,
-                          onPressed: () {},
-                          icon: Icon(
+                      child: InkWell(
+                        onTap: () async {
+                          String path =
+                              await profileController.pickCoverImage();
+                          logs("PATH:-----> $path");
+                        },
+                        highlightColor: ColorUtils.transparent,
+                        splashColor: ColorUtils.transparent,
+                        child: Container(
+                          width: 8.w,
+                          height: 8.w,
+                          child: Icon(
                             Icons.edit,
                             size: 4.w,
                             color: ColorUtils.white,
                           ),
+                          decoration: DecorationUtils.doneDecoration(context),
                         ),
-                        decoration: DecorationUtils.doneDecoration(context),
                       ),
                     ),
                     Positioned(
@@ -136,10 +164,8 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                     ),
                   ],
                 ),
-                // Text(PreferenceUtils.getString(key: "username")),
-                // SizeConfig.sH1,
                 AdoroText(
-                  "${PreferenceUtils.getString(key: "username") ?? ""}",
+                  "${PreferenceUtils.getString(key: "username")}",
                   textAlign: TextAlign.center,
                   fontSize: 15.sp,
                   fontWeight: FontWeight.bold,
@@ -418,8 +444,61 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
 
 class ProfileController extends GetxController {
   int tabIndex = 0;
+
   changeTab(value) {
     tabIndex = value;
     update();
+  }
+
+  String coverImagePath = "";
+  Future<String> pickCoverImage() async {
+    coverImagePath = "";
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+      );
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        coverImagePath = file.path!;
+        await updateCoverImage();
+      } else {
+        coverImagePath = "";
+      }
+    } catch (e) {
+      showSnackBar(
+        message: "Cover image not selected.",
+      );
+    }
+
+    update();
+    return coverImagePath;
+  }
+
+  ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+
+  UpdateCoverPicReqModel updateCoverPicReqModel = UpdateCoverPicReqModel();
+
+  updateCoverImage() async {
+    updateCoverPicReqModel.coverPhoto = coverImagePath;
+
+    await profileViewModel.updateUserCoverPic(updateCoverPicReqModel);
+    if (profileViewModel.updateUserCoverPicApiResponse.status ==
+        Status.COMPLETE) {
+      final UpdateCoverPicResModel updateCoverPicResModel =
+          profileViewModel.updateUserCoverPicApiResponse.data;
+
+      if (updateCoverPicResModel.status == VariableUtils.status200) {
+        showSnackBar(
+          message: updateCoverPicResModel.message ??
+              VariableUtils.somethingWentWrong,
+          snackbarSuccess: true,
+        );
+      } else {
+        showSnackBar(
+          message: updateCoverPicResModel.message ??
+              VariableUtils.somethingWentWrong,
+        );
+      }
+    }
   }
 }

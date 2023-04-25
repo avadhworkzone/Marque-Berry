@@ -101,92 +101,91 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: ColorUtils.greyFA,
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(16.w),
-              child: CommonAppBar(
-                title: VariableUtils.resultText,
-                ontap: () => Get.back(),
-              ),
-            ),
-            body: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: Column(
-                    children: [
-                      SizeConfig.sH3,
-                      Container(
-                        height: 8.h,
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            color: ColorUtils.white,
-                            borderRadius: BorderRadius.circular(3.w)),
-                        child: Row(
+    return Scaffold(
+        backgroundColor: ColorUtils.greyFA,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(16.w),
+          child: CommonAppBar(
+            title: VariableUtils.resultText,
+            ontap: () => Get.back(),
+          ),
+        ),
+        body: ListView.builder(
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              child: Column(
+                children: [
+                  SizeConfig.sH3,
+                  Container(
+                    height: 8.h,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                        color: ColorUtils.white,
+                        borderRadius: BorderRadius.circular(3.w)),
+                    child: Row(
+                      children: [
+                        SizeConfig.sW2,
+                        CircleAvatar(
+                          child: ImagesWidgets.userImage,
+                        ),
+                        SizeConfig.sW2,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizeConfig.sW2,
-                            CircleAvatar(
-                              child: ImagesWidgets.UserImage,
+                            SizeConfig.sH1,
+                            AdoroText(
+                              VariableUtils.brandName,
+                              fontSize: 11.sp,
+                              fontWeight: FontWeightClass.fontWeightBold,
+                              color: ColorUtils.black,
                             ),
-                            SizeConfig.sW2,
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizeConfig.sH1,
-                                AdoroText(
-                                  VariableUtils.brandName,
-                                  fontSize: 11.sp,
-                                  fontWeight: FontWeightClass.fontWeightBold,
-                                  color: ColorUtils.black,
-                                ),
-                                AdoroText(
-                                  VariableUtils.campaignName,
-                                  fontSize: 11.sp,
-                                  fontWeight: FontWeightClass.fontWeightBold,
-                                  color: ColorUtils.black92,
-                                ),
-                              ],
-                            ),
-                            SizeConfig.sW7,
-                            InkWell(
-                              onTap: () => Get.to(ViewResult()),
-                              child: Container(
-                                height: 4.h,
-                                width: 24.w,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      ColorUtils.linearGradient1,
-                                      ColorUtils.linearGradient6,
-                                      ColorUtils.linearGradient7
-                                    ],
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(2.w),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: AdoroText(
-                                    VariableUtils.viewResult,
-                                    color: ColorUtils.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 11.sp,
-                                  ),
-                                ),
-                              ),
+                            AdoroText(
+                              VariableUtils.campaignName,
+                              fontSize: 11.sp,
+                              fontWeight: FontWeightClass.fontWeightBold,
+                              color: ColorUtils.black92,
                             ),
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            )));
+                        SizeConfig.sW7,
+                        InkWell(
+                          onTap: () => Get.to(() => ViewResult()),
+                          child: Container(
+                            height: 4.h,
+                            width: 24.w,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  ColorUtils.linearGradient1,
+                                  ColorUtils.linearGradient6,
+                                  ColorUtils.linearGradient7
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(2.w),
+                              ),
+                            ),
+                            child: Center(
+                              child: AdoroText(
+                                VariableUtils.viewResult,
+                                color: ColorUtils.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        ));
   }
 }

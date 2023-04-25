@@ -43,7 +43,7 @@ class FollowerFollowing extends StatelessWidget {
     return Scaffold(
       appBar: customAppbar(
         context: context,
-        title: title ?? "",
+        title: title,
         icon: const Icon(
           Icons.search_rounded,
           color: ColorUtils.black2E,
