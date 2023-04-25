@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
@@ -41,9 +42,12 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: ColorUtils.grey[100],
+      backgroundColor: whiteBlack2E,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
         child: CommonAppBar(title: 'Details', ontap: () => Get.back()),
@@ -56,10 +60,14 @@ class DetailsScreen extends StatelessWidget {
             height: size.height,
             width: size.width,
             decoration: BoxDecoration(
-              color: ColorUtils.white,
+              color: whiteBlack2E,
+              boxShadow: [
+                BoxShadow(blurRadius: 5, color: Colors.grey),
+              ],
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
                   leading: ClipRRect(
@@ -117,19 +125,12 @@ class DetailsScreen extends StatelessWidget {
                 SizeConfig.sH1,
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: ListView.builder(
-                      itemCount: 7,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.all(1.w),
-                          child: AdoroText(
-                            description ?? "",
-                            color: ColorUtils.black92,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        );
-                      },
+                    padding:
+                        EdgeInsets.only(left: 4.w, right: 4.w, bottom: 4.w),
+                    child: AdoroText(
+                      description,
+                      color: ColorUtils.black92,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
@@ -151,7 +152,7 @@ class DetailsScreen extends StatelessWidget {
                   },
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.w),
                     child: Container(
                       height: 6.h,
                       width: size.width,

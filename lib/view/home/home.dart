@@ -20,8 +20,6 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
-import '../../commanWidget/custom_btn.dart';
-
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
@@ -311,7 +309,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  int parentId = 0;
+  String parentId = "0";
   void parentCommentIdChange(id) {
     parentId = id;
     update();

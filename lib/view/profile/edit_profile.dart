@@ -278,8 +278,8 @@ class EditProfile extends StatelessWidget {
                                                   fit: BoxFit.cover,
                                                 )
                                               : OctoImage(
-                                                  image: NetworkImage(
-                                                      profilePic ?? ""),
+                                                  image:
+                                                      NetworkImage(profilePic),
                                                   progressIndicatorBuilder:
                                                       (context, progress) {
                                                     double? value;

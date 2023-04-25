@@ -29,6 +29,7 @@ class ApiService extends BaseService {
       logs("URL ---> ${Uri.parse(url!)}");
       logs('BODY :=> ${jsonEncode(body)}');
       logs('API TYPE :$apiType');
+      logs('TOKEN :${PreferenceUtils.getString(key: 'token')}');
 
       ///------------------------------------ GET METHOD -------------------------------------///
       if (apiType == APIType.aGet) {
@@ -43,6 +44,7 @@ class ApiService extends BaseService {
           result.statusCode,
           result.body,
         );
+
         logs("Get response......$response");
       }
 

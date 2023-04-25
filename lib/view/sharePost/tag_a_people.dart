@@ -37,19 +37,17 @@ class TagAPeople extends StatelessWidget {
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return GetBuilder<TagAPeopleController>(
-      initState: (_) {
-        tagAPeopleController.longPressTrue(false);
-        tagAPeopleController.clearList();
-      },
+      initState: (_) {},
       builder: (tagAPeopleController) {
         return Scaffold(
           appBar: customAppbar(
             title: 'Tag friend',
             context: context,
-            icon: tagAPeopleController.isLongPress == true
+            icon: tagAPeopleController.tagList.isNotEmpty
                 ? IconButton(
+                    splashRadius: 6.w,
                     onPressed: () {
-                      tagAPeopleController.longPressTrue(false);
+                      tagAPeopleController.clearList();
                     },
                     icon: Icon(Icons.close, color: blackWhite),
                   )
@@ -72,7 +70,7 @@ class TagAPeople extends StatelessWidget {
                     ],
                   ),
                   child: SearchTextFormField(
-                    color: Theme.of(context).textTheme.titleSmall?.color,
+                    color: blackWhite,
                     validator: () {},
                     controller: search,
                     denyInput: false,
@@ -121,16 +119,16 @@ class TagAPeople extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final followData =
                                 getFollowerListResModel.data?[index];
+
+                            String tagId = ((followData?.id.toString()) ?? "");
                             return Column(
                               children: [
                                 InkWell(
-                                  onTap:
-                                      tagAPeopleController.isLongPress == true
-                                          ? null
-                                          : () {
-                                              tagAPeopleController
-                                                  .longPressTrue(true);
-                                            },
+                                  splashColor: ColorUtils.transparent,
+                                  highlightColor: ColorUtils.transparent,
+                                  onTap: () {
+                                    tagAPeopleController.addList(tagId);
+                                  },
                                   child: ListTile(
                                     leading: ClipRRect(
                                       borderRadius: BorderRadius.circular(10.w),
@@ -195,68 +193,9 @@ class TagAPeople extends StatelessWidget {
                                       fontSize: 10.sp,
                                       color: ColorUtils.black92,
                                     ),
-                                    trailing: tagAPeopleController
-                                                .isLongPress ==
-                                            true
-                                        ? Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: blackWhite ??
-                                                    ColorUtils.black,
-                                              ),
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Container(
-                                              padding: EdgeInsets.all(1.w),
-                                              child: tagAPeopleController
-                                                          .tagList
-                                                          .indexWhere((element) =>
-                                                              element.id
-                                                                      .toString() ==
-                                                                  followData?.id
-                                                                      .toString() &&
-                                                              element.username ==
-                                                                  followData
-                                                                      ?.username) >
-                                                      -1
-                                                  ? InkWell(
-                                                      highlightColor: ColorUtils
-                                                          .transparent,
-                                                      splashColor: ColorUtils
-                                                          .transparent,
-                                                      onTap: () {
-                                                        tagAPeopleController
-                                                            .removeList(
-                                                          followData?.id,
-                                                          followData?.username,
-                                                        );
-                                                      },
-                                                      child: Icon(
-                                                        Icons.check,
-                                                        size: 5.w,
-                                                        color: blackWhite,
-                                                      ),
-                                                    )
-                                                  : InkWell(
-                                                      highlightColor: ColorUtils
-                                                          .transparent,
-                                                      splashColor: ColorUtils
-                                                          .transparent,
-                                                      onTap: () {
-                                                        tagAPeopleController
-                                                            .addList(
-                                                          followData?.id,
-                                                          followData?.username,
-                                                        );
-                                                        logs("2 add karvana");
-                                                      },
-                                                      child: Container(
-                                                        height: 5.w,
-                                                        width: 5.w,
-                                                      ),
-                                                    ),
-                                            ),
-                                          )
+                                    trailing: tagAPeopleController.tagList
+                                            .contains(tagId)
+                                        ? Icon(Icons.check, color: blackWhite)
                                         : SizedBox(),
                                   ),
                                 ),
@@ -294,30 +233,24 @@ class TagAPeople extends StatelessWidget {
 }
 
 class TagAPeopleController extends GetxController {
-  bool isLongPress = false;
-  List<TagAPeopleClass> tagList = [];
+  List tagList = [];
 
-  longPressTrue(value) {
-    isLongPress = value;
+  void addList(String id) {
+    try {
+      if (tagList.contains(id)) {
+        tagList.remove(id);
+      } else {
+        tagList.add(id);
+      }
+    } catch (e) {
+      logs('Tag list:-----> $e');
+    }
     update();
   }
 
-  addList(id, username) {
-    tagList.add(TagAPeopleClass(username: username, id: id));
-    update();
-  }
-
-  removeList(id, username) {
-    int tagListIndex = tagList.indexWhere(
-      (element) => element.username == username && element.id == id,
-    );
-
-    tagList.removeAt(tagListIndex);
-    update();
-  }
-
-  clearList() {
+  void clearList() {
     tagList.clear();
+    update();
   }
 }
 

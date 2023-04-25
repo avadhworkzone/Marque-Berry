@@ -9,7 +9,9 @@ import '../../utils/size_config_utils.dart';
 import 'interest.dart';
 
 class DoneScreen extends StatelessWidget {
-  const DoneScreen({super.key});
+  bool? isCampaign = false;
+
+  DoneScreen({super.key, this.isCampaign});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,11 @@ class DoneScreen extends StatelessWidget {
           SizeConfig.sH10,
           CustomBtn(
             onTap: () {
-              Get.to(() => InterestScreen());
+              if (isCampaign == false) {
+                Get.to(() => InterestScreen());
+              } else {
+                Get.back();
+              }
             },
             text: 'DONE',
           ),

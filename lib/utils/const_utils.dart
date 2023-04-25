@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 class ConstUtils {}
 
@@ -18,14 +19,26 @@ String postTimeCalculate(date, ext) {
       DateTime date2 = DateTime.now();
 
       int data = date2.difference(date1).inDays;
+
+      // logs('-----------------------------------------------------');
+      // logs('DATE:-----> ${date2} ${date1}');
+      // logs('----------------------------------------------------->');
+      // logs('SECOND:-----> ${date2.difference(date1).inSeconds.toString()}');
+      // logs('min:-----> ${date2.difference(date1).inMinutes.toString()}');
+      // logs('hour:-----> ${date2.difference(date1).inHours.toString()}');
+      // logs('day:-----> ${date2.difference(date1).inDays.toString()}');
+
+      var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
+      date1 = dateTime.toLocal();
+
       if (date2.difference(date1).inSeconds < 60) {
-        return "$data sec $ext";
+        return "now";
       } else if (date2.difference(date1).inMinutes < 60) {
-        return "$data min $ext";
+        return "${date2.difference(date1).inMinutes} min $ext";
       } else if (date2.difference(date1).inHours < 60) {
-        return "$data h $ext";
+        return "${date2.difference(date1).inHours} h $ext";
       } else if (date2.difference(date1).inDays < 8) {
-        return "$data d $ext";
+        return "${date2.difference(date1).inDays} d $ext";
       } else {
         return "${(data / 7).toStringAsFixed(0)} w $ext";
       }

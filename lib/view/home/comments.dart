@@ -139,15 +139,17 @@ class Comments extends StatelessWidget {
 
                                     /// main comment
                                     home.parentCommentIdChange(
-                                      commentdata.commentId,
+                                      commentdata.commentId.toString(),
                                     );
 
                                     FocusScope.of(context)
                                         .requestFocus(focusNode);
                                     commentTextEditing.selection =
-                                        TextSelection.fromPosition(TextPosition(
-                                            offset: commentTextEditing
-                                                .text.length));
+                                        TextSelection.fromPosition(
+                                      TextPosition(
+                                        offset: commentTextEditing.text.length,
+                                      ),
+                                    );
                                   },
                                   name: commentdata.username ?? "",
                                   img: commentdata.image ?? "",
@@ -165,7 +167,7 @@ class Comments extends StatelessWidget {
                                     replayMessage: () {
                                       /// sub comment
                                       home.parentCommentIdChange(
-                                          commentdata.parentId);
+                                          commentdata.commentId.toString());
 
                                       commentTextEditing.text =
                                           "@${commentdata.childComment?[i].username} ";

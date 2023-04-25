@@ -57,27 +57,28 @@ class Support extends StatelessWidget {
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 6.w,
-                            vertical: 10.w,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AdoroText(
-                                VariableUtils.hiCheonYeoWoon,
-                                fontSize: 15.sp,
-                                color: ColorUtils.white,
-                                fontWeight: FontWeightClass.fontWeightBold,
-                              ),
-                              SizeConfig.sH3,
-                              AdoroText(
-                                'Please fill this form, our team will reach out to you soon',
-                                fontSize: 13.sp,
-                                color: ColorUtils.white,
-                                fontWeight: FontWeightClass.fontWeightBold,
-                              ),
-                            ],
+                          padding: EdgeInsets.only(
+                              bottom: 20.w, left: 8.w, right: 8.w),
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AdoroText(
+                                  VariableUtils.hiCheonYeoWoon,
+                                  fontSize: 15.sp,
+                                  color: ColorUtils.white,
+                                  fontWeight: FontWeightClass.fontWeightBold,
+                                ),
+                                SizeConfig.sH3,
+                                AdoroText(
+                                  'Please fill this form, our team will reach out to you soon',
+                                  fontSize: 13.sp,
+                                  color: ColorUtils.white,
+                                  fontWeight: FontWeightClass.fontWeightBold,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

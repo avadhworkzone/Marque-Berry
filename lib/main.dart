@@ -97,9 +97,6 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      // return DownloadTemplateList(
-                      //   title: 'BB BBBBBB',
-                      // );
                       return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
@@ -232,3 +229,6 @@ class AppTheme {
     ),
   );
 }
+
+/// tag people in share post
+///

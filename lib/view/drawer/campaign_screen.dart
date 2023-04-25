@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,21 +34,6 @@ class CampaignScreen extends StatefulWidget {
 }
 
 class _CampaignScreenState extends State<CampaignScreen> {
-  @override
-  void initState() {
-    campaignContestApiCall();
-    super.initState();
-  }
-
-  CampaignContestViewModel campaignContestViewModel =
-      Get.find<CampaignContestViewModel>();
-
-  campaignContestApiCall() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await campaignContestViewModel.getCampaignContest();
-    });
-  }
-
   final BottomBarController bottomBarController =
       Get.find<BottomBarController>();
 
@@ -55,52 +42,57 @@ class _CampaignScreenState extends State<CampaignScreen> {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
-    return GetBuilder<CampaignContestViewModel>(
-      builder: (campaignContestViewModel) {
-        return DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              backgroundColor: whiteBlack2E,
-              leading: IconButton(
-                splashRadius: 6.w,
-                onPressed: () {
-                  bottomBarController.pageChange(0);
-                },
-                icon: Icon(Icons.arrow_back, color: blackWhite),
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+    Color? blueB9White = Theme.of(context).textTheme.displaySmall?.color;
+
+    return GetBuilder<CampaignScreenController>(
+        builder: (campaignScreenController) {
+      return GetBuilder<CampaignContestViewModel>(
+        initState: (_) {
+          campaignScreenController.campaignContestApiCall();
+        },
+        builder: (campaignContestViewModel) {
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                elevation: 0,
+                backgroundColor: whiteBlack2E,
+                leading: IconButton(
+                  splashRadius: 6.w,
+                  onPressed: () {
+                    bottomBarController.pageChange(0);
+                  },
+                  icon: Icon(Icons.arrow_back, color: blackWhite),
+                ),
+                title: TabBar(
+                  labelColor: black92Blue,
+                  unselectedLabelColor: ColorUtils.white,
+                  indicatorColor: ColorUtils.blueB9,
+                  tabs: [
+                    Tab(child: Text('Campaign')),
+                    Tab(child: Text('Contest'))
+                  ],
+                ),
+                actions: [SizeConfig.sW9],
               ),
-              title: const TabBar(
-                tabs: [
-                  Tab(
-                    child: AdoroText(
-                      'Campaign',
-                      fontWeight: FontWeightClass.fontWeight600,
-                    ),
-                  ),
-                  Tab(
-                    child: AdoroText(
-                      'Contest',
-                      fontWeight: FontWeightClass.fontWeight600,
-                    ),
+              body: TabBarView(
+                children: [
+                  CampaignScn(
+                      campaignContestViewModel: campaignContestViewModel),
+                  ContestScreen(
+                    campaignContestViewModel: campaignContestViewModel,
                   ),
                 ],
               ),
-              actions: [SizeConfig.sW9],
             ),
-            body: TabBarView(
-              children: [
-                CampaignScn(campaignContestViewModel: campaignContestViewModel),
-                ContestScreen(
-                  campaignContestViewModel: campaignContestViewModel,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    });
   }
 }
 
@@ -238,6 +230,7 @@ class TabBarMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return GetBuilder<CampaignScreenController>(
@@ -248,12 +241,16 @@ class TabBarMethod extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 2.w),
             width: size.width,
             decoration: BoxDecoration(
-              color: ColorUtils.white,
+              boxShadow: [
+                BoxShadow(blurRadius: 5, color: Colors.grey),
+              ],
+              color: whiteBlack2E,
               borderRadius: BorderRadius.circular(5.w),
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
                     contentPadding: EdgeInsets.zero,
@@ -300,6 +297,7 @@ class TabBarMethod extends StatelessWidget {
                     ),
                     title: AdoroText(
                       '$title',
+                      color: blackWhite,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -310,9 +308,9 @@ class TabBarMethod extends StatelessWidget {
                   ),
                   SizeConfig.sH1,
                   AdoroText(
-                    'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat'
-                    'duis enim velit mollit...',
+                    "$description",
                     maxLines: 4,
+                    color: blackWhite,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizeConfig.sH1,
@@ -348,14 +346,17 @@ class TabBarMethod extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(3.w),
                             )
-                          : BoxDecoration(color: Colors.grey[100]),
+                          : BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(3.w),
+                            ),
                       child: Center(
                         child: AdoroText(
                           applied == "false" ? 'APPLY NOW' : "APPLIED",
                           color: applied == "false"
                               ? ColorUtils.white
-                              : ColorUtils.black92,
-                          fontWeight: FontWeight.w500,
+                              : ColorUtils.green4E,
+                          fontWeight: FontWeight.w600,
                           fontSize: 12.sp,
                         ),
                       ),
@@ -380,9 +381,7 @@ class TabBarMethod extends StatelessWidget {
                       width: size.width,
                       decoration: BoxDecoration(
                         color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(3.w),
-                        ),
+                        borderRadius: BorderRadius.circular(3.w),
                       ),
                       child: Center(
                         child: AdoroText(
@@ -429,7 +428,7 @@ class CampaignScreenController extends GetxController {
     required CampaignContestViewModel campaignContestViewModel,
     required String campaignId,
   }) async {
-    if (applied == "false") {
+    if (applied != "false") {
       String path = await pickCampaignImage();
       logs(path);
 
@@ -444,7 +443,8 @@ class CampaignScreenController extends GetxController {
               campaignContestViewModel.applyContestApiResponse.data;
 
           if (response.status.toString() == VariableUtils.status200) {
-            Get.to(() => DoneScreen());
+            campaignContestViewModel.getCampaignContest();
+            Get.to(() => DoneScreen(isCampaign: true));
 
             showSnackBar(
               message: response.msg ?? "apply successfully",
@@ -466,8 +466,8 @@ class CampaignScreenController extends GetxController {
 
   applyCampaign({
     required String applied,
-    required CampaignContestViewModel campaignContestViewModel,
     required String contestId,
+    required CampaignContestViewModel campaignContestViewModel,
   }) async {
     if (applied == "false") {
       String path = await pickCampaignImage();
@@ -476,13 +476,14 @@ class CampaignScreenController extends GetxController {
         applyCampaignReqModel.contestId = contestId;
 
         await campaignContestViewModel.applyCampaign(applyCampaignReqModel);
-
         if (campaignContestViewModel.applyCampaignApiResponse.status ==
             Status.COMPLETE) {
           final CampaignContestResModel response =
               campaignContestViewModel.applyCampaignApiResponse.data;
           if (response.status.toString() == VariableUtils.status200) {
-            Get.to(() => DoneScreen());
+            campaignContestViewModel.getCampaignContest();
+            Get.to(() => DoneScreen(isCampaign: true));
+
             showSnackBar(
               message: response.msg ?? "apply successfully",
               snackbarSuccess: true,
@@ -499,5 +500,14 @@ class CampaignScreenController extends GetxController {
     } else if (applied == "true") {
       showSnackBar(message: "Already applied");
     }
+  }
+
+  CampaignContestViewModel campaignContestViewModel =
+      Get.find<CampaignContestViewModel>();
+
+  campaignContestApiCall() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await campaignContestViewModel.getCampaignContest();
+    });
   }
 }

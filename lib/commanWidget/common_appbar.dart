@@ -64,7 +64,7 @@ AppBar customAppbar({
     ),
     leading: IconButton(
       onPressed: () => Get.back(),
-      splashRadius: 7.w,
+      splashRadius: 6.w,
       icon: Icon(Icons.arrow_back, color: blackWhite),
     ),
     actions: [
