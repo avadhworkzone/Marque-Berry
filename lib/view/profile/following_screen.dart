@@ -10,6 +10,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
 import '../../commanWidget/common_image.dart';
@@ -206,6 +207,14 @@ class FollowerList extends StatelessWidget {
     } else {
       GetFollowerListResModel getFollowerListResModel =
           followRequestViewModel.getFollowerListApiResponse.data;
+
+      if (getFollowerListResModel.status.toString() ==
+          VariableUtils.status500) {
+        return AdoroText(
+          getFollowerListResModel.msg ?? VariableUtils.somethingWentWrong,
+        );
+      }
+
       if (getFollowerListResModel.data!.isEmpty) {
         return Column(
           children: [

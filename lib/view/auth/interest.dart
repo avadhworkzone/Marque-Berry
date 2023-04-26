@@ -48,56 +48,66 @@ class InterestScreen extends StatelessWidget {
           builder: (interestController) {
             return Stack(
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizeConfig.sH10,
-                      AdoroText(
-                        VariableUtils.welcomeToAdoro,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                        color: blackWhite,
-                      ),
-                      AdoroText(
-                        VariableUtils.chooseOrMoreMemeCategories,
-                        color: blackWhite,
-                      ),
-                      SizeConfig.sH2,
-                      Expanded(
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 150,
-                            mainAxisSpacing: 8,
-                            crossAxisSpacing: 8,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizeConfig.sH10,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AdoroText(
+                            VariableUtils.welcomeToAdoro,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                            color: blackWhite,
                           ),
-                          itemCount: 18,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (authViewModel.memeCategoryApiResponse.status ==
-                                    Status.LOADING ||
-                                authViewModel.memeCategoryApiResponse.status ==
-                                    Status.INITIAL)
-                              return CircularProgressIndicator();
-                            else if (authViewModel
-                                        .memeCategoryApiResponse.status ==
-                                    Status.ERROR ||
-                                authViewModel.memeCategoryApiResponse.data ==
-                                    null)
-                              return Center(
-                                child: AdoroText(
-                                  VariableUtils.somethingWentWrong,
-                                ),
-                              );
-                            else if (authViewModel
-                                    .memeCategoryApiResponse.status ==
-                                Status.COMPLETE) {
-                              MemeCategoryResModel memeResponse =
-                                  authViewModel.memeCategoryApiResponse.data;
-                              return InkWell(
+                          AdoroText(
+                            VariableUtils.chooseOrMoreMemeCategories,
+                            color: blackWhite,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizeConfig.sH2,
+                    Expanded(
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5.w, vertical: 3.w),
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 150,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                        ),
+                        itemCount: 18,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (authViewModel.memeCategoryApiResponse.status ==
+                                  Status.LOADING ||
+                              authViewModel.memeCategoryApiResponse.status ==
+                                  Status.INITIAL)
+                            return CircularProgressIndicator();
+                          else if (authViewModel
+                                      .memeCategoryApiResponse.status ==
+                                  Status.ERROR ||
+                              authViewModel.memeCategoryApiResponse.data ==
+                                  null)
+                            return Center(
+                              child: AdoroText(
+                                VariableUtils.somethingWentWrong,
+                              ),
+                            );
+                          else if (authViewModel
+                                  .memeCategoryApiResponse.status ==
+                              Status.COMPLETE) {
+                            MemeCategoryResModel memeResponse =
+                                authViewModel.memeCategoryApiResponse.data;
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(2.w),
+                              child: InkWell(
+                                highlightColor: ColorUtils.transparent,
+                                splashColor: ColorUtils.transparent,
                                 onTap: interestController
                                                 .tempCategoryIndex.length <
                                             3 ||
@@ -117,79 +127,51 @@ class InterestScreen extends StatelessWidget {
                                     : null,
                                 child: Stack(
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(2.w),
-                                      child: Container(
-                                        alignment: Alignment.bottomCenter,
-                                        height: 15.h,
-                                        width: 30.w,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                              "${memeResponse.data?[index].imageUrl ?? ""}",
+                                    Container(
+                                      height: 30.w,
+                                      child: OctoImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          "${memeResponse.data?[index].imageUrl ?? ""}",
+                                        ),
+                                        progressIndicatorBuilder:
+                                            (context, progress) {
+                                          double? value;
+                                          var expectedBytes =
+                                              progress?.expectedTotalBytes;
+                                          if (progress != null &&
+                                              expectedBytes != null) {
+                                            value =
+                                                progress.cumulativeBytesLoaded /
+                                                    expectedBytes;
+                                          }
+                                          return Padding(
+                                            padding: EdgeInsets.all(8.w),
+                                            child: CircularProgressIndicator(
+                                              value: value,
+                                              color: blackWhite,
                                             ),
-                                            fit: BoxFit.cover,
+                                          );
+                                        },
+                                        errorBuilder:
+                                            (context, error, stacktrace) =>
+                                                Padding(
+                                          padding: EdgeInsets.all(7.w),
+                                          child: CommonImage(
+                                            img: IconsWidgets
+                                                .imageNotFoundImages,
+                                            color: blackWhite,
                                           ),
                                         ),
-                                        child: Stack(
-                                          children: [
-                                            OctoImage(
-                                              image: NetworkImage(
-                                                "${memeResponse.data?[index].imageUrl ?? ""}",
-                                              ),
-                                              progressIndicatorBuilder:
-                                                  (context, progress) {
-                                                double? value;
-                                                var expectedBytes = progress
-                                                    ?.expectedTotalBytes;
-                                                if (progress != null &&
-                                                    expectedBytes != null) {
-                                                  value = progress
-                                                          .cumulativeBytesLoaded /
-                                                      expectedBytes;
-                                                }
-                                                return Padding(
-                                                  padding: EdgeInsets.all(8.w),
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    value: value,
-                                                    color: blackWhite,
-                                                  ),
-                                                );
-                                              },
-                                              errorBuilder: (context, error,
-                                                      stacktrace) =>
-                                                  Padding(
-                                                padding: EdgeInsets.all(7.w),
-                                                child: CommonImage(
-                                                  img: IconsWidgets
-                                                      .imageNotFoundImages,
-                                                  color: blackWhite,
-                                                ),
-                                              ),
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    AdoroText(
-                                                      "${memeResponse.data?[index].title ?? ""}",
-                                                      color: blackWhite,
-                                                      fontWeight:
-                                                          FontWeightClass
-                                                              .fontWeightBold,
-                                                    ),
-                                                  ],
-                                                ),
-                                                // SizeConfig.sH05,
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: AdoroText(
+                                        "${memeResponse.data?[index].title ?? ""}",
+                                        color: ColorUtils.white,
+                                        fontWeight:
+                                            FontWeightClass.fontWeight800,
                                       ),
                                     ),
                                     if (interestController.tempCategoryIndex
@@ -210,39 +192,38 @@ class InterestScreen extends StatelessWidget {
                                       ),
                                   ],
                                 ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                      SizeConfig.sH2,
-                      Center(
-                        child: interestController.selectedCategoryList.length ==
-                                3
-                            ? CustomBtn(
-                                onTap: () async {
-                                  await interestController.setPreference();
-                                  await userDetails(
-                                    authViewModel: authViewModel,
-                                  );
-
-                                  await PreferenceUtils.setWelcome(1);
-                                  Get.offAllNamed(RouteHelper.getBottomRoute());
-                                },
-                                text: 'DONE',
-                              )
-                            : CustomBtn(
-                                onTap: null,
-                                text: 'DONE',
-                                decoration: BoxDecoration(
-                                  color: ColorUtils.black92,
-                                  borderRadius: BorderRadius.circular(1.5.w),
-                                ),
                               ),
+                            );
+                          }
+                        },
                       ),
-                      SizeConfig.sH2,
-                    ],
-                  ),
+                    ),
+                    SizeConfig.sH2,
+                    Center(
+                      child: interestController.selectedCategoryList.length == 3
+                          ? CustomBtn(
+                              onTap: () async {
+                                await interestController.setPreference();
+                                await userDetails(
+                                  authViewModel: authViewModel,
+                                );
+
+                                await PreferenceUtils.setWelcome(1);
+                                Get.offAllNamed(RouteHelper.getBottomRoute());
+                              },
+                              text: 'DONE',
+                            )
+                          : CustomBtn(
+                              onTap: null,
+                              text: 'DONE',
+                              decoration: BoxDecoration(
+                                color: ColorUtils.black92,
+                                borderRadius: BorderRadius.circular(1.5.w),
+                              ),
+                            ),
+                    ),
+                    SizeConfig.sH2,
+                  ],
                 ),
                 if (authViewModel.userCategoryApiResponse.status ==
                     Status.LOADING)

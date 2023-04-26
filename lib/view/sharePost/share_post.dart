@@ -68,45 +68,56 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                       children: [
                         Row(
                           children: [
-                            IconButton(
-                              onPressed: () {
+                            SizeConfig.sW4,
+                            InkWell(
+                              onTap: () {
                                 Get.back();
                                 bottomBarController.pageChange(0);
                               },
-                              splashRadius: 6.w,
-                              icon: Icon(
+                              child: Icon(
                                 Icons.close,
                                 size: 6.w,
                                 color: blackWhite,
                               ),
                             ),
-                            Spacer(),
+                            SizeConfig.sW2,
+                            //
+                            // IconButton(
+                            //   onPressed: () {
+                            //     Get.back();
+                            //     bottomBarController.pageChange(0);
+                            //   },
+                            //   splashRadius: 6.w,
+                            //   icon: Icon(
+                            //     Icons.close,
+                            //     size: 6.w,
+                            //     color: blackWhite,
+                            //   ),
+                            // ),
                             AdoroText(
                               VariableUtils.sharePost,
                               fontSize: 12.sp,
                               fontWeight: FontWeightClass.fontWeightBold,
                               color: blackWhite,
                             ),
-                            SizeConfig.sW4,
-                            Padding(
-                              padding: EdgeInsets.only(right: 4.w),
-                              child: InkWell(
-                                onTap: () {
-                                  createPostApi(
-                                    createPostReqModel,
-                                    sharePostController,
-                                  );
-                                },
-                                child: Container(
-                                  width: 20.w,
-                                  height: 4.h,
-                                  child: Image.asset(
-                                    ImagesWidgets.submitButtonImage,
-                                    fit: BoxFit.cover,
-                                  ),
+                            Spacer(),
+                            InkWell(
+                              onTap: () {
+                                createPostApi(
+                                  createPostReqModel,
+                                  sharePostController,
+                                );
+                              },
+                              child: Container(
+                                width: 20.w,
+                                height: 5.h,
+                                child: Image.asset(
+                                  ImagesWidgets.submitButtonImage,
+                                  // fit: BoxFit.cover,
                                 ),
                               ),
                             ),
+                            SizeConfig.sW4,
                           ],
                         ),
                         SizeConfig.sH3,
@@ -362,59 +373,62 @@ class uploadPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
-    return Column(
-      children: [
-        Divider(color: blackWhite, thickness: 1),
-        Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: CommonUploadTile(
-            title: VariableUtils.uploadAPhoto,
-            sharePostController: sharePostController,
-            uploadType: "image",
-            icon: 'assets/icons/image.png',
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 2.5.w),
+      child: Column(
+        children: [
+          Divider(color: blackWhite, thickness: 1),
+          Padding(
+            padding: EdgeInsets.only(left: 5.w),
+            child: CommonUploadTile(
+              title: VariableUtils.uploadAPhoto,
+              sharePostController: sharePostController,
+              uploadType: "image",
+              icon: 'assets/icons/image.png',
+            ),
           ),
-        ),
-        Divider(color: blackWhite, thickness: 1),
-        Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: CommonUploadTile(
-            sharePostController: sharePostController,
-            uploadType: "video",
-            icon: 'assets/icons/video.png',
-            title: VariableUtils.uploadAVideo,
+          Divider(color: blackWhite, thickness: 1),
+          Padding(
+            padding: EdgeInsets.only(left: 5.w),
+            child: CommonUploadTile(
+              sharePostController: sharePostController,
+              uploadType: "video",
+              icon: 'assets/icons/video.png',
+              title: VariableUtils.uploadAVideo,
+            ),
           ),
-        ),
-        Divider(color: blackWhite, thickness: 1),
-        Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: CommonUploadTile(
-            sharePostController: sharePostController,
-            uploadType: 'gif',
-            icon: 'assets/icons/gif.png',
-            title: VariableUtils.uploadAGIF,
+          Divider(color: blackWhite, thickness: 1),
+          Padding(
+            padding: EdgeInsets.only(left: 5.w),
+            child: CommonUploadTile(
+              sharePostController: sharePostController,
+              uploadType: 'gif',
+              icon: 'assets/icons/gif.png',
+              title: VariableUtils.uploadAGIF,
+            ),
           ),
-        ),
-        Divider(color: blackWhite, thickness: 1),
-        Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: CommonUploadTile(
-            sharePostController: sharePostController,
-            uploadType: 'template',
-            icon: 'assets/icons/choose.png',
-            title: VariableUtils.chooseATemplate,
+          Divider(color: blackWhite, thickness: 1),
+          Padding(
+            padding: EdgeInsets.only(left: 5.w),
+            child: CommonUploadTile(
+              sharePostController: sharePostController,
+              uploadType: 'template',
+              icon: 'assets/icons/choose.png',
+              title: VariableUtils.chooseATemplate,
+            ),
           ),
-        ),
-        Divider(color: blackWhite, thickness: 1),
-        Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: CommonUploadTile(
-            sharePostController: sharePostController,
-            uploadType: 'tag',
-            icon: 'assets/icons/tag.png',
-            title: VariableUtils.tagAFriend,
+          Divider(color: blackWhite, thickness: 1),
+          Padding(
+            padding: EdgeInsets.only(left: 5.w),
+            child: CommonUploadTile(
+              sharePostController: sharePostController,
+              uploadType: 'tag',
+              icon: 'assets/icons/tag.png',
+              title: VariableUtils.tagAFriend,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
