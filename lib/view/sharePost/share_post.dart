@@ -16,6 +16,7 @@ import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 import '../../model/apiModel/responseModel/create_post_res_model.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
@@ -62,280 +63,229 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
               child: SafeArea(
                 child: Stack(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 3.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizeConfig.sH1,
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  Get.back();
-                                  bottomBarController.pageChange(0);
-                                },
-                                splashRadius: 6.w,
-                                icon: Icon(
-                                  Icons.close,
-                                  size: 8.w,
-                                  color: blackWhite,
-                                ),
-                              ),
-                              Spacer(),
-                              AdoroText(
-                                VariableUtils.sharePost,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeightClass.fontWeightBold,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Get.back();
+                                bottomBarController.pageChange(0);
+                              },
+                              splashRadius: 6.w,
+                              icon: Icon(
+                                Icons.close,
+                                size: 6.w,
                                 color: blackWhite,
                               ),
-                              SizeConfig.sW4,
-                              Container(
-                                width: 20.w,
-                                height: 4.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4.w),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      "assets/images/Rectangle.png",
-                                    ),
+                            ),
+                            Spacer(),
+                            AdoroText(
+                              VariableUtils.sharePost,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeightClass.fontWeightBold,
+                              color: blackWhite,
+                            ),
+                            SizeConfig.sW4,
+                            Padding(
+                              padding: EdgeInsets.only(right: 4.w),
+                              child: InkWell(
+                                onTap: () {
+                                  createPostApi(
+                                    createPostReqModel,
+                                    sharePostController,
+                                  );
+                                },
+                                child: Container(
+                                  width: 20.w,
+                                  height: 4.h,
+                                  child: Image.asset(
+                                    ImagesWidgets.submitButtonImage,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                child: TextButton(
-                                  onPressed: () {
-                                    createPostApi(
-                                      createPostReqModel,
-                                      sharePostController,
-                                    );
-                                  },
-                                  child: Text(
-                                    VariableUtils.Post,
-                                    style: TextStyle(
-                                      fontSize: 11.sp,
-                                      fontWeight:
-                                          FontWeightClass.fontWeightBold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizeConfig.sH3,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(20.w),
+                                    child: Container(
+                                      height: 20.w,
+                                      width: 20.w,
+                                      child: Image.asset(
+                                        ImagesWidgets.profileimagesImage,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              // Container(
-                              //   height: 5.h,
-                              //   width: 30.w,
-                              //   decoration: BoxDecoration(
-                              //       gradient: LinearGradient(
-                              //         colors: [
-                              //           ColorUtils.linearGradient1,
-                              //           ColorUtils.linearGradient6,
-                              //           ColorUtils.linearGradient7
-                              //         ],
-                              //         stops: [0, 0.4, 1],
-                              //         begin: Alignment.topLeft,
-                              //         end: Alignment.bottomRight,
-                              //       ),
-                              //       borderRadius: BorderRadius.circular(5.w)),
-                              //   child: TextButton(
-                              //     onPressed: () {
-                              //       createPostApi(
-                              //         createPostReqModel,
-                              //         sharePostController,
-                              //       );
-                              //     },
-                              //     child: Text(
-                              //       VariableUtils.Post,
-                              //       style: TextStyle(
-                              //         fontSize: 11.sp,
-                              //         fontWeight: FontWeightClass.fontWeightBold,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
-                            ],
-                          ),
-                          SizeConfig.sH3,
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 3.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(20.w),
-                                      child: Container(
-                                        height: 20.w,
-                                        width: 20.w,
-                                        child: Image.asset(
-                                          "assets/images/profile.png",
-                                        ),
+                                  SizeConfig.sW4,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AdoroText(
+                                        "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
+                                        color: blackWhite,
+                                        fontSize: 15.sp,
+                                        fontWeight:
+                                            FontWeightClass.fontWeightBold,
                                       ),
-                                    ),
-                                    SizeConfig.sW4,
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AdoroText(
-                                          "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
-                                          color: blackWhite,
-                                          fontSize: 15.sp,
-                                          fontWeight:
-                                              FontWeightClass.fontWeightBold,
-                                        ),
-                                        SizeConfig.sH1,
-                                        Container(
-                                          height: 4.h,
-                                          // width: 35.w,
-                                          decoration: BoxDecoration(
-                                            color: ColorUtils.white,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(8.w),
-                                            ),
+                                      SizeConfig.sH1,
+                                      Container(
+                                        height: 4.h,
+                                        // width: 35.w,
+                                        decoration: BoxDecoration(
+                                          color: ColorUtils.white,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8.w),
                                           ),
-                                          child: Row(
-                                            children: [
-                                              SizeConfig.sW2,
-                                              Icon(
-                                                Icons.add_box_outlined,
-                                                color: ColorUtils.black,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            SizeConfig.sW2,
+                                            Icon(
+                                              Icons.add_box_outlined,
+                                              color: ColorUtils.black,
+                                            ),
+                                            SizeConfig.sW2,
+                                            DropdownButton(
+                                              hint: Text(
+                                                dropdownName == ""
+                                                    ? "Category"
+                                                    : dropdownName,
+                                                style: TextStyle(
+                                                  color: ColorUtils.black,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                              SizeConfig.sW2,
-                                              DropdownButton(
-                                                hint: Text(
-                                                  dropdownName == ""
-                                                      ? "Category"
-                                                      : dropdownName,
-                                                  style: TextStyle(
-                                                    color: ColorUtils.black,
+                                              icon: Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: ColorUtils.black92,
+                                              ),
+                                              items:
+                                                  categoryDataList.map((items) {
+                                                return DropdownMenuItem(
+                                                  value: items.name,
+                                                  child: AdoroText(
+                                                    items.name ?? "",
+                                                    color: blackWhite,
                                                     fontWeight: FontWeight.bold,
                                                   ),
-                                                ),
-                                                icon: Icon(
-                                                  Icons.keyboard_arrow_down,
-                                                  color: ColorUtils.black,
-                                                ),
-                                                items: categoryDataList
-                                                    .map((items) {
-                                                  return DropdownMenuItem(
-                                                    value: items.name,
-                                                    child: AdoroText(
-                                                      items.name ?? "",
-                                                      color: blackWhite,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                                onChanged: (String? newValue) {
-                                                  var index = categoryDataList
-                                                      .firstWhere(
-                                                    (element) =>
-                                                        element.name ==
-                                                        newValue,
-                                                  );
-                                                  setState(() {
-                                                    dropdownName =
-                                                        index.name.toString();
-                                                    dropdownValue =
-                                                        index.id.toString();
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                          ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (String? newValue) {
+                                                var index =
+                                                    categoryDataList.firstWhere(
+                                                  (element) =>
+                                                      element.name == newValue,
+                                                );
+                                                setState(() {
+                                                  dropdownName =
+                                                      index.name.toString();
+                                                  dropdownValue =
+                                                      index.id.toString();
+                                                });
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: blackWhite,
-                                  hintText:
-                                      VariableUtils.whatYouWantToTalkAbout,
-                                  hintStyle: TextStyle(color: ColorUtils.grey),
-                                  validator: () {},
-                                  controller: description,
-                                ),
-                                SizeConfig.sH2,
-                                if (sharePostController.sourcePath != "" &&
-                                    sharePostController.sourceName ==
-                                        "template")
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: AdoroText(
-                                          sharePostController.sourcePath
-                                              .split("/")
-                                              .last,
-                                          color: blackWhite,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        splashRadius: 6.w,
-                                        onPressed: () {
-                                          sharePostController.clearSourcePath();
-                                        },
-                                        icon: Icon(Icons.close,
-                                            color: blackWhite),
                                       ),
                                     ],
                                   ),
-                                if (sharePostController.sourcePath != "" &&
-                                    sharePostController.sourceName !=
-                                        "template")
-                                  Container(
-                                    height: 55.w,
-                                    width: Get.width,
-                                    color: ColorUtils.note,
-                                    child: Stack(
-                                      children: [
-                                        if (sharePostController.sourceName ==
-                                            "image")
-                                          Center(
-                                            child: Image.file(
-                                              File(sharePostController
-                                                  .sourcePath),
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        if (sharePostController.sourceName ==
-                                                "video" ||
-                                            sharePostController.sourceName ==
-                                                "gif")
-                                          Padding(
-                                            padding: EdgeInsets.all(4.w),
-                                            child: AspectRatio(
-                                              aspectRatio: 18 / 10,
-                                              child: BetterPlayer.file(
-                                                  sharePostController
-                                                      .sourcePath),
-                                            ),
-                                          ),
-                                        Positioned(
-                                          right: 0,
-                                          child: IconButton(
-                                            splashRadius: 6.w,
-                                            onPressed: () {
-                                              sharePostController
-                                                  .clearSourcePath();
-                                            },
-                                            icon: Icon(Icons.close),
+                                ],
+                              ),
+                              SizeConfig.sH4,
+                              CommonTextFormField(
+                                color: blackWhite,
+                                hintText: VariableUtils.whatYouWantToTalkAbout,
+                                hintStyle: TextStyle(color: ColorUtils.grey),
+                                validator: () {},
+                                controller: description,
+                              ),
+                              SizeConfig.sH2,
+                              if (sharePostController.sourcePath != "" &&
+                                  sharePostController.sourceName == "template")
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: AdoroText(
+                                        sharePostController.sourcePath
+                                            .split("/")
+                                            .last,
+                                        color: blackWhite,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      splashRadius: 6.w,
+                                      onPressed: () {
+                                        sharePostController.clearSourcePath();
+                                      },
+                                      icon:
+                                          Icon(Icons.close, color: blackWhite),
+                                    ),
+                                  ],
+                                ),
+                              if (sharePostController.sourcePath != "" &&
+                                  sharePostController.sourceName != "template")
+                                Container(
+                                  height: 55.w,
+                                  width: Get.width,
+                                  color: ColorUtils.note,
+                                  child: Stack(
+                                    children: [
+                                      if (sharePostController.sourceName ==
+                                          "image")
+                                        Center(
+                                          child: Image.file(
+                                            File(
+                                                sharePostController.sourcePath),
+                                            fit: BoxFit.fill,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  )
-                              ],
-                            ),
+                                      if (sharePostController.sourceName ==
+                                              "video" ||
+                                          sharePostController.sourceName ==
+                                              "gif")
+                                        Padding(
+                                          padding: EdgeInsets.all(4.w),
+                                          child: AspectRatio(
+                                            aspectRatio: 18 / 10,
+                                            child: BetterPlayer.file(
+                                                sharePostController.sourcePath),
+                                          ),
+                                        ),
+                                      Positioned(
+                                        right: 0,
+                                        child: IconButton(
+                                          splashRadius: 6.w,
+                                          onPressed: () {
+                                            sharePostController
+                                                .clearSourcePath();
+                                          },
+                                          icon: Icon(Icons.close),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                            ],
                           ),
-                          Expanded(child: SizedBox()),
-                          uploadPhoto(
-                            sharePostController: sharePostController,
-                          ),
-                          SizeConfig.sH2,
-                        ],
-                      ),
+                        ),
+                        Expanded(child: SizedBox()),
+                        uploadPhoto(
+                          sharePostController: sharePostController,
+                        ),
+                        SizeConfig.sH2,
+                      ],
                     ),
                     if (createPostViewModel.createPostApiResponse.status ==
                         Status.LOADING)
@@ -415,39 +365,54 @@ class uploadPhoto extends StatelessWidget {
     return Column(
       children: [
         Divider(color: blackWhite, thickness: 1),
-        CommonUploadTile(
-          title: VariableUtils.uploadAPhoto,
-          sharePostController: sharePostController,
-          uploadType: "image",
-          icon: 'assets/icons/image.png',
+        Padding(
+          padding: EdgeInsets.only(left: 5.w),
+          child: CommonUploadTile(
+            title: VariableUtils.uploadAPhoto,
+            sharePostController: sharePostController,
+            uploadType: "image",
+            icon: 'assets/icons/image.png',
+          ),
         ),
         Divider(color: blackWhite, thickness: 1),
-        CommonUploadTile(
-          sharePostController: sharePostController,
-          uploadType: "video",
-          icon: 'assets/icons/video.png',
-          title: VariableUtils.uploadAVideo,
+        Padding(
+          padding: EdgeInsets.only(left: 5.w),
+          child: CommonUploadTile(
+            sharePostController: sharePostController,
+            uploadType: "video",
+            icon: 'assets/icons/video.png',
+            title: VariableUtils.uploadAVideo,
+          ),
         ),
         Divider(color: blackWhite, thickness: 1),
-        CommonUploadTile(
-          sharePostController: sharePostController,
-          uploadType: 'gif',
-          icon: 'assets/icons/gif.png',
-          title: VariableUtils.uploadAGIF,
+        Padding(
+          padding: EdgeInsets.only(left: 5.w),
+          child: CommonUploadTile(
+            sharePostController: sharePostController,
+            uploadType: 'gif',
+            icon: 'assets/icons/gif.png',
+            title: VariableUtils.uploadAGIF,
+          ),
         ),
         Divider(color: blackWhite, thickness: 1),
-        CommonUploadTile(
-          sharePostController: sharePostController,
-          uploadType: 'template',
-          icon: 'assets/icons/choose.png',
-          title: VariableUtils.chooseATemplate,
+        Padding(
+          padding: EdgeInsets.only(left: 5.w),
+          child: CommonUploadTile(
+            sharePostController: sharePostController,
+            uploadType: 'template',
+            icon: 'assets/icons/choose.png',
+            title: VariableUtils.chooseATemplate,
+          ),
         ),
         Divider(color: blackWhite, thickness: 1),
-        CommonUploadTile(
-          sharePostController: sharePostController,
-          uploadType: 'tag',
-          icon: 'assets/icons/tag.png',
-          title: VariableUtils.tagAFriend,
+        Padding(
+          padding: EdgeInsets.only(left: 5.w),
+          child: CommonUploadTile(
+            sharePostController: sharePostController,
+            uploadType: 'tag',
+            icon: 'assets/icons/tag.png',
+            title: VariableUtils.tagAFriend,
+          ),
         ),
       ],
     );

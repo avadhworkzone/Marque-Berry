@@ -166,19 +166,18 @@ class DetailsScreen extends StatelessWidget {
                                 begin: Alignment.bottomLeft,
                                 end: Alignment.topRight,
                               ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(4.w),
-                              ),
+                              borderRadius: BorderRadius.circular(4.w),
                             )
                           : BoxDecoration(
                               color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(4.w),
                             ),
                       child: Center(
                         child: AdoroText(
-                          'APPLY NOW',
+                          applied == "false" ? 'APPLY NOW' : "APPLIED",
                           color: applied == "false"
                               ? ColorUtils.white
-                              : ColorUtils.black92,
+                              : ColorUtils.green4E,
                           fontWeight: FontWeight.w500,
                           fontSize: 12.sp,
                         ),

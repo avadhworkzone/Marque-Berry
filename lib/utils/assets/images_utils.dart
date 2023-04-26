@@ -17,6 +17,7 @@ class ImagesWidgets {
   static String ellipseImage = '$imagesbasePath/Ellipse.png';
   static String bgProfileImage = '$imagesbasePath/bgProfile.png';
   static String profileimagesImage = '$imagesbasePath/profileimages.png';
+  static String submitButtonImage = '$imagesbasePath/submitButton.png';
 
   static Image logoISImage = Image.asset(logoImage, scale: 3.6.w);
   static Image adoroImage = Image.asset(

@@ -63,12 +63,13 @@ class WithdrawlAmount extends StatelessWidget {
               padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 2.w),
               child: Stack(
                 children: [
-                  const TextField(
+                  TextField(
                     // focusNode: FocusScope.of(context).unfocus(),
+                    style: TextStyle(color: ColorUtils.black),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'withdrawal Amount',
-                        hintStyle: TextStyle(color: Colors.grey)),
+                        hintStyle: TextStyle(color: ColorUtils.grey)),
                   ),
                   Positioned(
                       top: 10.w,

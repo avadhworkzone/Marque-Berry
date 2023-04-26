@@ -63,10 +63,12 @@ class EnterOtpScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   TextField(
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(color: ColorUtils.black),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: '*******',
-                        hintStyle: TextStyle(color: Colors.grey)),
+                        hintStyle: TextStyle(color: ColorUtils.grey)),
                   ),
                   Positioned(
                     top: 10.w,
