@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
@@ -13,11 +14,29 @@ import 'package:socialv/viewModel/connectivity_view_model.dart';
 import '../drawer/campaign_screen.dart';
 import '../sharePost/share_post.dart';
 
-class BottomBar extends StatelessWidget {
+class BottomBar extends StatefulWidget {
   BottomBar({super.key});
 
-  List pageRoute = [Home(), SharePost(), CampaignScreen(), ProfileScreen1()];
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
+  late List pageRoute;
+
   // List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
+
+  @override
+  void initState() {
+    pageRoute = [
+      Home(scaffoldKey: _scaffold),
+      SharePost(),
+      CampaignScreen(),
+      ProfileScreen1()
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +50,11 @@ class BottomBar extends StatelessWidget {
               initState: (_) {},
               builder: (bottomBarController) {
                 return Scaffold(
+                  key: _scaffold,
                   body: pageRoute[bottomBarController.selectedIndex],
+                  drawer: bottomBarController.selectedIndex == 0
+                      ? MyDrawer()
+                      : null,
                   bottomNavigationBar: Container(
                     height: 16.w,
                     width: Get.width,
@@ -52,8 +75,12 @@ class BottomBar extends StatelessWidget {
                           children: [
                             bottombarIcon(
                               index: 0,
-                              img: IconsWidgets.homeImages,
-                              scale: 1.2.w,
+                              img: bottomBarController.selectedIndex == 0
+                                  ? IconsWidgets.selectHomeImage
+                                  : IconsWidgets.homeImages,
+                              scale: bottomBarController.selectedIndex == 0
+                                  ? 5.2.w
+                                  : 1.w,
                               context: context,
                               controller: bottomBarController,
                             ),
@@ -68,17 +95,28 @@ class BottomBar extends StatelessWidget {
                             const Spacer(),
                             bottombarIcon(
                               index: 2,
-                              scale: 1.w,
+                              // scale: 1.w,
                               context: context,
                               controller: bottomBarController,
-                              img: IconsWidgets.medalLightImages,
+                              img: bottomBarController.selectedIndex == 2
+                                  ? IconsWidgets.selectMedalLightImage
+                                  : IconsWidgets.medalLightImages,
+                              scale: bottomBarController.selectedIndex == 2
+                                  ? 4.5.w
+                                  : 1.w,
                             ),
                             const Spacer(),
                             bottombarIcon(
                               index: 3,
-                              scale: 1.w,
+                              // scale: 1.w,
                               context: context,
-                              img: IconsWidgets.userImages,
+                              img: bottomBarController.selectedIndex == 3
+                                  ? IconsWidgets.selectUserImage
+                                  : IconsWidgets.userImages,
+                              scale: bottomBarController.selectedIndex == 3
+                                  ? 5.5.w
+                                  : 1.w,
+
                               controller: bottomBarController,
                             ),
                             // InkWell(
@@ -156,9 +194,9 @@ class BottomBar extends StatelessWidget {
       child: CommonImageScale(
         img: img,
         scale: scale,
-        color: controller.selectedIndex == index
-            ? Theme.of(context).buttonColor
-            : Colors.grey,
+        // color: controller.selectedIndex == index
+        //     ? Theme.of(context).buttonColor
+        //     : Colors.grey,
       ),
     );
   }

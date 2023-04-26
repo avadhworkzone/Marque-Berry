@@ -118,7 +118,7 @@ class EnterOtpScreen extends StatelessWidget {
           ),
           const Spacer(),
           Container(
-            height: 20.h,
+            height: 25.h,
             width: size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(

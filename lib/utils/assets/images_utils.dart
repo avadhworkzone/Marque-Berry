@@ -59,7 +59,7 @@ class IconsWidgets {
   ///APPBAR HOME
   static String drawerImage = '$iconsbasePath/drawer.png';
   static String menuImage = '$iconsbasePath/menu.png';
-  static String messageImage = '$iconsbasePath/message.png';
+  // static String messageImage = '$iconsbasePath/message.png';
   static String searchImage = '$iconsbasePath/search.png';
 
   static String heartImage = '$iconsbasePath/heart.png';
@@ -76,8 +76,13 @@ class IconsWidgets {
   static String referImage = '$iconsbasePath/refer.png';
   static String supportImage = '$iconsbasePath/support.png';
   static String settingImage = '$iconsbasePath/setting.png';
-
   static String homeImages = '$iconsbasePath/home.png';
+  static String messageImage = '$iconsbasePath/message.png';
+  static String selectHomeImage = '$iconsbasePath/selectHome.png';
+  static String selectMedalLightImage = '$iconsbasePath/selectMedalLight.png';
+  static String selectPlusCircleImage = '$iconsbasePath/selectplusCircle.png';
+  static String selectUserImage = '$iconsbasePath/selectUser.png';
+
   static String plusCircleImages = '$iconsbasePath/plus_circle.png';
   static String medalLightImages = '$iconsbasePath/medal_light.png';
   static String userImages = '$iconsbasePath/user.png';

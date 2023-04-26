@@ -56,6 +56,7 @@ class FollowerFollowing extends StatelessWidget {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                 followerFollowingController.changeTabIndex(followingCounter);
                 await followRequestViewModel.getFollowerList();
+
                 await followRequestViewModel.getFollowingList();
               });
             },

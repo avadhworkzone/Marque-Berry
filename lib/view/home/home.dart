@@ -21,7 +21,8 @@ import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
 class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+  Home({Key? key, required this.scaffoldKey}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
@@ -39,23 +40,17 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: greyFABlack32,
-      drawer: MyDrawer(),
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: ColorUtils.transparent,
         automaticallyImplyLeading: false,
-        leading: Builder(
-          builder: (context) {
-            return GestureDetector(
-              onTap: () => Scaffold.of(context).openDrawer(),
-              child: CommonImageScale(
-                img: IconsWidgets.menuImage,
-                scale: 1.w,
-                color: blackWhite,
-              ),
-            );
-          },
-        ),
+        leading: GestureDetector(
+            onTap: () => scaffoldKey.currentState!.openDrawer(),
+            child: CommonImageScale(
+              img: IconsWidgets.menuImage,
+              scale: 1.w,
+              color: blackWhite,
+            )),
         titleSpacing: 0,
         title: CommonImageWidth(
           width: 25.w,
@@ -68,19 +63,19 @@ class Home extends StatelessWidget {
             height: 7.w,
             color: blackWhite,
           ),
-          SizeConfig.sW2,
+          // SizeConfig.sW2,
           GestureDetector(
             onTap: () => Get.to(
               () => MessageList(),
             ),
             child: CommonImageHeightWidth(
               img: IconsWidgets.messageImage,
-              width: 7.w,
-              height: 7.w,
+              width: 8.w,
+              height: 8.w,
               color: blackWhite,
             ),
           ),
-          SizeConfig.sW5,
+          SizeConfig.sW3,
         ],
       ),
       body: GetBuilder<HomeController>(

@@ -24,7 +24,7 @@ class CommonImageScale extends StatelessWidget {
     Key? key,
     required this.img,
     required this.scale,
-    required this.color,
+    this.color,
   }) : super(key: key);
 
   @override

@@ -119,17 +119,18 @@ class WithdrawlAmount extends StatelessWidget {
           ),
           const Spacer(),
           Container(
-            height: 20.h,
+            height: 25.h,
             width: size.width,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      ImagesWidgets.ellipseImage,
-                    ),
-                    fit: BoxFit.fill),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.w),
-                    topRight: Radius.circular(10.w))),
+              image: DecorationImage(
+                  image: AssetImage(
+                    ImagesWidgets.ellipseImage,
+                  ),
+                  fit: BoxFit.fill),
+              // borderRadius: BorderRadius.only(
+              //     topLeft: Radius.circular(10.w),
+              //     topRight: Radius.circular(10.w))
+            ),
             child: Center(
                 child: AdoroText(
               VariableUtils.adoro,

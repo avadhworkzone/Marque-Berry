@@ -46,6 +46,7 @@ dependencies:
   better_player: ^0.0.83
   share_plus: ^6.3.2
   intl: ^0.18.0
+  flutter_svg: ^2.0.5
 
   url_launcher: ^6.0.7
 
