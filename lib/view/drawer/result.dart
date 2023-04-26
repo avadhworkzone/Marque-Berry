@@ -108,10 +108,11 @@ class Result extends StatelessWidget {
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return SafeArea(
         child: Scaffold(
-            backgroundColor: greyFABlack32,
+            backgroundColor: whiteBlack2E,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(16.w),
               child: CommonAppBar(
+                color: ColorUtils.transparent,
                 title: VariableUtils.resultText,
                 ontap: () => Get.back(),
               ),
@@ -128,8 +129,12 @@ class Result extends StatelessWidget {
                         height: 8.h,
                         width: double.maxFinite,
                         decoration: BoxDecoration(
-                            color: whiteBlack2E,
-                            borderRadius: BorderRadius.circular(3.w)),
+                          color: whiteBlack2E,
+                          boxShadow: [
+                            BoxShadow(blurRadius: 2, color: Colors.grey),
+                          ],
+                          borderRadius: BorderRadius.circular(3.w),
+                        ),
                         child: Row(
                           children: [
                             SizeConfig.sW2,
@@ -155,7 +160,7 @@ class Result extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizeConfig.sW7,
+                            SizeConfig.sW13,
                             InkWell(
                               onTap: () => Get.to(ViewResult()),
                               child: Container(

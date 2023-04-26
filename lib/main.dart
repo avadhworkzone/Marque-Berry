@@ -230,6 +230,3 @@ class AppTheme {
     ),
   );
 }
-
-/// tag people in share post
-///

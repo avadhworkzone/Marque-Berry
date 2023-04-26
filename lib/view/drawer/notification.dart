@@ -137,7 +137,7 @@ class NotificationScreen extends StatelessWidget {
               VariableUtils.SuggestedForYou,
               fontSize: 13.sp,
               fontWeight: FontWeightClass.fontWeightBold,
-              color: ColorUtils.black2E,
+              color: blackWhite,
             ),
             SizeConfig.sH4,
             UserNameFollow(),

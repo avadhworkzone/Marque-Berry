@@ -44,9 +44,9 @@ class FollowerFollowing extends StatelessWidget {
       appBar: customAppbar(
         context: context,
         title: title,
-        icon: const Icon(
+        icon: Icon(
           Icons.search_rounded,
-          color: ColorUtils.black2E,
+          color: blackWhite,
         ),
       ),
       body: GetBuilder<FollowRequestViewModel>(
@@ -111,9 +111,9 @@ class FollowTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 15.h,
       width: Get.width,
-      margin: const EdgeInsets.only(bottom: 630),
+      // margin: EdgeInsets.only(bottom: 630),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -125,8 +125,8 @@ class FollowTabBar extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
+          topLeft: Radius.circular(5.w),
+          topRight: Radius.circular(5.w),
         ),
       ),
       child: Column(
@@ -143,8 +143,8 @@ class FollowTabBar extends StatelessWidget {
                         followerFollowingController.changeTabIndex(0);
                       },
                       child: AdoroText(
-                        "FOLLOWING",
-                        fontSize: 13.sp,
+                        "FOLLOWINNG",
+                        fontSize: 11.sp,
                         color: followerFollowingController.currentTabIndex == 0
                             ? ColorUtils.white
                             : Color(0xFF8BAFE7),
@@ -162,8 +162,8 @@ class FollowTabBar extends StatelessWidget {
                         followerFollowingController.changeTabIndex(1);
                       },
                       child: AdoroText(
-                        "FOLLOWER",
-                        fontSize: 13.sp,
+                        "FOLLOWERS",
+                        fontSize: 11.sp,
                         color: followerFollowingController.currentTabIndex == 0
                             ? Color(0xFF8BAFE7)
                             : ColorUtils.white,
