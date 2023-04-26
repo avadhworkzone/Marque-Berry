@@ -118,7 +118,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                       height: 38.w,
                       width: Get.width,
                       margin: EdgeInsets.only(bottom: 9.w),
-                      child:  profileController.coverImagePath != ""
+                      child: profileController.coverImagePath != ""
                           ? Image.file(
                               File(
                                 profileController.coverImagePath,
@@ -129,7 +129,6 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                               'assets/images/bgProfile.png',
                               fit: BoxFit.fill,
                             ),
-
                     ),
                     Positioned(
                       right: 2.w,
@@ -242,7 +241,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizeConfig.sH05,
-                              AdoroText('following', color: black92White),
+                              AdoroText('Following', color: black92White),
                               SizeConfig.sH05,
                               AdoroText(
                                 '86',

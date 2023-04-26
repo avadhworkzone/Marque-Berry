@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/auth/interest.dart';
 import 'package:socialv/view/drawer/campaign_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,14 +14,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:socialv/view/drawer/setting.dart';
 import 'package:socialv/routes/route_constant.dart';
 import 'package:socialv/view/message/chatting.dart';
-import 'package:socialv/view/message/message_list.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/view/profile/following_screen.dart';
 import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
-import 'package:socialv/view/template/download_template_listview.dart';
 import 'package:socialv/view/template/my_template.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/controllers/login_controller.dart';
@@ -97,6 +96,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
+                      return InterestScreen();
                       return SplashScreen();
                     } else {
                       return const NoInterNetConnected();

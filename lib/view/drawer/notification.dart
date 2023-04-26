@@ -141,10 +141,12 @@ class NotificationScreen extends StatelessWidget {
             ),
             SizeConfig.sH4,
             UserNameFollow(),
+            SizeConfig.sH3, UserNameFollow(),
+            SizeConfig.sH3, UserNameFollow(),
             SizeConfig.sH3,
-            UserNameCircleAvatar(),
-            SizeConfig.sH3,
-            UserNameContainer(),
+            // UserNameCircleAvatar(),
+            // SizeConfig.sH3,
+            // UserNameContainer(),
           ],
         ),
       ),
@@ -180,15 +182,15 @@ class Ritikraj extends StatelessWidget {
             ),
             AdoroText(
               VariableUtils.requestedTo,
-              fontSize: 12.sp,
-              fontWeight: FontWeightClass.fontWeightBold,
+              fontSize: 11.sp,
               color: ColorUtils.black92,
+              fontWeight: FontWeightClass.fontWeightBold,
             ),
             AdoroText(
               VariableUtils.followYou,
-              fontSize: 12.sp,
-              fontWeight: FontWeightClass.fontWeightBold,
+              fontSize: 11.sp,
               color: ColorUtils.black92,
+              fontWeight: FontWeightClass.fontWeightBold,
             ),
           ],
         ),
@@ -258,21 +260,20 @@ class UserNameFollow extends StatelessWidget {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CircleAvatar(
           radius: 6.w,
           child: ImagesWidgets.userImage,
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 20.w),
-          child: AdoroText(
-            VariableUtils.Username,
-            fontSize: 12.sp,
-            fontWeight: FontWeightClass.fontWeightBold,
-            color: blackWhite,
-          ),
+        SizeConfig.sW3,
+        AdoroText(
+          VariableUtils.Username,
+          fontSize: 12.sp,
+          fontWeight: FontWeightClass.fontWeightBold,
+          color: blackWhite,
         ),
+        Spacer(),
         Container(
           height: 4.h,
           width: 23.w,

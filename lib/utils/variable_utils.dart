@@ -38,7 +38,7 @@ class VariableUtils {
 
   ///  Login Screen
   static const welcomeBack = "Welcome back!";
-  static const youHaveBeenMissed = "you Have Been Missed For Long Time";
+  static const youHaveBeenMissed = "You have been missed for a long time!";
   static const mobileNumber = "Mobile Number";
   static const welcomeCreator = "Welcome Creator";
   static const joinTheWorld = "Join the world of creators";
@@ -66,7 +66,7 @@ class VariableUtils {
   static const uploadAPhoto = " Upload a photo";
   static const uploadAVideo = " Upload a Video";
   static const uploadAGIF = " Upload a GIF";
-  static const chooseATemplate = " choose a template";
+  static const chooseATemplate = "Choose a template";
   static const tagAFriend = " Tag a friend";
 
   ///TagAPeopleScreen
@@ -124,13 +124,13 @@ class VariableUtils {
   static const verify = "Verify";
 
   /// Notification
-  static const SeeAllRequests = "See all requests (00) ";
+  static const SeeAllRequests = "See all requests (1)";
   static const ritiKraj = "ritikraj2022 ";
   static const requestedTo = "requested to ";
-  static const followYou = " follow you · 2hrs";
+  static const followYou = "follow you · 2hrs";
   static const Confirm = " Confirm ";
   static const Delete = " Delete ";
-  static const SuggestedForYou = "  Suggested for you  ";
+  static const SuggestedForYou = "Suggested for you";
   static const Follow = "  Follow  ";
 
   static const uploadTemplate = "  Upload Template  ";
