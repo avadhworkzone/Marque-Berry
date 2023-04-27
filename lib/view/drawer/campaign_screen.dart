@@ -69,11 +69,14 @@ class _CampaignScreenState extends State<CampaignScreen> {
                   icon: Icon(Icons.arrow_back, color: blackWhite),
                 ),
                 title: TabBar(
-                  labelColor: black92Blue,
-                  unselectedLabelColor: black92White,
+                  labelColor: ColorUtils.blueB9,
+                  unselectedLabelColor: ColorUtils.grey,
                   indicatorColor: ColorUtils.blueB9,
                   tabs: [
-                    Tab(child: Text('Campaign')),
+                    Tab(
+                        child: Text(
+                      'Campaign',
+                    )),
                     Tab(child: Text('Contest'))
                   ],
                 ),

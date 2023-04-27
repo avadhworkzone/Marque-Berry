@@ -15,8 +15,14 @@ class ViewResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return Scaffold(
-      backgroundColor: ColorUtils.greyFA,
+      backgroundColor: whiteBlack2E,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(16.w),
         child: CommonAppBar(
@@ -36,7 +42,10 @@ class ViewResult extends StatelessWidget {
                   height: 6.h,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
-                      color: ColorUtils.white,
+                      color: whiteBlack2E,
+                      boxShadow: [
+                        BoxShadow(blurRadius: 2, color: Colors.grey),
+                      ],
                       borderRadius: BorderRadius.circular(4.w)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,7 +59,7 @@ class ViewResult extends StatelessWidget {
                           VariableUtils.userName,
                           fontSize: 13.sp,
                           fontWeight: FontWeightClass.fontWeightBold,
-                          color: ColorUtils.black,
+                          color: blackWhite,
                         ),
                       ),
                       AdoroText(

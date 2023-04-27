@@ -39,112 +39,113 @@ class Wallet extends StatelessWidget {
                 ),
               ),
               body: Center(
-                child: Column(
-                  children: [
-                    SizeConfig.sH3,
-                    AdoroText(
-                      VariableUtils.deepanshuSarmandal,
-                      fontSize: 14.sp,
-                    ),
-                    SizeConfig.sH2,
-                    CircleAvatar(
-                      radius: 15.w,
-                      child: Stack(
-                        children: [
-                          Image(
-                              image: AssetImage(
-                            ImagesWidgets.circleImage,
-                          )),
-                          // ImagesWidgets.circleImage,
-                          Padding(
-                            padding: EdgeInsets.all(2.w),
-                            child: Image.asset(
-                              ImagesWidgets.profile2Image,
-                            ),
-                          )
-                        ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizeConfig.sH2,
+                      AdoroText(
+                        VariableUtils.deepanshuSarmandal,
+                        fontSize: 14.sp,
                       ),
-                    ),
-                    SizeConfig.sH2,
-                    AdoroText(
-                      VariableUtils.youHaveEarned,
-                      color: blackWhite,
-                      fontWeight: FontWeight.bold,
-                      // color: blackWhite,
-                      fontSize: 12.sp,
-                    ),
-                    SizeConfig.sH1,
-                    AdoroText(
-                      VariableUtils.wallet75,
-                      color: blackWhite,
-                      fontSize: 30.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    SizeConfig.sH2,
-
-                    InkWell(
-                      splashColor: ColorUtils.transparent,
-                      highlightColor: ColorUtils.transparent,
-                      onTap: () => Get.to(WithdrawlAmount()),
-                      child: Container(
-                        height: 5.h,
-                        width: 53.w,
-                        decoration: BoxDecoration(
-
-                            image: DecorationImage(
-                          image: AssetImage(
-                            ImagesWidgets.RectangleImage,
-
-                          ),),
+                      SizeConfig.sH2,
+                      CircleAvatar(
+                        radius: 15.w,
+                        child: Stack(
+                          children: [
+                            Image(
+                                image: AssetImage(
+                              ImagesWidgets.circleImage,
+                            )),
+                            // ImagesWidgets.circleImage,
+                            Padding(
+                              padding: EdgeInsets.all(2.w),
+                              child: Image.asset(
+                                ImagesWidgets.profile2Image,
+                              ),
+                            )
+                          ],
                         ),
-                        child: Center(
-                          child: AdoroText(
-                            VariableUtils.withdrawMoney,
-                            fontSize: 12.sp,
-                            color: ColorUtils.white,
-                            fontWeight: FontWeight.bold,
+                      ),
+                      SizeConfig.sH2,
+                      AdoroText(
+                        VariableUtils.youHaveEarned,
+                        color: blackWhite,
+                        fontWeight: FontWeight.bold,
+                        // color: blackWhite,
+                        fontSize: 12.sp,
+                      ),
+                      SizeConfig.sH1,
+                      AdoroText(
+                        VariableUtils.wallet75,
+                        color: blackWhite,
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      SizeConfig.sH2,
+
+                      InkWell(
+                        splashColor: ColorUtils.transparent,
+                        highlightColor: ColorUtils.transparent,
+                        onTap: () => Get.to(WithdrawlAmount()),
+                        child: Container(
+                          height: 5.h,
+                          width: 53.w,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                ImagesWidgets.RectangleImage,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                            child: AdoroText(
+                              VariableUtils.withdrawMoney,
+                              fontSize: 12.sp,
+                              color: ColorUtils.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
 
-                    // Container(
-                    //   height: 5.h,
-                    //   width: 60.w,
-                    //   decoration: BoxDecoration(
-                    //     gradient: LinearGradient(
-                    //       colors: [
-                    //         ColorUtils.linearGradient1,
-                    //         ColorUtils.linearGradient6,
-                    //         ColorUtils.linearGradient7
-                    //       ],
-                    //       begin: Alignment.topLeft,
-                    //       end: Alignment.bottomRight,
-                    //     ),
-                    //     borderRadius: BorderRadius.all(
-                    //       Radius.circular(8.w),
-                    //     ),
-                    //   ),
-                    //   child: Center(
-                    //     child: AdoroText(
-                    //       VariableUtils.withdrawMoney,
-                    //       color: ColorUtils.white,
-                    //       fontWeight: FontWeight.bold,
-                    //       fontSize: 12.sp,
-                    //     ),
-                    //   ),
-                    // ),
-                    SizeConfig.sH3,
-                    AdoroText(
-                      VariableUtils.withdrawMinimumLimit,
-                      color: blackWhite,
-                    ),
-                    SizeConfig.sH1,
-                    AdoroText(
-                      VariableUtils.cashCoin,
-                      color: blackWhite,
-                    ),
-                  ],
+                      // Container(
+                      //   height: 5.h,
+                      //   width: 60.w,
+                      //   decoration: BoxDecoration(
+                      //     gradient: LinearGradient(
+                      //       colors: [
+                      //         ColorUtils.linearGradient1,
+                      //         ColorUtils.linearGradient6,
+                      //         ColorUtils.linearGradient7
+                      //       ],
+                      //       begin: Alignment.topLeft,
+                      //       end: Alignment.bottomRight,
+                      //     ),
+                      //     borderRadius: BorderRadius.all(
+                      //       Radius.circular(8.w),
+                      //     ),
+                      //   ),
+                      //   child: Center(
+                      //     child: AdoroText(
+                      //       VariableUtils.withdrawMoney,
+                      //       color: ColorUtils.white,
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 12.sp,
+                      //     ),
+                      //   ),
+                      // ),
+                      SizeConfig.sH3,
+                      AdoroText(
+                        VariableUtils.withdrawMinimumLimit,
+                        color: blackWhite,
+                      ),
+                      SizeConfig.sH1,
+                      AdoroText(
+                        VariableUtils.cashCoin,
+                        color: blackWhite,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

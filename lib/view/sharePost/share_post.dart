@@ -81,19 +81,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                               ),
                             ),
                             SizeConfig.sW2,
-                            //
-                            // IconButton(
-                            //   onPressed: () {
-                            //     Get.back();
-                            //     bottomBarController.pageChange(0);
-                            //   },
-                            //   splashRadius: 6.w,
-                            //   icon: Icon(
-                            //     Icons.close,
-                            //     size: 6.w,
-                            //     color: blackWhite,
-                            //   ),
-                            // ),
                             AdoroText(
                               VariableUtils.sharePost,
                               fontSize: 12.sp,
@@ -138,10 +125,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       ),
                                     ),
                                   ),
-                                  SizeConfig.sW4,
+                                  SizeConfig.sW3,
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
                                     children: [
                                       AdoroText(
                                         "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
@@ -152,62 +137,76 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       ),
                                       SizeConfig.sH1,
                                       Container(
-                                        height: 4.h,
-                                        // width: 35.w,
+                                        height: 5.h,
+                                        // width: 40.w,
                                         decoration: BoxDecoration(
                                           color: ColorUtils.white,
                                           borderRadius: BorderRadius.all(
-                                            Radius.circular(8.w),
+                                            Radius.circular(10.w),
                                           ),
                                         ),
-                                        child: Row(
-                                          children: [
-                                            SizeConfig.sW2,
-                                            Icon(
-                                              Icons.add_box_outlined,
-                                              color: ColorUtils.black,
-                                            ),
-                                            SizeConfig.sW2,
-                                            DropdownButton(
-                                              hint: Text(
-                                                dropdownName == ""
-                                                    ? "Category"
-                                                    : dropdownName,
-                                                style: TextStyle(
-                                                  color: ColorUtils.black,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 3.w,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.add_box_outlined,
+                                                color: ColorUtils.black,
                                               ),
-                                              icon: Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color: ColorUtils.black92,
-                                              ),
-                                              items:
-                                                  categoryDataList.map((items) {
-                                                return DropdownMenuItem(
-                                                  value: items.name,
-                                                  child: AdoroText(
-                                                    items.name ?? "",
-                                                    color: blackWhite,
+                                              SizeConfig.sW2,
+                                              DropdownButton(
+                                                underline: SizedBox(),
+                                                hint: Text(
+                                                  dropdownName == ""
+                                                      ? "Category"
+                                                      : dropdownName,
+                                                  style: TextStyle(
+                                                    color: ColorUtils.black,
                                                     fontWeight: FontWeight.bold,
                                                   ),
-                                                );
-                                              }).toList(),
-                                              onChanged: (String? newValue) {
-                                                var index =
-                                                    categoryDataList.firstWhere(
-                                                  (element) =>
-                                                      element.name == newValue,
-                                                );
-                                                setState(() {
-                                                  dropdownName =
-                                                      index.name.toString();
-                                                  dropdownValue =
-                                                      index.id.toString();
-                                                });
-                                              },
-                                            ),
-                                          ],
+                                                ),
+                                                icon: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 1.w,
+                                                      vertical: 2.w),
+                                                  child: Image(
+                                                    image: AssetImage(IconsWidgets
+                                                        .dropdownButtonImage),
+                                                    height: 4.h,
+                                                    width: 4.w,
+                                                  ),
+                                                ),
+                                                items: categoryDataList
+                                                    .map((items) {
+                                                  return DropdownMenuItem(
+                                                    value: items.name,
+                                                    child: AdoroText(
+                                                      items.name ?? "",
+                                                      color: blackWhite,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (String? newValue) {
+                                                  var index = categoryDataList
+                                                      .firstWhere(
+                                                    (element) =>
+                                                        element.name ==
+                                                        newValue,
+                                                  );
+                                                  setState(() {
+                                                    dropdownName =
+                                                        index.name.toString();
+                                                    dropdownValue =
+                                                        index.id.toString();
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ],

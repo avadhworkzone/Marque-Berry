@@ -82,6 +82,7 @@ class IconsWidgets {
   static String selectMedalLightImage = '$iconsbasePath/selectMedalLight.png';
   static String selectPlusCircleImage = '$iconsbasePath/selectplusCircle.png';
   static String selectUserImage = '$iconsbasePath/selectUser.png';
+  static String dropdownButtonImage = '$iconsbasePath/dropdownButton.png';
 
   static String plusCircleImages = '$iconsbasePath/plus_circle.png';
   static String medalLightImages = '$iconsbasePath/medal_light.png';
