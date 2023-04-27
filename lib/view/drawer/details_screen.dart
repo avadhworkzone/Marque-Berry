@@ -116,7 +116,7 @@ class DetailsScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   subtitle: AdoroText(
-                    "${time}",
+                    "$time",
                     color: ColorUtils.black92,
                     fontSize: 12.sp,
                   ),

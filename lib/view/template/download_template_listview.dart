@@ -1,14 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:octo_image/octo_image.dart';
-import 'package:sizer/sizer.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/size_config_utils.dart';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:sizer/sizer.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/utils/app_services/download_image.dart';
+import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import '../../commanWidget/common_appbar.dart';
 
 class DownloadTemplateList extends StatelessWidget {
   final String title;
-
   final dynamic templateList;
 
   DownloadTemplateList({
@@ -17,99 +25,170 @@ class DownloadTemplateList extends StatelessWidget {
     required this.templateList,
   }) : super(key: key);
 
+  DownloadTemplateController downloadTemplateController =
+      Get.find<DownloadTemplateController>();
+
+  ImageDownload imageDownload = ImageDownload();
+
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
-    return Material(
-      child: Column(
-        children: [
-          customAppbar(
-            title: title,
-            context: context,
-            color: ColorUtils.transparent,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: templateList.length,
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(3.w),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.w),
-                    child: Container(
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                        color: whiteBlack2E,
-                        borderRadius: BorderRadius.circular(3.w),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w),
-                        child: Column(
-                          children: [
-                            SizeConfig.sH3,
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(3.w),
-                              child: Container(
-                                height: 75.w,
-                                width: 100.w,
-                                child: OctoImage(
-                                  height: 8.w,
-                                  width: 8.w,
-                                  image: NetworkImage(
-                                    templateList[index].templateUrl,
-                                  ),
-                                  placeholderBuilder: OctoPlaceholder.blurHash(
-                                    'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                                  ),
-                                  errorBuilder: (context, obj, stack) =>
-                                      Image.asset(
-                                    'assets/icons/user.png',
-                                  ),
-                                  fit: BoxFit.cover,
+    return GetBuilder<DownloadTemplateController>(
+      builder: (downloadTemplateController) {
+        return Material(
+          child: Column(
+            children: [
+              customAppbar(
+                title: title,
+                context: context,
+                color: ColorUtils.transparent,
+              ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemCount: templateList.length,
+                      itemBuilder: (context, index) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(3.w),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 4.w, vertical: 2.w),
+                            child: Container(
+                              width: 100.w,
+                              decoration: BoxDecoration(
+                                color: whiteBlack2E,
+                                borderRadius: BorderRadius.circular(3.w),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                child: Column(
+                                  children: [
+                                    SizeConfig.sH3,
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(3.w),
+                                      child: Container(
+                                        height: 75.w,
+                                        width: 100.w,
+                                        child: OctoImage(
+                                          height: 8.w,
+                                          width: 8.w,
+                                          image: NetworkImage(
+                                            templateList[index].templateUrl,
+                                          ),
+                                          placeholderBuilder:
+                                              OctoPlaceholder.blurHash(
+                                            'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                                          ),
+                                          errorBuilder: (context, obj, stack) =>
+                                              Image.asset(
+                                            'assets/icons/user.png',
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SizeConfig.sH1AndHalf,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            var path = await imageDownload
+                                                .tempDownloadImage(
+                                              templateList[index].templateUrl,
+                                            );
+
+                                            Share.shareFiles([path],
+                                                subject: '');
+                                          },
+                                          child: Container(
+                                            height: 13.w,
+                                            width: 27.w,
+                                            child: Image.asset(
+                                              'assets/icons/share_icon_btn.png',
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            imageDownload.getStoragePermission(
+                                              path: templateList[index]
+                                                  .templateUrl,
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 13.w,
+                                            width: 30.w,
+                                            child: Image.asset(
+                                              'assets/icons/submit_icon_btn.png',
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizeConfig.sH1AndHalf,
+                                  ],
                                 ),
                               ),
                             ),
-                            SizeConfig.sH1AndHalf,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 13.w,
-                                  width: 27.w,
-                                  child: Image.asset(
-                                    'assets/icons/share_icon_btn.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Container(
-                                  height: 13.w,
-                                  width: 30.w,
-                                  child: Image.asset(
-                                    'assets/icons/submit_icon_btn.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ],
+                          ),
+                        );
+                      },
+                    ),
+                    if (downloadTemplateController.progress != "0%")
+                      Center(
+                        child: Container(
+                          height: 20.w,
+                          width: 20.w,
+                          decoration: BoxDecoration(
+                            color: ColorUtils.white,
+                            borderRadius: BorderRadius.circular(4.w),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                spreadRadius: 3.0,
+                                offset: const Offset(0, 0),
+                                color: Colors.black26.withOpacity(0.2),
+                              )
+                            ],
+                          ),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: ColorUtils.black,
                             ),
-                            SizeConfig.sH1AndHalf,
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
+  }
+}
+
+class DownloadTemplateController extends GetxController {
+  String progress = "0%";
+
+  void progressDownload(received, total) {
+    progress = "0%";
+    if (total != -1) {
+      logs("progressDownload-------> $received   $total");
+      progress = (received / total * 100).toStringAsFixed(0) + "%";
+      if (progress == "100%") {
+        progress = "0%";
+      }
+      update();
+    }
   }
 }

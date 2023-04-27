@@ -1,7 +1,4 @@
 // ignore_for_file: must_be_immutable
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -10,7 +7,6 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
-import '../../utils/size_config_utils.dart';
 import '../../utils/variable_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -4,7 +4,6 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/view/auth/interest.dart';
 import 'package:socialv/view/drawer/campaign_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,6 +19,7 @@ import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
+import 'package:socialv/view/template/download_template_listview.dart';
 import 'package:socialv/view/template/my_template.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/controllers/login_controller.dart';
@@ -96,7 +96,6 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return InterestScreen();
                       return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
@@ -128,17 +127,20 @@ class _MyAppState extends State<MyApp> {
   ChattingController chattingController = Get.put(ChattingController());
   TemplateController templateController = Get.put(TemplateController());
 
-  ProfileController profileController = Get.put(ProfileController());
   OtpController otpController = Get.put(OtpController());
   HomeController homeController = Get.put(HomeController());
   LoginController loginController = Get.put(LoginController());
   SettingController settingController = Get.put(SettingController());
+  ProfileController profileController = Get.put(ProfileController());
 
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());
-
+  TagAPeopleController tagAPeopleController = Get.put(TagAPeopleController());
   MyTemplateController myTemplateController = Get.put(MyTemplateController());
+
+  DownloadTemplateController downloadTemplateController =
+      Get.put(DownloadTemplateController());
 
   BrowserTemplateController browserTemplateController =
       Get.put(BrowserTemplateController());
@@ -151,8 +153,6 @@ class _MyAppState extends State<MyApp> {
 
   EditProfileController editProfileController =
       Get.put(EditProfileController());
-
-  TagAPeopleController tagAPeopleController = Get.put(TagAPeopleController());
 }
 
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY4MTIwODM3NiwiZXhwIjoxNjgyMDcyMzc2fQ.0ui6YLqzLpSj9hb84ErHGNn55ST0osUYEO-uBH-RdoU

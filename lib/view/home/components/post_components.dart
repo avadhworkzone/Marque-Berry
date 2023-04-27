@@ -25,6 +25,7 @@ class PostComponents extends StatelessWidget {
   String time;
   String title;
   String contentImage;
+  String contentType;
   String commentcounter = '0';
   String profileImage;
 
@@ -43,6 +44,7 @@ class PostComponents extends StatelessWidget {
   PostComponents({
     Key? key,
     required this.homeController,
+    required this.contentType,
     required this.currentTabIndex,
     required this.postid,
     required this.name,
@@ -77,7 +79,7 @@ class PostComponents extends StatelessWidget {
           decoration: BoxDecoration(
             color: whiteBlack2E,
             boxShadow: [
-              BoxShadow(blurRadius: 5, color: Colors.grey),
+              BoxShadow(blurRadius: 8, color: Colors.grey),
             ],
           ),
           child: Column(
@@ -250,6 +252,11 @@ class PostComponents extends StatelessWidget {
                             color: black92White,
                           ),
                     SizeConfig.sH1,
+                    // Text("contentType-----> $contentType"),
+                    // contentType.toLowerCase() == "video" ||
+                    //         contentType.toLowerCase() == "gif"
+                    //     ? Text('Video')
+                    //     :
                     ClipRRect(
                       borderRadius: BorderRadius.circular(2.w),
                       child: Container(
@@ -601,7 +608,6 @@ class LikeWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         disLikePostReqModel.postId = postid.toString();
-        logs(" ============= LIKE WIDGET ${categoryFeedViewModel.likeUnlink}");
         await categoryFeedViewModel.dislikePost(disLikePostReqModel);
         await categoryFeedViewModel.changeLikeUnlike(postid, false);
       },
