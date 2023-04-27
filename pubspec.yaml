@@ -20,6 +20,12 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.0.3
 
+  # permission_handler
+  permission_handler: ^10.2.0
+
+  # path_provider
+  path_provider: ^2.0.14
+
   # sizer :-
   sizer: ^2.0.15
   lottie: ^2.3.1
@@ -49,6 +55,7 @@ dependencies:
   flutter_svg: ^2.0.5
 
   url_launcher: ^6.0.7
+  dio: ^5.1.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +74,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lotties/
+    - assets/bottombar/
 
   fonts:
     - family: Poppins_light

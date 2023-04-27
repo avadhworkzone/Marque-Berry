@@ -4,16 +4,10 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/my_template_res_model.dart';
-import 'package:socialv/model/apiModel/responseModel/trending_template_res_model.dart';
-import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
-import 'package:socialv/view/drawer/template.dart';
 import 'package:socialv/viewModel/template_view_model.dart';
 
 import '../../model/apis/api_response.dart';
-import '../../utils/font_style_utils.dart';
 import '../../utils/tecell_text.dart';
 import 'download_template_listview.dart';
 

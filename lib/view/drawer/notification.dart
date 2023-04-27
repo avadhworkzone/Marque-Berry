@@ -87,12 +87,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../commanWidget/common_appbar.dart';
-import '../../commanWidget/common_image.dart';
-import '../../commanWidget/custom_btn.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/font_style_utils.dart';

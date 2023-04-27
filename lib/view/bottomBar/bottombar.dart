@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_drawer.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
@@ -68,7 +69,7 @@ class _BottomBarState extends State<BottomBar> {
                       ],
                     ),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 13.w),
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
                       child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: Row(
@@ -76,84 +77,37 @@ class _BottomBarState extends State<BottomBar> {
                             bottombarIcon(
                               index: 0,
                               img: bottomBarController.selectedIndex == 0
-                                  ? IconsWidgets.selectHomeImage
-                                  : IconsWidgets.homeImages,
-                              scale: bottomBarController.selectedIndex == 0
-                                  ? 5.2.w
-                                  : 1.w,
+                                  ? 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_home_selected.png'
+                                  : 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_home.png',
                               context: context,
                               controller: bottomBarController,
                             ),
-                            const Spacer(),
+                            // const Spacer(),
                             bottombarIcon(
                               index: 1,
-                              scale: 1.w,
                               context: context,
-                              img: IconsWidgets.plusCircleImages,
+                              img:
+                                  'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_share.png',
                               controller: bottomBarController,
                             ),
-                            const Spacer(),
+                            // const Spacer(),
                             bottombarIcon(
                               index: 2,
-                              // scale: 1.w,
                               context: context,
                               controller: bottomBarController,
                               img: bottomBarController.selectedIndex == 2
-                                  ? IconsWidgets.selectMedalLightImage
-                                  : IconsWidgets.medalLightImages,
-                              scale: bottomBarController.selectedIndex == 2
-                                  ? 4.5.w
-                                  : 1.w,
+                                  ? 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_campaign_selected.png'
+                                  : 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_campaign.png',
                             ),
-                            const Spacer(),
+                            // const Spacer(),
                             bottombarIcon(
                               index: 3,
-                              // scale: 1.w,
                               context: context,
                               img: bottomBarController.selectedIndex == 3
-                                  ? IconsWidgets.selectUserImage
-                                  : IconsWidgets.userImages,
-                              scale: bottomBarController.selectedIndex == 3
-                                  ? 5.5.w
-                                  : 1.w,
-
+                                  ? 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_profile_selected.png'
+                                  : 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_profile.png',
                               controller: bottomBarController,
                             ),
-                            // InkWell(
-                            //   onTap: () => bottomBarController.pageChange(1),
-                            //   child: CommonImageScale(
-                            //     img: IconsWidgets.plusCircleImages,
-                            //     scale: 1.w,
-                            //     color: Theme.of(context)
-                            //         .textTheme
-                            //         .titleSmall!
-                            //         .color,
-                            //   ),
-                            // ),
-                            // const Spacer(),
-                            // InkWell(
-                            //   onTap: () => bottomBarController.pageChange(2),
-                            //   child: CommonImageScale(
-                            //     img: IconsWidgets.medalLightImages,
-                            //     scale: 1.w,
-                            //     color: Theme.of(context)
-                            //         .textTheme
-                            //         .titleSmall!
-                            //         .color,
-                            //   ),
-                            // ),
-                            // const Spacer(),
-                            // InkWell(
-                            //   onTap: () => bottomBarController.pageChange(3),
-                            //   child: CommonImageScale(
-                            //     img: IconsWidgets.userImages,
-                            //     scale: 1.w,
-                            //     color: Theme.of(context)
-                            //         .textTheme
-                            //         .titleSmall!
-                            //         .color,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -175,28 +129,24 @@ class _BottomBarState extends State<BottomBar> {
   Widget bottombarIcon({
     required int index,
     required String img,
-    required double scale,
+    // required double scale,
     required BuildContext context,
     required BottomBarController controller,
   }) {
-    return InkWell(
-      onTap: () {
-        if (index == 1) {
-          Get.to(
-            () => SharePost(),
-            duration: Duration(milliseconds: 500),
-            transition: Transition.leftToRight,
-          );
-        } else {
-          controller.pageChange(index);
-        }
-      },
-      child: CommonImageScale(
-        img: img,
-        scale: scale,
-        // color: controller.selectedIndex == index
-        //     ? Theme.of(context).buttonColor
-        //     : Colors.grey,
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          if (index == 1) {
+            Get.to(
+              () => SharePost(),
+              duration: Duration(milliseconds: 500),
+              transition: Transition.leftToRight,
+            );
+          } else {
+            controller.pageChange(index);
+          }
+        },
+        child: Image.asset(img, scale: 5.w),
       ),
     );
   }

@@ -13,7 +13,6 @@ import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/view/message/message_list.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/view/home/components/tabbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
@@ -45,12 +44,13 @@ class Home extends StatelessWidget {
         backgroundColor: ColorUtils.transparent,
         automaticallyImplyLeading: false,
         leading: GestureDetector(
-            onTap: () => scaffoldKey.currentState!.openDrawer(),
-            child: CommonImageScale(
-              img: IconsWidgets.menuImage,
-              scale: 1.w,
-              color: blackWhite,
-            )),
+          onTap: () => scaffoldKey.currentState!.openDrawer(),
+          child: CommonImageScale(
+            img: IconsWidgets.menuImage,
+            scale: 1.w,
+            color: blackWhite,
+          ),
+        ),
         titleSpacing: 0,
         title: CommonImageWidth(
           width: 25.w,
@@ -160,11 +160,7 @@ class Home extends StatelessWidget {
 
                   return categoryPostList.isEmpty
                       ? Expanded(
-                          child: Center(
-                            child: AdoroText(
-                              "No data available",
-                            ),
-                          ),
+                          child: Center(child: AdoroText("No data available")),
                         )
                       : Expanded(
                           child: Stack(
@@ -183,6 +179,9 @@ class Home extends StatelessWidget {
                                       return categoryIndex.id == null
                                           ? SizedBox()
                                           : PostComponents(
+                                              contentType:
+                                                  categoryIndex.contentType ??
+                                                      "Image",
                                               homeController: homeController,
                                               currentTabIndex: homeController
                                                   .tabCurrentIndex,

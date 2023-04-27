@@ -47,6 +47,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
 
     return WillPopScope(
       onWillPop: () async {
@@ -254,7 +255,10 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                     children: [
                                       if (sharePostController.sourceName ==
                                           "image")
-                                        Center(
+                                        Container(
+                                          height: 55.w,
+                                          width: Get.width,
+                                          color: Colors.red,
                                           child: Image.file(
                                             File(
                                                 sharePostController.sourcePath),
@@ -276,12 +280,31 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       Positioned(
                                         right: 0,
                                         child: IconButton(
-                                          splashRadius: 6.w,
+                                          splashRadius: 2.w,
                                           onPressed: () {
                                             sharePostController
                                                 .clearSourcePath();
                                           },
-                                          icon: Icon(Icons.close),
+                                          icon: Icon(
+                                            Icons.close,
+                                            color: black92White,
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        left: 0,
+                                        bottom: 0,
+                                        child: InkWell(
+                                          highlightColor:
+                                              ColorUtils.transparent,
+                                          splashColor: ColorUtils.transparent,
+                                          onTap: () =>
+                                              Get.to(() => TagAPeople()),
+                                          child: CommonImageScale(
+                                            img: 'assets/icons/tag.png',
+                                            color: black92White,
+                                            scale: 1.2.w,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -291,9 +314,11 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                           ),
                         ),
                         Expanded(child: SizedBox()),
-                        uploadPhoto(
-                          sharePostController: sharePostController,
-                        ),
+                        sharePostController.sourcePath == ""
+                            ? uploadPhoto(
+                                sharePostController: sharePostController,
+                              )
+                            : SizedBox(),
                         SizeConfig.sH2,
                       ],
                     ),

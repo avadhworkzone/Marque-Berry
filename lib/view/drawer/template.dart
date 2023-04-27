@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +21,6 @@ import '../../model/apis/api_response.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
 import '../template/browser_template.dart';
-import '../template/download_template_listview.dart';
 import '../template/trending_template.dart';
 
 class TemplateModel {

@@ -9,10 +9,8 @@ import 'package:socialv/model/apiModel/responseModel/browser_template_res.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
-import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
 import 'package:socialv/viewModel/template_view_model.dart';
 
