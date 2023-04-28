@@ -289,7 +289,7 @@ class PostComponents extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizeConfig.sH2,
+                    SizeConfig.sH3,
                     Row(
                       children: [
                         // categoryFeedViewModel.likeUnlink.containsKey(postid)
@@ -611,10 +611,13 @@ class LikeWidget extends StatelessWidget {
         await categoryFeedViewModel.dislikePost(disLikePostReqModel);
         await categoryFeedViewModel.changeLikeUnlike(postid, false);
       },
-      child: Image.asset(
-        IconsWidgets.heartFilledImage,
-        scale: 1.w,
-        color: Colors.red,
+      child: Padding(
+        padding: EdgeInsets.only(left: 1.w),
+        child: Image.asset(
+          IconsWidgets.heartFilledImage,
+          scale: 1.w,
+          color: Colors.red,
+        ),
       ),
     );
   }
@@ -641,10 +644,13 @@ class UnlikeWidget extends StatelessWidget {
         logs(" =======------ LIKE WIDGET ${categoryFeedViewModel.likeUnlink}");
         await categoryFeedViewModel.likePost(likePostReqModel);
       },
-      child: CommonImageScale(
-        img: IconsWidgets.heartImage,
-        scale: 1.w,
-        color: Theme.of(context).textTheme.titleMedium?.color,
+      child: Padding(
+        padding: EdgeInsets.only(left: 1.w),
+        child: CommonImageScale(
+          img: IconsWidgets.heartImage,
+          scale: 1.w,
+          color: Theme.of(context).textTheme.titleMedium?.color,
+        ),
       ),
     );
   }

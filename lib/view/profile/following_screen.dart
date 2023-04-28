@@ -64,38 +64,33 @@ class FollowerFollowing extends StatelessWidget {
               });
             },
             builder: (followerFollowingController) {
-              return Container(
-                child: Column(
+              return SizedBox(
+                height: Get.height,
+                width: Get.width,
+                child: Stack(
                   children: [
-                    Stack(
-                      children: [
-                        FollowTabBar(
-                          followerFollowingController:
-                              followerFollowingController,
-                        ),
-                        Positioned(
-                          top: 15.w,
-                          child: Container(
-                            height: 100.h,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(8.w),
-                                    topLeft: Radius.circular(8.w)),
-                                color: whiteBlack2E),
-                            child:
-                                followerFollowingController.currentTabIndex == 0
-                                    ? FollowingList(
-                                        followRequestViewModel:
-                                            followRequestViewModel,
-                                      )
-                                    : FollowerList(
-                                        followRequestViewModel:
-                                            followRequestViewModel,
-                                      ),
-                          ),
-                        ),
-                      ],
+                    FollowTabBar(
+                      followerFollowingController: followerFollowingController,
+                    ),
+                    Positioned(
+                      // top: 15.w,
+                      bottom: 0,
+                      child: Container(
+                        height: Get.height - 22.w - 80,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(8.w),
+                                topLeft: Radius.circular(8.w)),
+                            color: whiteBlack2E),
+                        child: followerFollowingController.currentTabIndex == 0
+                            ? FollowingList(
+                                followRequestViewModel: followRequestViewModel,
+                              )
+                            : FollowerList(
+                                followRequestViewModel: followRequestViewModel,
+                              ),
+                      ),
                     ),
                   ],
                 ),
@@ -116,9 +111,9 @@ class FollowTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 14.h,
       width: Get.width,
-      margin: EdgeInsets.only(bottom: 130.6.w),
+      height: 22.w,
+      padding: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -134,50 +129,43 @@ class FollowTabBar extends StatelessWidget {
           topRight: Radius.circular(5.w),
         ),
       ),
-      child: Column(
+      child: Row(
         children: [
-          Container(
-            height: 18.w,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: Get.width / 2,
-                  child: Center(
-                    child: InkWell(
-                      onTap: () {
-                        followerFollowingController.changeTabIndex(0);
-                      },
-                      child: AdoroText(
-                        "FOLLOWINNG",
-                        fontSize: 11.sp,
-                        color: followerFollowingController.currentTabIndex == 0
-                            ? ColorUtils.white
-                            : Color(0xFF8BAFE7),
-                        fontWeight: FontWeightClass.fontWeight600,
-                      ),
-                    ),
-                  ),
+          SizedBox(
+            width: Get.width / 2,
+            child: Center(
+              child: InkWell(
+                onTap: () {
+                  followerFollowingController.changeTabIndex(0);
+                },
+                child: AdoroText(
+                  "FOLLOWINNG",
+                  fontSize: 11.sp,
+                  color: followerFollowingController.currentTabIndex == 0
+                      ? ColorUtils.white
+                      : Color(0xFF8BAFE7),
+                  fontWeight: FontWeightClass.fontWeight600,
                 ),
-                Spacer(),
-                SizedBox(
-                  width: Get.width / 2,
-                  child: Center(
-                    child: InkWell(
-                      onTap: () {
-                        followerFollowingController.changeTabIndex(1);
-                      },
-                      child: AdoroText(
-                        "FOLLOWERS",
-                        fontSize: 11.sp,
-                        color: followerFollowingController.currentTabIndex == 0
-                            ? Color(0xFF8BAFE7)
-                            : ColorUtils.white,
-                        fontWeight: FontWeightClass.fontWeight600,
-                      ),
-                    ),
-                  ),
+              ),
+            ),
+          ),
+          Spacer(),
+          SizedBox(
+            width: Get.width / 2,
+            child: Center(
+              child: InkWell(
+                onTap: () {
+                  followerFollowingController.changeTabIndex(1);
+                },
+                child: AdoroText(
+                  "FOLLOWERS",
+                  fontSize: 11.sp,
+                  color: followerFollowingController.currentTabIndex == 0
+                      ? Color(0xFF8BAFE7)
+                      : ColorUtils.white,
+                  fontWeight: FontWeightClass.fontWeight600,
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -221,15 +209,8 @@ class FollowerList extends StatelessWidget {
       }
 
       if (getFollowerListResModel.data!.isEmpty) {
-        return Column(
-          children: [
-            Container(
-              height: 75.h,
-              child: Center(
-                child: AdoroText("No follower", color: blackWhite),
-              ),
-            ),
-          ],
+        return Center(
+          child: AdoroText("No follower", color: blackWhite),
         );
       }
 
@@ -345,18 +326,11 @@ class FollowingList extends StatelessWidget {
       }
 
       if (getFollowerListResModel.data!.isEmpty) {
-        return Column(
-          children: [
-            Container(
-              height: 75.h,
-              child: Center(
-                child: AdoroText(
-                  "No following",
-                  color: blackWhite,
-                ),
-              ),
-            ),
-          ],
+        return Center(
+          child: AdoroText(
+            "No following",
+            color: blackWhite,
+          ),
         );
       }
 

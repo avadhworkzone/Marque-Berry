@@ -84,7 +84,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                             SizeConfig.sW2,
                             AdoroText(
                               VariableUtils.sharePost,
-                              fontSize: 12.sp,
+                              fontSize: 13.sp,
                               fontWeight: FontWeightClass.fontWeightBold,
                               color: blackWhite,
                             ),
@@ -128,13 +128,18 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                   ),
                                   SizeConfig.sW3,
                                   Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      AdoroText(
-                                        "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
-                                        color: blackWhite,
-                                        fontSize: 15.sp,
-                                        fontWeight:
-                                            FontWeightClass.fontWeightBold,
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 2.w),
+                                        child: AdoroText(
+                                          "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
+                                          color: blackWhite,
+                                          fontSize: 15.sp,
+                                          fontWeight:
+                                              FontWeightClass.fontWeightBold,
+                                        ),
                                       ),
                                       SizeConfig.sH1,
                                       Container(
