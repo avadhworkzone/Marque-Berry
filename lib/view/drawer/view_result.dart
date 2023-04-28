@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 
@@ -15,11 +14,8 @@ class ViewResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return Scaffold(
       backgroundColor: whiteBlack2E,
@@ -27,7 +23,7 @@ class ViewResult extends StatelessWidget {
         preferredSize: Size.fromHeight(16.w),
         child: CommonAppBar(
           title: VariableUtils.viewResult,
-          ontap: () => Get.back(),
+          onTap: () => Get.back(),
         ),
       ),
       body: ListView.builder(

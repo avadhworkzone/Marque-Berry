@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -145,11 +147,13 @@ class InterestScreen extends StatelessWidget {
                                                 progress.cumulativeBytesLoaded /
                                                     expectedBytes;
                                           }
-                                          return Padding(
-                                            padding: EdgeInsets.all(8.w),
-                                            child: CircularProgressIndicator(
-                                              value: value,
-                                              color: blackWhite,
+                                          return Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.w),
+                                              child: CircularProgressIndicator(
+                                                value: value,
+                                                color: blackWhite,
+                                              ),
                                             ),
                                           );
                                         },

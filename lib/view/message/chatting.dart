@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:better_player/better_player.dart';
@@ -53,12 +55,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+
     return WillPopScope(
       onWillPop: () {
         seenOldMessage();
@@ -105,12 +103,12 @@ class _ChattingScreenState extends State<ChattingScreen> {
                   fontSize: 15.sp,
                   fontWeight: FontWeightClass.fontWeight600,
                 ),
-                AdoroText(
-                  "2H",
-                  fontSize: 15.sp,
-                  color: greyFABlack32,
-                  fontWeight: FontWeightClass.fontWeight600,
-                ),
+                // AdoroText(
+                //   "2H",
+                //   fontSize: 15.sp,
+                //   color: greyFABlack32,
+                //   fontWeight: FontWeightClass.fontWeight600,
+                // ),
               ],
             ),
           ),
@@ -238,7 +236,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
               return SizedBox();
             }),
             // Image.file(File(chattingController._sourcePath)),
-            TextFormWidget(
+            textFormWidget(
               chattingController: chattingController,
               color: blackWhite,
               context: context,
@@ -249,7 +247,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
     );
   }
 
-  Widget TextFormWidget({
+  Widget textFormWidget({
     Color? color,
     required ChattingController chattingController,
     required BuildContext context,
@@ -257,8 +255,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
     Color greyFABlack32 = Theme.of(context).cardColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return Container(
       height: 16.w,
@@ -467,12 +463,6 @@ class LeftImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
-
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Column(
@@ -679,7 +669,7 @@ class RightImageWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              leftRightSideUserImage(sImage: sImage),
+              LeftRightSideUserImage(sImage: sImage),
             ],
           ),
           SizeConfig.sH1AndHalf,
@@ -779,7 +769,7 @@ class TempImageWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              leftRightSideUserImage(sImage: sImage),
+              LeftRightSideUserImage(sImage: sImage),
             ],
           ),
           SizeConfig.sH1AndHalf,
@@ -789,8 +779,8 @@ class TempImageWidget extends StatelessWidget {
   }
 }
 
-class leftRightSideUserImage extends StatelessWidget {
-  const leftRightSideUserImage({
+class LeftRightSideUserImage extends StatelessWidget {
+  const LeftRightSideUserImage({
     super.key,
     required this.sImage,
   });
@@ -799,12 +789,6 @@ class leftRightSideUserImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.w),
       child: Container(

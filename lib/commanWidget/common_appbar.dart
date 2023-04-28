@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -10,12 +12,12 @@ class CommonAppBar extends StatelessWidget {
 
   Color? color;
 
-  OnTab ontap;
+  OnTab onTap;
   CommonAppBar({
     Key? key,
     this.title,
     this.color,
-    required this.ontap,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class CommonAppBar extends StatelessWidget {
       backgroundColor: color ?? whiteBlack,
       leading: IconButton(
         splashRadius: 7.w,
-        onPressed: () => ontap(),
+        onPressed: () => onTap(),
         icon: Icon(Icons.arrow_back, color: blackWhite),
       ),
       title: AdoroText(

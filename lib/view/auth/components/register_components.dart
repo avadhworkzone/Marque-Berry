@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -22,7 +24,6 @@ class RegisterComponents extends StatelessWidget {
 
   final registerKey = GlobalKey<FormState>();
 
-  // var fullName = TextEditingController();
   var username = TextEditingController();
   var registerContact = TextEditingController();
 

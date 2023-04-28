@@ -38,17 +38,13 @@ class _UploadTemplateState extends State<UploadTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(16.w),
         child: CommonAppBar(
           title: VariableUtils.uploadTemplate,
-          ontap: () => Get.back(),
+          onTap: () => Get.back(),
         ),
       ),
       body: Column(

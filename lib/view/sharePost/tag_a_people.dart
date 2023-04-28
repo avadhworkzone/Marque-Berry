@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
@@ -30,11 +32,7 @@ class TagAPeople extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return GetBuilder<TagAPeopleController>(
       initState: (_) {},

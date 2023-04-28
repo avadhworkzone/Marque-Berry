@@ -3,8 +3,6 @@ import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/model/apiService/api_service.dart';
 import 'package:socialv/model/apiService/base_service.dart';
 
-import '../apiModel/requestModel/upload_template_req_model.dart';
-
 class TrendingTemplateRepo extends BaseService {
   Future<TrendingTemplateResModel> trendingTemplate() async {
     Map<String, dynamic> body = {};

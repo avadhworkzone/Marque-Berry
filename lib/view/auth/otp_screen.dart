@@ -9,7 +9,6 @@ import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/controllers/validate_otp_controller.dart';
 import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/otp_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/routes/route_helper.dart';
@@ -199,8 +198,13 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     key: PreferenceUtils.fullname,
                                     value: response.data?.fullName ?? "",
                                   );
+
                                   await PreferenceUtils.setString(
-                                    key: PreferenceUtils.profile,
+                                    key: PreferenceUtils.coverImage,
+                                    value: response.data?.coverPhoto ?? "",
+                                  );
+                                  await PreferenceUtils.setString(
+                                    key: PreferenceUtils.profileImage,
                                     value: response.data?.image ?? "",
                                   );
 

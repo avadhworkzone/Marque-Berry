@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -197,6 +199,9 @@ class Setting extends StatelessWidget {
                             key: PreferenceUtils.login,
                             value: 0,
                           );
+
+                          await PreferenceUtils.setCategory([]);
+                          // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY4MjY2MTM0OCwiZXhwIjoxNjgzNTI1MzQ4fQ.3-t01FgVF4oat6okVX4LbqlLUkKQYLVq6Xmv2ZMn73U
                           await PreferenceUtils.setWelcome(0);
                           Get.offAll(() => LoginScreen());
                         },

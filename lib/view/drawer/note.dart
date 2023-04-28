@@ -37,7 +37,7 @@ class Note extends StatelessWidget {
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
                 child: CommonAppBar(
-                    title: VariableUtils.note, ontap: () => Get.back()),
+                    title: VariableUtils.note, onTap: () => Get.back()),
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 2.w),

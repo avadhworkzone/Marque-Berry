@@ -21,7 +21,7 @@ class ContestResult extends StatelessWidget {
               preferredSize: Size.fromHeight(16.w),
               child: CommonAppBar(
                 title: VariableUtils.viewResult,
-                ontap: () => Get.back(),
+                onTap: () => Get.back(),
               ),
             ),
             body: ListView.builder(

@@ -168,7 +168,7 @@ class CategoryFeedViewModel extends GetxController {
     update();
   }
 
-  /// ===================== POST COMMENTS ========================
+  /// ===================== REPORT POST ========================
 
   Future<void> reportPost(ReportPostReqModel reqModel) async {
     logs('loading..');

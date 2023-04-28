@@ -84,7 +84,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
@@ -101,11 +100,8 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
     return SafeArea(
         child: Scaffold(
             backgroundColor: whiteBlack2E,
@@ -114,7 +110,7 @@ class Result extends StatelessWidget {
               child: CommonAppBar(
                 color: ColorUtils.transparent,
                 title: VariableUtils.resultText,
-                ontap: () => Get.back(),
+                onTap: () => Get.back(),
               ),
             ),
             body: ListView.builder(

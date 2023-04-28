@@ -20,8 +20,6 @@ class EditComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     return Container(
       height: 50.h,
       width: 90.w,

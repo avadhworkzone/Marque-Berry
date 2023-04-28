@@ -1,7 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
@@ -38,7 +39,7 @@ class ReferAndEarn extends StatelessWidget {
                 preferredSize: Size.fromHeight(16.w),
                 child: CommonAppBar(
                   title: VariableUtils.referEarnText,
-                  ontap: () => Get.back(),
+                  onTap: () => Get.back(),
                 ),
               ),
               body: Column(
@@ -170,7 +171,7 @@ class ReferAndEarn extends StatelessWidget {
                     child: Container(
                       width: 35.w,
                       child: Image.asset(
-                        IconsWidgets.share_btnImages,
+                        IconsWidgets.shareBtnImages,
                       ),
                     ),
                   ),

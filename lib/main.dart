@@ -171,7 +171,7 @@ class AppTheme {
     //   brightness: Brightness.light,
     //   iconTheme: IconThemeData(color: ColorUtils.black),
     // ),
-    buttonColor: ColorUtils.black,
+
     colorScheme: const ColorScheme.light(
       primary: ColorUtils.white,
       onPrimary: ColorUtils.white,
@@ -200,7 +200,6 @@ class AppTheme {
     scaffoldBackgroundColor: ColorUtils.black2E,
 
     canvasColor: ColorUtils.black2E,
-    buttonColor: ColorUtils.white,
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),

@@ -6,9 +6,18 @@ import 'package:socialv/model/apiModel/responseModel/create_post_res_model.dart'
 
 class CreatePostRepo extends BaseService {
   Future<CreatePostResModel> createPost(CreatePostReqModel reqModel) async {
+    Map<String, dynamic> body = reqModel.toJson();
+
+    // logs("IF PAHELA ----------->    $body");
+
+    if (reqModel.tag == '' || reqModel.tag == null) {
+      body.removeWhere((key, value) => key == 'tag');
+    }
+    // logs("IF PACHI ----------->    $body");
+
     var response = await ApiService().getResponse(
       apiType: APIType.aPost,
-      body: reqModel.toJson(),
+      body: body,
       url: '$baseURL$createPostURL',
       createPostData: true,
     );

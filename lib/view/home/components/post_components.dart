@@ -1,10 +1,16 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/report_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
@@ -13,15 +19,18 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/typedef_utils.dart';
 import 'package:socialv/view/home/comment_components/like_screen.dart';
 import 'package:socialv/view/home/comments.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 
+import '../../../utils/variable_utils.dart';
+
 class PostComponents extends StatelessWidget {
   String likecounter;
 
-  String name;
+  String userName;
   String time;
   String title;
   String contentImage;
@@ -47,7 +56,7 @@ class PostComponents extends StatelessWidget {
     required this.contentType,
     required this.currentTabIndex,
     required this.postid,
-    required this.name,
+    required this.userName,
     required this.time,
     required this.title,
     required this.likeByMe,
@@ -65,7 +74,6 @@ class PostComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyBlack2E = Theme.of(context).cardColor;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
@@ -86,9 +94,9 @@ class PostComponents extends StatelessWidget {
             children: [
               SizeConfig.sH2,
               ListTile(
-                title: (name) != ""
+                title: userName != ""
                     ? AdoroText(
-                        name,
+                        userName,
                         maxLines: 1,
                         fontSize: 12.sp,
                         color: Theme.of(context).textTheme.titleSmall!.color,
@@ -138,104 +146,16 @@ class PostComponents extends StatelessWidget {
                 ),
                 trailing: IconButton(
                   onPressed: () {
-                    Get.bottomSheet(
-                      Container(
-                        decoration: BoxDecoration(
-                          color: ColorUtils.white,
-                          borderRadius: BorderRadius.circular(5.w),
-                        ),
-                        height: 70.w,
-                        width: 100.w,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 5.w, vertical: 5.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 0.5.w,
-                                    width: 40.w,
-                                    color: ColorUtils.black92,
-                                  ),
-                                ],
-                              ),
-                              SizeConfig.sH3,
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/share.png",
-                                    scale: 1.5.w,
-                                    color: ColorUtils.black,
-                                  ),
-                                  SizeConfig.sW3,
-                                  AdoroText(
-                                    "Share via",
-                                    color: ColorUtils.black92,
-                                    fontSize: 14.sp,
-                                  ),
-                                ],
-                              ),
-                              SizeConfig.sH3,
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/link.png",
-                                    scale: 1.2.w,
-                                    color: ColorUtils.black,
-                                  ),
-                                  SizeConfig.sW3,
-                                  AdoroText(
-                                    "Copy link",
-                                    color: ColorUtils.black92,
-                                    fontSize: 13.sp,
-                                  ),
-                                ],
-                              ),
-                              SizeConfig.sH3,
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/unfollow.png",
-                                    scale: 1.2.w,
-                                    color: ColorUtils.black,
-                                  ),
-                                  SizeConfig.sW3,
-                                  AdoroText(
-                                    "Unfollow",
-                                    color: ColorUtils.black92,
-                                    fontSize: 13.sp,
-                                  ),
-                                ],
-                              ),
-                              SizeConfig.sH3,
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/report.png",
-                                    scale: 1.3.w,
-                                    color: ColorUtils.black,
-                                  ),
-                                  SizeConfig.sW3,
-                                  AdoroText(
-                                    "Report post",
-                                    color: ColorUtils.black92,
-                                    fontSize: 13.sp,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    dotDialog(
+                      postIdArg: (postid ?? 0),
+                      categoryFeedViewModel: categoryFeedViewModel,
                     );
                   },
                   icon: Icon(Icons.more_horiz, color: black92White),
                 ),
               ),
+              // Text(contentType.toString()),
+              // if(contentType)
               Padding(
                 padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
                 child: Column(
@@ -482,7 +402,91 @@ class PostComponents extends StatelessWidget {
     );
   }
 
-  LikeBottom({
+  ReportPostReqModel reportPostReqModel = ReportPostReqModel();
+
+  dotDialog({
+    required int postIdArg,
+    required CategoryFeedViewModel categoryFeedViewModel,
+  }) {
+    Get.bottomSheet(
+      Container(
+        decoration: BoxDecoration(
+          color: ColorUtils.white,
+          borderRadius: BorderRadius.horizontal(
+            left: Radius.circular(5.w),
+            right: Radius.circular(5.w),
+          ),
+        ),
+        height: 70.w,
+        width: 100.w,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: 0.5.w,
+                    width: 40.w,
+                    color: ColorUtils.black92,
+                  ),
+                ],
+              ),
+              SizeConfig.sH3,
+              bottomComponents(
+                image: 'assets/icons/share.png',
+                text: 'Share via',
+                onTap: () {},
+              ),
+              SizeConfig.sH3,
+              bottomComponents(
+                image: 'assets/icons/link.png',
+                text: 'Copy link',
+                onTap: () {},
+              ),
+              SizeConfig.sH3,
+              bottomComponents(
+                image: 'assets/icons/unfollow.png',
+                text: 'Unfollow',
+                onTap: () {},
+              ),
+              SizeConfig.sH3,
+              bottomComponents(
+                image: "assets/icons/report.png",
+                text: 'Report post',
+                onTap: () async {
+                  reportPostReqModel.postId = postIdArg.toString();
+                  await categoryFeedViewModel.reportPost(reportPostReqModel);
+
+                  if (categoryFeedViewModel.reportPostApiResponse.status ==
+                      Status.COMPLETE) {
+                    CommonStatusMsgResModel response =
+                        categoryFeedViewModel.reportPostApiResponse.data;
+
+                    if (response.status.toString() == VariableUtils.status200) {
+                      homeController.reportSuccess(true);
+                      homeController.addReport(postIdArg);
+                    } else {
+                      showSnackBar(
+                        message:
+                            response.msg ?? VariableUtils.somethingWentWrong,
+                      );
+                    }
+                    Get.back();
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  likeBottom({
     required List<LikedByPeople>? likeProfile,
     required Color? blackWhite,
   }) {
@@ -586,6 +590,24 @@ class PostComponents extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget bottomComponents(
+      {required String text, required String image, required OnTab onTap}) {
+    return InkWell(
+      child: Row(
+        children: [
+          Image.asset(
+            image,
+            // "assets/icons/share.png",
+            scale: 1.5.w,
+            color: ColorUtils.black,
+          ),
+          SizeConfig.sW3,
+          AdoroText(text, color: ColorUtils.black92, fontSize: 14.sp),
+        ],
       ),
     );
   }

@@ -14,7 +14,8 @@ class VariableUtils {
   static const naError = "N/A";
 
   ///
-  static const noInternetText = "Please check your internet \nconnection";
+  static const noInternetText = "No internet connection";
+  static const noInternetDescText = "Please check your internet \nconnection";
 
   ///  VIREN VAR ///
   ///DRAWER

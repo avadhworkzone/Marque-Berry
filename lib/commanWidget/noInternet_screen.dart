@@ -11,6 +11,7 @@ class NoInterNetConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
@@ -21,15 +22,15 @@ class NoInterNetConnected extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AdoroText(
-                'No internet connection',
+                VariableUtils.noInternetText,
                 fontSize: 20.sp,
-                color: Theme.of(context).buttonColor,
+                color: blackWhite,
               ),
               SizeConfig.sH3,
               AdoroText(
-                VariableUtils.noInternetText,
+                VariableUtils.noInternetDescText,
                 fontSize: 15.sp,
-                color: Theme.of(context).buttonColor,
+                color: blackWhite,
                 textAlign: TextAlign.center,
               )
             ],

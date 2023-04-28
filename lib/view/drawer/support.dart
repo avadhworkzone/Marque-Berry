@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -34,7 +36,7 @@ class Support extends StatelessWidget {
                 preferredSize: Size.fromHeight(8.h),
                 child: CommonAppBar(
                   title: VariableUtils.supportText,
-                  ontap: () => Get.back(),
+                  onTap: () => Get.back(),
                 ),
               ),
               body: GestureDetector(
@@ -283,7 +285,7 @@ class Support extends StatelessWidget {
                                     height: 13.w,
                                     // margin: EdgeInsets.only(bottom: 8.w),
                                     child: Image.asset(
-                                      IconsWidgets.submit_btnImages,
+                                      IconsWidgets.submitBtnImages,
                                     ),
                                   ),
                                   //SizeConfig.sH3,

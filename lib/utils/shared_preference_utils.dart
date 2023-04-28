@@ -15,7 +15,8 @@ class PreferenceUtils {
 
   static String username = 'username';
   static String fullname = 'fullname';
-  static String profile = 'profile';
+  static String profileImage = 'profileImage';
+  static String coverImage = 'coverImage';
 
   /// SET STRING PREFERENCE
   static Future setString({

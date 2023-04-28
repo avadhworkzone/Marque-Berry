@@ -1,5 +1,5 @@
 class UpdateProfilePicResModel {
-  String? status;
+  int? status;
   String? message;
 
   UpdateProfilePicResModel({this.status, this.message});

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_image.dart';

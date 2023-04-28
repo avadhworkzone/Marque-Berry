@@ -1,4 +1,4 @@
-import 'dart:math';
+// ignore_for_file: must_be_immutable
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -42,11 +42,6 @@ class _CampaignScreenState extends State<CampaignScreen> {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
-    Color greyFABlack32 = Theme.of(context).cardColor;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
-    Color? blueB9White = Theme.of(context).textTheme.displaySmall?.color;
-
     return GetBuilder<CampaignScreenController>(
         builder: (campaignScreenController) {
       return GetBuilder<CampaignContestViewModel>(
@@ -58,15 +53,13 @@ class _CampaignScreenState extends State<CampaignScreen> {
             length: 2,
             child: Scaffold(
               appBar: AppBar(
-                automaticallyImplyLeading: false,
                 elevation: 0,
                 backgroundColor: whiteBlack2E,
-                leading: IconButton(
-                  splashRadius: 6.w,
-                  onPressed: () {
-                    bottomBarController.pageChange(0);
-                  },
-                  icon: Icon(Icons.arrow_back, color: blackWhite),
+                automaticallyImplyLeading: false,
+                titleSpacing: 0,
+                leading: InkWell(
+                  onTap: () => bottomBarController.pageChange(0),
+                  child: Icon(Icons.arrow_back, color: blackWhite),
                 ),
                 title: TabBar(
                   labelColor: ColorUtils.blueB9,
@@ -74,10 +67,21 @@ class _CampaignScreenState extends State<CampaignScreen> {
                   indicatorColor: ColorUtils.blueB9,
                   tabs: [
                     Tab(
-                        child: Text(
-                      'Campaign',
-                    )),
-                    Tab(child: Text('Contest'))
+                      child: Text(
+                        'Campaign',
+                        style: TextStyle(
+                          fontWeight: FontWeightClass.fontWeight700,
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        'Contest',
+                        style: TextStyle(
+                          fontWeight: FontWeightClass.fontWeight700,
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 actions: [SizeConfig.sW9],

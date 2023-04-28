@@ -13,18 +13,14 @@ class EnterOtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
-        child: CommonAppBar(title: '', ontap: () => Get.back()),
+        child: CommonAppBar(title: '', onTap: () => Get.back()),
       ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +100,7 @@ class EnterOtpScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
-                      ImagesWidgets.RectangleImage,
+                      ImagesWidgets.rectangleImage,
                     ),
                     fit: BoxFit.cover),
                 borderRadius: BorderRadius.all(Radius.circular(5.w))),

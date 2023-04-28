@@ -6,8 +6,6 @@ import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/commanWidget/common_image.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
@@ -38,6 +36,8 @@ class _BottomBarState extends State<BottomBar> {
     ];
     super.initState();
   }
+
+  String bottomPath = "assets/bottombar/";
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +77,8 @@ class _BottomBarState extends State<BottomBar> {
                             bottombarIcon(
                               index: 0,
                               img: bottomBarController.selectedIndex == 0
-                                  ? 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_home_selected.png'
-                                  : 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_home.png',
+                                  ? '$bottomPath${PreferenceUtils.getString(key: 'mode')}_home_selected.png'
+                                  : '$bottomPath${PreferenceUtils.getString(key: 'mode')}_home.png',
                               context: context,
                               controller: bottomBarController,
                             ),
@@ -87,7 +87,7 @@ class _BottomBarState extends State<BottomBar> {
                               index: 1,
                               context: context,
                               img:
-                                  'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_share.png',
+                                  '$bottomPath${PreferenceUtils.getString(key: 'mode')}_share.png',
                               controller: bottomBarController,
                             ),
                             // const Spacer(),
@@ -96,16 +96,16 @@ class _BottomBarState extends State<BottomBar> {
                               context: context,
                               controller: bottomBarController,
                               img: bottomBarController.selectedIndex == 2
-                                  ? 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_campaign_selected.png'
-                                  : 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_campaign.png',
+                                  ? '$bottomPath${PreferenceUtils.getString(key: 'mode')}_campaign_selected.png'
+                                  : '$bottomPath${PreferenceUtils.getString(key: 'mode')}_campaign.png',
                             ),
                             // const Spacer(),
                             bottombarIcon(
                               index: 3,
                               context: context,
                               img: bottomBarController.selectedIndex == 3
-                                  ? 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_profile_selected.png'
-                                  : 'assets/bottombar/${PreferenceUtils.getString(key: 'mode')}_profile.png',
+                                  ? '$bottomPath${PreferenceUtils.getString(key: 'mode')}_profile_selected.png'
+                                  : '$bottomPath${PreferenceUtils.getString(key: 'mode')}_profile.png',
                               controller: bottomBarController,
                             ),
                           ],

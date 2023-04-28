@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/typedef_utils.dart';
@@ -18,6 +19,8 @@ import 'package:socialv/view/drawer/support.dart';
 import 'package:socialv/view/drawer/template.dart';
 import 'package:socialv/view/drawer/wallet.dart';
 
+import '../utils/app_services/common_profile_image.dart';
+
 class MyDrawer extends StatelessWidget {
   MyDrawer({Key? key}) : super(key: key);
 
@@ -27,8 +30,6 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return SafeArea(
       child: Drawer(
@@ -46,13 +47,11 @@ class MyDrawer extends StatelessWidget {
                 ),
               ),
               ListTile(
-                onTap: () {
-                  bottomBar.pageChange(3);
-                },
-                leading: CircleAvatar(
-                  radius: 10.w,
-                  backgroundColor: Colors.grey[400],
-                  backgroundImage: AssetImage("assets/icons/user1.png"),
+                splashColor: ColorUtils.transparent,
+                onTap: () => bottomBar.pageChange(3),
+                leading: CommonProfileImage(
+                  heightWidth: 16.w,
+                  bgColor: Colors.grey[200],
                 ),
                 title: AdoroText(
                   PreferenceUtils.getString(key: 'username'),

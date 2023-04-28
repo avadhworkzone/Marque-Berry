@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -12,11 +14,10 @@ import 'package:socialv/model/apiModel/requestModel/update_cover_pic_req_model.d
 import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
-import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/update_user_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/app_services/common_profile_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -52,9 +53,6 @@ class EditProfile extends StatelessWidget {
   EditProfileController editProfileController =
       Get.find<EditProfileController>();
 
-  String profilePic = '';
-  String coverPic = '';
-
   getUserProfile() async {
     await profileViewModel.getUserProfile();
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
@@ -62,13 +60,22 @@ class EditProfile extends StatelessWidget {
           profileViewModel.getUserProfileApiResponse.data;
 
       var profileData = response.data?[0];
-      profilePic = profileData?.image ?? "";
-      coverPic = profileData?.coverPhoto ?? "";
 
       PreferenceUtils.setString(
-          key: 'username', value: profileData?.username ?? "");
+          key: PreferenceUtils.username, value: profileData?.username ?? "");
+
       PreferenceUtils.setString(
-          key: 'fullname', value: profileData?.fullName ?? "");
+          key: PreferenceUtils.fullname, value: profileData?.fullName ?? "");
+
+      PreferenceUtils.setString(
+        key: PreferenceUtils.profileImage,
+        value: profileData?.image ?? "",
+      );
+
+      PreferenceUtils.setString(
+        key: PreferenceUtils.coverImage,
+        value: profileData?.coverPhoto ?? "",
+      );
 
       fullName = TextEditingController(text: profileData?.fullName ?? "");
       username = TextEditingController(text: profileData?.username ?? "");
@@ -128,8 +135,7 @@ class EditProfile extends StatelessWidget {
         Status.COMPLETE) {
       final UpdateProfilePicResModel updateProfilePicResModel =
           profileViewModel.updateUserProfilePicApiResponse.data;
-      if (updateProfilePicResModel.status.toString() ==
-          VariableUtils.status200) {
+      if (updateProfilePicResModel.status.toString() == '200') {
         showSnackBar(
           message: updateProfilePicResModel.message ??
               VariableUtils.somethingWentWrong,
@@ -144,30 +150,30 @@ class EditProfile extends StatelessWidget {
     }
   }
 
-  updateCoverImage() async {
-    updateCoverPicReqModel.coverPhoto = editProfileController.coverImagePath;
-
-    await profileViewModel.updateUserCoverPic(updateCoverPicReqModel);
-
-    if (profileViewModel.updateUserProfilePicApiResponse.status ==
-        Status.COMPLETE) {
-      final UpdateCoverPicResModel updateCoverPicResModel =
-          profileViewModel.updateUserCoverPicApiResponse.data;
-
-      if (updateCoverPicResModel.status.toString() == VariableUtils.status200) {
-        showSnackBar(
-          message: updateCoverPicResModel.message ??
-              VariableUtils.somethingWentWrong,
-          snackbarSuccess: true,
-        );
-      } else {
-        showSnackBar(
-          message: updateCoverPicResModel.message ??
-              VariableUtils.somethingWentWrong,
-        );
-      }
-    }
-  }
+  // updateCoverImage() async {
+  //   updateCoverPicReqModel.coverPhoto = editProfileController.coverImagePath;
+  //
+  //   await profileViewModel.updateUserCoverPic(updateCoverPicReqModel);
+  //
+  //   if (profileViewModel.updateUserProfilePicApiResponse.status ==
+  //       Status.COMPLETE) {
+  //     final UpdateCoverPicResModel updateCoverPicResModel =
+  //         profileViewModel.updateUserCoverPicApiResponse.data;
+  //
+  //     if (updateCoverPicResModel.status.toString() == VariableUtils.status200) {
+  //       showSnackBar(
+  //         message: updateCoverPicResModel.message ??
+  //             VariableUtils.somethingWentWrong,
+  //         snackbarSuccess: true,
+  //       );
+  //     } else {
+  //       showSnackBar(
+  //         message: updateCoverPicResModel.message ??
+  //             VariableUtils.somethingWentWrong,
+  //       );
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -180,10 +186,7 @@ class EditProfile extends StatelessWidget {
           builder: (editProfileController) {
             return GetBuilder<ProfileViewModel>(
               initState: (_) {
-                profilePic = '';
-                coverPic = '';
                 editProfileController.clearData();
-
                 getUserProfile();
               },
               init: ProfileViewModel(),
@@ -217,35 +220,10 @@ class EditProfile extends StatelessWidget {
                       ),
                       Stack(
                         children: [
-                          // var data =
-                          //     await editProfileController.pickCoverImage();
-                          // if (data != "") {
-                          //   await updateCoverImage();
-                          // }
                           Container(
                             height: 25.h,
                             width: double.maxFinite,
-                            decoration:
-                                editProfileController.coverImagePath == ""
-                                    ? DecorationUtils.buttonDecoration(context)
-                                    : coverPic != ""
-                                        ? BoxDecoration(
-                                            image: DecorationImage(
-                                              image: NetworkImage(coverPic),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                        : BoxDecoration(
-                                            image: DecorationImage(
-                                              image: FileImage(
-                                                File(
-                                                  editProfileController
-                                                      .coverImagePath,
-                                                ),
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
+                            child: CommonCoverImage(),
                           ),
                           Container(
                             height: 25.h,
@@ -276,8 +254,12 @@ class EditProfile extends StatelessWidget {
                                                   fit: BoxFit.cover,
                                                 )
                                               : OctoImage(
-                                                  image:
-                                                      NetworkImage(profilePic),
+                                                  image: NetworkImage(
+                                                    PreferenceUtils.getString(
+                                                      key: PreferenceUtils
+                                                          .profileImage,
+                                                    ),
+                                                  ),
                                                   progressIndicatorBuilder:
                                                       (context, progress) {
                                                     double? value;
@@ -340,20 +322,11 @@ class EditProfile extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    // if (editProfileController
-                                    //         .profileImagePath !=
-                                    //     "") {
-                                    //   await updateProfileImage();
-                                    //   await updateCoverImage();
-                                    //   // } else if (editProfileController
-                                    //   //         .coverImagePath !=
-                                    //   //     "") {
-                                    //   //   await updateCoverImage();
-                                    // } else if (editProfileController
-                                    //         .profileImagePath !=
-                                    //     "") {
-                                    await updateProfileImage();
-                                    // }
+                                    if (editProfileController
+                                            .profileImagePath !=
+                                        "") {
+                                      await updateProfileImage();
+                                    }
                                   },
                                   child: Container(
                                     height: 5.h,
@@ -539,7 +512,7 @@ class EditProfile extends StatelessWidget {
 
 class EditProfileController extends GetxController {
   String profileImagePath = "";
-  String coverImagePath = "";
+  // String coverImagePath = "";
   // String sourcePath = "";
 
   pickProfileImage() async {
@@ -565,6 +538,6 @@ class EditProfileController extends GetxController {
 
   clearData() {
     profileImagePath = "";
-    coverImagePath = "";
+    // coverImagePath = "";
   }
 }

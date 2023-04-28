@@ -20,14 +20,6 @@ String postTimeCalculate(date, ext) {
 
       int data = date2.difference(date1).inDays;
 
-      // logs('-----------------------------------------------------');
-      // logs('DATE:-----> ${date2} ${date1}');
-      // logs('----------------------------------------------------->');
-      // logs('SECOND:-----> ${date2.difference(date1).inSeconds.toString()}');
-      // logs('min:-----> ${date2.difference(date1).inMinutes.toString()}');
-      // logs('hour:-----> ${date2.difference(date1).inHours.toString()}');
-      // logs('day:-----> ${date2.difference(date1).inDays.toString()}');
-
       var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
       date1 = dateTime.toLocal();
 
@@ -69,7 +61,6 @@ class Category {
   }
 }
 
-///
 String chatId(String id1, String id2) {
   logs('id1 length => ${id1.length} id2 length=> ${id2.length}');
   if (id1.compareTo(id2) > 0) {

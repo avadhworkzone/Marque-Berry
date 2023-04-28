@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -32,9 +34,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return Scaffold(
       backgroundColor: greyFABlack32,
@@ -175,12 +174,17 @@ class Home extends StatelessWidget {
                                     itemBuilder: (context, index) {
                                       final categoryIndex =
                                           categoryPostList[index];
-                                      return categoryIndex.id == null
+                                      final postId = (categoryIndex.id ?? 0);
+
+                                      return postId == 0 ||
+                                              homeController.reportList
+                                                      .contains(postId) ==
+                                                  true
                                           ? SizedBox()
                                           : PostComponents(
                                               contentType:
                                                   categoryIndex.contentType ??
-                                                      "Image",
+                                                      "image",
                                               homeController: homeController,
                                               currentTabIndex: homeController
                                                   .tabCurrentIndex,
@@ -209,7 +213,7 @@ class Home extends StatelessWidget {
                                                   : categoryIndex
                                                           .author![0].image ??
                                                       "",
-                                              name: (categoryIndex.author
+                                              userName: (categoryIndex.author
                                                               ?.isEmpty ??
                                                           true) ==
                                                       true
@@ -240,6 +244,17 @@ class Home extends StatelessWidget {
                                 ),
                               ),
                               if (categoryFeedViewModel.isPageLoading)
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 20),
+                                    child: Loader(),
+                                  ),
+                                ),
+                              if (!categoryFeedViewModel.isPageLoading &&
+                                  categoryFeedViewModel
+                                          .reportPostApiResponse.status ==
+                                      Status.LOADING)
                                 Align(
                                   alignment: Alignment.bottomCenter,
                                   child: Padding(
@@ -317,5 +332,18 @@ class HomeController extends GetxController {
   void tabChange(int index) {
     tabCurrentIndex = index;
     update();
+  }
+
+  bool isReportSuccess = false;
+  reportSuccess(val) {
+    isReportSuccess = val;
+    update();
+  }
+
+  List reportList = [];
+  void addReport(int postId) {
+    reportList.add(postId);
+    update();
+    logs('Report list -------> ${reportList.toString()}');
   }
 }

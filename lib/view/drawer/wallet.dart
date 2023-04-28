@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,6 @@ class Wallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
 
     return GetBuilder<ConnectivityViewModel>(
       init: ConnectivityViewModel(),
@@ -35,7 +36,7 @@ class Wallet extends StatelessWidget {
                 preferredSize: Size.fromHeight(16.w),
                 child: CommonAppBar(
                   title: VariableUtils.walletText,
-                  ontap: () => Get.back(),
+                  onTap: () => Get.back(),
                 ),
               ),
               body: Center(
@@ -93,7 +94,7 @@ class Wallet extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                ImagesWidgets.RectangleImage,
+                                ImagesWidgets.rectangleImage,
                               ),
                             ),
                           ),

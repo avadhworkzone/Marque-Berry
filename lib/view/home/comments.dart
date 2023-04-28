@@ -1,6 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
@@ -26,13 +27,12 @@ import '../../viewModel/category_view_model.dart';
 
 class Comments extends StatelessWidget {
   int? postId = 0;
-  int? likecount;
-
+  int? likeCount;
   String profileImage = "";
 
   Comments({
     Key? key,
-    this.likecount,
+    this.likeCount,
     required this.postId,
     required this.profileImage,
   }) : super(key: key);
@@ -54,15 +54,11 @@ class Comments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color greyFABlack32 = Theme.of(context).cardColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
-    Color? canvasColor = Theme.of(context).canvasColor;
+
+    var commentTextEditing = TextEditingController();
 
     return Material(
-      // color: Colors.grey[100],
       child: GetBuilder<HomeController>(builder: (home) {
         return GetBuilder<CategoryFeedViewModel>(
           initState: (_) {
@@ -72,16 +68,13 @@ class Comments extends StatelessWidget {
             if (categoryFeedViewModel.getAllCommentApiResponse.status ==
                     Status.LOADING ||
                 categoryFeedViewModel.getAllCommentApiResponse.status ==
-                    Status.INITIAL) {
+                    Status.INITIAL)
               return Center(child: Loader());
-            } else if (categoryFeedViewModel.getAllCommentApiResponse.status ==
-                Status.ERROR) {
-              return SomethingWentWrong();
-            }
+            else if (categoryFeedViewModel.getAllCommentApiResponse.status ==
+                Status.ERROR) return SomethingWentWrong();
 
             GetAllCommentResModel response =
                 categoryFeedViewModel.getAllCommentApiResponse.data;
-
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -90,7 +83,7 @@ class Comments extends StatelessWidget {
                   preferredSize: Size.fromHeight(22.w),
                   child: CommonAppBar(
                     title: 'Comments',
-                    ontap: () => Get.back(),
+                    onTap: () => Get.back(),
                   ),
                 ),
                 if (response.status.toString() == VariableUtils.status500)
@@ -112,34 +105,28 @@ class Comments extends StatelessWidget {
                               .length ??
                           0,
                       itemBuilder: (context, index) {
-                        final commentdata = response.data![index];
-
-                        // final subComments = response.data!
-                        //     .where((element) =>
-                        //         element.parentId ==
-                        //         commentdata.commentId.toString())
-                        //     .toList();
+                        final commentData = response.data![index];
 
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.w),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              if (commentdata.parentId == "0")
+                              if (commentData.parentId == "0")
                                 CommentList(
-                                  likecount: (likecount ?? 0).toString(),
+                                  likecount: (likeCount ?? 0).toString(),
                                   replaycount: 0,
                                   time: postTimeCalculate(
-                                    commentdata.createdOn.toString(),
+                                    commentData.createdOn.toString(),
                                     '',
                                   ),
                                   replayMessage: () {
                                     commentTextEditing.text =
-                                        "@${commentdata.username} ";
+                                        "@${commentData.username} ";
 
                                     /// main comment
                                     home.parentCommentIdChange(
-                                      commentdata.commentId.toString(),
+                                      commentData.commentId.toString(),
                                     );
 
                                     FocusScope.of(context)
@@ -151,14 +138,14 @@ class Comments extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  name: commentdata.username ?? "",
-                                  img: commentdata.image ?? "",
+                                  name: commentData.username ?? "",
+                                  img: commentData.image ?? "",
                                   mentione: '',
                                   replayData: false,
-                                  message: commentdata.comment ?? "",
+                                  message: commentData.comment ?? "",
                                 ),
                               for (int i = 0;
-                                  i < commentdata.childComment!.length;
+                                  i < commentData.childComment!.length;
                                   i++)
                                 Container(
                                   width: 80.w,
@@ -167,10 +154,10 @@ class Comments extends StatelessWidget {
                                     replayMessage: () {
                                       /// sub comment
                                       home.parentCommentIdChange(
-                                          commentdata.commentId.toString());
+                                          commentData.commentId.toString());
 
                                       commentTextEditing.text =
-                                          "@${commentdata.childComment?[i].username} ";
+                                          "@${commentData.childComment?[i].username} ";
                                       FocusScope.of(context)
                                           .requestFocus(focusNode);
 
@@ -181,21 +168,21 @@ class Comments extends StatelessWidget {
                                                 commentTextEditing.text.length),
                                       );
                                     },
-                                    likecount: (likecount ?? 0).toString(),
+                                    likecount: (likeCount ?? 0).toString(),
                                     replaycount: 0,
                                     time: postTimeCalculate(
-                                      commentdata.childComment?[i].createdOn,
+                                      commentData.childComment?[i].createdOn,
                                       '',
                                     ),
                                     name:
-                                        commentdata.childComment?[i].username ??
+                                        commentData.childComment?[i].username ??
                                             "",
-                                    img: commentdata.childComment?[i].image ??
+                                    img: commentData.childComment?[i].image ??
                                         "",
                                     mentione: '',
                                     replayData: true,
                                     message:
-                                        commentdata.childComment?[i].comment ??
+                                        commentData.childComment?[i].comment ??
                                             "",
                                   ),
                                 ),
@@ -334,33 +321,4 @@ class Comments extends StatelessWidget {
       }),
     );
   }
-
-  var commentTextEditing = TextEditingController();
-//
-// List<Map<String, dynamic>> commentsList = [
-//   {
-//     "likecount": "19",
-//     "replaycount": 0,
-//     "time": "8 min ago",
-//     "name": 'Jane_Cooper',
-//     "img": "assets/icons/user1.png",
-//     "mentione": "@ira_membrit",
-//     "replayData": false,
-//     "message":
-//         'Loving 😍 your work and profile 👨 Top Marks. Once you are confident enough to develop',
-//   },
-//   {
-//     "img": "assets/icons/user2.png",
-//     "name": 'con Trariweis',
-//     "time": "6 min ago",
-//     "message": 'Nice 👌 Work, love your content ',
-//     "likecount": "19",
-//     "replaycount": 1,
-//     "mentione": '',
-//     "replayData": false,
-//   },
-// ];
 }
-
-/// device show kar
-/// done ok
