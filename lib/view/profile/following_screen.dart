@@ -32,8 +32,8 @@ class FollowerFollowing extends StatelessWidget {
   FollowerFollowingController followerFollowingController =
       Get.find<FollowerFollowingController>();
 
-  FollowRequestViewModel followRequestViewModel =
-      Get.find<FollowRequestViewModel>();
+  FollowFollowingViewModel followRequestViewModel =
+      Get.find<FollowFollowingViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class FollowerFollowing extends StatelessWidget {
           color: blackWhite,
         ),
       ),
-      body: GetBuilder<FollowRequestViewModel>(
+      body: GetBuilder<FollowFollowingViewModel>(
         builder: (followRequestViewModel) {
           return GetBuilder<FollowerFollowingController>(
             initState: (_) {
@@ -187,7 +187,7 @@ class FollowTabBar extends StatelessWidget {
 }
 
 class FollowerList extends StatelessWidget {
-  FollowRequestViewModel followRequestViewModel;
+  FollowFollowingViewModel followRequestViewModel;
 
   FollowerList({super.key, required this.followRequestViewModel});
 
@@ -312,7 +312,7 @@ class FollowerList extends StatelessWidget {
 //
 
 class FollowingList extends StatelessWidget {
-  FollowRequestViewModel followRequestViewModel;
+  FollowFollowingViewModel followRequestViewModel;
 
   FollowingList({super.key, required this.followRequestViewModel});
 

@@ -24,8 +24,8 @@ import '../../utils/assets/images_utils.dart';
 class MessageList extends StatelessWidget {
   MessageList({Key? key}) : super(key: key);
 
-  FollowRequestViewModel followRequestViewModel =
-      Get.find<FollowRequestViewModel>();
+  FollowFollowingViewModel followRequestViewModel =
+      Get.find<FollowFollowingViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class MessageList extends StatelessWidget {
           ontap: () => Get.back(),
         ),
       ),
-      body: GetBuilder<FollowRequestViewModel>(
+      body: GetBuilder<FollowFollowingViewModel>(
         initState: (_) async {
           await followRequestViewModel.getFollowerList();
         },

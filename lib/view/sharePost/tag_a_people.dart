@@ -23,8 +23,8 @@ import '../../utils/variable_utils.dart';
 class TagAPeople extends StatelessWidget {
   TagAPeople({Key? key}) : super(key: key);
 
-  FollowRequestViewModel followRequestViewModel =
-      Get.find<FollowRequestViewModel>();
+  FollowFollowingViewModel followRequestViewModel =
+      Get.find<FollowFollowingViewModel>();
   var search = TextEditingController();
   TagAPeopleController tagAPeopleController = Get.find<TagAPeopleController>();
 
@@ -82,7 +82,7 @@ class TagAPeople extends StatelessWidget {
                   ),
                 ),
                 SizeConfig.sH2,
-                GetBuilder<FollowRequestViewModel>(
+                GetBuilder<FollowFollowingViewModel>(
                   initState: (_) async {
                     await followRequestViewModel.getFollowerList();
                   },

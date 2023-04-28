@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/post_comment_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/report_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/repo/Get_all_comment_repo.dart';
 import 'package:socialv/model/repo/post_comment_repo.dart';
+import 'package:socialv/model/repo/report_post_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/model/repo/like_post_repo.dart';
@@ -39,7 +41,7 @@ class CategoryFeedViewModel extends GetxController {
   ApiResponse getAllCommentApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse postCommentApiResponse = ApiResponse.initial('INITIAL');
 
-  // ApiResponse dislikeApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse reportPostApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== CATEGORY VIEW MODEL ================================
   Map<int, bool> likeUnlink = {};
@@ -162,6 +164,22 @@ class CategoryFeedViewModel extends GetxController {
     } catch (e) {
       logs('postCommentApiResponse ERROR :=> $e');
       postCommentApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ===================== POST COMMENTS ========================
+
+  Future<void> reportPost(ReportPostReqModel reqModel) async {
+    logs('loading..');
+    reportPostApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await ReportPostRepo().reportPost(reqModel);
+      reportPostApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('reportPostApiResponse ERROR :=> $e');
+      reportPostApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }
