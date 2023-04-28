@@ -42,9 +42,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await GetStorage.init();
-
   await Firebase.initializeApp();
-
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -81,7 +79,7 @@ class _MyAppState extends State<MyApp> {
           stream: isLightTheme.stream,
           builder: (context, AsyncSnapshot snapshot) {
             return GetMaterialApp(
-              theme: //AppTheme.darkTheme,
+              theme:
                   PreferenceUtils.getString(key: PreferenceUtils.mode) == "dark"
                       ? AppTheme.darkTheme
                       : AppTheme.lightTheme,
@@ -121,8 +119,8 @@ class _MyAppState extends State<MyApp> {
   CampaignContestViewModel campaignContestViewModel =
       Get.put(CampaignContestViewModel());
 
-  FollowRequestViewModel followRequestViewModel =
-      Get.put(FollowRequestViewModel());
+  FollowFollowingViewModel followRequestViewModel =
+      Get.put(FollowFollowingViewModel());
 
   ChattingController chattingController = Get.put(ChattingController());
   TemplateController templateController = Get.put(TemplateController());
