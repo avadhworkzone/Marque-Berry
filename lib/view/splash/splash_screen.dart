@@ -5,6 +5,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/splash_controller.dart';
+import '../../utils/assets/images_utils.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
@@ -19,7 +20,7 @@ class SplashScreen extends StatelessWidget {
         width: Get.width,
         height: Get.height,
         child: Image.asset(
-          "assets/images/splash.png",
+          ImagesWidgets.splashImage,
           fit: BoxFit.cover,
         ),
       ),

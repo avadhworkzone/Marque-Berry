@@ -18,6 +18,7 @@ class ImagesWidgets {
   static String bgProfileImage = '$imagesbasePath/bgProfile.png';
   static String profileImagesImage = '$imagesbasePath/profileimages.png';
   static String submitButtonImage = '$imagesbasePath/submitButton.png';
+  static String splashImage = '$imagesbasePath/splash.png';
 
   static Image logoISImage = Image.asset(logoImage, scale: 3.6.w);
   static Image adoroImage = Image.asset(
@@ -92,6 +93,13 @@ class IconsWidgets {
   static String clipboardImages = '$iconsbasePath/clipboard.png';
   static String shareBtnImages = '$iconsbasePath/share_btn.png';
   static String linkImages = '$iconsbasePath/link.png';
+  static String tagImages = '$iconsbasePath/tag.png';
+  static String imageImages = '$iconsbasePath/image.png';
+  static String videoImages = '$iconsbasePath/video.png';
+  static String gifImages = '$iconsbasePath/gif.png';
+  static String chooseImages = '$iconsbasePath/choose.png';
+  static String shareIconBtnImages = '$iconsbasePath/share_icon_btn.png';
+  static String submitIconBtnImages = '$iconsbasePath/submit_icon_btn.png';
 
   // static Image plusCircleImages = Image.asset(
   //   '$iconsbasePath/plus_circle.png',
