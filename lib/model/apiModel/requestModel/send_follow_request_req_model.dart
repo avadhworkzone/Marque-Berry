@@ -1,9 +1,9 @@
-class SendFollowRequestReqModel {
+class SendFollowReqModel {
   String? userId;
 
-  SendFollowRequestReqModel({this.userId});
+  SendFollowReqModel({this.userId});
 
-  SendFollowRequestReqModel.fromJson(Map<String, dynamic> json) {
+  SendFollowReqModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
   }
 

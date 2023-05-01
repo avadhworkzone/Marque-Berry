@@ -18,6 +18,7 @@ abstract class BaseService {
 
   /// HOME FEED
   final String feedCategoryURL = 'feed?category=';
+  final String getLikeURL = 'getPostLikesUsers';
   final String likeURL = 'like';
   final String dislikeURL = 'deleteLike';
   final String reportPostURL = 'ReportPost';

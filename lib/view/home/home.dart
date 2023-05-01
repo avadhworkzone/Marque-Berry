@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -20,15 +21,31 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({Key? key, required this.scaffoldKey}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey;
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  HomeController homeController = Get.find<HomeController>();
+  ScrollController _scrollController = ScrollController();
+
+  void paginationListen(HomeController homeController) {
+    _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent ==
+          _scrollController.position.pixels) {
+        if (!categoryFeedViewModel.isPageLoading) {
+          categoryFeedViewModel.categoryTrending(homeController.tabName);
+        }
+      }
+    });
+  }
+
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
-  HomeController homeController = Get.find<HomeController>();
-
-  ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +56,17 @@ class Home extends StatelessWidget {
       backgroundColor: greyFABlack32,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: ColorUtils.transparent,
+        titleSpacing: 0,
         automaticallyImplyLeading: false,
+        backgroundColor: ColorUtils.transparent,
         leading: GestureDetector(
-          onTap: () => scaffoldKey.currentState!.openDrawer(),
+          onTap: () => widget.scaffoldKey.currentState!.openDrawer(),
           child: CommonImageScale(
             img: IconsWidgets.menuImage,
             scale: 1.w,
             color: blackWhite,
           ),
         ),
-        titleSpacing: 0,
         title: CommonImageWidth(
           width: 25.w,
           img: IconsWidgets.adoroTextImages,
@@ -61,7 +78,6 @@ class Home extends StatelessWidget {
             height: 7.w,
             color: blackWhite,
           ),
-          // SizeConfig.sW2,
           GestureDetector(
             onTap: () => Get.to(
               () => MessageList(),
@@ -100,40 +116,6 @@ class Home extends StatelessWidget {
                 homeController: homeController,
                 categoryFeedViewModel: categoryFeedViewModel,
               ),
-
-              // if (categoryFeedViewModel.categoryApiResponse.status ==
-              //         Status.LOADING ||
-              //     categoryFeedViewModel.categoryApiResponse.status ==
-              //         Status.INITIAL)
-              //   Expanded(child: Center(child: Loader())),
-              // if (categoryFeedViewModel.categoryApiResponse.status ==
-              //         Status.ERROR ||
-              //     categoryFeedViewModel.categoryApiResponse.data == null)
-              //   Expanded(child: Center(child: SomethingWentWrong())),
-              // if (categoryFeedViewModel.categoryApiResponse.status ==
-              //     Status.COMPLETE) ...[
-              //   Expanded(
-              //     child: SingleChildScrollView(
-              //       child: Padding(
-              //         padding: EdgeInsets.all(4.w),
-              //         child: Column(
-              //           children: [
-              //             ListView.builder(
-              //               physics: NeverScrollableScrollPhysics(),
-              //               shrinkWrap: true,
-              //               itemCount: 2,
-              //               itemBuilder: (context, index) {
-              //                 return PostComponents();
-              //               },
-              //             ),
-              //             GroupComponents(),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   )
-              // ]
-
               GetBuilder<CategoryFeedViewModel>(
                 init: CategoryFeedViewModel(),
                 initState: (_) {
@@ -156,102 +138,115 @@ class Home extends StatelessWidget {
                   List<CategoryData> categoryPostList =
                       categoryFeedViewModel.categoryPostList;
 
-                  return categoryPostList.isEmpty
-                      ? Expanded(
-                          child: Center(child: AdoroText("No data available")),
-                        )
-                      : Expanded(
-                          child: Stack(
+                  return Expanded(
+                    child: categoryPostList.isEmpty
+                        ? Center(
+                            child: AdoroText(VariableUtils.noDataFound),
+                          )
+                        : Stack(
                             children: [
-                              SingleChildScrollView(
-                                controller: _scrollController,
-                                child: Padding(
-                                  padding: EdgeInsets.all(4.w),
-                                  child: ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: categoryPostList.length,
-                                    itemBuilder: (context, index) {
-                                      final categoryIndex =
-                                          categoryPostList[index];
-                                      final postId = (categoryIndex.id ?? 0);
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 3.w),
+                                child: InViewNotifierList(
+                                  controller: _scrollController,
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  isInViewPortCondition: (double deltaTop,
+                                      double deltaBottom,
+                                      double viewPortDimension) {
+                                    return deltaTop <
+                                            (0.5 * viewPortDimension) &&
+                                        deltaBottom > (0.5 * viewPortDimension);
+                                  },
+                                  itemCount: categoryPostList.length,
+                                  builder: (BuildContext context, int index) {
+                                    final categoryIndex =
+                                        categoryPostList[index];
+                                    final postId = (categoryIndex.id ?? 0);
 
-                                      return postId == 0 ||
-                                              homeController.reportList
-                                                      .contains(postId) ==
-                                                  true
-                                          ? SizedBox()
-                                          : PostComponents(
-                                              contentType:
-                                                  categoryIndex.contentType ??
-                                                      "image",
-                                              homeController: homeController,
-                                              currentTabIndex: homeController
-                                                  .tabCurrentIndex,
-                                              postid: categoryIndex.id ?? 0,
-                                              categoryFeedViewModel:
-                                                  categoryFeedViewModel,
-                                              likeByMe: categoryIndex.likedByMe
-                                                          .toString() ==
-                                                      'true'
-                                                  ? "You"
-                                                  : (categoryIndex
-                                                          .likedByPeople?[0]
-                                                          .username ??
-                                                      ""),
-                                              likeProfile:
-                                                  categoryIndex.likedByPeople,
-                                              likeByMePeople: categoryIndex
-                                                      .likedByPeople?.length ??
-                                                  0,
-                                              profileImage: (categoryIndex
-                                                              .author
-                                                              ?.isEmpty ??
-                                                          true) ==
-                                                      true
-                                                  ? ""
-                                                  : categoryIndex
-                                                          .author![0].image ??
-                                                      "",
-                                              userName: (categoryIndex.author
-                                                              ?.isEmpty ??
-                                                          true) ==
-                                                      true
-                                                  ? ""
-                                                  : categoryIndex
-                                                      .author![0].username
-                                                      .toString(),
-                                              time: postTimeCalculate(
-                                                categoryIndex.createdOn,
-                                                'ago',
-                                              ),
-                                              contentImage: categoryIndex
-                                                  .contentUrl
-                                                  .toString(),
-                                              title: categoryIndex.content
-                                                  .toString(),
-                                              likecounter: (categoryIndex
-                                                          .likedByPeople
-                                                          ?.length ??
-                                                      0)
-                                                  .toString(),
-                                              commentcounter:
-                                                  (categoryIndex.comments ?? 0)
-                                                      .toString(),
-                                            );
-                                    },
-                                  ),
+                                    return LayoutBuilder(
+                                      builder: (BuildContext context,
+                                          BoxConstraints constraints) {
+                                        return InViewNotifierWidget(
+                                          id: '$index',
+                                          builder: (BuildContext context,
+                                              bool isInView, Widget? child) {
+                                            return postId == 0 ||
+                                                    homeController.reportList
+                                                            .contains(postId) ==
+                                                        true
+                                                ? SizedBox()
+                                                : PostComponents(
+                                                    isInView: isInView,
+                                                    userId: int.parse(
+                                                        categoryIndex.userId
+                                                            .toString()),
+                                                    followedByMe: categoryIndex
+                                                            .followedByMe ??
+                                                        false,
+                                                    contentType: categoryIndex
+                                                            .contentType ??
+                                                        "image",
+                                                    homeController:
+                                                        homeController,
+                                                    currentTabIndex:
+                                                        homeController
+                                                            .tabCurrentIndex,
+                                                    postId:
+                                                        categoryIndex.id ?? 0,
+                                                    categoryFeedViewModel:
+                                                        categoryFeedViewModel,
+                                                    likeByMe: categoryIndex
+                                                                .likedByMe
+                                                                .toString() ==
+                                                            'true'
+                                                        ? "You"
+                                                        : (categoryIndex
+                                                                .likedByPeople?[
+                                                                    0]
+                                                                .username ??
+                                                            ""),
+                                                    likeProfile: categoryIndex
+                                                        .likedByPeople,
+                                                    likeByMePeople:
+                                                        categoryIndex
+                                                                .likedByPeople
+                                                                ?.length ??
+                                                            0,
+                                                    profileImage:
+                                                        categoryIndex.image ??
+                                                            "",
+                                                    userName: categoryIndex
+                                                            .username ??
+                                                        "",
+                                                    time: postTimeCalculate(
+                                                      categoryIndex.createdOn,
+                                                      'ago',
+                                                    ),
+                                                    contentImage: categoryIndex
+                                                        .contentUrl
+                                                        .toString(),
+                                                    title: categoryIndex.content
+                                                        .toString(),
+                                                    likeCounter: (categoryIndex
+                                                                .likedByPeople
+                                                                ?.length ??
+                                                            0)
+                                                        .toString(),
+                                                    commentCounter:
+                                                        (categoryIndex
+                                                                    .comments ??
+                                                                0)
+                                                            .toString(),
+                                                  );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
                               ),
-                              if (categoryFeedViewModel.isPageLoading)
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 20),
-                                    child: Loader(),
-                                  ),
-                                ),
-                              if (!categoryFeedViewModel.isPageLoading &&
+                              if (categoryFeedViewModel.isPageLoading ||
                                   categoryFeedViewModel
                                           .reportPostApiResponse.status ==
                                       Status.LOADING)
@@ -264,7 +259,7 @@ class Home extends StatelessWidget {
                                 ),
                             ],
                           ),
-                        );
+                  );
                 },
               )
             ],
@@ -272,43 +267,6 @@ class Home extends StatelessWidget {
         },
       ),
     );
-  }
-
-  void paginationListen(HomeController homeController) {
-    _scrollController.addListener(() async {
-      if (_scrollController.position.maxScrollExtent ==
-          _scrollController.position.pixels) {
-        if (!categoryFeedViewModel.isPageLoading) {
-          categoryFeedViewModel.categoryTrending(homeController.tabName);
-        }
-
-        // if (!homeController.isLoading) {
-        //   homeController.changeLoading(!homeController.isLoading);
-        // } else {
-        //   homeController.changePageNumber(
-        //     homeController.pageNumberIndex =
-        //         homeController.pageNumberIndex + 1,
-        //   );
-        //
-        //   await categoryFeedViewModel.categoryTrending(
-        //     homeController.tabName,
-        //     homeController.pageNumberIndex.toString(),
-        //   );
-        //
-        //   if (categoryFeedViewModel.categoryApiResponse.status ==
-        //       Status.COMPLETE) {
-        //     CategoryResModel categoryResponse =
-        //         categoryFeedViewModel.categoryApiResponse.data;
-        //
-        //     if (categoryResponse.data != null) {
-        //       homeController.categoryListUpdate(
-        //         categoryResponse.data!,
-        //       );
-        //     }
-        //   }
-        // }
-      }
-    });
   }
 }
 
@@ -335,7 +293,7 @@ class HomeController extends GetxController {
   }
 
   bool isReportSuccess = false;
-  reportSuccess(val) {
+  void reportSuccess(val) {
     isReportSuccess = val;
     update();
   }
@@ -344,6 +302,21 @@ class HomeController extends GetxController {
   void addReport(int postId) {
     reportList.add(postId);
     update();
-    logs('Report list -------> ${reportList.toString()}');
+  }
+
+  Map<String, bool> followUnfollow = {};
+
+  void setFollowData(String postId, bool followStatus) {
+    if (followUnfollow.containsKey(postId)) {
+      followUnfollow[postId] = followStatus;
+    } else {
+      followUnfollow.addAll({postId: followStatus});
+    }
+    update();
+  }
+
+  void clearFollowData() {
+    followUnfollow.clear();
+    update();
   }
 }

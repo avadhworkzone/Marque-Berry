@@ -1,28 +1,26 @@
 import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/commanWidget/common_appbar.dart';
-import 'package:socialv/controllers/bottomBar_controller.dart';
-import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
-import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.dart';
-import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/app_services/common_profile_image.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/utils/size_config_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/utils/decoration_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
-import 'package:socialv/view/profile/following_screen.dart';
+import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
-
-import '../../commanWidget/custom_snackbar.dart';
-import '../../model/apiModel/requestModel/update_cover_pic_req_model.dart';
-import '../../utils/decoration_utils.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/profile/following_screen.dart';
+import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/utils/app_services/common_profile_image.dart';
+import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
+import 'package:socialv/model/apiModel/requestModel/update_cover_pic_req_model.dart';
+import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.dart';
 
 class ImagesModel {
   final String image;
@@ -116,18 +114,16 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SizeConfig.sH2,
+                  SizeConfig.sH1,
                   Stack(
                     children: [
                       Container(
-                        height: 38.w,
+                        height: 40.w,
                         width: Get.width,
                         margin: EdgeInsets.only(bottom: 9.w),
                         child: profileController.coverImagePath != ""
                             ? Image.file(
-                                File(
-                                  profileController.coverImagePath,
-                                ),
+                                File(profileController.coverImagePath),
                                 fit: BoxFit.fill,
                               )
                             : CommonCoverImage(),
@@ -168,7 +164,6 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                     fontWeight: FontWeight.bold,
                     color: blackWhite,
                   ),
-
                   SizeConfig.sH2,
                   Container(
                     height: 22.w,
@@ -375,29 +370,37 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                               ),
                             ),
                             SizeConfig.sH2,
-                            Container(
-                              width: 90.w,
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                itemCount: imagesList.length,
-                                physics: NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  mainAxisSpacing: 3.2.w,
-                                  crossAxisSpacing: 3.2.w,
-                                ),
-                                itemBuilder: (c, i) {
-                                  return ClipRRect(
-                                    borderRadius: BorderRadius.circular(1.5.w),
-                                    child: Image.network(
-                                      imagesList[i].image,
-                                      fit: BoxFit.fill,
+                            profileController.tabIndex == 1
+                                ? Center(
+                                    child: AdoroText(
+                                      "No mentions",
+                                      color: black92White,
                                     ),
-                                  );
-                                },
-                              ),
-                            ),
+                                  )
+                                : Container(
+                                    width: 90.w,
+                                    child: GridView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: imagesList.length,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        mainAxisSpacing: 3.2.w,
+                                        crossAxisSpacing: 3.2.w,
+                                      ),
+                                      itemBuilder: (c, i) {
+                                        return ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(1.5.w),
+                                          child: Image.network(
+                                            imagesList[i].image,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
                           ],
                         ),
                       ),

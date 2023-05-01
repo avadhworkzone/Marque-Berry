@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "331861768056",
-    "project_id": "adoro-demo-ffcf5",
-    "storage_bucket": "adoro-demo-ffcf5.appspot.com"
+    "project_number": "988984878081",
+    "project_id": "adoro-app",
+    "storage_bucket": "adoro-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:331861768056:android:42801fc04f34a9f285fa8d",
+        "mobilesdk_app_id": "1:988984878081:android:ba1a53d575af959f7a4c00",
         "android_client_info": {
           "package_name": "com.iconic.socialv"
         }
       },
       "oauth_client": [
         {
-          "client_id": "331861768056-1b8pl2m2236kevll9k1digsucs45d3tl.apps.googleusercontent.com",
+          "client_id": "988984878081-7fnr0b48t6vp7glaup8gbetvjg8tlsla.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAT5-280waN4DG4qpf5Ynm81MsJCgAueCw"
+          "current_key": "AIzaSyDDF9LnUPO7z60xSt_8tKG4UtbyFEKVr1U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "331861768056-1b8pl2m2236kevll9k1digsucs45d3tl.apps.googleusercontent.com",
+              "client_id": "988984878081-7fnr0b48t6vp7glaup8gbetvjg8tlsla.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "988984878081-emf60t8209439o7qclgfmegbt38vf8gv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.iconic.socialv"
+              }
             }
           ]
         }

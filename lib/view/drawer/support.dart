@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -76,7 +77,7 @@ class Support extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AdoroText(
-                                      VariableUtils.hiCheonYeoWoon,
+                                      "Hi, ${PreferenceUtils.getString(key: PreferenceUtils.fullname)}",
                                       fontSize: 15.sp,
                                       color: ColorUtils.white,
                                       fontWeight:

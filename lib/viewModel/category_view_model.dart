@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:socialv/model/apiModel/requestModel/get_post_like_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/post_comment_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/report_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/repo/Get_all_comment_repo.dart';
 import 'package:socialv/model/repo/post_comment_repo.dart';
+import 'package:socialv/model/repo/post_like_user_repo.dart';
 import 'package:socialv/model/repo/report_post_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
@@ -15,18 +17,14 @@ import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart'
 
 class CategoryFeedViewModel extends GetxController {
   int _pageNumberIndex = 0;
-
   int get pageNumberIndex => _pageNumberIndex;
-
   set pageNumberIndex(int value) {
     _pageNumberIndex = value;
     update();
   }
 
   bool _isPageLoading = false;
-
   bool get isPageLoading => _isPageLoading;
-
   set isPageLoading(bool value) {
     _isPageLoading = value;
     update();
@@ -42,11 +40,13 @@ class CategoryFeedViewModel extends GetxController {
   ApiResponse postCommentApiResponse = ApiResponse.initial('INITIAL');
 
   ApiResponse reportPostApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse getLikeByUserApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== CATEGORY VIEW MODEL ================================
   Map<int, bool> likeUnlink = {};
 
-  changeLikeUnlike(key, value) {
+  /// LIKE UNLIKE
+  setLikeUnlike(key, value) {
     if (likeUnlink.containsKey(key)) {
       likeUnlink[key] = value;
     } else {
@@ -60,6 +60,25 @@ class CategoryFeedViewModel extends GetxController {
     update();
   }
 
+  /// ==================
+  Map<int, bool> followUnfollow = {};
+
+  setFollowData(int userId, bool followStatus) {
+    if (followUnfollow.containsKey(userId)) {
+      followUnfollow[userId] = followStatus;
+    } else {
+      followUnfollow.addAll({userId: followStatus});
+    }
+    update();
+  }
+
+  clearFollowData() {
+    followUnfollow.clear();
+    update();
+  }
+
+  /// ======================= CATEGORY TRENDING VIEW MODEL ========================
+
   Future<void> categoryTrending(String category) async {
     logs('loading..');
 
@@ -68,6 +87,8 @@ class CategoryFeedViewModel extends GetxController {
       _isPageLoading = false;
       pageNumberIndex = 0;
       clearLikeUnlink();
+      clearFollowData();
+
       categoryPostList.clear();
       update();
     } else {
@@ -83,10 +104,16 @@ class CategoryFeedViewModel extends GetxController {
 
         // if (response.data != null) {
         for (int i = 0; i < (response.data?.length ?? 0); i++) {
-          changeLikeUnlike(
+          setLikeUnlike(
             response.data?[i].id,
             response.data?[i].likedByMe ?? false,
           );
+          if (response.data?[i].userId != null) {
+            setFollowData(
+              int.parse(response.data?[i].userId ?? ""),
+              response.data?[i].followedByMe ?? false,
+            );
+          }
         }
         // }
 
@@ -180,6 +207,22 @@ class CategoryFeedViewModel extends GetxController {
     } catch (e) {
       logs('reportPostApiResponse ERROR :=> $e');
       reportPostApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ===================== GET POST LIKE BY USER POST ========================
+
+  Future<void> getLikeByUser(GetPostLikeReqModel reqModel) async {
+    logs('loading..');
+    getLikeByUserApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await GetPostLikeUserRepo().getPostLikeUser(reqModel);
+      getLikeByUserApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('getLikeByUserApiResponse ERROR :=> $e');
+      getLikeByUserApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }

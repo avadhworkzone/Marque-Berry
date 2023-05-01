@@ -41,12 +41,15 @@ class FollowerFollowing extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return Scaffold(
-      appBar: customAppbar(
-        context: context,
-        title: title,
-        icon: Icon(
-          Icons.search_rounded,
-          color: blackWhite,
+      appBar: PreferredSize(
+        preferredSize: Size(100.w, 70),
+        child: customAppbar(
+          context: context,
+          title: title,
+          icon: Icon(
+            Icons.search_rounded,
+            color: blackWhite,
+          ),
         ),
       ),
       body: GetBuilder<FollowFollowingViewModel>(
@@ -70,16 +73,17 @@ class FollowerFollowing extends StatelessWidget {
                       followerFollowingController: followerFollowingController,
                     ),
                     Positioned(
-                      // top: 15.w,
                       bottom: 0,
                       child: Container(
-                        height: Get.height - 22.w - 80,
+                        height: Get.height - 22.w - 70,
                         width: Get.width,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(8.w),
-                                topLeft: Radius.circular(8.w)),
-                            color: whiteBlack2E),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(8.w),
+                            topLeft: Radius.circular(8.w),
+                          ),
+                          color: whiteBlack2E,
+                        ),
                         child: followerFollowingController.currentTabIndex == 0
                             ? FollowingList(
                                 followRequestViewModel: followRequestViewModel,

@@ -660,8 +660,8 @@ class SharePostController extends GetxController {
       update();
     } catch (e) {
       sourceName = "";
-      showSnackBar(message: "Permission is required.");
-      logs("message:=====> $e");
+      logs('CATCH:-----> $e');
+      showSnackBar(message: "$extension not selected");
     }
   }
 

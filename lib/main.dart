@@ -14,11 +14,11 @@ import 'package:socialv/view/drawer/setting.dart';
 import 'package:socialv/routes/route_constant.dart';
 import 'package:socialv/view/message/chatting.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
-import 'package:socialv/view/profile/following_screen.dart';
 import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/view/sharePost/share_post.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/view/splash/splash_screen.dart';
+import 'package:socialv/view/profile/following_screen.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
 import 'package:socialv/view/template/my_template.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
@@ -94,6 +94,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
+                      // return InterestScreen();
                       return SplashScreen();
                     } else {
                       return const NoInterNetConnected();
@@ -159,11 +160,10 @@ class _MyAppState extends State<MyApp> {
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Poppins',
-
     cardColor: ColorUtils.grey.withOpacity(0.12),
     scaffoldBackgroundColor: ColorUtils.white,
-
     canvasColor: Colors.grey[200],
+
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),
@@ -195,11 +195,10 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     // useMaterial3: true,
     fontFamily: 'Poppins',
-
     cardColor: ColorUtils.black2E,
     scaffoldBackgroundColor: ColorUtils.black2E,
-
     canvasColor: ColorUtils.black2E,
+
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>331861768056-upjua04k7abumqtljlspuj52foadavk3.apps.googleusercontent.com</string>
+	<string>988984878081-emf60t8209439o7qclgfmegbt38vf8gv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.331861768056-upjua04k7abumqtljlspuj52foadavk3</string>
+	<string>com.googleusercontent.apps.988984878081-emf60t8209439o7qclgfmegbt38vf8gv</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDt-DuFHMZrxXRpuynIKd0Ioe6r6tbVVq4</string>
+	<string>AIzaSyDQyjgD_hVkDbosiWl3N1sZsdEhBSIGOEs</string>
 	<key>GCM_SENDER_ID</key>
-	<string>331861768056</string>
+	<string>988984878081</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.iconic.socialv</string>
 	<key>PROJECT_ID</key>
-	<string>adoro-demo-ffcf5</string>
+	<string>adoro-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>adoro-demo-ffcf5.appspot.com</string>
+	<string>adoro-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:331861768056:ios:8e231c0d302fe50685fa8d</string>
+	<string>1:988984878081:ios:09210662e76193c67a4c00</string>
 </dict>
 </plist>

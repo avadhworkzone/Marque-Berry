@@ -96,7 +96,7 @@ class VariableUtils {
 
   /// Refer & Earn
 
-  static const copiedSuccessfully = " copied successfully";
+  static const copiedSuccessfully = "copied successfully";
   static const share = "Share";
 
   /// Settings

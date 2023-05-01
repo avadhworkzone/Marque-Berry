@@ -31,6 +31,9 @@ class CategoryData {
   int? id;
   String? userId;
   String? content;
+  String? username;
+  String? image;
+  bool? followedByMe;
   String? contentType;
   String? contentUrl;
   String? categoryId;
@@ -40,23 +43,30 @@ class CategoryData {
   List<LikedByPeople>? likedByPeople;
   bool? likedByMe;
 
-  CategoryData(
-      {this.id,
-      this.userId,
-      this.content,
-      this.contentType,
-      this.contentUrl,
-      this.categoryId,
-      this.createdOn,
-      this.comments,
-      this.author,
-      this.likedByPeople,
-      this.likedByMe});
+  CategoryData({
+    this.id,
+    this.userId,
+    this.content,
+    this.image,
+    this.username,
+    this.followedByMe,
+    this.contentType,
+    this.contentUrl,
+    this.categoryId,
+    this.createdOn,
+    this.comments,
+    this.author,
+    this.likedByPeople,
+    this.likedByMe,
+  });
 
   CategoryData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     content = json['content'];
+    username = json['username'];
+    image = json['image'];
+    followedByMe = json['followedByMe'] ?? false;
     contentType = json['content_type'];
     contentUrl = json['content_url'];
     categoryId = json['category_id'];
@@ -82,6 +92,10 @@ class CategoryData {
     data['id'] = this.id;
     data['user_id'] = this.userId;
     data['content'] = this.content;
+    data['username'] = this.username;
+    data['image'] = this.image;
+    data['followedByMe'] = this.followedByMe;
+    data['username'] = this.username;
     data['content_type'] = this.contentType;
     data['content_url'] = this.contentUrl;
     data['category_id'] = this.categoryId;

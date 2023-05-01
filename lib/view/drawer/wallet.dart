@@ -39,11 +39,13 @@ class Wallet extends StatelessWidget {
                   onTap: () => Get.back(),
                 ),
               ),
-              body: Center(
+              body: SizedBox(
+                width: Get.width,
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizeConfig.sH2,
+                      SizeConfig.sH7,
                       AdoroText(
                         VariableUtils.deepanshuSarmandal,
                         fontSize: 14.sp,

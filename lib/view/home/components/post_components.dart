@@ -5,14 +5,16 @@ import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/report_post_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/send_follow_request_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/test.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
@@ -22,20 +24,22 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/typedef_utils.dart';
 import 'package:socialv/view/home/comment_components/like_screen.dart';
 import 'package:socialv/view/home/comments.dart';
+import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
+import 'package:socialv/viewModel/follow_request_view_model.dart';
 
 import '../../../utils/variable_utils.dart';
 
 class PostComponents extends StatelessWidget {
-  String likecounter;
+  String likeCounter;
 
   String userName;
   String time;
   String title;
   String contentImage;
   String contentType;
-  String commentcounter = '0';
+  String commentCounter = '0';
   String profileImage;
 
   String likeByMe;
@@ -44,18 +48,24 @@ class PostComponents extends StatelessWidget {
 
   CategoryFeedViewModel categoryFeedViewModel;
 
-  int? postid = 0;
+  int postId = 0;
+  int userId = 0;
 
   int currentTabIndex;
 
   HomeController homeController;
 
+  bool followedByMe;
+  bool isInView;
+
   PostComponents({
     Key? key,
+    required this.isInView,
     required this.homeController,
     required this.contentType,
     required this.currentTabIndex,
-    required this.postid,
+    required this.postId,
+    required this.userId,
     required this.userName,
     required this.time,
     required this.title,
@@ -64,12 +74,14 @@ class PostComponents extends StatelessWidget {
     required this.likeProfile,
     required this.profileImage,
     required this.contentImage,
-    required this.likecounter,
-    required this.commentcounter,
+    required this.followedByMe,
+    required this.likeCounter,
+    required this.commentCounter,
     required this.categoryFeedViewModel,
   }) : super(key: key);
 
   DisLikePostReqModel disLikePostReqModel = DisLikePostReqModel();
+
   LikePostReqModel likePostReqModel = LikePostReqModel();
 
   @override
@@ -94,16 +106,14 @@ class PostComponents extends StatelessWidget {
             children: [
               SizeConfig.sH2,
               ListTile(
-                title: userName != ""
-                    ? AdoroText(
-                        userName,
-                        maxLines: 1,
-                        fontSize: 12.sp,
-                        color: Theme.of(context).textTheme.titleSmall!.color,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeightClass.fontWeight600,
-                      )
-                    : SizedBox(),
+                title: AdoroText(
+                  userName,
+                  maxLines: 1,
+                  fontSize: 12.sp,
+                  color: Theme.of(context).textTheme.titleSmall!.color,
+                  overflow: TextOverflow.ellipsis,
+                  fontWeight: FontWeightClass.fontWeight600,
+                ),
                 subtitle: AdoroText(
                   time,
                   maxLines: 1,
@@ -147,81 +157,76 @@ class PostComponents extends StatelessWidget {
                 trailing: IconButton(
                   onPressed: () {
                     dotDialog(
-                      postIdArg: (postid ?? 0),
+                      postIdArg: postId,
                       categoryFeedViewModel: categoryFeedViewModel,
                     );
                   },
                   icon: Icon(Icons.more_horiz, color: black92White),
                 ),
               ),
-              // Text(contentType.toString()),
-              // if(contentType)
               Padding(
                 padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizeConfig.sH1,
-                    (title) == ""
-                        ? SizedBox()
-                        : AdoroText(
-                            "$title",
-                            maxLines: 2,
-                            fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                            color: black92White,
-                          ),
+                    AdoroText(
+                      "$title",
+                      maxLines: 2,
+                      fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
+                      color: black92White,
+                    ),
                     SizeConfig.sH1,
-                    // Text("contentType-----> $contentType"),
-                    // contentType.toLowerCase() == "video" ||
-                    //         contentType.toLowerCase() == "gif"
-                    //     ? Text('Video')
-                    //     :
                     ClipRRect(
                       borderRadius: BorderRadius.circular(2.w),
                       child: Container(
                         height: 75.w,
                         width: Get.width,
-                        child: OctoImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(contentImage),
-                          progressIndicatorBuilder: (context, progress) {
-                            double? value;
-                            var expectedBytes = progress?.expectedTotalBytes;
-                            if (progress != null && expectedBytes != null) {
-                              value = progress.cumulativeBytesLoaded /
-                                  expectedBytes;
-                            }
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: value,
-                                color: blackWhite,
+                        child: contentType.toLowerCase() == "video"
+                            ? VideoComponents(play: isInView, url: contentImage)
+                            : OctoImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(contentImage),
+                                progressIndicatorBuilder: (context, progress) {
+                                  double? value;
+                                  var expectedBytes =
+                                      progress?.expectedTotalBytes;
+                                  if (progress != null &&
+                                      expectedBytes != null) {
+                                    value = progress.cumulativeBytesLoaded /
+                                        expectedBytes;
+                                  }
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value: value,
+                                      color: blackWhite,
+                                    ),
+                                  );
+                                },
+                                errorBuilder: (context, error, stacktrace) =>
+                                    Padding(
+                                  padding: EdgeInsets.all(7.w),
+                                  child: CommonImage(
+                                    img: IconsWidgets.userImages,
+                                    color: ColorUtils.black,
+                                  ),
+                                ),
                               ),
-                            );
-                          },
-                          errorBuilder: (context, error, stacktrace) => Padding(
-                            padding: EdgeInsets.all(7.w),
-                            child: CommonImage(
-                              img: IconsWidgets.userImages,
-                              color: ColorUtils.black,
-                            ),
-                          ),
-                        ),
                       ),
                     ),
                     SizeConfig.sH3,
                     Row(
                       children: [
-                        // categoryFeedViewModel.likeUnlink.containsKey(postid)
-                        //     ?
-                        categoryFeedViewModel.likeUnlink[postid] == true
+                        categoryFeedViewModel.likeUnlink[postId] == true
                             ? LikeWidget(
+                                postId: postId,
                                 disLikePostReqModel: disLikePostReqModel,
-                                postid: postid ?? 0,
-                                categoryFeedViewModel: categoryFeedViewModel)
+                                categoryFeedViewModel: categoryFeedViewModel,
+                              )
                             : UnlikeWidget(
+                                postid: postId,
                                 likePostReqModel: likePostReqModel,
-                                postid: postid ?? 0,
                                 categoryFeedViewModel: categoryFeedViewModel,
                               ),
                         SizeConfig.sW2,
@@ -229,35 +234,35 @@ class PostComponents extends StatelessWidget {
                           onTap: () {
                             Get.to(
                               () => Comments(
-                                postId: postid,
+                                postId: postId,
                                 profileImage: profileImage,
                               ),
                             );
                           },
                           child: CommonImageScale(
-                            img: IconsWidgets.chatImage,
                             scale: 0.8.w,
                             color: black92White,
+                            img: IconsWidgets.chatImage,
                           ),
                         ),
                         SizeConfig.sW2,
                         CommonImageScale(
-                          img: IconsWidgets.sendImage,
                           scale: 1.w,
                           color: black92White,
+                          img: IconsWidgets.sendImage,
                         ),
                         Spacer(),
                         InkWell(
                           onTap: () {
                             Get.to(
                               () => Comments(
-                                postId: postid,
+                                postId: postId,
                                 profileImage: profileImage,
                               ),
                             );
                           },
                           child: AdoroText(
-                            "$commentcounter Comments",
+                            "$commentCounter Comments",
                             fontSize: 10.sp,
                             color: black92White,
                           ),
@@ -346,7 +351,7 @@ class PostComponents extends StatelessWidget {
                             if (likeProfile!.length == 1) SizeConfig.sW2,
                             InkWell(
                               onTap: () => Get.to(
-                                () => LikeScreen(likeProfile: likeProfile),
+                                () => LikeScreen(likeProfile: postId),
                               ),
                               child: Text.rich(
                                 TextSpan(
@@ -377,7 +382,7 @@ class PostComponents extends StatelessWidget {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: '$likecounter other',
+                                      text: '$likeCounter other',
                                       style: TextStyle(
                                         fontSize: 9.sp,
                                         color: black92White,
@@ -402,6 +407,10 @@ class PostComponents extends StatelessWidget {
     );
   }
 
+  SendFollowReqModel sendFollowReqModel = SendFollowReqModel();
+
+  DeleteFollowReqModel deleteFollowReqModel = DeleteFollowReqModel();
+
   ReportPostReqModel reportPostReqModel = ReportPostReqModel();
 
   dotDialog({
@@ -409,80 +418,109 @@ class PostComponents extends StatelessWidget {
     required CategoryFeedViewModel categoryFeedViewModel,
   }) {
     Get.bottomSheet(
-      Container(
-        decoration: BoxDecoration(
-          color: ColorUtils.white,
-          borderRadius: BorderRadius.horizontal(
-            left: Radius.circular(5.w),
-            right: Radius.circular(5.w),
+      GetBuilder<FollowFollowingViewModel>(builder: (followFollowingViewModel) {
+        return Container(
+          decoration: BoxDecoration(
+            color: ColorUtils.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(5.w),
+              topRight: Radius.circular(5.w),
+            ),
           ),
-        ),
-        height: 70.w,
-        width: 100.w,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: 0.5.w,
-                    width: 40.w,
-                    color: ColorUtils.black92,
-                  ),
-                ],
-              ),
-              SizeConfig.sH3,
-              bottomComponents(
-                image: 'assets/icons/share.png',
-                text: 'Share via',
-                onTap: () {},
-              ),
-              SizeConfig.sH3,
-              bottomComponents(
-                image: 'assets/icons/link.png',
-                text: 'Copy link',
-                onTap: () {},
-              ),
-              SizeConfig.sH3,
-              bottomComponents(
-                image: 'assets/icons/unfollow.png',
-                text: 'Unfollow',
-                onTap: () {},
-              ),
-              SizeConfig.sH3,
-              bottomComponents(
-                image: "assets/icons/report.png",
-                text: 'Report post',
-                onTap: () async {
-                  reportPostReqModel.postId = postIdArg.toString();
-                  await categoryFeedViewModel.reportPost(reportPostReqModel);
+          height: 70.w,
+          width: 100.w,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      height: 0.5.w,
+                      width: 40.w,
+                      color: ColorUtils.black92,
+                    ),
+                  ],
+                ),
+                SizeConfig.sH3,
+                bottomComponents(
+                  image: IconsWidgets.shareImages,
+                  text: 'Share via',
+                  onTap: () {},
+                ),
+                SizeConfig.sH3,
+                bottomComponents(
+                  onTap: () {},
+                  text: 'Copy link',
+                  image: IconsWidgets.linkImages,
+                ),
+                SizeConfig.sH3,
+                bottomComponents(
+                  image: IconsWidgets.unfollowImages,
+                  text: categoryFeedViewModel.followUnfollow[userId] == true
+                      ? "Follow"
+                      : "Unfollow",
+                  onTap: () async {
+                    if (categoryFeedViewModel.followUnfollow[userId] == true) {
+                      sendFollowReqModel.userId = userId.toString();
+                      await followFollowingViewModel
+                          .sendFollowRequest(sendFollowReqModel);
 
-                  if (categoryFeedViewModel.reportPostApiResponse.status ==
-                      Status.COMPLETE) {
-                    CommonStatusMsgResModel response =
-                        categoryFeedViewModel.reportPostApiResponse.data;
-
-                    if (response.status.toString() == VariableUtils.status200) {
-                      homeController.reportSuccess(true);
-                      homeController.addReport(postIdArg);
+                      if (followFollowingViewModel
+                              .sendFollowRequestApiResponse.status ==
+                          Status.COMPLETE) {
+                        categoryFeedViewModel.setFollowData(userId, false);
+                      }
                     } else {
-                      showSnackBar(
-                        message:
-                            response.msg ?? VariableUtils.somethingWentWrong,
-                      );
+                      deleteFollowReqModel.flag = "feed";
+                      deleteFollowReqModel.id = userId.toString();
+
+                      await followFollowingViewModel
+                          .deleteFollowRequest(deleteFollowReqModel);
+
+                      if (followFollowingViewModel
+                              .sendFollowRequestApiResponse.status ==
+                          Status.COMPLETE) {
+                        categoryFeedViewModel.setFollowData(userId, true);
+                      }
                     }
-                    Get.back();
-                  }
-                },
-              ),
-            ],
+                  },
+                ),
+                SizeConfig.sH3,
+                bottomComponents(
+                  text: 'Report post',
+                  image: IconsWidgets.reportImages,
+                  onTap: () async {
+                    reportPostReqModel.postId = postIdArg.toString();
+                    await categoryFeedViewModel.reportPost(reportPostReqModel);
+
+                    if (categoryFeedViewModel.reportPostApiResponse.status ==
+                        Status.COMPLETE) {
+                      CommonStatusMsgResModel response =
+                          categoryFeedViewModel.reportPostApiResponse.data;
+
+                      if (response.status.toString() ==
+                          VariableUtils.status200) {
+                        homeController.reportSuccess(true);
+                        homeController.addReport(postIdArg);
+                      } else {
+                        showSnackBar(
+                          message:
+                              response.msg ?? VariableUtils.somethingWentWrong,
+                        );
+                      }
+                      Get.back();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -517,7 +555,6 @@ class PostComponents extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  // AdoroText(likeProfile..toString()),
                   Expanded(
                     child: ListView.builder(
                       itemCount: likeProfile?.length ?? 0,
@@ -594,14 +631,17 @@ class PostComponents extends StatelessWidget {
     );
   }
 
-  Widget bottomComponents(
-      {required String text, required String image, required OnTab onTap}) {
+  Widget bottomComponents({
+    required String text,
+    required String image,
+    required OnTab onTap,
+  }) {
     return InkWell(
+      onTap: onTap,
       child: Row(
         children: [
           Image.asset(
             image,
-            // "assets/icons/share.png",
             scale: 1.5.w,
             color: ColorUtils.black,
           ),
@@ -617,21 +657,21 @@ class LikeWidget extends StatelessWidget {
   const LikeWidget({
     super.key,
     required this.disLikePostReqModel,
-    required this.postid,
+    required this.postId,
     required this.categoryFeedViewModel,
   });
 
   final DisLikePostReqModel disLikePostReqModel;
-  final int postid;
+  final int postId;
   final CategoryFeedViewModel categoryFeedViewModel;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        disLikePostReqModel.postId = postid.toString();
+        disLikePostReqModel.postId = postId.toString();
         await categoryFeedViewModel.dislikePost(disLikePostReqModel);
-        await categoryFeedViewModel.changeLikeUnlike(postid, false);
+        await categoryFeedViewModel.setLikeUnlike(postId, false);
       },
       child: Padding(
         padding: EdgeInsets.only(left: 1.w),
@@ -662,8 +702,7 @@ class UnlikeWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         likePostReqModel.postId = postid.toString();
-        categoryFeedViewModel.changeLikeUnlike(postid, true);
-        logs(" =======------ LIKE WIDGET ${categoryFeedViewModel.likeUnlink}");
+        categoryFeedViewModel.setLikeUnlike(postid, true);
         await categoryFeedViewModel.likePost(likePostReqModel);
       },
       child: Padding(

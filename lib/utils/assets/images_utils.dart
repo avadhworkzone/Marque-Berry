@@ -93,6 +93,11 @@ class IconsWidgets {
   static String shareBtnImages = '$iconsbasePath/share_btn.png';
   static String linkImages = '$iconsbasePath/link.png';
 
+  ///home
+  static String shareImages = '$iconsbasePath/share.png';
+  static String unfollowImages = '$iconsbasePath/unfollow.png';
+  static String reportImages = '$iconsbasePath/report.png';
+
   // static Image plusCircleImages = Image.asset(
   //   '$iconsbasePath/plus_circle.png',
   //   scale: 1.w,

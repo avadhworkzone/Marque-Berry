@@ -120,11 +120,9 @@ class _UploadTemplateState extends State<UploadTemplate> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: InkWell(
-              highlightColor: ColorUtils.transparent,
+              onTap: () => selectImage(),
               splashColor: ColorUtils.transparent,
-              onTap: () {
-                selectImage();
-              },
+              highlightColor: ColorUtils.transparent,
               child: Container(
                 height: 80.w,
                 width: 80.w,
@@ -136,7 +134,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
                       )
                     : Image.file(
                         File(selectedImagePath),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
                       ),
               ),
             ),

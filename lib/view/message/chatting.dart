@@ -153,7 +153,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                             String messageFirebase =
                                 snapshot.data?["message"][index]["message"];
 
-                            ///
+                            /// DATE CONVERTER
                             final Timestamp timestamp =
                                 snapshot.data?["message"][index]["date"];
                             final DateTime dateTime = timestamp.toDate();

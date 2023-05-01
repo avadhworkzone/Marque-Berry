@@ -1,21 +1,20 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/commanWidget/loader.dart';
-import 'package:socialv/model/apiModel/responseModel/trending_template_res_model.dart';
 import 'package:socialv/utils/variable_utils.dart';
-import 'package:socialv/view/template/download_template_listview.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/viewModel/template_view_model.dart';
-
-import '../../commanWidget/common_image.dart';
-import '../../model/apis/api_response.dart';
-import '../../utils/assets/images_utils.dart';
-import '../../utils/color_utils.dart';
-import '../../utils/tecell_text.dart';
+import 'package:socialv/view/template/download_template_listview.dart';
+import 'package:socialv/model/apiModel/responseModel/trending_template_res_model.dart';
 
 class TrendingTemplate extends StatelessWidget {
   TrendingTemplate({Key? key}) : super(key: key);
@@ -27,10 +26,7 @@ class TrendingTemplate extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return Scaffold(
-      appBar: customAppbar(
-        title: "Trending Template",
-        context: context,
-      ),
+      appBar: customAppbar(title: "Trending Template", context: context),
       body: GetBuilder<TemplateViewModel>(
         initState: (_) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -43,14 +39,21 @@ class TrendingTemplate extends StatelessWidget {
               templateViewModel.trendingTemplateApiResponse.status ==
                   Status.INITIAL) {
             return Center(child: Loader());
-          } else if (templateViewModel.trendingTemplateApiResponse.status ==
+          }
+
+          if (templateViewModel.trendingTemplateApiResponse.status ==
               Status.ERROR) {
             return Center(child: SomethingWentWrong());
           }
           final TrendingTemplateResModel trendingResponse =
               templateViewModel.trendingTemplateApiResponse.data;
+
           if (trendingResponse.status.toString() == VariableUtils.status500) {
-            return AdoroText(trendingResponse.msg ?? "");
+            return Center(child: AdoroText(trendingResponse.msg ?? ""));
+          }
+
+          if (trendingResponse.data!.isEmpty) {
+            return Center(child: AdoroText(VariableUtils.noDataFound));
           }
 
           return Padding(
@@ -119,5 +122,3 @@ class TrendingTemplate extends StatelessWidget {
     );
   }
 }
-
-//tag :"(2,4)"

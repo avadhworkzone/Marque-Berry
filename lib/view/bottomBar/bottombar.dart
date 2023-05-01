@@ -74,7 +74,7 @@ class _BottomBarState extends State<BottomBar> {
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: Row(
                           children: [
-                            bottombarIcon(
+                            bottomBarIcon(
                               index: 0,
                               img: bottomBarController.selectedIndex == 0
                                   ? '$bottomPath${PreferenceUtils.getString(key: 'mode')}_home_selected.png'
@@ -83,7 +83,7 @@ class _BottomBarState extends State<BottomBar> {
                               controller: bottomBarController,
                             ),
                             // const Spacer(),
-                            bottombarIcon(
+                            bottomBarIcon(
                               index: 1,
                               context: context,
                               img:
@@ -91,7 +91,7 @@ class _BottomBarState extends State<BottomBar> {
                               controller: bottomBarController,
                             ),
                             // const Spacer(),
-                            bottombarIcon(
+                            bottomBarIcon(
                               index: 2,
                               context: context,
                               controller: bottomBarController,
@@ -100,7 +100,7 @@ class _BottomBarState extends State<BottomBar> {
                                   : '$bottomPath${PreferenceUtils.getString(key: 'mode')}_campaign.png',
                             ),
                             // const Spacer(),
-                            bottombarIcon(
+                            bottomBarIcon(
                               index: 3,
                               context: context,
                               img: bottomBarController.selectedIndex == 3
@@ -126,7 +126,7 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  Widget bottombarIcon({
+  Widget bottomBarIcon({
     required int index,
     required String img,
     // required double scale,
