@@ -10,6 +10,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import '../../commanWidget/common_appbar.dart';
+import '../../utils/assets/images_utils.dart';
 
 class DownloadTemplateList extends StatelessWidget {
   final String title;
@@ -81,7 +82,7 @@ class DownloadTemplateList extends StatelessWidget {
                                           ),
                                           errorBuilder: (context, obj, stack) =>
                                               Image.asset(
-                                            'assets/icons/user.png',
+                                            IconsWidgets.userImages,
                                           ),
                                           fit: BoxFit.cover,
                                         ),
@@ -108,7 +109,7 @@ class DownloadTemplateList extends StatelessWidget {
                                             height: 13.w,
                                             width: 27.w,
                                             child: Image.asset(
-                                              'assets/icons/share_icon_btn.png',
+                                              IconsWidgets.shareIconBtnImages,
                                               fit: BoxFit.fill,
                                             ),
                                           ),
@@ -124,7 +125,7 @@ class DownloadTemplateList extends StatelessWidget {
                                             height: 13.w,
                                             width: 30.w,
                                             child: Image.asset(
-                                              'assets/icons/submit_icon_btn.png',
+                                              IconsWidgets.submitBtnImages,
                                               fit: BoxFit.fill,
                                             ),
                                           ),

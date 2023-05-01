@@ -330,7 +330,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                 onTap: () =>
                                                     Get.to(() => TagAPeople()),
                                                 child: CommonImageScale(
-                                                  img: 'assets/icons/tag.png',
+                                                  img: IconsWidgets.tagImages,
                                                   color: black92White,
                                                   scale: 1.2.w,
                                                 ),
@@ -541,7 +541,7 @@ class UploadPhoto extends StatelessWidget {
               title: VariableUtils.uploadAPhoto,
               sharePostController: sharePostController,
               uploadType: "image",
-              icon: 'assets/icons/image.png',
+              icon: IconsWidgets.imageImages,
             ),
           ),
           Divider(color: blackWhite, thickness: 1),
@@ -550,7 +550,7 @@ class UploadPhoto extends StatelessWidget {
             child: CommonUploadTile(
               sharePostController: sharePostController,
               uploadType: "video",
-              icon: 'assets/icons/video.png',
+              icon: IconsWidgets.videoImages,
               title: VariableUtils.uploadAVideo,
             ),
           ),
@@ -560,7 +560,7 @@ class UploadPhoto extends StatelessWidget {
             child: CommonUploadTile(
               sharePostController: sharePostController,
               uploadType: 'gif',
-              icon: 'assets/icons/gif.png',
+              icon: IconsWidgets.gifImages,
               title: VariableUtils.uploadAGIF,
             ),
           ),
@@ -570,7 +570,7 @@ class UploadPhoto extends StatelessWidget {
             child: CommonUploadTile(
               sharePostController: sharePostController,
               uploadType: 'template',
-              icon: 'assets/icons/choose.png',
+              icon: IconsWidgets.chooseImages,
               title: VariableUtils.chooseATemplate,
             ),
           ),
@@ -580,7 +580,7 @@ class UploadPhoto extends StatelessWidget {
             child: CommonUploadTile(
               sharePostController: sharePostController,
               uploadType: 'tag',
-              icon: 'assets/icons/tag.png',
+              icon: IconsWidgets.tagImages,
               title: VariableUtils.tagAFriend,
             ),
           ),

@@ -59,7 +59,7 @@ class CommonCoverImage extends StatelessWidget {
       fit: BoxFit.fill,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(
-          'assets/images/bgProfile.png',
+          ImagesWidgets.bgProfileImage,
           fit: BoxFit.fill,
         );
       },
