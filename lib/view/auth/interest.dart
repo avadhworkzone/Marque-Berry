@@ -131,44 +131,51 @@ class InterestScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       height: 30.w,
-                                      child: OctoImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                          "${memeResponse.data?[index].imageUrl ?? ""}",
-                                        ),
-                                        progressIndicatorBuilder:
-                                            (context, progress) {
-                                          double? value;
-                                          var expectedBytes =
-                                              progress?.expectedTotalBytes;
-                                          if (progress != null &&
-                                              expectedBytes != null) {
-                                            value =
-                                                progress.cumulativeBytesLoaded /
-                                                    expectedBytes;
-                                          }
-                                          return Center(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.w),
-                                              child: CircularProgressIndicator(
-                                                value: value,
-                                                color: blackWhite,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        errorBuilder:
-                                            (context, error, stacktrace) =>
-                                                Padding(
-                                          padding: EdgeInsets.all(7.w),
-                                          child: CommonImage(
-                                            img: IconsWidgets
-                                                .imageNotFoundImages,
-                                            color: blackWhite,
-                                          ),
-                                        ),
-                                      ),
+                                      child: Image(
+                                          image: AssetImage(
+                                              "assets/images/categrories/${memeResponse.data?[index].title?.toLowerCase().replaceAll(" ", "") ?? ""}.png"),
+                                          fit: BoxFit.cover),
                                     ),
+                                    // Container(
+                                    //   height: 30.w,
+                                    //   child: OctoImage(
+                                    //     fit: BoxFit.cover,
+                                    //     image: NetworkImage(
+                                    //       "${memeResponse.data?[index].imageUrl ?? ""}",
+                                    //     ),
+                                    //     progressIndicatorBuilder:
+                                    //         (context, progress) {
+                                    //       double? value;
+                                    //       var expectedBytes =
+                                    //           progress?.expectedTotalBytes;
+                                    //       if (progress != null &&
+                                    //           expectedBytes != null) {
+                                    //         value =
+                                    //             progress.cumulativeBytesLoaded /
+                                    //                 expectedBytes;
+                                    //       }
+                                    //       return Center(
+                                    //         child: Padding(
+                                    //           padding: EdgeInsets.all(8.w),
+                                    //           child: CircularProgressIndicator(
+                                    //             value: value,
+                                    //             color: blackWhite,
+                                    //           ),
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //     errorBuilder:
+                                    //         (context, error, stacktrace) =>
+                                    //             Padding(
+                                    //       padding: EdgeInsets.all(7.w),
+                                    //       child: CommonImage(
+                                    //         img: IconsWidgets
+                                    //             .imageNotFoundImages,
+                                    //         color: blackWhite,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     Align(
                                       alignment: Alignment.bottomCenter,
                                       child: AdoroText(
@@ -241,6 +248,7 @@ class InterestScreen extends StatelessWidget {
   }
 
   UserCategoryReqModel userCategoryReqModel = UserCategoryReqModel();
+
   userDetails({required AuthViewModel authViewModel}) async {
     if (PreferenceUtils.getCategory().isNotEmpty) {
       categoryDataList = (jsonDecode(PreferenceUtils.getCategory()) as List)

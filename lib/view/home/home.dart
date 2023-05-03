@@ -81,6 +81,8 @@ class _HomeState extends State<Home> {
           GestureDetector(
             onTap: () => Get.to(
               () => MessageList(),
+              transition: Transition.rightToLeft,
+              duration: Duration(milliseconds: 400),
             ),
             child: CommonImageHeightWidth(
               img: IconsWidgets.messageImage,

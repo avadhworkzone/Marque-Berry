@@ -43,6 +43,7 @@ class ViewResult extends StatelessWidget {
                         BoxShadow(blurRadius: 2, color: Colors.grey),
                       ],
                       borderRadius: BorderRadius.circular(4.w)),
+
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

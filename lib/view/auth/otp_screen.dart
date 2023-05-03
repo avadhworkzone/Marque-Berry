@@ -15,7 +15,7 @@ import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/view/auth/done_screen.dart';
+
 import 'package:socialv/viewModel/auth_view_model.dart';
 import '../../commanWidget/custom_btn.dart';
 import '../../model/apiModel/responseModel/login_res_model.dart';
@@ -23,6 +23,7 @@ import '../../utils/color_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/tecell_text.dart';
 import '../../utils/variable_utils.dart';
+import 'interest.dart';
 
 class ValidateOtpScreen extends StatefulWidget {
   @override
@@ -217,10 +218,10 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     key: PreferenceUtils.login,
                                     value: 1,
                                   );
-                                  Get.to(() => DoneScreen(
-                                        isCampaign: false,
+                                  Get.to(() => InterestScreen(
+                                      // isCampaign: false,
                                       ));
-                                  Get.offAllNamed(RouteHelper.getDoneRoute());
+                                  // Get.offAllNamed(RouteHelper.getDoneRoute());
                                 } else {
                                   showSnackBar(
                                     message: VariableUtils.somethingWentWrong,

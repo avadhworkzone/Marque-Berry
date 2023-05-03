@@ -14,7 +14,9 @@ import '../../commanWidget/custom_btn.dart';
 import '../../commanWidget/custom_snackbar.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
+import '../../utils/custom_text_field.dart';
 import '../../utils/size_config_utils.dart';
+import '../../utils/validation_utils.dart';
 import '../../utils/variable_utils.dart';
 import '../../viewModel/template_view_model.dart';
 
@@ -29,6 +31,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
   TemplateViewModel templateViewModel = Get.find<TemplateViewModel>();
 
   int selectedTabIndex = 0;
+  var uploadTemplateCapiion = TextEditingController();
 
   @override
   void initState() {
@@ -47,111 +50,132 @@ class _UploadTemplateState extends State<UploadTemplate> {
           onTap: () => Get.back(),
         ),
       ),
-      body: Column(
-        children: [
-          SizeConfig.sH3,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              UploadBtn(
-                height: 5.h,
-                width: 30.w,
-                onTap: () {
-                  setState(() {
-                    selectedTabIndex = 0;
-                  });
-                },
-                decoration: selectedTabIndex == 0
-                    ? BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            ColorUtils.linearGradient1,
-                            ColorUtils.linearGradient2,
-                            ColorUtils.linearGradient3,
-                            ColorUtils.linearGradient4,
-                            ColorUtils.linearGradient5,
-                            ColorUtils.linearGradient6,
-                            ColorUtils.linearGradient7,
-                          ],
-                          stops: [0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizeConfig.sH3,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                UploadBtn(
+                  height: 5.h,
+                  width: 30.w,
+                  onTap: () {
+                    setState(() {
+                      selectedTabIndex = 0;
+                    });
+                  },
+                  decoration: selectedTabIndex == 0
+                      ? BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              ColorUtils.linearGradient1,
+                              ColorUtils.linearGradient2,
+                              ColorUtils.linearGradient3,
+                              ColorUtils.linearGradient4,
+                              ColorUtils.linearGradient5,
+                              ColorUtils.linearGradient6,
+                              ColorUtils.linearGradient7,
+                            ],
+                            stops: [0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8],
+                          ),
+                          borderRadius: BorderRadius.circular(2.w),
+                        )
+                      : BoxDecoration(),
+                  text: 'Standard',
+                  textColor: selectedTabIndex == 0
+                      ? ColorUtils.white
+                      : ColorUtils.black92,
+                ),
+                SizeConfig.sW5,
+                UploadBtn(
+                  height: 5.h,
+                  width: 30.w,
+                  onTap: () {
+                    setState(() {
+                      selectedTabIndex = 1;
+                    });
+                  },
+                  decoration: selectedTabIndex == 0
+                      ? BoxDecoration()
+                      : BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              ColorUtils.linearGradient1,
+                              ColorUtils.linearGradient2,
+                              ColorUtils.linearGradient3,
+                              ColorUtils.linearGradient4,
+                              ColorUtils.linearGradient5,
+                              ColorUtils.linearGradient6,
+                              ColorUtils.linearGradient7,
+                            ],
+                            stops: [0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8],
+                          ),
+                          borderRadius: BorderRadius.circular(2.w),
                         ),
-                        borderRadius: BorderRadius.circular(2.w),
-                      )
-                    : BoxDecoration(),
-                text: 'Standard',
-                textColor: selectedTabIndex == 0
-                    ? ColorUtils.white
-                    : ColorUtils.black92,
-              ),
-              SizeConfig.sW5,
-              UploadBtn(
-                height: 5.h,
-                width: 30.w,
-                onTap: () {
-                  setState(() {
-                    selectedTabIndex = 1;
-                  });
-                },
-                decoration: selectedTabIndex == 0
-                    ? BoxDecoration()
-                    : BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            ColorUtils.linearGradient1,
-                            ColorUtils.linearGradient2,
-                            ColorUtils.linearGradient3,
-                            ColorUtils.linearGradient4,
-                            ColorUtils.linearGradient5,
-                            ColorUtils.linearGradient6,
-                            ColorUtils.linearGradient7,
-                          ],
-                          stops: [0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8],
+                  text: 'Licensed',
+                  textColor: selectedTabIndex == 0
+                      ? ColorUtils.black92
+                      : ColorUtils.white,
+                ),
+              ],
+            ),
+            SizeConfig.sH6,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: InkWell(
+                onTap: () => selectImage(),
+                splashColor: ColorUtils.transparent,
+                highlightColor: ColorUtils.transparent,
+                child: Container(
+                  height: 80.w,
+                  width: 80.w,
+                  child: selectedImagePath == ""
+                      ? Image.asset(
+                          '$imagesbasePath/Vector.png',
+                          scale: 1.1.w,
+                          color: blackWhite,
+                        )
+                      : Image.file(
+                          File(selectedImagePath),
+                          fit: BoxFit.contain,
                         ),
-                        borderRadius: BorderRadius.circular(2.w),
-                      ),
-                text: 'Licensed',
-                textColor: selectedTabIndex == 0
-                    ? ColorUtils.black92
-                    : ColorUtils.white,
-              ),
-            ],
-          ),
-          SizeConfig.sH6,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: InkWell(
-              onTap: () => selectImage(),
-              splashColor: ColorUtils.transparent,
-              highlightColor: ColorUtils.transparent,
-              child: Container(
-                height: 80.w,
-                width: 80.w,
-                child: selectedImagePath == ""
-                    ? Image.asset(
-                        '$imagesbasePath/Vector.png',
-                        scale: 1.1.w,
-                        color: blackWhite,
-                      )
-                    : Image.file(
-                        File(selectedImagePath),
-                        fit: BoxFit.contain,
-                      ),
+                ),
               ),
             ),
-          ),
-          SizeConfig.sH10,
-          CustomBtn(
-            height: 5.h,
-            onTap: () {
-              if (selectedImagePath != "") {
-                uploadTemplateApi(selectedImagePath);
-              } else {
-                showSnackBar(message: "Image not selected");
-              }
-            },
-            text: 'UPLOAD MEME TEMPLATE',
-          ),
-        ],
+            SizeConfig.sH2,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: CommonTextFormField(
+                color: ColorUtils.black,
+                // color: Colors.redAccent,
+                // color: blackWhite,
+                controller: uploadTemplateCapiion,
+                hintText: "Write a wittiest caption",
+                hintStyle: TextStyle(
+                    color: ColorUtils.black92,
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.bold),
+                keyboardType: TextInputType.name,
+                validator: (v) => userValidation(v),
+                // denyInputFormatters: RegularExpression.noSpaceAllowPattern,
+                // allowInputFormatters: RegularExpression.nameKeyboardPattern,
+              ),
+            ),
+            SizeConfig.sH5,
+            CustomBtn(
+              height: 5.h,
+              onTap: () {
+                if (selectedImagePath != "") {
+                  uploadTemplateApi(selectedImagePath);
+                } else {
+                  showSnackBar(message: "Image not selected");
+                }
+              },
+              text: 'UPLOAD MEME TEMPLATE',
+            ),
+          ],
+        ),
       ),
     );
   }

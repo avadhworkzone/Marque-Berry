@@ -12,6 +12,7 @@ import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/auth/login_screen.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
 import '../../viewModel/connectivity_view_model.dart';
 
@@ -156,7 +157,7 @@ class Setting extends StatelessWidget {
                                           child: Padding(
                                             padding: EdgeInsets.all(0.8.w),
                                             child: Image.asset(
-                                              "assets/icons/light.png",
+                                              IconsWidgets.lightImages,
                                               color: ColorUtils.black,
                                             ),
                                           ),
@@ -179,7 +180,7 @@ class Setting extends StatelessWidget {
                                           child: Padding(
                                             padding: EdgeInsets.all(0.8.w),
                                             child: Image.asset(
-                                              "assets/icons/dark.png",
+                                              IconsWidgets.darkImages,
                                             ),
                                           ),
                                         ),

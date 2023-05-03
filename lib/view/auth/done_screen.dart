@@ -27,6 +27,7 @@ class DoneScreen extends StatelessWidget {
             height: 25.h,
             width: 50.w,
             decoration: DecorationUtils.doneDecoration(context),
+
             child: ImagesWidgets.verifiedImage,
           ),
           SizeConfig.sH10,

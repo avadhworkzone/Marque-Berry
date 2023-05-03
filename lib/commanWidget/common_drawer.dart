@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/typedef_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -66,6 +67,7 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
               ),
+              SizeConfig.sH2,
               drawerData(
                 onTap: () {
                   Get.back();
