@@ -18,6 +18,7 @@ import 'package:socialv/model/apiModel/responseModel/update_user_res_model.dart'
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/app_services/common_profile_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -150,30 +151,20 @@ class EditProfile extends StatelessWidget {
     }
   }
 
-  // updateCoverImage() async {
-  //   updateCoverPicReqModel.coverPhoto = editProfileController.coverImagePath;
-  //
-  //   await profileViewModel.updateUserCoverPic(updateCoverPicReqModel);
-  //
-  //   if (profileViewModel.updateUserProfilePicApiResponse.status ==
-  //       Status.COMPLETE) {
-  //     final UpdateCoverPicResModel updateCoverPicResModel =
-  //         profileViewModel.updateUserCoverPicApiResponse.data;
-  //
-  //     if (updateCoverPicResModel.status.toString() == VariableUtils.status200) {
-  //       showSnackBar(
-  //         message: updateCoverPicResModel.message ??
-  //             VariableUtils.somethingWentWrong,
-  //         snackbarSuccess: true,
-  //       );
-  //     } else {
-  //       showSnackBar(
-  //         message: updateCoverPicResModel.message ??
-  //             VariableUtils.somethingWentWrong,
-  //       );
-  //     }
-  //   }
-  // }
+  updateProfileBtn(context) async {
+    FocusScope.of(context).unfocus();
+    if (username.text.isEmpty ||
+        mailId.text.isEmpty ||
+        bankName.text.isEmpty ||
+        ifscCode.text.isEmpty ||
+        accountNumber.text.isEmpty ||
+        fullName.text.isEmpty ||
+        beneficiaryName.text.isEmpty) {
+      showSnackBar(message: "Fields is required");
+    } else {
+      await updateProfileData();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +186,7 @@ class EditProfile extends StatelessWidget {
                         Status.LOADING ||
                     profileViewModel.getUserProfileApiResponse.status ==
                         Status.INITIAL) return Center(child: Loader());
+
                 if (profileViewModel.getUserProfileApiResponse.status ==
                     Status.ERROR) return Center(child: SomethingWentWrong());
 
@@ -304,7 +296,9 @@ class EditProfile extends StatelessWidget {
                                             splashRadius: 5.w,
                                             onPressed: () {
                                               editProfileController
-                                                  .pickProfileImage();
+                                                  .pickProfileImage(
+                                                context: context,
+                                              );
                                             },
                                             icon: Icon(
                                               Icons.edit,
@@ -326,6 +320,8 @@ class EditProfile extends StatelessWidget {
                                             .profileImagePath !=
                                         "") {
                                       await updateProfileImage();
+                                    } else {
+                                      updateProfileBtn(context);
                                     }
                                   },
                                   child: Container(
@@ -480,24 +476,6 @@ class EditProfile extends StatelessWidget {
                         ),
                       ),
                       SizeConfig.sH2,
-                      CustomBtn(
-                        onTap: () async {
-                          FocusScope.of(context).unfocus();
-                          if (username.text.isEmpty ||
-                              mailId.text.isEmpty ||
-                              bankName.text.isEmpty ||
-                              ifscCode.text.isEmpty ||
-                              accountNumber.text.isEmpty ||
-                              fullName.text.isEmpty ||
-                              beneficiaryName.text.isEmpty) {
-                            showSnackBar(message: "Fields is required");
-                          } else {
-                            await updateProfileData();
-                          }
-                        },
-                        text: 'Update account',
-                      ),
-                      SizeConfig.sH2,
                     ],
                   ),
                 );
@@ -510,12 +488,12 @@ class EditProfile extends StatelessWidget {
   }
 }
 
+CropImage cropImageClass = CropImage();
+
 class EditProfileController extends GetxController {
   String profileImagePath = "";
-  // String coverImagePath = "";
-  // String sourcePath = "";
 
-  pickProfileImage() async {
+  pickProfileImage({required BuildContext context}) async {
     profileImagePath = "";
 
     try {
@@ -524,14 +502,17 @@ class EditProfileController extends GetxController {
       );
       if (result != null) {
         PlatformFile file = result.files.first;
-        profileImagePath = file.path!;
-      } else {
-        profileImagePath = "";
+        // profileImagePath = file.path!;
+        final cropImagePath = await cropImageClass.cropImage(
+          image: File(file.path!),
+          isBackGround: false,
+          context: context,
+        );
+
+        profileImagePath = cropImagePath?.path ?? '';
       }
     } catch (e) {
-      showSnackBar(
-        message: "Profile image not selected.",
-      );
+      logs("PROFILE IMAGE CATCH $e");
     }
     update();
   }

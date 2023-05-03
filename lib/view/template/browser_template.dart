@@ -10,6 +10,7 @@ import 'package:socialv/model/apiModel/responseModel/browser_template_res.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
@@ -19,9 +20,14 @@ import '../../commanWidget/common_image.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/variable_utils.dart';
 
-class BrowserTemplate extends StatelessWidget {
+class BrowserTemplate extends StatefulWidget {
   BrowserTemplate({Key? key}) : super(key: key);
 
+  @override
+  State<BrowserTemplate> createState() => _BrowserTemplateState();
+}
+
+class _BrowserTemplateState extends State<BrowserTemplate> {
   BrowserTemplateController browserTemplateController =
       Get.find<BrowserTemplateController>();
 
@@ -31,7 +37,7 @@ class BrowserTemplate extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
 
-    var search = TextEditingController();
+    // var search = TextEditingController();
 
     return Scaffold(
       appBar: customAppbar(title: "Browse Template", context: context),
@@ -41,6 +47,8 @@ class BrowserTemplate extends StatelessWidget {
             initState: (_) {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                 await templateViewModel.browserTemplate();
+                browserTemplateController.changeTab(0);
+                browserTemplateController.searchFunction("");
               });
             },
             builder: (browserTemplateController) {
@@ -59,6 +67,27 @@ class BrowserTemplate extends StatelessWidget {
                   VariableUtils.status500) {
                 return AdoroText(browserResponse.msg ?? "");
               }
+
+              List<Standard> standardList =
+                  browserResponse.data?.standard ?? [];
+
+              List<Standard> licensedList =
+                  browserResponse.data?.licensed ?? [];
+
+              if (browserTemplateController.search.isNotEmpty) {
+                standardList = standardList
+                    .where((element) => element.id
+                        .toString()
+                        .contains(browserTemplateController.search))
+                    .toList();
+
+                licensedList = licensedList
+                    .where((element) => element.id
+                        .toString()
+                        .contains(browserTemplateController.search))
+                    .toList();
+              }
+
               return Column(
                 children: [
                   SizeConfig.sH2,
@@ -75,10 +104,11 @@ class BrowserTemplate extends StatelessWidget {
                       ],
                     ),
                     child: TextFormField(
-                      controller: search,
-                      cursorColor:
-                          Theme.of(context).textTheme.titleSmall?.color,
-                      inputFormatters: [],
+                      cursorColor: blackWhite,
+                      onChanged: (value) {
+                        browserTemplateController.searchFunction(value);
+                        setState(() {});
+                      },
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: whiteBlack2E,
@@ -89,21 +119,9 @@ class BrowserTemplate extends StatelessWidget {
                           padding: EdgeInsets.all(2.w),
                           child: Icon(Icons.search, color: blackWhite),
                         ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade200,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade200,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade200,
-                          ),
-                        ),
+                        border: border,
+                        focusedBorder: border,
+                        enabledBorder: border,
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: 0.w,
                           vertical: 3.w,
@@ -123,68 +141,62 @@ class BrowserTemplate extends StatelessWidget {
                           splashColor: ColorUtils.transparent,
                           highlightColor: ColorUtils.transparent,
                           onTap: () => browserTemplateController.changeTab(0),
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Spacer(),
-                                Container(
-                                  width: 48.w,
-                                  child: Center(
-                                    child: AdoroText(
-                                      "Standard",
-                                      color:
-                                          browserTemplateController.tabIndex ==
-                                                  0
-                                              ? ColorUtils.blueB9
-                                              : black92White,
-                                      fontWeight: FontWeightClass.fontWeight700,
-                                    ),
+                          child: Column(
+                            children: [
+                              Spacer(),
+                              Container(
+                                width: 48.w,
+                                child: Center(
+                                  child: AdoroText(
+                                    "Standard",
+                                    color:
+                                        browserTemplateController.tabIndex == 0
+                                            ? ColorUtils.blueB9
+                                            : black92White,
+                                    fontWeight: FontWeightClass.fontWeight700,
                                   ),
                                 ),
-                                Spacer(),
-                                Container(
-                                  height: 0.7.w,
-                                  width: 45.w,
-                                  color: browserTemplateController.tabIndex == 0
-                                      ? ColorUtils.blueB9
-                                      : ColorUtils.black92.withOpacity(0.2),
-                                ),
-                              ],
-                            ),
+                              ),
+                              Spacer(),
+                              Container(
+                                height: 0.7.w,
+                                width: 45.w,
+                                color: browserTemplateController.tabIndex == 0
+                                    ? ColorUtils.blueB9
+                                    : ColorUtils.black92.withOpacity(0.2),
+                              ),
+                            ],
                           ),
                         ),
                         InkWell(
                           splashColor: ColorUtils.transparent,
                           highlightColor: ColorUtils.transparent,
                           onTap: () => browserTemplateController.changeTab(1),
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Spacer(),
-                                Container(
-                                  width: 48.w,
-                                  child: Center(
-                                    child: AdoroText(
-                                      "Licensed",
-                                      fontWeight: FontWeightClass.fontWeight700,
-                                      color:
-                                          browserTemplateController.tabIndex ==
-                                                  1
-                                              ? ColorUtils.blueB9
-                                              : black92White,
-                                    ),
+                          child: Column(
+                            children: [
+                              Spacer(),
+                              Container(
+                                width: 48.w,
+                                child: Center(
+                                  child: AdoroText(
+                                    "Licensed",
+                                    fontWeight: FontWeightClass.fontWeight700,
+                                    color:
+                                        browserTemplateController.tabIndex == 1
+                                            ? ColorUtils.blueB9
+                                            : black92White,
                                   ),
                                 ),
-                                Spacer(),
-                                Container(
-                                  height: 0.7.w,
-                                  width: 45.w,
-                                  color: browserTemplateController.tabIndex == 1
-                                      ? ColorUtils.blueB9
-                                      : ColorUtils.black92.withOpacity(0.2),
-                                ),
-                              ],
-                            ),
+                              ),
+                              Spacer(),
+                              Container(
+                                height: 0.7.w,
+                                width: 45.w,
+                                color: browserTemplateController.tabIndex == 1
+                                    ? ColorUtils.blueB9
+                                    : ColorUtils.black92.withOpacity(0.2),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -192,152 +204,165 @@ class BrowserTemplate extends StatelessWidget {
                   ),
                   SizeConfig.sH3,
                   browserTemplateController.tabIndex == 0
-                      ? InkWell(
-                          splashColor: ColorUtils.transparent,
-                          highlightColor: ColorUtils.transparent,
-                          onTap: () {
-                            Get.to(
-                              () => DownloadTemplateList(
-                                title: 'Standard',
-                                templateList: browserResponse.data!.standard!,
+                      ? standardList.isEmpty
+                          ? Expanded(
+                              child: Center(
+                                child: AdoroText(VariableUtils.noDataFound),
                               ),
-                            );
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: browserResponse.data?.standard?.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                mainAxisSpacing: 3.2.w,
-                                crossAxisSpacing: 3.2.w,
-                              ),
-                              itemBuilder: (c, i) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(1.5.w),
-                                  child: OctoImage(
-                                    fit: BoxFit.cover,
-                                    width: 24,
-                                    height: 24,
-                                    image: NetworkImage(
-                                      browserResponse
-                                          .data!.standard![i].templateUrl
-                                          .toString(),
-                                    ),
-                                    // fit: BoxFit.fill,
-                                    progressIndicatorBuilder:
-                                        (context, progress) {
-                                      double? value;
-                                      var expectedBytes =
-                                          progress?.expectedTotalBytes;
-                                      if (progress != null &&
-                                          expectedBytes != null) {
-                                        value = progress.cumulativeBytesLoaded /
-                                            expectedBytes;
-                                      }
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: value,
-                                          color: blackWhite,
-                                        ),
-                                      );
-                                    },
-                                    errorBuilder:
-                                        (context, error, stacktrace) =>
-                                            Container(
-                                      width: 24,
-                                      height: 24,
-                                      color: ColorUtils.grey[200],
-                                      child: Padding(
-                                        padding: EdgeInsets.all(1.w),
-                                        child: CommonImage(
-                                          img: IconsWidgets.userImages,
-                                          color: ColorUtils.black,
-                                        ),
-                                      ),
-                                    ),
+                            )
+                          : InkWell(
+                              splashColor: ColorUtils.transparent,
+                              highlightColor: ColorUtils.transparent,
+                              onTap: () {
+                                Get.to(
+                                  () => DownloadTemplateList(
+                                    title: 'Standard',
+                                    templateList: standardList,
                                   ),
                                 );
                               },
-                            ),
-                          ),
-                        )
-                      : InkWell(
-                          splashColor: ColorUtils.transparent,
-                          highlightColor: ColorUtils.transparent,
-                          onTap: () {
-                            Get.to(
-                              () => DownloadTemplateList(
-                                title: 'Licensed',
-                                templateList: browserResponse.data!.licensed!,
-                              ),
-                            );
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: browserResponse.data?.licensed?.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                mainAxisSpacing: 3.2.w,
-                                crossAxisSpacing: 3.2.w,
-                              ),
-                              itemBuilder: (c, i) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(1.5.w),
-                                  child: OctoImage(
-                                    fit: BoxFit.cover,
-                                    width: 24,
-                                    height: 24,
-                                    image: NetworkImage(
-                                      browserResponse
-                                              .data!.licensed![i].templateUrl ??
-                                          '',
-                                    ),
-                                    // fit: BoxFit.fill,
-                                    progressIndicatorBuilder:
-                                        (context, progress) {
-                                      double? value;
-                                      var expectedBytes =
-                                          progress?.expectedTotalBytes;
-                                      if (progress != null &&
-                                          expectedBytes != null) {
-                                        value = progress.cumulativeBytesLoaded /
-                                            expectedBytes;
-                                      }
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: value,
-                                          color: blackWhite,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: standardList.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    mainAxisSpacing: 3.2.w,
+                                    crossAxisSpacing: 3.2.w,
+                                  ),
+                                  itemBuilder: (c, i) {
+                                    return ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(1.5.w),
+                                      child: OctoImage(
+                                        fit: BoxFit.cover,
+                                        width: 24,
+                                        height: 24,
+                                        image: NetworkImage(
+                                          standardList[i].templateUrl ?? "",
                                         ),
-                                      );
-                                    },
-                                    errorBuilder:
-                                        (context, error, stacktrace) =>
-                                            Container(
-                                      width: 24,
-                                      height: 24,
-                                      color: ColorUtils.grey[200],
-                                      child: Padding(
-                                        padding: EdgeInsets.all(1.w),
-                                        child: CommonImage(
-                                          img: IconsWidgets.userImages,
-                                          color: ColorUtils.black,
+                                        // fit: BoxFit.fill,
+                                        progressIndicatorBuilder:
+                                            (context, progress) {
+                                          double? value;
+                                          var expectedBytes =
+                                              progress?.expectedTotalBytes;
+                                          if (progress != null &&
+                                              expectedBytes != null) {
+                                            value =
+                                                progress.cumulativeBytesLoaded /
+                                                    expectedBytes;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: value,
+                                              color: blackWhite,
+                                            ),
+                                          );
+                                        },
+                                        errorBuilder:
+                                            (context, error, stacktrace) =>
+                                                Container(
+                                          width: 24,
+                                          height: 24,
+                                          color: ColorUtils.grey[200],
+                                          child: Padding(
+                                            padding: EdgeInsets.all(1.w),
+                                            child: CommonImage(
+                                              img: IconsWidgets.userImages,
+                                              color: ColorUtils.black,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
+                      : licensedList.isEmpty
+                          ? Expanded(
+                              child: Center(
+                                child: AdoroText(VariableUtils.noDataFound),
+                              ),
+                            )
+                          : InkWell(
+                              splashColor: ColorUtils.transparent,
+                              highlightColor: ColorUtils.transparent,
+                              onTap: () {
+                                Get.to(
+                                  () => DownloadTemplateList(
+                                    title: 'Licensed',
+                                    templateList:
+                                        browserResponse.data!.licensed!,
                                   ),
                                 );
                               },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: licensedList.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    mainAxisSpacing: 3.2.w,
+                                    crossAxisSpacing: 3.2.w,
+                                  ),
+                                  itemBuilder: (c, i) {
+                                    return ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(1.5.w),
+                                      child: OctoImage(
+                                        fit: BoxFit.cover,
+                                        width: 24,
+                                        height: 24,
+                                        image: NetworkImage(
+                                          licensedList[i].templateUrl ?? '',
+                                        ),
+                                        // fit: BoxFit.fill,
+                                        progressIndicatorBuilder:
+                                            (context, progress) {
+                                          double? value;
+                                          var expectedBytes =
+                                              progress?.expectedTotalBytes;
+                                          if (progress != null &&
+                                              expectedBytes != null) {
+                                            value =
+                                                progress.cumulativeBytesLoaded /
+                                                    expectedBytes;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: value,
+                                              color: blackWhite,
+                                            ),
+                                          );
+                                        },
+                                        errorBuilder:
+                                            (context, error, stacktrace) =>
+                                                Container(
+                                          width: 24,
+                                          height: 24,
+                                          color: ColorUtils.grey[200],
+                                          child: Padding(
+                                            padding: EdgeInsets.all(1.w),
+                                            child: CommonImage(
+                                              img: IconsWidgets.userImages,
+                                              color: ColorUtils.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                 ],
               );
             },
@@ -352,6 +377,12 @@ class BrowserTemplateController extends GetxController {
   int tabIndex = 0;
   changeTab(value) {
     tabIndex = value;
+    update();
+  }
+
+  String search = "";
+  searchFunction(value) {
+    search = value;
     update();
   }
 }

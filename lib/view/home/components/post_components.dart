@@ -461,20 +461,10 @@ class PostComponents extends StatelessWidget {
                 bottomComponents(
                   image: IconsWidgets.unfollowImages,
                   text: categoryFeedViewModel.followUnfollow[userId] == true
-                      ? "Follow"
-                      : "Unfollow",
+                      ? "Unfollow"
+                      : "Follow",
                   onTap: () async {
                     if (categoryFeedViewModel.followUnfollow[userId] == true) {
-                      sendFollowReqModel.userId = userId.toString();
-                      await followFollowingViewModel
-                          .sendFollowRequest(sendFollowReqModel);
-
-                      if (followFollowingViewModel
-                              .sendFollowRequestApiResponse.status ==
-                          Status.COMPLETE) {
-                        categoryFeedViewModel.setFollowData(userId, false);
-                      }
-                    } else {
                       deleteFollowReqModel.flag = "feed";
                       deleteFollowReqModel.id = userId.toString();
 
@@ -485,6 +475,16 @@ class PostComponents extends StatelessWidget {
                               .sendFollowRequestApiResponse.status ==
                           Status.COMPLETE) {
                         categoryFeedViewModel.setFollowData(userId, true);
+                      }
+                    } else {
+                      sendFollowReqModel.userId = userId.toString();
+                      await followFollowingViewModel
+                          .sendFollowRequest(sendFollowReqModel);
+
+                      if (followFollowingViewModel
+                              .sendFollowRequestApiResponse.status ==
+                          Status.COMPLETE) {
+                        categoryFeedViewModel.setFollowData(userId, false);
                       }
                     }
                   },

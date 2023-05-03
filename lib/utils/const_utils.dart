@@ -1,5 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
 class ConstUtils {}
@@ -67,5 +70,45 @@ String chatId(String id1, String id2) {
     return id1 + '-' + id2;
   } else {
     return id2 + '-' + id1;
+  }
+}
+
+OutlineInputBorder border = OutlineInputBorder(
+  borderSide: BorderSide(color: Colors.grey.shade200),
+);
+
+class CropImage {
+  Future<File?> cropImage({
+    required File image,
+    required bool isBackGround,
+    required BuildContext context,
+  }) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: image.path,
+      aspectRatioPresets: isBackGround
+          ? [CropAspectRatioPreset.ratio16x9]
+          : [CropAspectRatioPreset.square],
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          hideBottomControls: true,
+          initAspectRatio: isBackGround
+              ? CropAspectRatioPreset.ratio16x9
+              : CropAspectRatioPreset.square,
+          lockAspectRatio: true,
+        ),
+        IOSUiSettings(
+          minimumAspectRatio: 1.0,
+          hidesNavigationBar: true,
+          aspectRatioLockEnabled: true,
+        )
+      ],
+    );
+    logs('croppedFile:=>$croppedFile');
+    if (croppedFile == null) {
+      return null;
+    }
+
+    return File(croppedFile.path);
   }
 }

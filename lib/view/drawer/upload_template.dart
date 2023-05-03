@@ -14,6 +14,7 @@ import '../../commanWidget/custom_btn.dart';
 import '../../commanWidget/custom_snackbar.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
+import '../../utils/const_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/variable_utils.dart';
 import '../../viewModel/template_view_model.dart';
@@ -156,6 +157,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
     );
   }
 
+  CropImage cropImageClass = CropImage();
   String selectedImagePath = "";
   void selectImage() async {
     try {
@@ -164,7 +166,13 @@ class _UploadTemplateState extends State<UploadTemplate> {
       );
       if (result != null) {
         PlatformFile file = result.files.first;
-        selectedImagePath = file.path!;
+
+        final cropImagePath = await cropImageClass.cropImage(
+          image: File(file.path!),
+          isBackGround: true,
+          context: context,
+        );
+        selectedImagePath = cropImagePath?.path ?? "";
       }
       setState(() {});
     } catch (e) {
@@ -178,7 +186,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
   uploadTemplateApi(imagePath) async {
     uploadTemplateReqModel.template = imagePath;
     uploadTemplateReqModel.tag =
-        selectedTabIndex == 0 ? 'standard' : 'licensed';
+        selectedTabIndex == 1 ? "licensed" : 'standard';
 
     await templateViewModel.uploadTemplate(uploadTemplateReqModel);
 
@@ -190,8 +198,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
           message: uploadTemplateResModel.msg ?? "Upload successfully",
           snackbarSuccess: true,
         );
-      }
-      if (uploadTemplateResModel.status == 500) {
+      } else if (uploadTemplateResModel.status == 500) {
         showSnackBar(
             message:
                 uploadTemplateResModel.msg ?? VariableUtils.somethingWentWrong);

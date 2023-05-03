@@ -116,7 +116,6 @@ class _MyAppState extends State<MyApp> {
   TemplateViewModel templateViewModel = Get.put(TemplateViewModel());
   CreatePostViewModel createPostViewModel = Get.put(CreatePostViewModel());
   CategoryFeedViewModel categoryViewModel = Get.put(CategoryFeedViewModel());
-
   CampaignContestViewModel campaignContestViewModel =
       Get.put(CampaignContestViewModel());
 

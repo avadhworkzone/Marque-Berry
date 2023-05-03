@@ -11,6 +11,7 @@ import 'package:better_player/better_player.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -34,8 +35,9 @@ class SharePost extends StatefulWidget {
 }
 
 class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
-  String dropdownName = '';
-  String dropdownValue = '';
+  // String dropdownName = '';
+  String categoryId = '';
+  String categoryName = '';
 
   final description = TextEditingController();
   SharePostController sharePostController = Get.find<SharePostController>();
@@ -67,8 +69,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                     sharePostController.clearSourcePath();
                   });
-                  logs(
-                      "message========   ${PreferenceUtils.getString(key: PreferenceUtils.profileImage)}");
                 },
                 builder: (createPostViewModel) {
                   return Material(
@@ -79,9 +79,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // AdoroText(
-                              //   "${PreferenceUtils.getString(key: PreferenceUtils.profileImage)}",
-                              // ),
                               Row(
                                 children: [
                                   SizeConfig.sW4,
@@ -107,6 +104,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                   ),
                                   Spacer(),
                                   InkWell(
+                                    splashColor: ColorUtils.transparent,
+                                    highlightColor: ColorUtils.transparent,
                                     onTap: () {
                                       createPostApi(
                                         createPostReqModel,
@@ -129,7 +128,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                                 child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       children: [
@@ -171,9 +169,9 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                     DropdownButton(
                                                       underline: SizedBox(),
                                                       hint: Text(
-                                                        dropdownName == ""
+                                                        categoryName == ""
                                                             ? "Category"
-                                                            : dropdownName,
+                                                            : categoryName,
                                                         style: TextStyle(
                                                           color:
                                                               ColorUtils.black,
@@ -184,12 +182,14 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                       icon: Padding(
                                                         padding: EdgeInsets
                                                             .symmetric(
-                                                                horizontal: 1.w,
-                                                                vertical: 2.w),
+                                                          horizontal: 1.w,
+                                                          vertical: 2.w,
+                                                        ),
                                                         child: Image(
                                                           image: AssetImage(
-                                                              IconsWidgets
-                                                                  .dropdownButtonImage),
+                                                            IconsWidgets
+                                                                .dropdownButtonImage,
+                                                          ),
                                                           height: 4.h,
                                                           width: 4.w,
                                                         ),
@@ -216,11 +216,11 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                               newValue,
                                                         );
                                                         setState(() {
-                                                          dropdownName = index
+                                                          categoryName = index
                                                               .name
                                                               .toString();
-                                                          dropdownValue = index
-                                                              .id
+
+                                                          categoryId = index.id
                                                               .toString();
                                                         });
                                                       },
@@ -263,8 +263,10 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                               sharePostController
                                                   .clearSourcePath();
                                             },
-                                            icon: Icon(Icons.close,
-                                                color: blackWhite),
+                                            icon: Icon(
+                                              Icons.close,
+                                              color: blackWhite,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -274,7 +276,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       Container(
                                         height: 55.w,
                                         width: Get.width,
-                                        // color: ColorUtils.note,
                                         child: Stack(
                                           children: [
                                             if (sharePostController
@@ -339,104 +340,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                           ],
                                         ),
                                       )
-
-                                    //
-                                    // SizeConfig.sH2,
-                                    // if (sharePostController.sourcePath != "" &&
-                                    //     sharePostController.sourceName ==
-                                    //         "template")
-                                    //   Row(
-                                    //     children: [
-                                    //       Expanded(
-                                    //         child: AdoroText(
-                                    //           sharePostController.sourcePath
-                                    //               .split("/")
-                                    //               .last,
-                                    //           color: blackWhite,
-                                    //         ),
-                                    //       ),
-                                    //       IconButton(
-                                    //         splashRadius: 6.w,
-                                    //         onPressed: () {
-                                    //           sharePostController
-                                    //               .clearSourcePath();
-                                    //         },
-                                    //         icon: Icon(Icons.close,
-                                    //             color: blackWhite),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // if (sharePostController.sourcePath != "" &&
-                                    //     sharePostController.sourceName !=
-                                    //         "template")
-                                    //   Container(
-                                    //     height: 55.w,
-                                    //     width: Get.width,
-                                    //     color: ColorUtils.note,
-                                    //     child: Stack(
-                                    //       children: [
-                                    //         if (sharePostController
-                                    //                 .sourceName ==
-                                    //             "image")
-                                    //           Container(
-                                    //             height: 55.w,
-                                    //             width: Get.width,
-                                    //             color: Colors.red,
-                                    //             child: Image.file(
-                                    //               File(sharePostController
-                                    //                   .sourcePath),
-                                    //               fit: BoxFit.fill,
-                                    //             ),
-                                    //           ),
-                                    //         if (sharePostController
-                                    //                     .sourceName ==
-                                    //                 "video" ||
-                                    //             sharePostController
-                                    //                     .sourceName ==
-                                    //                 "gif")
-                                    //           Padding(
-                                    //             padding: EdgeInsets.all(4.w),
-                                    //             child: AspectRatio(
-                                    //               aspectRatio: 18 / 10,
-                                    //               child: BetterPlayer.file(
-                                    //                   sharePostController
-                                    //                       .sourcePath),
-                                    //             ),
-                                    //           ),
-                                    //         Positioned(
-                                    //           right: 0,
-                                    //           child: IconButton(
-                                    //             splashRadius: 2.w,
-                                    //             onPressed: () {
-                                    //               sharePostController
-                                    //                   .clearSourcePath();
-                                    //             },
-                                    //             icon: Icon(
-                                    //               Icons.close,
-                                    //               color: black92White,
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //         Positioned(
-                                    //           left: 0,
-                                    //           bottom: 0,
-                                    //           child: InkWell(
-                                    //             highlightColor:
-                                    //                 ColorUtils.transparent,
-                                    //             splashColor:
-                                    //                 ColorUtils.transparent,
-                                    //             onTap: () =>
-                                    //                 Get.to(() => TagAPeople()),
-                                    //             child: CommonImageScale(
-                                    //               img: 'assets/icons/tag.png',
-                                    //               color: black92White,
-                                    //               scale: 1.2.w,
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       ],
-                                    //     ),
-                                    //   )
                                   ],
                                 ),
                               ),
@@ -466,9 +369,16 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
     );
   }
 
-  createPostApi(CreatePostReqModel createPostReqModel,
-      SharePostController sharePostController) async {
-    if (dropdownValue == "") {
+  final HomeController homeController = Get.find<HomeController>();
+  createPostApi(
+    CreatePostReqModel createPostReqModel,
+    SharePostController sharePostController,
+  ) async {
+    var categoryIndex = categoryDataList
+        .indexWhere((element) => element.id.toString().contains(categoryId));
+    logs("INDEX=====>  ${categoryIndex.toString()}");
+
+    if (categoryId == "") {
       showSnackBar(
         message: "Category not selected",
         snackbarSuccess: false,
@@ -485,7 +395,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
       );
     } else {
       createPostReqModel.content = description.text;
-      createPostReqModel.categoryId = int.parse(dropdownValue);
+      createPostReqModel.categoryId = int.parse(categoryId);
       createPostReqModel.contentUrl = sharePostController.sourcePath;
       createPostReqModel.contentType = sharePostController.sourceName;
 
@@ -510,9 +420,9 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
           message: createPostResModel.msg ?? "Post added successfully",
           snackbarSuccess: true,
         );
+        homeController.tabChange(categoryIndex + 2);
       } else if (createPostViewModel.createPostApiResponse.status ==
           Status.ERROR) {
-        //bottomBarController.pageChange(0);
         showSnackBar(
           message: VariableUtils.somethingWentWrong,
         );
@@ -615,7 +525,7 @@ class CommonUploadTile extends StatelessWidget {
         if (uploadType == "tag") {
           Get.to(() => TagAPeople());
         } else {
-          sharePostController.pickFile(uploadType);
+          sharePostController.pickFile(extension: uploadType, context: context);
         }
       },
       child: Row(
@@ -634,11 +544,16 @@ class CommonUploadTile extends StatelessWidget {
   }
 }
 
+CropImage cropImageClass = CropImage();
+
 class SharePostController extends GetxController {
   String sourcePath = "";
   String sourceName = "";
 
-  pickFile(String extension) async {
+  pickFile({
+    required String extension,
+    required BuildContext context,
+  }) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -652,7 +567,14 @@ class SharePostController extends GetxController {
       );
       if (result != null) {
         PlatformFile file = result.files.first;
-        sourcePath = file.path!;
+
+        final cropImagePath = await cropImageClass.cropImage(
+          image: File(file.path!),
+          isBackGround: true,
+          context: context,
+        );
+
+        sourcePath = cropImagePath?.path ?? '';
       } else {
         sourcePath = "";
       }

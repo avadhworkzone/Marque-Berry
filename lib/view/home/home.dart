@@ -281,7 +281,7 @@ class HomeController extends GetxController {
   }
 
   String parentId = "0";
-  void parentCommentIdChange(id) {
+  void parentCommentIdChange(String id) {
     parentId = id;
     update();
   }

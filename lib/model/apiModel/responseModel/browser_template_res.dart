@@ -24,7 +24,7 @@ class BrowserTemplateResModel {
 
 class Data {
   List<Standard>? standard;
-  List<Licensed>? licensed;
+  List<Standard>? licensed;
 
   Data({this.standard, this.licensed});
 
@@ -36,9 +36,9 @@ class Data {
       });
     }
     if (json['licensed'] != null) {
-      licensed = <Licensed>[];
+      licensed = <Standard>[];
       json['licensed'].forEach((v) {
-        licensed!.add(new Licensed.fromJson(v));
+        licensed!.add(new Standard.fromJson(v));
       });
     }
   }
@@ -91,41 +91,41 @@ class Standard {
     return data;
   }
 }
-
-class Licensed {
-  int? id;
-  String? userId;
-  String? tag;
-  String? templateUrl;
-  String? status;
-  String? createdOn;
-
-  Licensed({
-    this.id,
-    this.userId,
-    this.tag,
-    this.templateUrl,
-    this.status,
-    this.createdOn,
-  });
-
-  Licensed.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    tag = json['tag'];
-    templateUrl = json['template_url'];
-    status = json['status'];
-    createdOn = json['created_on'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['tag'] = this.tag;
-    data['template_url'] = this.templateUrl;
-    data['status'] = this.status;
-    data['created_on'] = this.createdOn;
-    return data;
-  }
-}
+//
+// class Licensed {
+//   int? id;
+//   String? userId;
+//   String? tag;
+//   String? templateUrl;
+//   String? status;
+//   String? createdOn;
+//
+//   Licensed({
+//     this.id,
+//     this.userId,
+//     this.tag,
+//     this.templateUrl,
+//     this.status,
+//     this.createdOn,
+//   });
+//
+//   Licensed.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     userId = json['user_id'];
+//     tag = json['tag'];
+//     templateUrl = json['template_url'];
+//     status = json['status'];
+//     createdOn = json['created_on'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['id'] = this.id;
+//     data['user_id'] = this.userId;
+//     data['tag'] = this.tag;
+//     data['template_url'] = this.templateUrl;
+//     data['status'] = this.status;
+//     data['created_on'] = this.createdOn;
+//     return data;
+//   }
+// }

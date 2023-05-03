@@ -36,6 +36,7 @@ abstract class BaseService {
   final String postCommentURL = 'postComment';
   final String deleteCommentURL = 'deleteComment';
   final String getAllCommentURL = 'getAllcomments';
+  final String updateCommentURL = 'updateComment';
 
   /// CAMPAIGN AND CONTEST
   final String getAllCampaignAndContestAppURL = 'getAllcampaignAndContestApp';

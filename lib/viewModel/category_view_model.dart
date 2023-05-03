@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
+import 'package:socialv/model/apiModel/requestModel/delete_comment_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/get_post_like_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/post_comment_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/report_post_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/update_comment_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/repo/Get_all_comment_repo.dart';
+import 'package:socialv/model/repo/delete_comment_repo.dart';
 import 'package:socialv/model/repo/post_comment_repo.dart';
 import 'package:socialv/model/repo/post_like_user_repo.dart';
 import 'package:socialv/model/repo/report_post_repo.dart';
@@ -38,6 +41,8 @@ class CategoryFeedViewModel extends GetxController {
 
   ApiResponse getAllCommentApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse postCommentApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse updateCommentApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse deleteCommentApiResponse = ApiResponse.initial('INITIAL');
 
   ApiResponse reportPostApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getLikeByUserApiResponse = ApiResponse.initial('INITIAL');
@@ -175,6 +180,38 @@ class CategoryFeedViewModel extends GetxController {
     } catch (e) {
       logs('getAllCommentApiResponse ERROR :=> $e');
       getAllCommentApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  Future<void> deleteComment(DeleteCommentReqModel reqMode) async {
+    // if (getAllCommentApiResponse.status != Status.COMPLETE) {
+    //   logs('loading..');
+    //   getAllCommentApiResponse = ApiResponse.loading('LOADING');
+    //   update();
+    // }
+    try {
+      final response = await DeleteCommentRepo().deleteComment(reqMode);
+      deleteCommentApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('deleteCommentApiResponse ERROR :=> $e');
+      deleteCommentApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  Future<void> updateComment(UpdateCommentReqModel reqMode) async {
+    // if (getAllCommentApiResponse.status != Status.COMPLETE) {
+    //   logs('loading..');
+    //   getAllCommentApiResponse = ApiResponse.loading('LOADING');
+    //   update();
+    // }
+    try {
+      final response = await UpdateCommentRepo().updateComment(reqMode);
+      updateCommentApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('updateCommentApiResponse ERROR :=> $e');
+      updateCommentApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }

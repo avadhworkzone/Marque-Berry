@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -133,7 +134,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                         top: 2.w,
                         child: InkWell(
                           onTap: () async {
-                            await profileController.pickCoverImage();
+                            await profileController.pickCoverImage(context);
                           },
                           highlightColor: ColorUtils.transparent,
                           splashColor: ColorUtils.transparent,
@@ -462,7 +463,9 @@ class ProfileController extends GetxController {
     update();
   }
 
-  Future<String> pickCoverImage() async {
+  CropImage cropImageClass = CropImage();
+
+  Future<String> pickCoverImage(context) async {
     coverImagePath = "";
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -470,27 +473,30 @@ class ProfileController extends GetxController {
       );
       if (result != null) {
         PlatformFile file = result.files.first;
-        coverImagePath = file.path!;
-        await updateCoverImage();
-      } else {
-        coverImagePath = "";
+
+        final cropPath = await cropImageClass.cropImage(
+          context: context,
+          image: File(file.path!),
+          isBackGround: true,
+        );
+        coverImagePath = cropPath?.path ?? "";
+
+        if (coverImagePath != "") {
+          await updateCoverImage(cropPath);
+        }
       }
     } catch (e) {
-      showSnackBar(
-        message: "Cover image not selected.",
-      );
+      logs("NORMAL IMAGE CATCH $e");
     }
-
     update();
     return coverImagePath;
   }
 
   ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
-
   UpdateCoverPicReqModel updateCoverPicReqModel = UpdateCoverPicReqModel();
 
-  updateCoverImage() async {
-    updateCoverPicReqModel.coverPhoto = coverImagePath;
+  updateCoverImage(cropPath) async {
+    updateCoverPicReqModel.coverPhoto = cropPath;
 
     await profileViewModel.updateUserCoverPic(updateCoverPicReqModel);
     if (profileViewModel.updateUserCoverPicApiResponse.status ==
