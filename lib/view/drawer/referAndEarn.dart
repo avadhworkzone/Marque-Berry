@@ -3,6 +3,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
@@ -47,48 +48,92 @@ class ReferAndEarn extends StatelessWidget {
                   Stack(
                     children: [
                       Container(
-                        height: size.height / 3.4,
+                        height: size.height / 2.3,
                         width: size.width,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              ColorUtils.linearGradient3,
-                              ColorUtils.linearGradient6,
-                              ColorUtils.linearGradient7
-                            ],
-                            stops: [0, 0.3, 0.8],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                        child: Image(
+                          image: AssetImage(
+                            "assets/images/referEarn.png",
                           ),
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(10.w),
-                          ),
-                        ),
-                        // padding: const EdgeInsets.symmetric(horizontal: 20),
-                        margin: EdgeInsets.only(bottom: 18.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizeConfig.sH6,
-                            AdoroText(
-                              VariableUtils.referEarnText,
-                              fontSize: 23.sp,
-                              color: ColorUtils.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
+                          fit: BoxFit.fill,
+
+                          // width: Get.width
                         ),
                       ),
+
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.w),
+                        child: Center(
+                          child: AdoroText(
+                            VariableUtils.referEarnText,
+                            fontSize: 23.sp,
+                            color: ColorUtils.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      // Container(
+                      //   height: size.height / 3.4,
+                      //   width: size.width,
+                      //   decoration: BoxDecoration(
+                      //
+                      //     gradient: LinearGradient(
+                      //       colors: [
+                      //         ColorUtils.linearGradient3,
+                      //         ColorUtils.linearGradient6,
+                      //         ColorUtils.linearGradient7
+                      //       ],
+                      //       stops: [0, 0.3, 0.8],
+                      //       begin: Alignment.topLeft,
+                      //       end: Alignment.bottomRight,
+                      //     ),
+                      //
+                      //     // borderRadius: BorderRadius.vertical(
+                      //     //   bottom: Radius.circular(15.w),
+                      //     // ),
+                      //   ),
+                      //   // padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   margin: EdgeInsets.only(bottom: 18.w),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       SizeConfig.sH6,
+                      //       AdoroText(
+                      //         VariableUtils.referEarnText,
+                      //         fontSize: 23.sp,
+                      //         color: ColorUtils.white,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+
                       Positioned(
-                        bottom: 0,
+                        bottom: 0.w,
                         left: 8.w,
                         right: 8.w,
                         child: Container(
-                          height: 22.h,
+                          height: 23.h,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            border: Border.all(color: ColorUtils.black2E),
+                            border: GradientBoxBorder(
+                              gradient: LinearGradient(
+                                colors: [
+                                  ColorUtils.linearGradient1,
+                                  ColorUtils.linearGradient2,
+                                  ColorUtils.linearGradient3,
+                                  ColorUtils.linearGradient4,
+                                  ColorUtils.linearGradient5,
+                                  ColorUtils.linearGradient6,
+                                  ColorUtils.linearGradient7,
+                                ],
+                                //   stops: [0, 0.3, 0.8],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                            ),
+                            // border: Border.all(color: ColorUtils.black2E),
                             borderRadius: BorderRadius.circular(3.w),
+
                             boxShadow: [
                               BoxShadow(
                                 color: ColorUtils.grey.withOpacity(0.5),

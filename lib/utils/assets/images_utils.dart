@@ -19,11 +19,13 @@ class ImagesWidgets {
   static String profileImagesImage = '$imagesbasePath/profileimages.png';
   static String submitButtonImage = '$imagesbasePath/submitButton.png';
   static String splashImage = '$imagesbasePath/splash.png';
+  static String tickSquareImage = '$imagesbasePath/TickSquare.png';
+  static String closeSquareImage = '$imagesbasePath/CloseSquare.png';
 
   static Image logoISImage = Image.asset(logoImage, scale: 3.6.w);
   static Image adoroImage = Image.asset(
     '$imagesbasePath/adoro.png',
-    scale: 1.5.w,
+    scale: 1.w,
   );
   static Image verifiedImage = Image.asset(
     '$imagesbasePath/verifieduser.png',
@@ -39,6 +41,27 @@ class ImagesWidgets {
     '$imagesbasePath/Vector.png',
     scale: 1.1.w,
   );
+
+  /// categories
+
+  static String sadPostImage = '$imagesbasePath/sadpost.png';
+  static String savageImage = '$imagesbasePath/savage.png';
+  static String relatableImage = '$imagesbasePath/relatable.png';
+  static String shitPostImage = '$imagesbasePath/shitpost.png';
+  static String dankImage = '$imagesbasePath/dank.png';
+  static String wholesomeImage = '$imagesbasePath/wholesome.png';
+  static String webSeriesImage = '$imagesbasePath/webseries.png';
+  static String techImage = '$imagesbasePath/tech.png';
+  static String sportsImage = '$imagesbasePath/sports.png';
+  static String movieImage = '$imagesbasePath/movie.png';
+  static String nostalgiaImage = '$imagesbasePath/nostalgia.png';
+  static String historyImage = '$imagesbasePath/history.png';
+  static String gamingImage = '$imagesbasePath/gaming.png';
+  static String desiImage = '$imagesbasePath/desi.png';
+  static String celebsImage = '$imagesbasePath/celebs.png';
+  static String animeImage = '$imagesbasePath/anime.png';
+  static String parodyImage = '$imagesbasePath/parody.png';
+  static String politicsImage = '$imagesbasePath/politics.png';
 }
 
 class SvgWidgets {
@@ -100,6 +123,12 @@ class IconsWidgets {
   static String chooseImages = '$iconsbasePath/choose.png';
   static String shareIconBtnImages = '$iconsbasePath/share_icon_btn.png';
   static String submitIconBtnImages = '$iconsbasePath/submit_icon_btn.png';
+  static String lightImages = '$iconsbasePath/light.png';
+  static String darkImages = '$iconsbasePath/dark.png';
+  static String user1Images = '$iconsbasePath/user1.png';
+  static String post2Images = '$iconsbasePath/post2.png';
+  static String publicGroupImages = '$iconsbasePath/public_group.png';
+  static String post3Images = '$iconsbasePath/post3.png';
 
   ///home
   static String shareImages = '$iconsbasePath/share.png';

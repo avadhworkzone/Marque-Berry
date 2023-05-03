@@ -6,6 +6,8 @@ import 'package:socialv/utils/tecell_text.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 
+import '../../../utils/assets/images_utils.dart';
+
 class GroupComponents extends StatelessWidget {
   const GroupComponents({Key? key}) : super(key: key);
 
@@ -61,7 +63,7 @@ class GroupComponents extends StatelessWidget {
                 ),
                 leading: CircleAvatar(
                   radius: 7.w,
-                  backgroundImage: AssetImage("assets/icons/user1.png"),
+                  backgroundImage: AssetImage(IconsWidgets.user1Images),
                 ),
                 trailing: Icon(
                   Icons.more_horiz,
@@ -84,7 +86,7 @@ class GroupComponents extends StatelessWidget {
                               width: Get.width,
                               child: ClipRRect(
                                 child: Image.asset(
-                                  "assets/icons/post2.png",
+                                  IconsWidgets.post2Images,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -112,7 +114,7 @@ class GroupComponents extends StatelessWidget {
                                           Row(
                                             children: [
                                               Image.asset(
-                                                "assets/icons/public_group.png",
+                                                IconsWidgets.publicGroupImages,
                                                 scale: 1.w,
                                               ),
                                               SizeConfig.sW3,
@@ -125,7 +127,7 @@ class GroupComponents extends StatelessWidget {
                                           Row(
                                             children: [
                                               Image.asset(
-                                                "assets/icons/public_group.png",
+                                                IconsWidgets.publicGroupImages,
                                                 scale: 1.w,
                                               ),
                                               SizeConfig.sW3,
@@ -150,7 +152,7 @@ class GroupComponents extends StatelessWidget {
                           child: Container(
                             height: 25.w,
                             width: 25.w,
-                            child: Image.asset("assets/icons/post3.png"),
+                            child: Image.asset(IconsWidgets.post3Images),
                           ),
                         )
                       ],

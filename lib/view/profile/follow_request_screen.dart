@@ -3,6 +3,8 @@ import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/tecell_text.dart';
 
+import '../../utils/assets/images_utils.dart';
+
 class FollowRequestScreen extends StatelessWidget {
   const FollowRequestScreen({Key? key}) : super(key: key);
   final isCheck = true;
@@ -80,22 +82,24 @@ class FollowRequestScreen extends StatelessWidget {
                                     style: TextStyle(color: ColorUtils.black92),
                                   ),
                                   leading: CircleAvatar(
-                                    child: Image.asset(
-                                        'assets/images/Profile1.png'),
-                                  ),
+                                      child: ImagesWidgets.profileImage
+                                      // Image.asset(
+                                      //
+                                      // ),
+                                      ),
                                   trailing: Wrap(
                                     spacing: 2,
                                     children: [
                                       InkWell(
                                         onTap: () {},
                                         child: Image.asset(
-                                          'assets/images/TickSquare.png',
+                                          ImagesWidgets.tickSquareImage,
                                         ),
                                       ),
                                       InkWell(
                                         onTap: () {},
                                         child: Image.asset(
-                                          'assets/images/CloseSquare.png',
+                                          ImagesWidgets.closeSquareImage,
                                         ),
                                       )
                                     ],

@@ -240,14 +240,14 @@ class PostComponents extends StatelessWidget {
                             );
                           },
                           child: CommonImageScale(
-                            scale: 0.8.w,
+                            scale: 25.w,
                             color: black92White,
                             img: IconsWidgets.chatImage,
                           ),
                         ),
                         SizeConfig.sW2,
                         CommonImageScale(
-                          scale: 1.w,
+                          scale: 25.w,
                           color: black92White,
                           img: IconsWidgets.sendImage,
                         ),
@@ -369,12 +369,12 @@ class PostComponents extends StatelessWidget {
                                       text: "$likeByMe",
                                       style: TextStyle(
                                         fontSize: 9.sp,
-                                        color: black92White,
+                                        color: blackWhite,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     TextSpan(
-                                      text: ' And ',
+                                      text: ' and ',
                                       style: TextStyle(
                                         fontSize: 9.sp,
                                         color: black92Blue,
@@ -385,7 +385,7 @@ class PostComponents extends StatelessWidget {
                                       text: '$likeCounter other',
                                       style: TextStyle(
                                         fontSize: 9.sp,
-                                        color: black92White,
+                                        color: blackWhite,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -709,7 +709,7 @@ class UnlikeWidget extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.w),
         child: CommonImageScale(
           img: IconsWidgets.heartImage,
-          scale: 1.w,
+          scale: 25.w,
           color: Theme.of(context).textTheme.titleMedium?.color,
         ),
       ),

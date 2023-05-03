@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:io';
+import 'dart:math';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
@@ -303,6 +304,18 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                   child: BetterPlayer.file(
                                                     sharePostController
                                                         .sourcePath,
+                                                    betterPlayerConfiguration:
+                                                        BetterPlayerConfiguration(
+                                                            // aspectRatio: 18 / 10,
+                                                            controlsConfiguration:
+                                                                BetterPlayerControlsConfiguration(
+                                                      enableFullscreen: false,
+                                                      enableOverflowMenu: false,
+                                                      enablePlayPause: false,
+                                                      enableMute: false,
+                                                      enableProgressBar: false,
+                                                      enableProgressText: false,
+                                                    )),
                                                   ),
                                                 ),
                                               ),

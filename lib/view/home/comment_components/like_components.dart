@@ -30,7 +30,7 @@ class LikeButton extends StatelessWidget {
           children: [
             CommonImageScale(
               img: IconsWidgets.heartImage,
-              scale: 1.3.w,
+              scale: 25.w,
               color: ColorUtils.black92,
             ),
             SizeConfig.sW2,

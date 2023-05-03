@@ -67,6 +67,7 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
               ),
+              SizeConfig.sH2,
               drawerData(
                 onTap: () {
                   Get.back();

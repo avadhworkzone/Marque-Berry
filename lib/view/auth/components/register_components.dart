@@ -25,6 +25,7 @@ class RegisterComponents extends StatelessWidget {
   final registerKey = GlobalKey<FormState>();
 
   var username = TextEditingController();
+  var fullNameController = TextEditingController();
   var registerContact = TextEditingController();
 
   RegisterReqModel registerReqModel = RegisterReqModel();
@@ -47,16 +48,16 @@ class RegisterComponents extends StatelessWidget {
           ),
           AdoroText(VariableUtils.joinTheWorld, color: black92White),
           SizeConfig.sH5,
-          // AdoroText(VariableUtils.fullName, color: black92White),
-          // CommonTextFormField(
-          //   color: blackWhite,
-          //   controller: fullName,
-          //   keyboardType: TextInputType.name,
-          //   validator: (v) => userValidation(v),
-          //   denyInputFormatters: RegularExpression.onlyFirstSpaceNoAllowPattern,
-          //   allowInputFormatters: RegularExpression.alphabetSpacePattern,
-          // ),
-          // SizeConfig.sH2,
+          AdoroText(VariableUtils.fullName, color: black92White),
+          CommonTextFormField(
+            color: blackWhite,
+            controller: fullNameController,
+            keyboardType: TextInputType.name,
+            validator: (v) => userValidation(v),
+            denyInputFormatters: RegularExpression.onlyFirstSpaceNoAllowPattern,
+            allowInputFormatters: RegularExpression.alphabetSpacePattern,
+          ),
+          SizeConfig.sH2,
           AdoroText(VariableUtils.userName, color: black92White),
           CommonTextFormField(
             color: blackWhite,
@@ -85,6 +86,7 @@ class RegisterComponents extends StatelessWidget {
                 if (registerKey.currentState!.validate()) {
                   registerReqModel.username = username.text;
                   registerReqModel.mobileNo = registerContact.text;
+                  registerReqModel.fullName = fullNameController.text;
                   await authViewModel.register(registerReqModel);
 
                   if (authViewModel.registerApiResponse.status ==
@@ -102,6 +104,7 @@ class RegisterComponents extends StatelessWidget {
                         arguments: {
                           "mobile": registerContact.text,
                           "username": username.text,
+                          "fullName": fullNameController.text,
                           "type": "register"
                         },
                       );
