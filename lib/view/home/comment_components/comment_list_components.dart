@@ -160,11 +160,11 @@ class _CommentListState extends State<CommentList> {
                   onTap: () {
                     Get.back();
                     updateTextEditing.text = message;
-                    updateTextEditing.selection = TextSelection.fromPosition(
-                      TextPosition(
-                        offset: updateTextEditing.text.length + 1,
-                      ),
-                    );
+                    // updateTextEditing.selection = TextSelection.fromPosition(
+                    //   TextPosition(
+                    //     offset: updateTextEditing.text.length,
+                    //   ),
+                    // );
                     setState(() {});
                     updateFromBottomSheet(context, commentId);
                   },

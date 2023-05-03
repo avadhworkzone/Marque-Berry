@@ -75,6 +75,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/categrories/
     - assets/icons/
     - assets/lotties/
     - assets/bottombar/
