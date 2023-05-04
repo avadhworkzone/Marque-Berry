@@ -95,7 +95,6 @@ class _MyAppState extends State<MyApp> {
                 builder: (connectivityViewModel) {
                   if (connectivityViewModel.isOnline != null) {
                     if (connectivityViewModel.isOnline!) {
-                      return InterestScreen();
                       return SplashScreen();
                     } else {
                       return const NoInterNetConnected();

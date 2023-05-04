@@ -26,13 +26,14 @@ class CommonProfileImage extends StatelessWidget {
         color: bgColor,
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: PreferenceUtils.getString(key: 'profile') != ""
-              ? NetworkImage(
-                  PreferenceUtils.getString(key: 'profile'),
-                ) as ImageProvider
-              : AssetImage(
-                  IconsWidgets.userImages,
-                ),
+          image:
+              PreferenceUtils.getString(key: PreferenceUtils.profileImage) != ""
+                  ? NetworkImage(PreferenceUtils.getString(
+                      key: PreferenceUtils.profileImage,
+                    )) as ImageProvider
+                  : AssetImage(
+                      IconsWidgets.userImages,
+                    ),
           // scale: 0.28.w,
           fit: BoxFit.contain,
         ),

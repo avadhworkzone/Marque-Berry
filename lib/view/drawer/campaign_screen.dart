@@ -57,9 +57,13 @@ class _CampaignScreenState extends State<CampaignScreen> {
                 backgroundColor: whiteBlack2E,
                 automaticallyImplyLeading: false,
                 titleSpacing: 0,
-                leading: InkWell(
-                  onTap: () => bottomBarController.pageChange(0),
-                  child: Icon(Icons.arrow_back, color: blackWhite),
+                leading: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(8.w),
+                    onTap: () => bottomBarController.pageChange(0),
+                    child: Icon(Icons.arrow_back, color: blackWhite),
+                  ),
                 ),
                 title: TabBar(
                   labelColor: ColorUtils.blueB9,

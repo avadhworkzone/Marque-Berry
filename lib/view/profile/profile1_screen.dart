@@ -158,6 +158,7 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                     ],
                   ),
                   SizeConfig.sH1,
+
                   AdoroText(
                     "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
                     textAlign: TextAlign.center,
@@ -482,7 +483,7 @@ class ProfileController extends GetxController {
         coverImagePath = cropPath?.path ?? "";
 
         if (coverImagePath != "") {
-          await updateCoverImage(cropPath);
+          await updateCoverImage(coverImagePath);
         }
       }
     } catch (e) {
