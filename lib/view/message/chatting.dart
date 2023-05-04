@@ -15,6 +15,7 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/view/home/components/video_components.dart';
 
@@ -31,8 +32,8 @@ class ChattingScreen extends StatefulWidget {
   ChattingScreen({
     Key? key,
     required this.senderId,
-    required this.senderName,
     required this.receiverId,
+    required this.senderName,
     required this.receiverName,
     required this.senderImage,
     required this.receiverImage,
@@ -68,7 +69,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
           elevation: 0.0,
           automaticallyImplyLeading: false,
           title: Container(
-            // height: 16.w,
             child: Row(
               children: [
                 IconButton(
@@ -95,7 +95,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                     ),
                   ),
                 ),
-                SizeConfig.sW1,
+                SizeConfig.sW2,
                 AdoroText(
                   widget.receiverName,
                   color: blackWhite,
@@ -213,7 +213,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
                 },
               ),
             ),
-
             GetBuilder<ChattingController>(builder: (chattingController) {
               String ext = chattingController._sourcePath.split("/").last;
               if (ext == "jpg" || ext == "png" || ext == "jpeg") {
@@ -234,7 +233,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
                 );
               return SizedBox();
             }),
-            // Image.file(File(chattingController._sourcePath)),
             textFormWidget(
               chattingController: chattingController,
               color: blackWhite,
@@ -478,21 +476,7 @@ class LeftImageWidget extends StatelessWidget {
                   width: 9.w,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(200),
-                      child: OctoImage(
-                        height: 8.w,
-                        width: 8.w,
-                        image: NetworkImage(rImage),
-                        placeholderBuilder: OctoPlaceholder.blurHash(
-                          'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                        ),
-                        errorBuilder: (context, obj, stack) => Image.asset(
-                          'assets/images/profile_dummy.png',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    child: chattingProfileImage(image: rImage),
                   ),
                 ),
               ),
@@ -801,21 +785,7 @@ class LeftRightSideUserImage extends StatelessWidget {
         width: 9.w,
         child: Padding(
           padding: const EdgeInsets.only(top: 4.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(200),
-            child: OctoImage(
-              height: 8.w,
-              width: 8.w,
-              image: NetworkImage(sImage),
-              placeholderBuilder: OctoPlaceholder.blurHash(
-                'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-              ),
-              errorBuilder: (context, obj, stack) => Image.asset(
-                'assets/images/profile_dummy.png',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
+          child: chattingProfileImage(image: sImage),
         ),
       ),
     );
@@ -849,21 +819,7 @@ class LeftAlignTextWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(200),
-                  child: OctoImage(
-                    height: 8.w,
-                    width: 8.w,
-                    image: NetworkImage(receiverImage),
-                    placeholderBuilder: OctoPlaceholder.blurHash(
-                      'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                    ),
-                    errorBuilder: (context, obj, stack) => Image.asset(
-                      'assets/icons/user.png',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                child: chattingProfileImage(image: receiverImage),
               ),
               Flexible(
                 child: Padding(
@@ -974,21 +930,7 @@ class RightAlignTextWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(200),
-                  child: OctoImage(
-                    height: 8.w,
-                    width: 8.w,
-                    image: NetworkImage(senderImage),
-                    placeholderBuilder: OctoPlaceholder.blurHash(
-                      'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                    ),
-                    errorBuilder: (context, obj, stack) => Image.asset(
-                      'assets/images/profile_dummy.png',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                child: chattingProfileImage(image: senderImage),
               ),
               SizeConfig.sW4,
             ],
@@ -998,6 +940,28 @@ class RightAlignTextWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+/// =============== CHATTING PROFILE IMAGE ================
+
+Widget chattingProfileImage({required String image}) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(10.w),
+    child: Container(
+      color: Colors.grey[100],
+      child: OctoImage(
+        height: 8.w,
+        width: 8.w,
+        image: NetworkImage(image),
+        placeholderBuilder: OctoPlaceholder.blurHash(
+          'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+        ),
+        errorBuilder: (context, obj, stack) =>
+            Image.asset(IconsWidgets.userImages),
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
 }
 
 /// ==================== Controller =======================
@@ -1050,6 +1014,6 @@ class ChattingController extends GetxController {
   }
 }
 
-/// ============ MESSAGE ENUM =============================
+/// ================ MESSAGE ENUM ===============
 
 enum MessageType { TEXT, VIDEO, IMAGE }

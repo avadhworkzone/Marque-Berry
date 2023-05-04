@@ -210,31 +210,32 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                                 child: AdoroText(VariableUtils.noDataFound),
                               ),
                             )
-                          : InkWell(
-                              splashColor: ColorUtils.transparent,
-                              highlightColor: ColorUtils.transparent,
-                              onTap: () {
-                                Get.to(
-                                  () => DownloadTemplateList(
-                                    title: 'Standard',
-                                    templateList: standardList,
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5.w),
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: standardList.length,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 3.2.w,
-                                    crossAxisSpacing: 3.2.w,
-                                  ),
-                                  itemBuilder: (c, i) {
-                                    return ClipRRect(
+                          : Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: standardList.length,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 3.2.w,
+                                  crossAxisSpacing: 3.2.w,
+                                ),
+                                itemBuilder: (c, i) {
+                                  return InkWell(
+                                    splashColor: ColorUtils.transparent,
+                                    highlightColor: ColorUtils.transparent,
+                                    onTap: () {
+                                      Get.to(
+                                        () => DownloadTemplateList(
+                                          index: i,
+                                          title: 'Standard',
+                                          templateList: standardList,
+                                        ),
+                                      );
+                                    },
+                                    child: ClipRRect(
                                       borderRadius:
                                           BorderRadius.circular(1.5.w),
                                       child: OctoImage(
@@ -278,9 +279,9 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
                             )
                       : licensedList.isEmpty
@@ -289,32 +290,33 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                                 child: AdoroText(VariableUtils.noDataFound),
                               ),
                             )
-                          : InkWell(
-                              splashColor: ColorUtils.transparent,
-                              highlightColor: ColorUtils.transparent,
-                              onTap: () {
-                                Get.to(
-                                  () => DownloadTemplateList(
-                                    title: 'Licensed',
-                                    templateList:
-                                        browserResponse.data!.licensed!,
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5.w),
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: licensedList.length,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 3.2.w,
-                                    crossAxisSpacing: 3.2.w,
-                                  ),
-                                  itemBuilder: (c, i) {
-                                    return ClipRRect(
+                          : Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: licensedList.length,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 3.2.w,
+                                  crossAxisSpacing: 3.2.w,
+                                ),
+                                itemBuilder: (c, i) {
+                                  return InkWell(
+                                    splashColor: ColorUtils.transparent,
+                                    highlightColor: ColorUtils.transparent,
+                                    onTap: () {
+                                      Get.to(
+                                        () => DownloadTemplateList(
+                                          index: i,
+                                          title: 'Licensed',
+                                          templateList:
+                                              browserResponse.data!.licensed!,
+                                        ),
+                                      );
+                                    },
+                                    child: ClipRRect(
                                       borderRadius:
                                           BorderRadius.circular(1.5.w),
                                       child: OctoImage(
@@ -358,9 +360,9 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                 ],

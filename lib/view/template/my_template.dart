@@ -86,6 +86,7 @@ class MyTemplate extends StatelessWidget {
                       Get.to(
                         () => DownloadTemplateList(
                           title: 'My Template',
+                          index: index,
                           templateList: templateList,
                         ),
                       );

@@ -20,6 +20,7 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/custom_btn.dart';
+import 'package:socialv/view/bottomBar/bottombar.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/controllers/intrest_controller.dart';
@@ -180,7 +181,8 @@ class InterestScreen extends StatelessWidget {
                                 );
 
                                 await PreferenceUtils.setWelcome(1);
-                                Get.offAllNamed(RouteHelper.getBottomRoute());
+
+                                Get.offAll(() => BottomBar());
                               },
                               text: 'DONE',
                             )

@@ -57,21 +57,25 @@ class MyDrawer extends StatelessWidget {
                   heightWidth: 16.w,
                   bgColor: Colors.grey[200],
                 ),
-                title: Padding(
-                  padding: EdgeInsets.only(bottom: 1.w),
-                  child: AdoroText(
-                    PreferenceUtils.getString(key: PreferenceUtils.username),
-                    color: blackWhite,
-                    fontWeight: FontWeightClass.fontWeight600,
-                  ),
+                title: AdoroText(
+                  PreferenceUtils.getString(key: PreferenceUtils.username),
+                  color: blackWhite,
+                  fontWeight: FontWeightClass.fontWeight600,
                 ),
-                subtitle: AdoroText(
-                  '@${PreferenceUtils.getString(key: PreferenceUtils.fullname)}',
-                  fontWeight: FontWeightClass.fontWeight500,
-                ),
+                subtitle:
+                    PreferenceUtils.getString(key: PreferenceUtils.fullname) !=
+                            ""
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 1.w),
+                            child: AdoroText(
+                              '@${PreferenceUtils.getString(key: PreferenceUtils.fullname)}',
+                              fontWeight: FontWeightClass.fontWeight500,
+                            ),
+                          )
+                        : SizedBox(),
               ),
               SizeConfig.sH2,
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => NotificationScreen());
@@ -80,7 +84,7 @@ class MyDrawer extends StatelessWidget {
                 title: VariableUtils.notificationText,
                 image: IconsWidgets.notificationImage,
               ),
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => Result());
@@ -89,7 +93,7 @@ class MyDrawer extends StatelessWidget {
                 title: VariableUtils.resultText,
                 image: IconsWidgets.resultImage,
               ),
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => Note());
@@ -98,7 +102,7 @@ class MyDrawer extends StatelessWidget {
                 title: VariableUtils.noteFromAdoroText,
                 image: IconsWidgets.noteImage,
               ),
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => Wallet());
@@ -107,7 +111,7 @@ class MyDrawer extends StatelessWidget {
                 title: VariableUtils.walletText,
                 image: IconsWidgets.walletImage,
               ),
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => Template());
@@ -116,7 +120,7 @@ class MyDrawer extends StatelessWidget {
                 title: VariableUtils.templateText,
                 image: IconsWidgets.templateImage,
               ),
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => ReferAndEarn());
@@ -125,7 +129,7 @@ class MyDrawer extends StatelessWidget {
                 title: VariableUtils.referEarnText,
                 image: IconsWidgets.referImage,
               ),
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => Support());
@@ -134,7 +138,7 @@ class MyDrawer extends StatelessWidget {
                 title: VariableUtils.supportText,
                 image: IconsWidgets.supportImage,
               ),
-              drawerData(
+              drawerListTile(
                 onTap: () {
                   Get.back();
                   Get.to(() => Setting());
@@ -150,7 +154,7 @@ class MyDrawer extends StatelessWidget {
     );
   }
 
-  Widget drawerData({
+  Widget drawerListTile({
     required BuildContext context,
     required OnTab onTap,
     required String image,

@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-
-import 'color_utils.dart';
 import 'package:flutter/material.dart';
 
 class AdoroText extends StatelessWidget {
@@ -32,6 +30,7 @@ class AdoroText extends StatelessWidget {
     this.decoration = TextDecoration.none,
     this.letterSpacing,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -39,17 +38,15 @@ class AdoroText extends StatelessWidget {
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
-        color: color ??
-            Theme.of(context).textTheme.subtitle1!.color ??
-            ColorUtils.black,
-        fontFamily: fontFamily,
-        fontWeight: fontWeight,
-        fontSize: fontSize ?? 14,
         height: height,
-        fontStyle: fontStyle,
         overflow: overflow,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+        fontFamily: fontFamily,
         decoration: decoration,
+        fontSize: fontSize ?? 14,
         letterSpacing: letterSpacing,
+        color: color ?? Theme.of(context).textTheme.titleSmall?.color,
       ),
     );
   }

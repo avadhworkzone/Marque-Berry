@@ -63,8 +63,8 @@ class LikeScreen extends StatelessWidget {
             return Center(child: AdoroText(likeResponse.msg ?? ""));
           } else if (likeResponse.data!.isEmpty) {
             return Center(
-                child:
-                    AdoroText(likeResponse.msg ?? VariableUtils.noDataFound));
+              child: AdoroText(likeResponse.msg ?? VariableUtils.noDataFound),
+            );
           }
 
           return Padding(

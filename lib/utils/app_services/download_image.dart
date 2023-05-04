@@ -69,7 +69,6 @@ class ImageDownload {
         directory = Directory('/storage/emulated/0/Download');
         final existsPathStatus = await directory.exists();
         if (!existsPathStatus) directory = await getExternalStorageDirectory();
-        // directory = await getTemporaryDirectory();
       }
       return directory?.path;
     } catch (err) {
@@ -78,7 +77,6 @@ class ImageDownload {
     return directory?.path;
   }
 
-  ///
   Future<String> tempDownloadImage(String url) async {
     try {
       final response = await dio.get(

@@ -71,6 +71,7 @@ class TrendingTemplate extends StatelessWidget {
                     Get.to(
                       () => DownloadTemplateList(
                         title: 'Trending',
+                        index: index,
                         templateList: trendingResponse.data!,
                       ),
                     );

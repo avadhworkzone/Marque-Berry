@@ -24,6 +24,15 @@ import '../../commanWidget/custom_btn.dart';
 import '../../model/apiModel/responseModel/login_res_model.dart';
 
 class ValidateOtpScreen extends StatefulWidget {
+  String type;
+  String mobile;
+
+  ValidateOtpScreen({
+    Key? key,
+    required this.mobile,
+    required this.type,
+  }) : super(key: key);
+
   @override
   State<ValidateOtpScreen> createState() => _ValidateOtpScreenState();
 }

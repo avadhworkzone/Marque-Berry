@@ -17,6 +17,8 @@ import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 
+import '../otp_screen.dart';
+
 class RegisterComponents extends StatelessWidget {
   AuthViewModel authViewModel;
 
@@ -99,15 +101,21 @@ class RegisterComponents extends StatelessWidget {
                         message: response.msg.toString(),
                         snackbarSuccess: true,
                       );
-                      Get.toNamed(
-                        RouteHelper.getValidateOTPRoute(),
-                        arguments: {
-                          "mobile": registerContact.text,
-                          "username": username.text,
-                          "fullName": fullNameController.text,
-                          "type": "register"
-                        },
+
+                      Get.to(
+                        () => ValidateOtpScreen(
+                          mobile: registerContact.text,
+                          type: 'register',
+                        ),
                       );
+
+                      // Get.toNamed(
+                      //   RouteHelper.getValidateOTPRoute(),
+                      //   arguments: {
+                      //     "mobile": registerContact.text,
+                      //     "type": "register"
+                      //   },
+                      // );
                     } else {
                       showSnackBar(
                         message:

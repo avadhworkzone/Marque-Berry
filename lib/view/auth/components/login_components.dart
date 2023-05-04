@@ -15,6 +15,7 @@ import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/auth/otp_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 
 class LoginComponents extends StatelessWidget {
@@ -76,12 +77,11 @@ class LoginComponents extends StatelessWidget {
                         message: response.msg.toString(),
                         snackbarSuccess: true,
                       );
-                      Get.toNamed(
-                        RouteHelper.getValidateOTPRoute(),
-                        arguments: {
-                          "mobile": loginContact.text,
-                          "type": "login",
-                        },
+                      Get.to(
+                        () => ValidateOtpScreen(
+                          mobile: loginContact.text,
+                          type: 'login',
+                        ),
                       );
                     } else {
                       showSnackBar(

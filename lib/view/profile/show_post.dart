@@ -10,22 +10,32 @@ import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 
 class ShowPost extends StatefulWidget {
+  final int index;
   final List<ImagesModel> postList;
 
-  ShowPost({Key? key, required this.postList}) : super(key: key);
+  ShowPost({
+    Key? key,
+    required this.postList,
+    required this.index,
+  }) : super(key: key);
 
   @override
   State<ShowPost> createState() => _ShowPostState();
 }
 
 class _ShowPostState extends State<ShowPost> {
+  ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;
 
     return GetBuilder<HomeController>(builder: (homeController) {
-      return GetBuilder<CategoryFeedViewModel>(
-          builder: (categoryFeedViewModel) {
+      return GetBuilder<CategoryFeedViewModel>(initState: (_) {
+        scrollController = ScrollController(
+          initialScrollOffset: widget.index * (60.h),
+        );
+      }, builder: (categoryFeedViewModel) {
         return Scaffold(
           backgroundColor: greyFABlack32,
           appBar: PreferredSize(
@@ -37,7 +47,7 @@ class _ShowPostState extends State<ShowPost> {
             ),
           ),
           body: InViewNotifierList(
-            // controller: _scrollController,
+            controller: scrollController,
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             isInViewPortCondition: (double deltaTop, double deltaBottom,

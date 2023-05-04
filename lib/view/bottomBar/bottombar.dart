@@ -7,7 +7,6 @@ import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/view/profile/profile.dart';
-import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';

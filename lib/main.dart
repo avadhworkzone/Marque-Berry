@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:socialv/view/auth/interest.dart';
-import 'package:socialv/view/auth/login_screen.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -86,9 +84,7 @@ class _MyAppState extends State<MyApp> {
                       : AppTheme.lightTheme,
               title: "ADORO",
               navigatorKey: Get.key,
-              getPages: RouteHelper.routes,
               debugShowCheckedModeBanner: false,
-              initialRoute: RouteConstant.inital,
               smartManagement: SmartManagement.full,
               home: GetBuilder<ConnectivityViewModel>(
                 init: ConnectivityViewModel(),
@@ -154,23 +150,15 @@ class _MyAppState extends State<MyApp> {
       Get.put(EditProfileController());
 }
 
-// https://api.postman.com/collections/2554210-f52106ae-9e3d-47a0-b2e3-d7eb1c319143?access_key=PMAT-01GPJBWJMNT4JBECTXF38YV17R
-
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Poppins',
     cardColor: ColorUtils.grey.withOpacity(0.12),
     scaffoldBackgroundColor: ColorUtils.white,
     canvasColor: Colors.grey[200],
-
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
     ),
-    // appBarTheme: const AppBarTheme(
-    //   brightness: Brightness.light,
-    //   iconTheme: IconThemeData(color: ColorUtils.black),
-    // ),
-
     colorScheme: const ColorScheme.light(
       primary: ColorUtils.white,
       onPrimary: ColorUtils.white,
@@ -225,3 +213,5 @@ class AppTheme {
     ),
   );
 }
+
+// https://api.postman.com/collections/2554210-f52106ae-9e3d-47a0-b2e3-d7eb1c319143?access_key=PMAT-01GPJBWJMNT4JBECTXF38YV17R

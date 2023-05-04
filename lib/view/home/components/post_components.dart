@@ -179,7 +179,9 @@ class PostComponents extends StatelessWidget {
                           width: Get.width,
                           child: contentType.toLowerCase() == "video"
                               ? InViewVideoComponents(
-                                  play: isInView, url: contentImage)
+                                  play: isInView,
+                                  url: contentImage,
+                                )
                               : OctoImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(contentImage),
@@ -205,7 +207,7 @@ class PostComponents extends StatelessWidget {
                                     padding: EdgeInsets.all(7.w),
                                     child: CommonImage(
                                       img: IconsWidgets.userImages,
-                                      color: ColorUtils.black,
+                                      color: blackWhite,
                                     ),
                                   ),
                                 ),
@@ -221,7 +223,7 @@ class PostComponents extends StatelessWidget {
                                   categoryFeedViewModel: categoryFeedViewModel,
                                 )
                               : UnlikeWidget(
-                                  postid: postId,
+                                  postId: postId,
                                   likePostReqModel: likePostReqModel,
                                   categoryFeedViewModel: categoryFeedViewModel,
                                 ),
@@ -560,11 +562,13 @@ class LikeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        disLikePostReqModel.postId = postId.toString();
-        await categoryFeedViewModel.dislikePost(disLikePostReqModel);
-        await categoryFeedViewModel.setLikeUnlike(postId, false);
-      },
+      onTap: postId == 0
+          ? null
+          : () async {
+              disLikePostReqModel.postId = postId.toString();
+              await categoryFeedViewModel.dislikePost(disLikePostReqModel);
+              await categoryFeedViewModel.setLikeUnlike(postId, false);
+            },
       child: Padding(
         padding: EdgeInsets.only(left: 1.w),
         child: Image.asset(
@@ -581,22 +585,24 @@ class UnlikeWidget extends StatelessWidget {
   const UnlikeWidget({
     super.key,
     required this.likePostReqModel,
-    required this.postid,
+    required this.postId,
     required this.categoryFeedViewModel,
   });
 
   final LikePostReqModel likePostReqModel;
-  final int postid;
+  final int postId;
   final CategoryFeedViewModel categoryFeedViewModel;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        likePostReqModel.postId = postid.toString();
-        categoryFeedViewModel.setLikeUnlike(postid, true);
-        await categoryFeedViewModel.likePost(likePostReqModel);
-      },
+      onTap: postId == 0
+          ? null
+          : () async {
+              likePostReqModel.postId = postId.toString();
+              categoryFeedViewModel.setLikeUnlike(postId, true);
+              await categoryFeedViewModel.likePost(likePostReqModel);
+            },
       child: Padding(
         padding: EdgeInsets.only(left: 1.w),
         child: CommonImageScale(

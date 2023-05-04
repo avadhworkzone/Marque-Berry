@@ -1,26 +1,33 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:octo_image/octo_image.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/utils/app_services/download_image.dart';
+import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import '../../commanWidget/common_appbar.dart';
+import 'package:socialv/utils/app_services/download_image.dart';
+
 import '../../utils/assets/images_utils.dart';
+import '../../commanWidget/common_appbar.dart';
 
 class DownloadTemplateList extends StatelessWidget {
   final String title;
+  final int index;
   final dynamic templateList;
 
   DownloadTemplateList({
     Key? key,
     required this.title,
+    required this.index,
     required this.templateList,
   }) : super(key: key);
+
+  ScrollController scrollController = ScrollController();
+  // ScrollController scrollController = ScrollController(initialScrollOffset: index * (75.w + 13.w + 6.h),);
 
   DownloadTemplateController downloadTemplateController =
       Get.find<DownloadTemplateController>();
@@ -32,7 +39,13 @@ class DownloadTemplateList extends StatelessWidget {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
 
     return GetBuilder<DownloadTemplateController>(
+      initState: (_) {
+        scrollController = ScrollController(
+          initialScrollOffset: index * (75.w + 13.w + 6.h),
+        );
+      },
       builder: (downloadTemplateController) {
+        logs(index.toString());
         return Material(
           child: Column(
             children: [
@@ -45,6 +58,7 @@ class DownloadTemplateList extends StatelessWidget {
                 child: Stack(
                   children: [
                     ListView.builder(
+                      controller: scrollController,
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
                       itemCount: templateList.length,
@@ -56,6 +70,7 @@ class DownloadTemplateList extends StatelessWidget {
                                 horizontal: 4.w, vertical: 2.w),
                             child: Container(
                               width: 100.w,
+                              height: 75.w + 13.w + 6.h,
                               decoration: BoxDecoration(
                                 color: whiteBlack2E,
                                 borderRadius: BorderRadius.circular(3.w),
@@ -99,11 +114,7 @@ class DownloadTemplateList extends StatelessWidget {
                                                 .tempDownloadImage(
                                               templateList[index].templateUrl,
                                             );
-
-                                            Share.shareFiles(
-                                              [path],
-                                              subject: '',
-                                            );
+                                            Share.shareXFiles([XFile(path)]);
                                           },
                                           child: Container(
                                             height: 13.w,
@@ -159,9 +170,7 @@ class DownloadTemplateList extends StatelessWidget {
                             ],
                           ),
                           child: Center(
-                            child: CircularProgressIndicator(
-                              color: ColorUtils.black,
-                            ),
+                            child: Loader(),
                           ),
                         ),
                       ),
@@ -182,7 +191,6 @@ class DownloadTemplateController extends GetxController {
   void progressDownload(received, total) {
     progress = "0%";
     if (total != -1) {
-      logs("progressDownload-------> $received   $total");
       progress = (received / total * 100).toStringAsFixed(0) + "%";
       if (progress == "100%") {
         progress = "0%";

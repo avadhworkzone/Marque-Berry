@@ -49,6 +49,8 @@ class Template extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+
     return GetBuilder<ConnectivityViewModel>(
       init: ConnectivityViewModel(),
       initState: (_) {
@@ -114,6 +116,7 @@ class Template extends StatelessWidget {
                           SizeConfig.sH1,
                           AdoroText(
                             template[index]["title"],
+                            color: blackWhite,
                             fontWeight: FontWeightClass.fontWeight600,
                           ),
                         ],

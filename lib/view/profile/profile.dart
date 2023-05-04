@@ -27,7 +27,6 @@ import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.
 
 class ImagesModel {
   final String image;
-
   ImagesModel({required this.image});
 }
 
@@ -118,9 +117,7 @@ class _ProfileState extends State<Profile> {
           child: CommonAppBar(
             color: ColorUtils.transparent,
             title: 'Profile',
-            onTap: () {
-              bottomBarController.pageChange(0);
-            },
+            onTap: () => bottomBarController.pageChange(0),
           ),
         ),
         body: GetBuilder<ProfileViewModel>(builder: (profileViewModel) {
@@ -411,6 +408,7 @@ class _ProfileState extends State<Profile> {
                                           return InkWell(
                                             onTap: () => Get.to(
                                               () => ShowPost(
+                                                index: index,
                                                 postList: profileImageList,
                                               ),
                                             ),
@@ -442,6 +440,7 @@ class _ProfileState extends State<Profile> {
                                           return InkWell(
                                             onTap: () => Get.to(
                                               () => ShowMentions(
+                                                index: index,
                                                 mentionsList: mentionsImageList,
                                               ),
                                             ),

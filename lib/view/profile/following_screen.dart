@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/get_following_list_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
@@ -225,22 +226,20 @@ class FollowerList extends StatelessWidget {
                     followingData?.username ?? "",
                     style: TextStyle(color: blackWhite),
                   ),
-                  // subtitle: Text(
-                  //   followingData?.status ?? "",
-                  //   style: TextStyle(color: blackWhite),
-                  // ),
-                  subtitle: AdoroText(followingData?.fullName ?? "",
-                      color: blackWhite),
+                  subtitle: AdoroText(
+                    followingData?.fullName ?? "",
+                    color: blackWhite,
+                  ),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(10.w),
                     child: Container(
-                      height: 10.w,
                       width: 10.w,
+                      height: 10.w,
                       color: ColorUtils.greyFA,
                       child: OctoImage(
-                        fit: BoxFit.cover,
                         width: 24,
                         height: 24,
+                        fit: BoxFit.cover,
                         image: NetworkImage(followingData?.image ?? ""),
                         progressIndicatorBuilder: (context, progress) {
                           double? value;
@@ -298,41 +297,36 @@ class FollowingList extends StatelessWidget {
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
-    if (followRequestViewModel.getFollowerListApiResponse.status ==
+    if (followRequestViewModel.getFollowingListApiResponse.status ==
             Status.LOADING ||
-        followRequestViewModel.getFollowerListApiResponse.status ==
+        followRequestViewModel.getFollowingListApiResponse.status ==
             Status.INITIAL) {
       return Center(child: Loader());
-    } else if (followRequestViewModel.getFollowerListApiResponse.status ==
+    } else if (followRequestViewModel.getFollowingListApiResponse.status ==
         Status.ERROR) {
       return Center(child: SomethingWentWrong());
     } else {
-      GetFollowerListResModel getFollowerListResModel =
-          followRequestViewModel.getFollowerListApiResponse.data;
+      GetFollowingListResModel getFollowingListResModel =
+          followRequestViewModel.getFollowingListApiResponse.data;
 
-      if (getFollowerListResModel.status.toString() ==
+      if (getFollowingListResModel.status.toString() ==
           VariableUtils.status500) {
         return Center(
           child: AdoroText(
-            getFollowerListResModel.msg ?? VariableUtils.somethingWentWrong,
+            getFollowingListResModel.msg ?? VariableUtils.somethingWentWrong,
           ),
         );
       }
 
-      if (getFollowerListResModel.data!.isEmpty) {
-        return Center(
-          child: AdoroText(
-            "No following",
-            color: blackWhite,
-          ),
-        );
+      if (getFollowingListResModel.data!.isEmpty) {
+        return Center(child: AdoroText("No following", color: blackWhite));
       }
 
       return ListView.builder(
         padding: EdgeInsets.only(bottom: 40.w),
-        itemCount: getFollowerListResModel.data?.length,
+        itemCount: getFollowingListResModel.data?.length,
         itemBuilder: (context, index) {
-          final followingData = getFollowerListResModel.data?[index];
+          final followingData = getFollowingListResModel.data?[index];
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w),
             child: Column(
