@@ -49,22 +49,25 @@ class MyDrawer extends StatelessWidget {
               ),
               ListTile(
                 splashColor: ColorUtils.transparent,
-                onTap: () => bottomBar.pageChange(3),
+                onTap: () {
+                  Get.back();
+                  bottomBar.pageChange(3);
+                },
                 leading: CommonProfileImage(
                   heightWidth: 16.w,
                   bgColor: Colors.grey[200],
                 ),
-                title: AdoroText(
-                  PreferenceUtils.getString(key: PreferenceUtils.username),
-                  color: blackWhite,
-                  fontWeight: FontWeightClass.fontWeight600,
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 6.0),
+                title: Padding(
+                  padding: EdgeInsets.only(bottom: 1.w),
                   child: AdoroText(
-                    PreferenceUtils.getString(key: PreferenceUtils.fullname),
-                    fontWeight: FontWeightClass.fontWeight500,
+                    PreferenceUtils.getString(key: PreferenceUtils.username),
+                    color: blackWhite,
+                    fontWeight: FontWeightClass.fontWeight600,
                   ),
+                ),
+                subtitle: AdoroText(
+                  '@${PreferenceUtils.getString(key: PreferenceUtils.fullname)}',
+                  fontWeight: FontWeightClass.fontWeight500,
                 ),
               ),
               SizeConfig.sH2,

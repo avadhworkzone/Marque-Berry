@@ -225,7 +225,7 @@ class PostComponents extends StatelessWidget {
                                   likePostReqModel: likePostReqModel,
                                   categoryFeedViewModel: categoryFeedViewModel,
                                 ),
-                          SizeConfig.sW2,
+                          SizeConfig.sW1AndHalf,
                           InkWell(
                             onTap: () {
                               Get.to(
@@ -241,7 +241,7 @@ class PostComponents extends StatelessWidget {
                               img: IconsWidgets.chatImage,
                             ),
                           ),
-                          SizeConfig.sW2,
+                          SizeConfig.sW1AndHalf,
                           CommonImageScale(
                             scale: 25.w,
                             color: black92White,

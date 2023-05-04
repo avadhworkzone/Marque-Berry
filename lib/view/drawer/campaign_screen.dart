@@ -54,12 +54,13 @@ class _CampaignScreenState extends State<CampaignScreen> {
             child: Scaffold(
               appBar: AppBar(
                 elevation: 0,
+                titleSpacing: 0,
                 backgroundColor: whiteBlack2E,
                 automaticallyImplyLeading: false,
-                titleSpacing: 0,
-                leading: ClipOval(
-                  clipBehavior: Clip.hardEdge,
+                leading: Padding(
+                  padding: EdgeInsets.all(1.w),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(8.w),
                     onTap: () => bottomBarController.pageChange(0),
                     child: Icon(Icons.arrow_back, color: blackWhite),
                   ),
