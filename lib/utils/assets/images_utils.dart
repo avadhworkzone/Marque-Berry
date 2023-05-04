@@ -21,11 +21,12 @@ class ImagesWidgets {
   static String splashImage = '$imagesbasePath/splash.png';
   static String tickSquareImage = '$imagesbasePath/TickSquare.png';
   static String closeSquareImage = '$imagesbasePath/CloseSquare.png';
+  static String referEarnImage = '$imagesbasePath/referEarn.png';
 
   static Image logoISImage = Image.asset(logoImage, scale: 3.6.w);
   static Image adoroImage = Image.asset(
     '$imagesbasePath/adoro.png',
-    scale: 1.w,
+    scale: 1.2.w,
   );
   static Image verifiedImage = Image.asset(
     '$imagesbasePath/verifieduser.png',

@@ -48,65 +48,30 @@ class ReferAndEarn extends StatelessWidget {
                   Stack(
                     children: [
                       Container(
-                        height: size.height / 2.3,
+                        height: size.height / 3.2,
                         width: size.width,
-                        child: Image(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
                           image: AssetImage(
-                            "assets/images/referEarn.png",
+                            ImagesWidgets.referEarnImage,
                           ),
                           fit: BoxFit.fill,
-
-                          // width: Get.width
+                        )),
+                        // padding: const EdgeInsets.symmetric(horizontal: 20),
+                        margin: EdgeInsets.only(bottom: 18.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizeConfig.sH6,
+                            AdoroText(
+                              VariableUtils.referEarnText,
+                              fontSize: 23.sp,
+                              color: ColorUtils.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
                         ),
                       ),
-
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.w),
-                        child: Center(
-                          child: AdoroText(
-                            VariableUtils.referEarnText,
-                            fontSize: 23.sp,
-                            color: ColorUtils.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      // Container(
-                      //   height: size.height / 3.4,
-                      //   width: size.width,
-                      //   decoration: BoxDecoration(
-                      //
-                      //     gradient: LinearGradient(
-                      //       colors: [
-                      //         ColorUtils.linearGradient3,
-                      //         ColorUtils.linearGradient6,
-                      //         ColorUtils.linearGradient7
-                      //       ],
-                      //       stops: [0, 0.3, 0.8],
-                      //       begin: Alignment.topLeft,
-                      //       end: Alignment.bottomRight,
-                      //     ),
-                      //
-                      //     // borderRadius: BorderRadius.vertical(
-                      //     //   bottom: Radius.circular(15.w),
-                      //     // ),
-                      //   ),
-                      //   // padding: const EdgeInsets.symmetric(horizontal: 20),
-                      //   margin: EdgeInsets.only(bottom: 18.w),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: [
-                      //       SizeConfig.sH6,
-                      //       AdoroText(
-                      //         VariableUtils.referEarnText,
-                      //         fontSize: 23.sp,
-                      //         color: ColorUtils.white,
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-
                       Positioned(
                         bottom: 0.w,
                         left: 8.w,
@@ -220,31 +185,6 @@ class ReferAndEarn extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Container(
-                  //   height: 6.h,
-                  //   width: 40.w,
-                  //   decoration: BoxDecoration(
-                  //     gradient: LinearGradient(
-                  //       colors: [
-                  //         ColorUtils.linearGradient1,
-                  //         ColorUtils.linearGradient6,
-                  //         ColorUtils.linearGradient7
-                  //       ],
-                  //       begin: Alignment.bottomLeft,
-                  //       end: Alignment.topRight,
-                  //     ),
-                  //     borderRadius: BorderRadius.all(
-                  //       Radius.circular(6.w),
-                  //     ),
-                  //   ),
-                  //   child: Center(
-                  //       child: AdoroText(
-                  //     VariableUtils.share,
-                  //     color: ColorUtils.white,
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 15.sp,
-                  //   )),
-                  // ),
                   SizeConfig.sH7,
                   Padding(
                     padding: EdgeInsets.only(left: 7.w, right: 7.w),

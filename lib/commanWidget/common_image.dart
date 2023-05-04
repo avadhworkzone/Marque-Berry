@@ -32,7 +32,11 @@ class CommonImageScale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(img, scale: scale, color: color);
+    return Image.asset(
+      img,
+      scale: scale,
+      color: color,
+    );
   }
 }
 

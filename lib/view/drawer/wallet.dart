@@ -62,8 +62,10 @@ class Wallet extends StatelessWidget {
                             // ImagesWidgets.circleImage,
                             Padding(
                               padding: EdgeInsets.all(2.w),
-                              child: Image.asset(
-                                ImagesWidgets.profile2Image,
+                              child: Center(
+                                child: Image.asset(
+                                  ImagesWidgets.profile2Image,
+                                ),
                               ),
                             )
                           ],
@@ -78,6 +80,7 @@ class Wallet extends StatelessWidget {
                         fontSize: 12.sp,
                       ),
                       SizeConfig.sH1,
+
                       AdoroText(
                         VariableUtils.wallet75,
                         color: blackWhite,

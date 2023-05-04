@@ -57,25 +57,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // Image(
-                            //   image: AssetImage(
-                            //     "assets/images/adoro.png",
-                            //   ),
-                            //   width: 60.w,
-                            //   // height: 10.h,
-                            // )
                             ImagesWidgets.adoroImage,
                           ],
                         ),
-                        SizeConfig.sH2,
+                        SizeConfig.sH4,
                         Container(
-                          height: Get.height - 25.h,
+                          height: Get.height - 24.h,
                           child: Stack(
                             children: [
                               Container(
-                                padding: EdgeInsets.only(top: 0.5.w),
+                                padding: EdgeInsets.only(top: 1.w),
                                 width: Get.width,
-                                height: 10.h,
+                                height: 15.h,
                                 decoration:
                                     DecorationUtils.loginDecoration(context),
                                 child: Row(
