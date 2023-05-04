@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 
 class CommonProfileImage extends StatelessWidget {
   double heightWidth;
-
   Color? bgColor;
 
   CommonProfileImage({
@@ -26,14 +26,16 @@ class CommonProfileImage extends StatelessWidget {
         color: bgColor,
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: PreferenceUtils.getString(key: 'profile') != ""
+          image: PreferenceUtils.getString(
+                    key: PreferenceUtils.profileImage,
+                  ) !=
+                  ""
               ? NetworkImage(
-                  PreferenceUtils.getString(key: 'profile'),
+                  PreferenceUtils.getString(
+                    key: PreferenceUtils.profileImage,
+                  ),
                 ) as ImageProvider
-              : AssetImage(
-                  IconsWidgets.userImages,
-                ),
-          // scale: 0.28.w,
+              : AssetImage(IconsWidgets.userImages),
           fit: BoxFit.contain,
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';

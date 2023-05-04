@@ -7,7 +7,7 @@ import 'package:socialv/model/apiModel/requestModel/update_comment_req_model.dar
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/view/home/home.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';

@@ -12,7 +12,7 @@ import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';

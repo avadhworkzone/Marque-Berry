@@ -2,14 +2,13 @@
 
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
-import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
@@ -18,6 +17,7 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/view/home/components/tabbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
+import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
@@ -147,106 +147,86 @@ class _HomeState extends State<Home> {
                           )
                         : Stack(
                             children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 3.w),
-                                child: InViewNotifierList(
-                                  controller: _scrollController,
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  isInViewPortCondition: (double deltaTop,
-                                      double deltaBottom,
-                                      double viewPortDimension) {
-                                    return deltaTop <
-                                            (0.5 * viewPortDimension) &&
-                                        deltaBottom > (0.5 * viewPortDimension);
-                                  },
-                                  itemCount: categoryPostList.length,
-                                  builder: (BuildContext context, int index) {
-                                    final categoryIndex =
-                                        categoryPostList[index];
-                                    final postId = (categoryIndex.id ?? 0);
+                              InViewNotifierList(
+                                controller: _scrollController,
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                isInViewPortCondition: (double deltaTop,
+                                    double deltaBottom,
+                                    double viewPortDimension) {
+                                  return deltaTop < (0.5 * viewPortDimension) &&
+                                      deltaBottom > (0.5 * viewPortDimension);
+                                },
+                                itemCount: categoryPostList.length,
+                                builder: (BuildContext context, int index) {
+                                  final categoryIndex = categoryPostList[index];
+                                  final postId = (categoryIndex.id ?? 0);
 
-                                    return LayoutBuilder(
-                                      builder: (BuildContext context,
-                                          BoxConstraints constraints) {
-                                        return InViewNotifierWidget(
-                                          id: '$index',
-                                          builder: (BuildContext context,
-                                              bool isInView, Widget? child) {
-                                            return postId == 0 ||
-                                                    homeController.reportList
-                                                            .contains(postId) ==
-                                                        true
-                                                ? SizedBox()
-                                                : PostComponents(
-                                                    isInView: isInView,
-                                                    userId: int.parse(
-                                                        categoryIndex.userId
-                                                            .toString()),
-                                                    followedByMe: categoryIndex
-                                                            .followedByMe ??
-                                                        false,
-                                                    contentType: categoryIndex
-                                                            .contentType ??
-                                                        "image",
-                                                    homeController:
-                                                        homeController,
-                                                    currentTabIndex:
-                                                        homeController
-                                                            .tabCurrentIndex,
-                                                    postId:
-                                                        categoryIndex.id ?? 0,
-                                                    categoryFeedViewModel:
-                                                        categoryFeedViewModel,
-                                                    likeByMe: categoryIndex
-                                                                .likedByMe
-                                                                .toString() ==
-                                                            'true'
-                                                        ? "You"
-                                                        : (categoryIndex
-                                                                .likedByPeople?[
-                                                                    0]
-                                                                .username ??
-                                                            ""),
-                                                    likeProfile: categoryIndex
-                                                        .likedByPeople,
-                                                    likeByMePeople:
-                                                        categoryIndex
-                                                                .likedByPeople
-                                                                ?.length ??
-                                                            0,
-                                                    profileImage:
-                                                        categoryIndex.image ??
-                                                            "",
-                                                    userName: categoryIndex
-                                                            .username ??
-                                                        "",
-                                                    time: postTimeCalculate(
-                                                      categoryIndex.createdOn,
-                                                      'ago',
-                                                    ),
-                                                    contentImage: categoryIndex
-                                                        .contentUrl
-                                                        .toString(),
-                                                    title: categoryIndex.content
-                                                        .toString(),
-                                                    likeCounter: (categoryIndex
-                                                                .likedByPeople
-                                                                ?.length ??
-                                                            0)
-                                                        .toString(),
-                                                    commentCounter:
-                                                        (categoryIndex
-                                                                    .comments ??
-                                                                0)
-                                                            .toString(),
-                                                  );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
+                                  return LayoutBuilder(
+                                    builder: (BuildContext context,
+                                        BoxConstraints constraints) {
+                                      return InViewNotifierWidget(
+                                        id: '$index',
+                                        builder: (BuildContext context,
+                                            bool isInView, Widget? child) {
+                                          return postId == 0 ||
+                                                  homeController.reportList
+                                                          .contains(postId) ==
+                                                      true
+                                              ? SizedBox()
+                                              : PostComponents(
+                                                  isInView: isInView,
+                                                  userId: int.parse(
+                                                      categoryIndex.userId
+                                                          .toString()),
+                                                  contentType: categoryIndex
+                                                          .contentType ??
+                                                      "image",
+                                                  homeController:
+                                                      homeController,
+                                                  postId: categoryIndex.id ?? 0,
+                                                  categoryFeedViewModel:
+                                                      categoryFeedViewModel,
+                                                  likeByMe: categoryIndex
+                                                              .likedByMe
+                                                              .toString() ==
+                                                          'true'
+                                                      ? "You"
+                                                      : (categoryIndex
+                                                              .likedByPeople?[0]
+                                                              .username ??
+                                                          ""),
+                                                  likeProfile: categoryIndex
+                                                      .likedByPeople,
+                                                  profileImage:
+                                                      categoryIndex.image ?? "",
+                                                  userName:
+                                                      categoryIndex.username ??
+                                                          "",
+                                                  time: postTimeCalculate(
+                                                    categoryIndex.createdOn,
+                                                    'ago',
+                                                  ),
+                                                  contentImage: categoryIndex
+                                                      .contentUrl
+                                                      .toString(),
+                                                  title: categoryIndex.content
+                                                      .toString(),
+                                                  likeCounter: (categoryIndex
+                                                              .likedByPeople
+                                                              ?.length ??
+                                                          0)
+                                                      .toString(),
+                                                  commentCounter:
+                                                      (categoryIndex.comments ??
+                                                              0)
+                                                          .toString(),
+                                                );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                               if (categoryFeedViewModel.isPageLoading ||
                                   categoryFeedViewModel

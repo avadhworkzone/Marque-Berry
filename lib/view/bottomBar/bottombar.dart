@@ -6,6 +6,7 @@ import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/view/profile/profile1_screen.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
@@ -32,7 +33,7 @@ class _BottomBarState extends State<BottomBar> {
       Home(scaffoldKey: _scaffold),
       SharePost(),
       CampaignScreen(),
-      ProfileScreen1()
+      Profile()
     ];
     super.initState();
   }

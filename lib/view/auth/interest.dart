@@ -5,14 +5,14 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:octo_image/octo_image.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/requestModel/user_category_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/user_category_res_model.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
@@ -21,8 +21,6 @@ import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/custom_btn.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
-import 'package:socialv/commanWidget/common_image.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/controllers/intrest_controller.dart';
 import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
@@ -131,51 +129,11 @@ class InterestScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       height: 30.w,
-                                      child: Image(
-                                          image: AssetImage(
-                                              "assets/images/categrories/${memeResponse.data?[index].title?.toLowerCase().replaceAll(" ", "") ?? ""}.png"),
-                                          fit: BoxFit.cover),
+                                      child: Image.asset(
+                                        "$imagesbasePath/categories/${memeResponse.data?[index].title?.toLowerCase().replaceAll(" ", "") ?? ""}.png",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    // Container(
-                                    //   height: 30.w,
-                                    //   child: OctoImage(
-                                    //     fit: BoxFit.cover,
-                                    //     image: NetworkImage(
-                                    //       "${memeResponse.data?[index].imageUrl ?? ""}",
-                                    //     ),
-                                    //     progressIndicatorBuilder:
-                                    //         (context, progress) {
-                                    //       double? value;
-                                    //       var expectedBytes =
-                                    //           progress?.expectedTotalBytes;
-                                    //       if (progress != null &&
-                                    //           expectedBytes != null) {
-                                    //         value =
-                                    //             progress.cumulativeBytesLoaded /
-                                    //                 expectedBytes;
-                                    //       }
-                                    //       return Center(
-                                    //         child: Padding(
-                                    //           padding: EdgeInsets.all(8.w),
-                                    //           child: CircularProgressIndicator(
-                                    //             value: value,
-                                    //             color: blackWhite,
-                                    //           ),
-                                    //         ),
-                                    //       );
-                                    //     },
-                                    //     errorBuilder:
-                                    //         (context, error, stacktrace) =>
-                                    //             Padding(
-                                    //       padding: EdgeInsets.all(7.w),
-                                    //       child: CommonImage(
-                                    //         img: IconsWidgets
-                                    //             .imageNotFoundImages,
-                                    //         color: blackWhite,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
                                     Align(
                                       alignment: Alignment.bottomCenter,
                                       child: AdoroText(
@@ -198,7 +156,8 @@ class InterestScreen extends StatelessWidget {
                                                 context),
                                         child: Image(
                                           image: AssetImage(
-                                              "assets/images/design.png"),
+                                            "assets/images/design.png",
+                                          ),
                                         ),
                                       ),
                                   ],
@@ -206,6 +165,7 @@ class InterestScreen extends StatelessWidget {
                               ),
                             );
                           }
+                          return SizedBox();
                         },
                       ),
                     ),

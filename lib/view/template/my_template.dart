@@ -10,7 +10,7 @@ import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/template_view_model.dart';
 
 import '../../model/apis/api_response.dart';
-import '../../utils/tecell_text.dart';
+import '../../utils/adoro_text.dart';
 import 'download_template_listview.dart';
 
 class MyTemplate extends StatelessWidget {

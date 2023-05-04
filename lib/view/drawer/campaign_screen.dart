@@ -18,7 +18,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/auth/done_screen.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
@@ -57,9 +57,12 @@ class _CampaignScreenState extends State<CampaignScreen> {
                 backgroundColor: whiteBlack2E,
                 automaticallyImplyLeading: false,
                 titleSpacing: 0,
-                leading: InkWell(
-                  onTap: () => bottomBarController.pageChange(0),
-                  child: Icon(Icons.arrow_back, color: blackWhite),
+                leading: ClipOval(
+                  clipBehavior: Clip.hardEdge,
+                  child: InkWell(
+                    onTap: () => bottomBarController.pageChange(0),
+                    child: Icon(Icons.arrow_back, color: blackWhite),
+                  ),
                 ),
                 title: TabBar(
                   labelColor: ColorUtils.blueB9,
@@ -142,10 +145,10 @@ class CampaignScn extends StatelessWidget {
           campaignContestViewModel: campaignContestViewModel,
           method: 'campaign',
           size: size,
-          title: dataIndex.firstAward ?? "",
+          title: dataIndex.brandName ?? "",
           createOn: dataIndex.createdOn ?? "",
           applied: dataIndex.applied ?? "false",
-          image: dataIndex.image ?? "",
+          image: dataIndex.logo ?? "",
           description: dataIndex.description ?? "",
           campaignContestId: dataIndex.id.toString(),
         );
@@ -191,15 +194,14 @@ class ContestScreen extends StatelessWidget {
       itemCount: contestContestResponse.contest?.length ?? 0,
       itemBuilder: (context, index) {
         final dataIndex = contestContestResponse.contest?[index];
-        logs(dataIndex?.firstAward ?? "");
 
         return TabBarMethod(
           method: 'contest',
           size: size,
           createOn: dataIndex?.createdOn ?? "",
           applied: dataIndex?.applied ?? "false",
-          title: dataIndex?.firstAward ?? '',
-          image: dataIndex?.image ?? '',
+          title: dataIndex?.brandName ?? '',
+          image: dataIndex?.logo ?? '',
           description: dataIndex?.description ?? "",
           campaignContestId: dataIndex?.id.toString() ?? "",
           campaignContestViewModel: campaignContestViewModel,

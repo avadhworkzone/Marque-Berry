@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
 
 class ImageDownload {
@@ -44,6 +45,8 @@ class ImageDownload {
       }
 
       File file = File("$savePath/adoro_${url.split("/").last}");
+
+      logs("FILE PATH -----> $savePath  ");
       var raf = file.openSync(mode: FileMode.write);
       raf.writeFromSync(response.data);
       await raf.close();

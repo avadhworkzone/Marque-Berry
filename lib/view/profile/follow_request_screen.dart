@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 
 import '../../utils/assets/images_utils.dart';
 

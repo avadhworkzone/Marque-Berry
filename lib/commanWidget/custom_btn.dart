@@ -1,7 +1,7 @@
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/typedef_utils.dart' as tpdf;

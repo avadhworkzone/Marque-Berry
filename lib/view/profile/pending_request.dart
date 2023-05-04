@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 
 class PendingRequest extends StatelessWidget {
   const PendingRequest({Key? key}) : super(key: key);

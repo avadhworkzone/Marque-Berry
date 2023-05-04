@@ -3,7 +3,7 @@
 // import 'package:get/get_core/src/get_main.dart';
 // import 'package:sizer/sizer.dart';
 // import 'package:socialv/utils/color_utils.dart';
-// import 'package:socialv/utils/tecell_text.dart';
+// import 'package:socialv/utils/adoro_text.dart';
 // import 'package:socialv/commanWidget/common_appbar.dart';
 // import 'package:socialv/utils/variable_utils.dart';
 //
@@ -93,7 +93,7 @@ import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/font_style_utils.dart';
 import '../../utils/size_config_utils.dart';
-import '../../utils/tecell_text.dart';
+import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
 
 class NotificationScreen extends StatelessWidget {

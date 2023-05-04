@@ -6,8 +6,11 @@ class CommonImage extends StatelessWidget {
   String img;
   Color? color;
 
-  CommonImage({Key? key, required this.img, required this.color})
-      : super(key: key);
+  CommonImage({
+    Key? key,
+    required this.img,
+    required this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

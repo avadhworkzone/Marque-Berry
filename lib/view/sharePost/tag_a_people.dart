@@ -19,7 +19,7 @@ import '../../utils/color_utils.dart';
 import '../../utils/custom_text_field.dart';
 import '../../utils/font_style_utils.dart';
 import '../../utils/size_config_utils.dart';
-import '../../utils/tecell_text.dart';
+import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
 
 class TagAPeople extends StatelessWidget {

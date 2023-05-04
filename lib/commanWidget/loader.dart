@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 
 // class CircularIndicator extends StatelessWidget {

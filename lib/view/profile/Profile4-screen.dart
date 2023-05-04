@@ -1,7 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:marque_berry/view/common/color_utils.dart';
 // import 'package:marque_berry/view/common/custom_appbar.dart';
-// import 'package:marque_berry/view/common/tecell_text.dart';
 //
 // class ImagesModel {
 //   final String image;

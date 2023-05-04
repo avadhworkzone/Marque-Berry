@@ -1,23 +1,22 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:io';
-
-import 'package:better_player/better_player.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/commanWidget/custom_snackbar.dart';
-import 'package:socialv/commanWidget/loader.dart';
+import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/view/home/components/video_components.dart';
 
 class ChattingScreen extends StatefulWidget {
   String senderId;
@@ -510,8 +509,9 @@ class LeftImageWidget extends StatelessWidget {
                                 child: Center(
                                   child: AspectRatio(
                                     aspectRatio: 2 / 3,
-                                    child: BetterPlayer.network(image),
+                                    child: FileVideoPlayer(url: image),
                                   ),
+                                  // BetterPlayer.network(image),
                                 ),
                               ),
                             ),
@@ -611,8 +611,9 @@ class RightImageWidget extends StatelessWidget {
                               child: Center(
                                 child: AspectRatio(
                                   aspectRatio: 16 / 9,
-                                  child: BetterPlayer.network(image),
+                                  child: FileVideoPlayer(url: image),
                                 ),
+                                // BetterPlayer.network(image),
                               ),
                             ),
                           );
@@ -710,13 +711,17 @@ class TempImageWidget extends StatelessWidget {
                       ? () {
                           Get.dialog(
                             Dialog(
-                              backgroundColor: Colors.red,
+                              // backgroundColor: Colors.red,
                               insetPadding: EdgeInsets.zero,
                               child: Center(
                                 child: AspectRatio(
                                   aspectRatio: 16 / 9,
-                                  child: BetterPlayer.file(image),
+                                  child: FileVideoPlayer(
+                                    url: image,
+                                    fileVideo: true,
+                                  ),
                                 ),
+                                // BetterPlayer.file(image),
                               ),
                             ),
                           );

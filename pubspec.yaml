@@ -47,7 +47,6 @@ dependencies:
 
   file_picker: ^5.2.7
   image_cropper: ^3.0.3
-  better_player: ^0.0.83
   video_player: ^2.6.1
   inview_notifier_list: ^3.0.0
 
@@ -75,7 +74,7 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/categrories/
+    - assets/images/categories/
     - assets/icons/
     - assets/lotties/
     - assets/bottombar/
@@ -90,6 +89,10 @@ flutter:
     - family: Poppins_Bold
       fonts:
         - asset: assets/fonts/Poppins-Bold.ttf
+    - family: Poppins_SemiBold
+      fonts:
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+
 #  fonts:
 #    - family: Poppins
 #      fonts:

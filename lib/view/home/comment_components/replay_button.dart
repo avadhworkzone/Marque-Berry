@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 
 class ReplayButton extends StatelessWidget {
   int? replaycount = 0;

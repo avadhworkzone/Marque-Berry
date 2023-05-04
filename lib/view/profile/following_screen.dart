@@ -11,7 +11,7 @@ import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 

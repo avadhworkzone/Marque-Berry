@@ -5,7 +5,7 @@ import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/tecell_text.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/typedef_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
@@ -55,14 +55,14 @@ class MyDrawer extends StatelessWidget {
                   bgColor: Colors.grey[200],
                 ),
                 title: AdoroText(
-                  PreferenceUtils.getString(key: 'username'),
+                  PreferenceUtils.getString(key: PreferenceUtils.username),
                   color: blackWhite,
                   fontWeight: FontWeightClass.fontWeight600,
                 ),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 6.0),
                   child: AdoroText(
-                    PreferenceUtils.getString(key: 'fullname'),
+                    PreferenceUtils.getString(key: PreferenceUtils.fullname),
                     fontWeight: FontWeightClass.fontWeight500,
                   ),
                 ),

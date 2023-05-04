@@ -6,7 +6,7 @@ import 'package:socialv/utils/size_config_utils.dart';
 import '../../commanWidget/common_appbar.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/font_style_utils.dart';
-import '../../utils/tecell_text.dart';
+import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
 
 class ViewResult extends StatelessWidget {
@@ -43,7 +43,6 @@ class ViewResult extends StatelessWidget {
                         BoxShadow(blurRadius: 2, color: Colors.grey),
                       ],
                       borderRadius: BorderRadius.circular(4.w)),
-
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

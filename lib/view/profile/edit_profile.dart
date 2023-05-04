@@ -4,12 +4,11 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
-import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/commanWidget/custom_btn.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/model/apiModel/requestModel/update_cover_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
@@ -17,12 +16,12 @@ import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/update_user_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/app_services/common_profile_image.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/validation_utils.dart';
+import 'package:socialv/view/bottomBar/bottombar.dart';
 
 import '../../model/apiModel/responseModel/update_profile_pic_res_model.dart';
 import '../../utils/color_utils.dart';
@@ -41,7 +40,7 @@ class EditProfile extends StatelessWidget {
   var beneficiaryName = TextEditingController();
   var accountNumber = TextEditingController();
   var ifscCode = TextEditingController();
-  var mobilenumber = TextEditingController();
+  var mobileNumber = TextEditingController();
 
   UpdateUserReqDetail updateUserReqDetail = UpdateUserReqDetail();
   ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
@@ -62,18 +61,22 @@ class EditProfile extends StatelessWidget {
 
       var profileData = response.data?[0];
 
-      PreferenceUtils.setString(
-          key: PreferenceUtils.username, value: profileData?.username ?? "");
+      await PreferenceUtils.setString(
+        key: PreferenceUtils.username,
+        value: profileData?.username ?? "",
+      );
 
-      PreferenceUtils.setString(
-          key: PreferenceUtils.fullname, value: profileData?.fullName ?? "");
+      await PreferenceUtils.setString(
+        key: PreferenceUtils.fullname,
+        value: profileData?.fullName ?? "",
+      );
 
-      PreferenceUtils.setString(
+      await PreferenceUtils.setString(
         key: PreferenceUtils.profileImage,
         value: profileData?.image ?? "",
       );
 
-      PreferenceUtils.setString(
+      await PreferenceUtils.setString(
         key: PreferenceUtils.coverImage,
         value: profileData?.coverPhoto ?? "",
       );
@@ -82,7 +85,7 @@ class EditProfile extends StatelessWidget {
       username = TextEditingController(text: profileData?.username ?? "");
       mailId = TextEditingController(text: profileData?.email ?? "");
       bankName = TextEditingController(text: profileData?.bankName ?? "");
-      mobilenumber = TextEditingController(text: profileData?.mobileNo ?? "");
+      mobileNumber = TextEditingController(text: profileData?.mobileNo ?? "");
       beneficiaryName =
           TextEditingController(text: profileData?.beneficiaryName ?? "");
       accountNumber =
@@ -96,7 +99,7 @@ class EditProfile extends StatelessWidget {
         PreferenceUtils.getInt(key: PreferenceUtils.userid).toString();
 
     updateUserReqDetail.userName = username.text;
-    updateUserReqDetail.mobileNumber = mobilenumber.text;
+    updateUserReqDetail.mobileNumber = mobileNumber.text;
 
     updateUserReqDetail.fullName = fullName.text;
     updateUserReqDetail.bankName = bankName.text;
@@ -151,337 +154,321 @@ class EditProfile extends StatelessWidget {
     }
   }
 
-  updateProfileBtn(context) async {
-    FocusScope.of(context).unfocus();
-    if (username.text.isEmpty ||
-        mailId.text.isEmpty ||
-        bankName.text.isEmpty ||
-        ifscCode.text.isEmpty ||
-        accountNumber.text.isEmpty ||
-        fullName.text.isEmpty ||
-        beneficiaryName.text.isEmpty) {
-      showSnackBar(message: "Fields is required");
-    } else {
-      await updateProfileData();
-    }
-  }
+  final BottomBarController bottomBarController =
+      Get.find<BottomBarController>();
 
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
-      body: SafeArea(
-        child: GetBuilder<EditProfileController>(
-          init: EditProfileController(),
-          builder: (editProfileController) {
-            return GetBuilder<ProfileViewModel>(
-              initState: (_) {
-                editProfileController.clearData();
-                getUserProfile();
-              },
-              init: ProfileViewModel(),
-              builder: (profileViewModel) {
-                if (profileViewModel.getUserProfileApiResponse.status ==
-                        Status.LOADING ||
-                    profileViewModel.getUserProfileApiResponse.status ==
-                        Status.INITIAL) return Center(child: Loader());
+    return WillPopScope(
+      onWillPop: () async {
+        Get.offAll(() => BottomBar());
+        bottomBarController.pageChange(3);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).canvasColor,
+        body: SafeArea(
+          child: GetBuilder<EditProfileController>(
+            init: EditProfileController(),
+            builder: (editProfileController) {
+              return GetBuilder<ProfileViewModel>(
+                initState: (_) {
+                  editProfileController.clearData();
+                  getUserProfile();
+                },
+                init: ProfileViewModel(),
+                builder: (profileViewModel) {
+                  if (profileViewModel.getUserProfileApiResponse.status ==
+                      Status.ERROR) return Center(child: SomethingWentWrong());
 
-                if (profileViewModel.getUserProfileApiResponse.status ==
-                    Status.ERROR) return Center(child: SomethingWentWrong());
-
-                return SingleChildScrollView(
-                  child: Column(
+                  return Stack(
                     children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 4.w,
-                              horizontal: 4.w,
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 4.w,
+                                    horizontal: 4.w,
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.offAll(() => BottomBar());
+                                      bottomBarController.pageChange(3);
+                                    },
+                                    child: Icon(
+                                      Icons.arrow_back,
+                                      color: blackWhite,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: InkWell(
-                              onTap: () => Get.back(),
-                              child: Icon(
-                                Icons.arrow_back,
-                                color: blackWhite,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Stack(
-                        children: [
-                          Container(
-                            height: 25.h,
-                            width: double.maxFinite,
-                            child: CommonCoverImage(),
-                          ),
-                          Container(
-                            height: 25.h,
-                            padding: EdgeInsets.only(right: 5.w, left: 8.w),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Stack(
                               children: [
                                 Container(
-                                  width: 38.w,
-                                  child: Stack(
+                                  height: 25.h,
+                                  width: double.maxFinite,
+                                  child: CommonCoverImage(),
+                                ),
+                                Container(
+                                  height: 25.h,
+                                  padding:
+                                      EdgeInsets.only(right: 5.w, left: 8.w),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(30.w),
-                                        child: Container(
-                                          height: 30.w,
-                                          width: 30.w,
-                                          color: ColorUtils.white,
-                                          child: editProfileController
-                                                      .profileImagePath !=
-                                                  ""
-                                              ? Image.file(
-                                                  File(
-                                                    editProfileController
-                                                        .profileImagePath,
-                                                  ),
-                                                  fit: BoxFit.cover,
-                                                )
-                                              : OctoImage(
-                                                  image: NetworkImage(
-                                                    PreferenceUtils.getString(
-                                                      key: PreferenceUtils
-                                                          .profileImage,
-                                                    ),
-                                                  ),
-                                                  progressIndicatorBuilder:
-                                                      (context, progress) {
-                                                    double? value;
-                                                    var expectedBytes = progress
-                                                        ?.expectedTotalBytes;
-                                                    if (progress != null &&
-                                                        expectedBytes != null) {
-                                                      value = progress
-                                                              .cumulativeBytesLoaded /
-                                                          expectedBytes;
-                                                    }
-                                                    return Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        value: value,
-                                                        color: blackWhite,
+                                      Container(
+                                        width: 38.w,
+                                        child: Stack(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.w),
+                                              child: Container(
+                                                height: 30.w,
+                                                width: 30.w,
+                                                color: ColorUtils.white,
+                                                child: editProfileController
+                                                            .profileImagePath !=
+                                                        ""
+                                                    ? Image.file(
+                                                        File(
+                                                          editProfileController
+                                                              .profileImagePath,
+                                                        ),
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : CommonProfileImage(
+                                                        heightWidth: 25.w,
                                                       ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              right: 6.w,
+                                              bottom: 3.w,
+                                              child: Container(
+                                                width: 8.w,
+                                                height: 8.w,
+                                                child: IconButton(
+                                                  splashRadius: 5.w,
+                                                  onPressed: () async {
+                                                    await editProfileController
+                                                        .pickProfileImage(
+                                                      context: context,
                                                     );
                                                   },
-                                                  errorBuilder: (context, error,
-                                                          stacktrace) =>
-                                                      ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20.w),
-                                                    child: Image.asset(
-                                                      IconsWidgets.userImages,
-                                                      color: ColorUtils.black,
-                                                      scale: 0.28.w,
-                                                    ),
+                                                  icon: Icon(
+                                                    Icons.edit,
+                                                    size: 4.w,
+                                                    color: ColorUtils.white,
                                                   ),
                                                 ),
+                                                decoration: DecorationUtils
+                                                    .doneDecoration(context),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Positioned(
-                                        right: 6.w,
-                                        bottom: 3.w,
+                                      InkWell(
+                                        onTap: () async {
+                                          FocusScope.of(context).unfocus();
+
+                                          if (editProfileController
+                                                  .profileImagePath !=
+                                              "") {
+                                            await updateProfileImage();
+                                          }
+                                          await updateProfileData();
+                                          // getUserProfile();
+                                        },
                                         child: Container(
-                                          width: 8.w,
-                                          height: 8.w,
-                                          child: IconButton(
-                                            splashRadius: 5.w,
-                                            onPressed: () {
-                                              editProfileController
-                                                  .pickProfileImage(
-                                                context: context,
-                                              );
-                                            },
-                                            icon: Icon(
-                                              Icons.edit,
-                                              size: 4.w,
-                                              color: ColorUtils.white,
+                                          height: 5.h,
+                                          width: 40.w,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                "assets/images/rectangleedit.png",
+                                              ),
                                             ),
                                           ),
-                                          decoration:
-                                              DecorationUtils.doneDecoration(
-                                                  context),
+                                          child: Center(
+                                            child: Text(
+                                              VariableUtils.updateProfile,
+                                              style: TextStyle(
+                                                fontSize: 11.sp,
+                                                color: ColorUtils.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () async {
-                                    if (editProfileController
-                                            .profileImagePath !=
-                                        "") {
-                                      await updateProfileImage();
-                                    } else {
-                                      updateProfileBtn(context);
-                                    }
-                                  },
-                                  child: Container(
-                                    height: 5.h,
-                                    width: 40.w,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          "assets/images/rectangleedit.png",
-                                        ),
+                              ],
+                            ),
+                            SizeConfig.sH4,
+                            Container(
+                              width: 90.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4.w),
+                                color: ColorUtils.greyFA,
+                              ),
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 4.w),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizeConfig.sH2,
+                                      CommonTextFormField(
+                                        color: ColorUtils.black,
+                                        controller: fullName,
+                                        hintText: "Full Name",
+                                        hintStyle: FontTextStyle.profileText,
+                                        textstyle: FontTextStyle.profileText
+                                            .copyWith(
+                                                color: ColorUtils.black92),
+                                        keyboardType: TextInputType.name,
+                                        validator: (v) => userValidation(v),
+                                        denyInputFormatters: RegularExpression
+                                            .noSpaceAllowPattern,
+                                        allowInputFormatters: RegularExpression
+                                            .nameKeyboardPattern,
                                       ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        VariableUtils.updateProfile,
-                                        style: TextStyle(
-                                          fontSize: 11.sp,
-                                          color: ColorUtils.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      SizeConfig.sH2,
+                                      CommonTextFormField(
+                                        color: ColorUtils.black,
+                                        controller: username,
+                                        hintText: "UserName",
+                                        hintStyle: FontTextStyle.profileText,
+                                        textstyle: FontTextStyle.profileText
+                                            .copyWith(
+                                                color: ColorUtils.black92),
+                                        keyboardType: TextInputType.name,
+                                        validator: (v) => userValidation(v),
+                                        denyInputFormatters: RegularExpression
+                                            .noSpaceAllowPattern,
+                                        allowInputFormatters: RegularExpression
+                                            .nameKeyboardPattern,
                                       ),
-                                    ),
+                                      SizeConfig.sH2,
+                                      CommonTextFormField(
+                                        color: ColorUtils.black,
+                                        controller: mailId,
+                                        hintText: "Mail Id",
+                                        hintStyle: FontTextStyle.profileText,
+                                        textstyle: FontTextStyle.profileText
+                                            .copyWith(
+                                                color: ColorUtils.black92),
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        validator: (v) => userValidation(v),
+                                        denyInputFormatters: RegularExpression
+                                            .noSpaceAllowPattern,
+                                        allowInputFormatters: RegularExpression
+                                            .emailKeyboardPattern,
+                                      ),
+                                      SizeConfig.sH2,
+                                      CommonTextFormField(
+                                        color: ColorUtils.black,
+                                        controller: bankName,
+                                        hintText: "Bank Name",
+                                        hintStyle: FontTextStyle.profileText,
+                                        textstyle: FontTextStyle.profileText
+                                            .copyWith(
+                                                color: ColorUtils.black92),
+                                        keyboardType: TextInputType.name,
+                                        validator: (v) => userValidation(v),
+                                        denyInputFormatters: RegularExpression
+                                            .noSpaceAllowPattern,
+                                        allowInputFormatters: RegularExpression
+                                            .nameKeyboardPattern,
+                                      ),
+                                      SizeConfig.sH2,
+                                      CommonTextFormField(
+                                        color: ColorUtils.black,
+                                        controller: beneficiaryName,
+                                        hintText: "Beneficiary Name",
+                                        hintStyle: FontTextStyle.profileText,
+                                        textstyle: FontTextStyle.profileText
+                                            .copyWith(
+                                                color: ColorUtils.black92),
+                                        keyboardType: TextInputType.name,
+                                        validator: (v) => userValidation(v),
+                                        denyInputFormatters: RegularExpression
+                                            .noSpaceAllowPattern,
+                                        allowInputFormatters: RegularExpression
+                                            .nameKeyboardPattern,
+                                      ),
+                                      SizeConfig.sH2,
+                                      CommonTextFormField(
+                                        color: ColorUtils.black,
+                                        controller: accountNumber,
+                                        hintText: "Account Number",
+                                        hintStyle: FontTextStyle.profileText,
+                                        textstyle: FontTextStyle.profileText
+                                            .copyWith(
+                                                color: ColorUtils.black92),
+                                        keyboardType: TextInputType.number,
+                                        validator: (v) => userValidation(v),
+                                        denyInputFormatters: RegularExpression
+                                            .noSpaceAllowPattern,
+                                        allowInputFormatters: RegularExpression
+                                            .contactKeyboardPattern,
+                                      ),
+                                      SizeConfig.sH2,
+                                      CommonTextFormField(
+                                        color: ColorUtils.black,
+                                        controller: ifscCode,
+                                        hintText: "IFSC Code",
+                                        hintStyle: FontTextStyle.profileText,
+                                        textstyle: FontTextStyle.profileText
+                                            .copyWith(
+                                                color: ColorUtils.black92),
+                                        keyboardType: TextInputType.number,
+                                        validator: (v) => userValidation(v),
+                                        denyInputFormatters: RegularExpression
+                                            .noSpaceAllowPattern,
+                                        allowInputFormatters: RegularExpression
+                                            .contactKeyboardPattern,
+                                      ),
+                                      SizeConfig.sH2,
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizeConfig.sH4,
-                      Container(
-                        width: 90.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.w),
-                          color: ColorUtils.greyFA,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: ColorUtils.black,
-                                  controller: fullName,
-                                  hintText: "Full Name",
-                                  hintStyle: FontTextStyle.profileText,
-                                  textstyle: FontTextStyle.profileText
-                                      .copyWith(color: ColorUtils.black92),
-                                  keyboardType: TextInputType.name,
-                                  validator: (v) => userValidation(v),
-                                  denyInputFormatters:
-                                      RegularExpression.noSpaceAllowPattern,
-                                  allowInputFormatters:
-                                      RegularExpression.nameKeyboardPattern,
-                                ),
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: ColorUtils.black,
-                                  controller: username,
-                                  hintText: "UserName",
-                                  hintStyle: FontTextStyle.profileText,
-                                  textstyle: FontTextStyle.profileText
-                                      .copyWith(color: ColorUtils.black92),
-                                  keyboardType: TextInputType.name,
-                                  validator: (v) => userValidation(v),
-                                  denyInputFormatters:
-                                      RegularExpression.noSpaceAllowPattern,
-                                  allowInputFormatters:
-                                      RegularExpression.nameKeyboardPattern,
-                                ),
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: ColorUtils.black,
-                                  controller: mailId,
-                                  hintText: "Mail Id",
-                                  hintStyle: FontTextStyle.profileText,
-                                  textstyle: FontTextStyle.profileText
-                                      .copyWith(color: ColorUtils.black92),
-                                  keyboardType: TextInputType.emailAddress,
-                                  validator: (v) => userValidation(v),
-                                  denyInputFormatters:
-                                      RegularExpression.noSpaceAllowPattern,
-                                  allowInputFormatters:
-                                      RegularExpression.emailKeyboardPattern,
-                                ),
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: ColorUtils.black,
-                                  controller: bankName,
-                                  hintText: "Bank Name",
-                                  hintStyle: FontTextStyle.profileText,
-                                  textstyle: FontTextStyle.profileText
-                                      .copyWith(color: ColorUtils.black92),
-                                  keyboardType: TextInputType.name,
-                                  validator: (v) => userValidation(v),
-                                  denyInputFormatters:
-                                      RegularExpression.noSpaceAllowPattern,
-                                  allowInputFormatters:
-                                      RegularExpression.nameKeyboardPattern,
-                                ),
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: ColorUtils.black,
-                                  controller: beneficiaryName,
-                                  hintText: "Beneficiary Name",
-                                  hintStyle: FontTextStyle.profileText,
-                                  textstyle: FontTextStyle.profileText
-                                      .copyWith(color: ColorUtils.black92),
-                                  keyboardType: TextInputType.name,
-                                  validator: (v) => userValidation(v),
-                                  denyInputFormatters:
-                                      RegularExpression.noSpaceAllowPattern,
-                                  allowInputFormatters:
-                                      RegularExpression.nameKeyboardPattern,
-                                ),
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: ColorUtils.black,
-                                  controller: accountNumber,
-                                  hintText: "Account Number",
-                                  hintStyle: FontTextStyle.profileText,
-                                  textstyle: FontTextStyle.profileText
-                                      .copyWith(color: ColorUtils.black92),
-                                  keyboardType: TextInputType.number,
-                                  validator: (v) => userValidation(v),
-                                  denyInputFormatters:
-                                      RegularExpression.noSpaceAllowPattern,
-                                  allowInputFormatters:
-                                      RegularExpression.contactKeyboardPattern,
-                                ),
-                                SizeConfig.sH2,
-                                CommonTextFormField(
-                                  color: ColorUtils.black,
-                                  controller: ifscCode,
-                                  hintText: "IFSC Code",
-                                  hintStyle: FontTextStyle.profileText,
-                                  textstyle: FontTextStyle.profileText
-                                      .copyWith(color: ColorUtils.black92),
-                                  keyboardType: TextInputType.number,
-                                  validator: (v) => userValidation(v),
-                                  denyInputFormatters:
-                                      RegularExpression.noSpaceAllowPattern,
-                                  allowInputFormatters:
-                                      RegularExpression.contactKeyboardPattern,
-                                ),
-                                SizeConfig.sH2,
-                              ],
-                            ),
-                          ),
+                            SizeConfig.sH2,
+                          ],
                         ),
                       ),
-                      SizeConfig.sH2,
+                      if (profileViewModel.getUserProfileApiResponse.status ==
+                              Status.LOADING ||
+                          profileViewModel
+                                  .updateUserCoverPicApiResponse.status ==
+                              Status.LOADING ||
+                          profileViewModel
+                                  .updateUserProfilePicApiResponse.status ==
+                              Status.LOADING)
+                        Expanded(child: Center(child: Loader()))
                     ],
-                  ),
-                );
-              },
-            );
-          },
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

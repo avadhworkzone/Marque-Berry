@@ -1,32 +1,32 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:io';
-import 'dart:math';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/model/apiModel/responseModel/create_post_res_model.dart';
+import 'package:socialv/utils/app_services/common_profile_image.dart';
+import 'package:socialv/view/home/home.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/commanWidget/loader.dart';
-import 'package:better_player/better_player.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/commanWidget/common_image.dart';
-import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
-import '../../model/apiModel/responseModel/create_post_res_model.dart';
+import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
-import '../../utils/app_services/common_profile_image.dart';
-import '../../utils/assets/images_utils.dart';
+
 import '../../utils/color_utils.dart';
-import '../../utils/tecell_text.dart';
+import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
 import '../../utils/custom_text_field.dart';
 import '../../utils/size_config_utils.dart';
+import '../../utils/assets/images_utils.dart';
 
 class SharePost extends StatefulWidget {
   SharePost({Key? key}) : super(key: key);
@@ -90,11 +90,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       Get.back();
                                       bottomBarController.pageChange(0);
                                     },
-                                    child: Icon(
-                                      Icons.close,
-                                      size: 6.w,
-                                      color: blackWhite,
-                                    ),
+                                    child: Icon(Icons.close,
+                                        size: 6.w, color: blackWhite),
                                   ),
                                   SizeConfig.sW2,
                                   AdoroText(
@@ -301,21 +298,10 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                 padding: EdgeInsets.all(4.w),
                                                 child: AspectRatio(
                                                   aspectRatio: 18 / 10,
-                                                  child: BetterPlayer.file(
-                                                    sharePostController
+                                                  child: FileVideoPlayer(
+                                                    url: sharePostController
                                                         .sourcePath,
-                                                    betterPlayerConfiguration:
-                                                        BetterPlayerConfiguration(
-                                                            // aspectRatio: 18 / 10,
-                                                            controlsConfiguration:
-                                                                BetterPlayerControlsConfiguration(
-                                                      enableFullscreen: false,
-                                                      enableOverflowMenu: false,
-                                                      enablePlayPause: false,
-                                                      enableMute: false,
-                                                      enableProgressBar: false,
-                                                      enableProgressText: false,
-                                                    )),
+                                                    fileVideo: true,
                                                   ),
                                                 ),
                                               ),
@@ -389,7 +375,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   ) async {
     var categoryIndex = categoryDataList
         .indexWhere((element) => element.id.toString().contains(categoryId));
-    logs("INDEX=====>  ${categoryIndex.toString()}");
 
     if (categoryId == "") {
       showSnackBar(
@@ -576,18 +561,28 @@ class SharePostController extends GetxController {
                 ? ['mp4', 'mov', 'wmv', 'avi', 'mpg', '3gp', 'mkv']
                 : extension == "gif"
                     ? ['gif']
-                    : ['pdf', 'doc', 'docx', 'xlsx', 'xltx'],
+                    : extension == "template"
+                        ? ['pdf', 'doc', 'docx', 'xlsx', 'xltx']
+                        : [],
       );
       if (result != null) {
         PlatformFile file = result.files.first;
 
-        final cropImagePath = await cropImageClass.cropImage(
-          image: File(file.path!),
-          isBackGround: true,
-          context: context,
-        );
+        if (extension == "image") {
+          final cropImagePath = await cropImageClass.cropImage(
+            image: File(file.path!),
+            isBackGround: true,
+            context: context,
+          );
 
-        sourcePath = cropImagePath?.path ?? '';
+          sourcePath = cropImagePath?.path ?? '';
+        } else if (extension == "video" ||
+            extension == "gif" ||
+            extension == "template") {
+          sourcePath = file.path ?? '';
+
+          logs("sourcePath----->  $sourcePath");
+        }
       } else {
         sourcePath = "";
       }
