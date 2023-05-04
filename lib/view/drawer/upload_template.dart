@@ -71,15 +71,11 @@ class _UploadTemplateState extends State<UploadTemplate> {
                       ? BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              ColorUtils.linearGradient1,
-                              ColorUtils.linearGradient2,
-                              ColorUtils.linearGradient3,
+                              ColorUtils.linearGradient7,
                               ColorUtils.linearGradient4,
                               ColorUtils.linearGradient5,
-                              ColorUtils.linearGradient6,
-                              ColorUtils.linearGradient7,
+                              ColorUtils.linearGradient8,
                             ],
-                            stops: [0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8],
                           ),
                           borderRadius: BorderRadius.circular(2.w),
                         )
@@ -103,15 +99,11 @@ class _UploadTemplateState extends State<UploadTemplate> {
                       : BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              ColorUtils.linearGradient1,
-                              ColorUtils.linearGradient2,
-                              ColorUtils.linearGradient3,
+                              ColorUtils.linearGradient7,
                               ColorUtils.linearGradient4,
                               ColorUtils.linearGradient5,
-                              ColorUtils.linearGradient6,
-                              ColorUtils.linearGradient7,
+                              ColorUtils.linearGradient8,
                             ],
-                            stops: [0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8],
                           ),
                           borderRadius: BorderRadius.circular(2.w),
                         ),

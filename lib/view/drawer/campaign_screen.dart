@@ -347,9 +347,16 @@ class TabBarMethod extends StatelessWidget {
                           ? BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  ColorUtils.linearGradient1,
-                                  ColorUtils.linearGradient6,
-                                  ColorUtils.linearGradient7
+                                  ColorUtils.linearGradient7,
+                                  ColorUtils.linearGradient4,
+                                  ColorUtils.linearGradient5,
+                                  ColorUtils.linearGradient8,
+                                ],
+                                stops: [
+                                  0.0,
+                                  0.3,
+                                  0.6,
+                                  0.9,
                                 ],
                                 begin: Alignment.bottomLeft,
                                 end: Alignment.topRight,

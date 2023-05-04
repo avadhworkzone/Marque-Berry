@@ -23,10 +23,11 @@ class ColorUtils {
   static const linearGradient1 = Color(0xFF00FFFF);
   static const linearGradient2 = Color(0xFF42EFF2);
   static const linearGradient3 = Color(0xFF92DBE1);
-  static const linearGradient4 = Color(0xFFCDCCD5);
-  static const linearGradient5 = Color(0xFFF1C3CE);
+  static const linearGradient4 = Color(0xFFCDCCD5); //2
+  static const linearGradient5 = Color(0xFFF1C3CE); //3
   static const linearGradient6 = Color(0xFFFFC0CB);
-  static const linearGradient7 = Color(0xFFFFDE6B);
+  static const linearGradient7 = Color(0xFF6CE5E9); //1
+  static const linearGradient8 = Color(0xFFFFD97D); //4
 
   /// Red Shadow Colors
   static const red29 = Color(0xFFF93E29);

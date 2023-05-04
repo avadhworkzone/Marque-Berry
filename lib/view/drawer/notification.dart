@@ -191,9 +191,10 @@ class Ritikraj extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  ColorUtils.linearGradient1,
-                  ColorUtils.linearGradient6,
-                  ColorUtils.linearGradient7
+                  ColorUtils.linearGradient7,
+                  ColorUtils.linearGradient4,
+                  ColorUtils.linearGradient5,
+                  ColorUtils.linearGradient8,
                 ],
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
@@ -264,9 +265,10 @@ class UserNameFollow extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                ColorUtils.linearGradient1,
-                ColorUtils.linearGradient6,
-                ColorUtils.linearGradient7
+                ColorUtils.linearGradient7,
+                ColorUtils.linearGradient4,
+                ColorUtils.linearGradient5,
+                ColorUtils.linearGradient8,
               ],
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
@@ -289,104 +291,104 @@ class UserNameFollow extends StatelessWidget {
   }
 }
 
-class UserNameCircleAvatar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CircleAvatar(
-          radius: 6.w,
-          child: ImagesWidgets.userImage,
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 20.w),
-          child: AdoroText(
-            VariableUtils.Username,
-            fontSize: 12.sp,
-            fontWeight: FontWeightClass.fontWeightBold,
-            color: blackWhite,
-          ),
-        ),
-        Container(
-          height: 4.h,
-          width: 23.w,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                ColorUtils.linearGradient1,
-                ColorUtils.linearGradient6,
-                ColorUtils.linearGradient7
-              ],
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(2.w),
-            ),
-          ),
-          child: Center(
-            child: AdoroText(
-              VariableUtils.Follow,
-              color: ColorUtils.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 11.sp,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class UserNameContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CircleAvatar(
-          radius: 6.w,
-          child: ImagesWidgets.userImage,
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 20.w),
-          child: AdoroText(
-            VariableUtils.Username,
-            fontSize: 12.sp,
-            fontWeight: FontWeightClass.fontWeightBold,
-            color: blackWhite,
-          ),
-        ),
-        Container(
-          height: 4.h,
-          width: 23.w,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                ColorUtils.linearGradient1,
-                ColorUtils.linearGradient6,
-                ColorUtils.linearGradient7
-              ],
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(2.w),
-            ),
-          ),
-          child: Center(
-            child: AdoroText(
-              VariableUtils.Follow,
-              color: ColorUtils.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 11.sp,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
+// class UserNameCircleAvatar extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         CircleAvatar(
+//           radius: 6.w,
+//           child: ImagesWidgets.userImage,
+//         ),
+//         Padding(
+//           padding: EdgeInsets.only(right: 20.w),
+//           child: AdoroText(
+//             VariableUtils.Username,
+//             fontSize: 12.sp,
+//             fontWeight: FontWeightClass.fontWeightBold,
+//             color: blackWhite,
+//           ),
+//         ),
+//         Container(
+//           height: 4.h,
+//           width: 23.w,
+//           decoration: BoxDecoration(
+//             gradient: LinearGradient(
+//               colors: [
+//                 ColorUtils.linearGradient1,
+//                 ColorUtils.linearGradient6,
+//                 ColorUtils.linearGradient7
+//               ],
+//               begin: Alignment.bottomLeft,
+//               end: Alignment.topRight,
+//             ),
+//             borderRadius: BorderRadius.all(
+//               Radius.circular(2.w),
+//             ),
+//           ),
+//           child: Center(
+//             child: AdoroText(
+//               VariableUtils.Follow,
+//               color: ColorUtils.white,
+//               fontWeight: FontWeight.bold,
+//               fontSize: 11.sp,
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+// class UserNameContainer extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         CircleAvatar(
+//           radius: 6.w,
+//           child: ImagesWidgets.userImage,
+//         ),
+//         Padding(
+//           padding: EdgeInsets.only(right: 20.w),
+//           child: AdoroText(
+//             VariableUtils.Username,
+//             fontSize: 12.sp,
+//             fontWeight: FontWeightClass.fontWeightBold,
+//             color: blackWhite,
+//           ),
+//         ),
+//         Container(
+//           height: 4.h,
+//           width: 23.w,
+//           decoration: BoxDecoration(
+//             gradient: LinearGradient(
+//               colors: [
+//                 ColorUtils.linearGradient1,
+//                 ColorUtils.linearGradient6,
+//                 ColorUtils.linearGradient7
+//               ],
+//               begin: Alignment.bottomLeft,
+//               end: Alignment.topRight,
+//             ),
+//             borderRadius: BorderRadius.all(
+//               Radius.circular(2.w),
+//             ),
+//           ),
+//           child: Center(
+//             child: AdoroText(
+//               VariableUtils.Follow,
+//               color: ColorUtils.white,
+//               fontWeight: FontWeight.bold,
+//               fontSize: 11.sp,
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
