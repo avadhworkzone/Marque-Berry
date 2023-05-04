@@ -83,13 +83,10 @@ class ReferAndEarn extends StatelessWidget {
                             border: GradientBoxBorder(
                               gradient: LinearGradient(
                                 colors: [
-                                  ColorUtils.linearGradient1,
-                                  ColorUtils.linearGradient2,
-                                  ColorUtils.linearGradient3,
+                                  ColorUtils.linearGradient7,
                                   ColorUtils.linearGradient4,
                                   ColorUtils.linearGradient5,
-                                  ColorUtils.linearGradient6,
-                                  ColorUtils.linearGradient7,
+                                  ColorUtils.linearGradient8,
                                 ],
                                 //   stops: [0, 0.3, 0.8],
                                 begin: Alignment.topLeft,

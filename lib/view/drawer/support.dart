@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -59,11 +60,12 @@ class Support extends StatelessWidget {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  ColorUtils.linearGradient1,
-                                  ColorUtils.linearGradient6,
-                                  ColorUtils.linearGradient7
+                                  ColorUtils.linearGradient7,
+                                  ColorUtils.linearGradient4,
+                                  ColorUtils.linearGradient5,
+                                  ColorUtils.linearGradient8,
                                 ],
-                                stops: [0, 0.5, 1],
+                                // stops: [0, 0.5, 1],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
@@ -111,8 +113,19 @@ class Support extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       color: ColorUtils.white,
                                       borderRadius: BorderRadius.circular(6.w),
-                                      border: Border.all(
-                                          color: ColorUtils.linearGradient5),
+                                      border: GradientBoxBorder(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            ColorUtils.linearGradient7,
+                                            ColorUtils.linearGradient4,
+                                            ColorUtils.linearGradient5,
+                                            ColorUtils.linearGradient8,
+                                          ],
+                                          //   stops: [0, 0.3, 0.8],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                      ),
                                     ),
                                     // height: 63.h,
                                     child: Padding(
@@ -145,13 +158,14 @@ class Support extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                 colors: [
-                                                  ColorUtils.linearGradient1,
-                                                  ColorUtils.linearGradient6,
                                                   ColorUtils.linearGradient7,
+                                                  ColorUtils.linearGradient4,
+                                                  ColorUtils.linearGradient5,
+                                                  ColorUtils.linearGradient8,
                                                 ],
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight,
-                                                stops: [0.0, 0.6, 0.8],
+                                                // stops: [0.0, 0.6, 0.8],
                                                 tileMode: TileMode.clamp,
                                               ),
                                             ),
@@ -181,9 +195,10 @@ class Support extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                 colors: [
-                                                  ColorUtils.linearGradient1,
-                                                  ColorUtils.linearGradient6,
                                                   ColorUtils.linearGradient7,
+                                                  ColorUtils.linearGradient4,
+                                                  ColorUtils.linearGradient5,
+                                                  ColorUtils.linearGradient8,
                                                 ],
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight,
@@ -264,13 +279,14 @@ class Support extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                 colors: [
-                                                  ColorUtils.linearGradient1,
-                                                  ColorUtils.linearGradient6,
                                                   ColorUtils.linearGradient7,
+                                                  ColorUtils.linearGradient4,
+                                                  ColorUtils.linearGradient5,
+                                                  ColorUtils.linearGradient8,
                                                 ],
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight,
-                                                stops: [0.0, 0.25, 0.55],
+                                                // stops: [0.0, 0.25, 0.55],
                                               ),
                                             ),
                                           ),

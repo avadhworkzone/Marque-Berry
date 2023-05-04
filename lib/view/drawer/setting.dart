@@ -69,9 +69,10 @@ class Setting extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        ColorUtils.linearGradient1,
-                                        ColorUtils.linearGradient6,
-                                        ColorUtils.linearGradient7
+                                        ColorUtils.linearGradient7,
+                                        ColorUtils.linearGradient4,
+                                        ColorUtils.linearGradient5,
+                                        ColorUtils.linearGradient8,
                                       ],
                                       begin: Alignment(-1.0, -0.4),
                                       end: Alignment(0.8, 1.0),
@@ -124,9 +125,10 @@ class Setting extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      ColorUtils.linearGradient1,
-                                      ColorUtils.linearGradient6,
-                                      ColorUtils.linearGradient7
+                                      ColorUtils.linearGradient7,
+                                      ColorUtils.linearGradient4,
+                                      ColorUtils.linearGradient5,
+                                      ColorUtils.linearGradient8,
                                     ],
                                     begin: Alignment(-1.0, -0.4),
                                     end: Alignment(0.8, 1.0),

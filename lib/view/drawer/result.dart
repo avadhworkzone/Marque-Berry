@@ -164,9 +164,10 @@ class Result extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      ColorUtils.linearGradient1,
-                                      ColorUtils.linearGradient6,
-                                      ColorUtils.linearGradient7
+                                      ColorUtils.linearGradient7,
+                                      ColorUtils.linearGradient4,
+                                      ColorUtils.linearGradient5,
+                                      ColorUtils.linearGradient8,
                                     ],
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
