@@ -39,7 +39,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
     selectedTabIndex = 0;
   }
 
-  var uploadTemplateCapiion = TextEditingController();
+  var uploadTemplateCaption = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
                 color: ColorUtils.black,
                 // color: Colors.redAccent,
                 // color: blackWhite,
-                controller: uploadTemplateCapiion,
+                controller: uploadTemplateCaption,
                 hintText: "Write a wittiest caption",
                 hintStyle: TextStyle(
                     color: ColorUtils.black92,
@@ -158,10 +158,16 @@ class _UploadTemplateState extends State<UploadTemplate> {
             CustomBtn(
               height: 5.h,
               onTap: () {
-                if (selectedImagePath != "") {
-                  uploadTemplateApi(selectedImagePath);
+                if (uploadTemplateCaption.text.isNotEmpty) {
+                  if (selectedImagePath != "") {
+                    uploadTemplateApi(selectedImagePath);
+                  } else {
+                    showSnackBar(message: "Image not selected");
+                  }
+                  print('Success');
                 } else {
-                  showSnackBar(message: "Image not selected");
+                  print("fail");
+                  showSnackBar(message: "Please enter caption");
                 }
               },
               text: 'UPLOAD MEME TEMPLATE',
@@ -174,6 +180,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
 
   CropImage cropImageClass = CropImage();
   String selectedImagePath = "";
+
   void selectImage() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -192,7 +199,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
       setState(() {});
     } catch (e) {
       selectedImagePath = "";
-      showSnackBar(message: "Permission is required.");
+      showSnackBar(message: " Permission is required.");
     }
   }
 
@@ -203,6 +210,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
     uploadTemplateReqModel.tag =
         selectedTabIndex == 1 ? "licensed" : 'standard';
 
+    uploadTemplateReqModel.caption = uploadTemplateCaption.text;
     await templateViewModel.uploadTemplate(uploadTemplateReqModel);
 
     if (templateViewModel.uploadTemplateApiResponse.status == Status.COMPLETE) {

@@ -62,6 +62,7 @@ class Standard {
   String? templateUrl;
   String? status;
   String? createdOn;
+  String? caption;
 
   Standard(
       {this.id,
@@ -69,7 +70,8 @@ class Standard {
       this.tag,
       this.templateUrl,
       this.status,
-      this.createdOn});
+      this.createdOn,
+      this.caption});
 
   Standard.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -78,6 +80,7 @@ class Standard {
     templateUrl = json['template_url'];
     status = json['status'];
     createdOn = json['created_on'];
+    caption = json['caption'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +91,7 @@ class Standard {
     data['template_url'] = this.templateUrl;
     data['status'] = this.status;
     data['created_on'] = this.createdOn;
+    data['caption'] = this.caption;
     return data;
   }
 }

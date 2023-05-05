@@ -30,6 +30,7 @@ class ApiService extends BaseService {
       logs('BODY :=> ${jsonEncode(body)}');
       logs('API TYPE :$apiType');
       logs('TOKEN ---> ${PreferenceUtils.getString(key: 'token')}');
+      logs('user id ---> ${PreferenceUtils.getInt(key: 'userid')}');
 
       ///------------------------------------ GET METHOD -------------------------------------///
       if (apiType == APIType.aGet) {

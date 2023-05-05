@@ -175,9 +175,10 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                         SizeConfig.sH5,
                         CustomBtn(
                           onTap: () async {
+                            print("===========${Get.arguments}");
                             if (otpFormKey.currentState!.validate()) {
-                              validateOTPReqModel.mobileNo =
-                                  Get.arguments['mobile'];
+                              validateOTPReqModel.mobileNo = widget.mobile;
+                              // Get.arguments['mobile'];
                               validateOTPReqModel.otp = otp.text;
                               await authViewModel
                                   .validateOTP(validateOTPReqModel);

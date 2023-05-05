@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/apiService/api_service.dart';
 import 'package:socialv/model/apiService/base_service.dart';
@@ -15,7 +17,7 @@ class FeedCategoryRepo extends BaseService {
       body: body,
       url: '$baseURL$feedCategoryURL$category&pageNumber=$pageNumber',
     );
-
+    log('DATA ==>$response');
     // logs('RES ---->${response.runtimeType}');
     // return (response as List).map((e) => CategoryResModel.fromJson(e)).toList();
     return CategoryResModel.fromJson(response);

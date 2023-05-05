@@ -29,7 +29,10 @@ class TemplateModel {
   final String title;
   final String image;
 
-  TemplateModel({required this.title, required this.image});
+  TemplateModel({
+    required this.title,
+    required this.image,
+  });
 }
 
 class Template extends StatelessWidget {

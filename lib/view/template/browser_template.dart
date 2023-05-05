@@ -76,13 +76,13 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
 
               if (browserTemplateController.search.isNotEmpty) {
                 standardList = standardList
-                    .where((element) => element.id
+                    .where((element) => element.caption
                         .toString()
                         .contains(browserTemplateController.search))
                     .toList();
 
                 licensedList = licensedList
-                    .where((element) => element.id
+                    .where((element) => element.caption
                         .toString()
                         .contains(browserTemplateController.search))
                     .toList();
