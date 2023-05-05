@@ -2,10 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/my_template_res_model.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/template_view_model.dart';
 
@@ -16,19 +20,20 @@ import 'download_template_listview.dart';
 class MyTemplate extends StatelessWidget {
   MyTemplate({Key? key}) : super(key: key);
 
-  MyTemplateController myTemplateController = Get.find<MyTemplateController>();
+  // MyTemplateController myTemplateController = Get.find<MyTemplateController>();
 
   TemplateViewModel templateViewModel = Get.find<TemplateViewModel>();
   List<Standard> templateList = [];
 
   @override
   Widget build(BuildContext context) {
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+
     return Scaffold(
-      appBar: customAppbar(title: "My Template", context: context),
-      body: GetBuilder<MyTemplateController>(builder: (myTemplateController) {
-        return GetBuilder<TemplateViewModel>(
+        appBar: customAppbar(title: "My Template", context: context),
+        body: GetBuilder<TemplateViewModel>(
           initState: (_) async {
-            myTemplateController._showLoader = true;
+            // myTemplateController._showLoader = true;
             await templateViewModel.myTemplate();
             if (templateViewModel.myTemplateApiResponse.status ==
                 Status.COMPLETE) {
@@ -36,7 +41,7 @@ class MyTemplate extends StatelessWidget {
                   templateViewModel.myTemplateApiResponse.data;
 
               if (trendingResponse.status == 500) {
-                myTemplateController._showLoader = false;
+                // myTemplateController._showLoader = false;
               } else {
                 for (int i = 0;
                     i < (trendingResponse.data?.standard?.length ?? 0);
@@ -51,12 +56,12 @@ class MyTemplate extends StatelessWidget {
                 }
               }
             }
-            myTemplateController._showLoader = false;
+            // myTemplateController._showLoader = false;
           },
           builder: (templateViewModel) {
             if (templateViewModel.myTemplateApiResponse.status ==
                     Status.LOADING ||
-                myTemplateController._showLoader == true ||
+                // myTemplateController._showLoader == true ||
                 templateViewModel.myTemplateApiResponse.status ==
                     Status.INITIAL) {
               return Center(child: Loader());
@@ -92,29 +97,65 @@ class MyTemplate extends StatelessWidget {
                       );
                     },
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(2.w),
-                      child: Image.network(
-                        templateList[index].templateUrl ?? "",
-                        fit: BoxFit.fill,
+                      borderRadius: BorderRadius.circular(1.5.w),
+                      child: OctoImage(
+                        fit: BoxFit.cover,
+                        width: 24,
+                        height: 24,
+                        image: NetworkImage(
+                          templateList[index].templateUrl ?? "",
+                        ),
+                        // fit: BoxFit.fill,
+                        progressIndicatorBuilder: (context, progress) {
+                          double? value;
+                          var expectedBytes = progress?.expectedTotalBytes;
+                          if (progress != null && expectedBytes != null) {
+                            value =
+                                progress.cumulativeBytesLoaded / expectedBytes;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: value,
+                              color: blackWhite,
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, stacktrace) => Container(
+                          width: 24,
+                          height: 24,
+                          color: ColorUtils.grey[200],
+                          child: Padding(
+                            padding: EdgeInsets.all(1.w),
+                            child: CommonImage(
+                              img: IconsWidgets.userImages,
+                              color: ColorUtils.black,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
+                    // child: ClipRRect(
+                    //   borderRadius: BorderRadius.circular(2.w),
+                    //   child: Image.network(
+                    //     templateList[index].templateUrl ?? "",
+                    //     fit: BoxFit.fill,
+                    //   ),
+                    // ),
                   );
                 },
               ),
             );
           },
-        );
-      }),
-    );
+        ));
   }
 }
 
-class MyTemplateController extends GetxController {
-  bool _showLoader = false;
-  bool get showLoader => _showLoader;
-
-  set showLoader(bool value) {
-    _showLoader = value;
-    update();
-  }
-}
+// class MyTemplateController extends GetxController {
+//   bool _showLoader = false;
+//   bool get showLoader => _showLoader;
+//
+//   set showLoader(bool value) {
+//     _showLoader = value;
+//     update();
+//   }
+// }

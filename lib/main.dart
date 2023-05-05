@@ -132,7 +132,7 @@ class _MyAppState extends State<MyApp> {
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());
   TagAPeopleController tagAPeopleController = Get.put(TagAPeopleController());
-  MyTemplateController myTemplateController = Get.put(MyTemplateController());
+  // MyTemplateController myTemplateController = Get.put(MyTemplateController());
 
   DownloadTemplateController downloadTemplateController =
       Get.put(DownloadTemplateController());

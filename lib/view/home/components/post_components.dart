@@ -229,13 +229,16 @@ class PostComponents extends StatelessWidget {
                                 ),
                           SizeConfig.sW1AndHalf,
                           InkWell(
-                            onTap: () {
-                              Get.to(
+                            onTap: () async {
+                              await Get.to(
                                 () => Comments(
                                   postId: postId,
                                   profileImage: profileImage,
                                 ),
                               );
+                              categoryFeedViewModel.pageNumberIndex = 0;
+                              categoryFeedViewModel
+                                  .categoryTrending(homeController.tabName);
                             },
                             child: CommonImageScale(
                               scale: 25.w,

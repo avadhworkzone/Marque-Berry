@@ -210,78 +210,80 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                                 child: AdoroText(VariableUtils.noDataFound),
                               ),
                             )
-                          : Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w),
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                itemCount: standardList.length,
-                                physics: NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  mainAxisSpacing: 3.2.w,
-                                  crossAxisSpacing: 3.2.w,
-                                ),
-                                itemBuilder: (c, i) {
-                                  return InkWell(
-                                    splashColor: ColorUtils.transparent,
-                                    highlightColor: ColorUtils.transparent,
-                                    onTap: () {
-                                      Get.to(
-                                        () => DownloadTemplateList(
-                                          index: i,
-                                          title: 'Standard',
-                                          templateList: standardList,
-                                        ),
-                                      );
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(1.5.w),
-                                      child: OctoImage(
-                                        fit: BoxFit.cover,
-                                        width: 24,
-                                        height: 24,
-                                        image: NetworkImage(
-                                          standardList[i].templateUrl ?? "",
-                                        ),
-                                        // fit: BoxFit.fill,
-                                        progressIndicatorBuilder:
-                                            (context, progress) {
-                                          double? value;
-                                          var expectedBytes =
-                                              progress?.expectedTotalBytes;
-                                          if (progress != null &&
-                                              expectedBytes != null) {
-                                            value =
-                                                progress.cumulativeBytesLoaded /
-                                                    expectedBytes;
-                                          }
-                                          return Center(
-                                            child: CircularProgressIndicator(
-                                              value: value,
-                                              color: blackWhite,
-                                            ),
-                                          );
-                                        },
-                                        errorBuilder:
-                                            (context, error, stacktrace) =>
-                                                Container(
+                          : Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                child: GridView.builder(
+                                  // shrinkWrap: true,
+                                  itemCount: standardList.length,
+                                  // physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    mainAxisSpacing: 3.2.w,
+                                    crossAxisSpacing: 3.2.w,
+                                  ),
+                                  itemBuilder: (c, i) {
+                                    return InkWell(
+                                      splashColor: ColorUtils.transparent,
+                                      highlightColor: ColorUtils.transparent,
+                                      onTap: () {
+                                        Get.to(
+                                          () => DownloadTemplateList(
+                                            index: i,
+                                            title: 'Standard',
+                                            templateList: standardList,
+                                          ),
+                                        );
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(1.5.w),
+                                        child: OctoImage(
+                                          fit: BoxFit.cover,
                                           width: 24,
                                           height: 24,
-                                          color: ColorUtils.grey[200],
-                                          child: Padding(
-                                            padding: EdgeInsets.all(1.w),
-                                            child: CommonImage(
-                                              img: IconsWidgets.userImages,
-                                              color: ColorUtils.black,
+                                          image: NetworkImage(
+                                            standardList[i].templateUrl ?? "",
+                                          ),
+                                          // fit: BoxFit.fill,
+                                          progressIndicatorBuilder:
+                                              (context, progress) {
+                                            double? value;
+                                            var expectedBytes =
+                                                progress?.expectedTotalBytes;
+                                            if (progress != null &&
+                                                expectedBytes != null) {
+                                              value = progress
+                                                      .cumulativeBytesLoaded /
+                                                  expectedBytes;
+                                            }
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                value: value,
+                                                color: blackWhite,
+                                              ),
+                                            );
+                                          },
+                                          errorBuilder:
+                                              (context, error, stacktrace) =>
+                                                  Container(
+                                            width: 24,
+                                            height: 24,
+                                            color: ColorUtils.grey[200],
+                                            child: Padding(
+                                              padding: EdgeInsets.all(1.w),
+                                              child: CommonImage(
+                                                img: IconsWidgets.userImages,
+                                                color: ColorUtils.black,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                             )
                       : licensedList.isEmpty
