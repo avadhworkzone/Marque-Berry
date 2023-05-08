@@ -18,6 +18,7 @@ class ImagesWidgets {
   static String bgProfileImage = '$imagesbasePath/bgProfile.png';
   static String profileImagesImage = '$imagesbasePath/profileimages.png';
   static String submitButtonImage = '$imagesbasePath/submitButton.png';
+  static String gradientRectangle = '$imagesbasePath/gradientRectangle.png';
   static String splashImage = '$imagesbasePath/splash.png';
   static String tickSquareImage = '$imagesbasePath/TickSquare.png';
   static String closeSquareImage = '$imagesbasePath/CloseSquare.png';

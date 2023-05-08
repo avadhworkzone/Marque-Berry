@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
@@ -30,9 +31,6 @@ class MessageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
@@ -65,107 +63,158 @@ class MessageList extends StatelessWidget {
               ),
             );
           }
-          return ListView.builder(
-            itemCount: getFollowerListResModel.data?.length ?? 0,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final followData = getFollowerListResModel.data?[index];
-              return Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.to(
-                        () => ChattingScreen(
-                          receiverName: followData?.username ?? "",
-                          receiverImage: followData?.image ?? "",
-                          senderName:
-                              PreferenceUtils.getString(key: 'username'),
-                          senderId: (PreferenceUtils.getInt(key: 'userid'))
-                              .toString(),
-                          receiverId: followData?.id.toString() ?? "",
-                          senderImage:
-                              PreferenceUtils.getString(key: 'profile'),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.w),
-                        child: Container(
-                          height: 10.w,
-                          width: 10.w,
-                          color: ColorUtils.greyFA,
-                          child: OctoImage(
-                            fit: BoxFit.cover,
-                            width: 24,
-                            height: 24,
-                            image: NetworkImage(followData?.image ?? ""),
-                            progressIndicatorBuilder: (context, progress) {
-                              double? value;
-                              var expectedBytes = progress?.expectedTotalBytes;
-                              if (progress != null && expectedBytes != null) {
-                                value = progress.cumulativeBytesLoaded /
-                                    expectedBytes;
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: value,
-                                  color: blackWhite,
-                                ),
-                              );
-                            },
-                            errorBuilder: (context, error, stacktrace) =>
-                                Container(
-                              width: 24,
-                              height: 24,
-                              color: ColorUtils.grey[200],
-                              child: Padding(
-                                padding: EdgeInsets.all(1.w),
-                                child: CommonImage(
-                                  img: IconsWidgets.userImages,
-                                  color: ColorUtils.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AdoroText(
-                            followData?.username ?? VariableUtils.naError,
-                            fontSize: 13.sp,
-                            color: blackWhite,
-                            fontWeight: FontWeightClass.fontWeight600,
-                          ),
-                          SizeConfig.sH05,
-                        ],
-                      ),
-                      subtitle: AdoroText(
-                        followData?.fullName ?? "",
-                        fontSize: 10.sp,
-                        color: blackWhite,
-                      ),
-                      trailing: MessageCount(
-                        receiverId: followData?.id.toString() ?? "",
-                      ),
-                    ),
-                  ),
-                  Divider(indent: 10, endIndent: 20, color: black92White)
-                ],
-              );
-            },
-          );
+
+          return StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("Chat")
+                  .orderBy('last_message_time', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: Loader());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: SomethingWentWrong());
+                }
+                List<TagData> users = getFollowerListResModel.data ?? [];
+                List<TagData> containChatUsers = [];
+                if ((snapshot.data?.docs.isNotEmpty ?? false) == true) {
+                  final docs = snapshot.data!.docs;
+
+                  docs.forEach((element) {
+                    final mapData = (element.data() as Map<String, dynamic>);
+                    final containChatIndex =
+                        (getFollowerListResModel.data ?? []).indexWhere(
+                            (element) =>
+                                element.id.toString() == mapData['senderId'] ||
+                                element.id.toString() == mapData['receiverId']);
+
+                    if (containChatIndex > -1) {
+                      containChatUsers.add((getFollowerListResModel.data ??
+                          [])[containChatIndex]);
+                    }
+                  });
+                }
+                if (containChatUsers.isNotEmpty) {
+                  users = containChatUsers;
+                  users.addAll((getFollowerListResModel.data ?? [])
+                      .where((e1) =>
+                          users.indexWhere((e2) => e2.id == e1.id) == -1)
+                      .toList());
+                }
+
+                return UserList(users: users);
+              });
         },
       ),
     );
   }
 }
 
+class UserList extends StatelessWidget {
+  const UserList({Key? key, required this.users}) : super(key: key);
+  final List<TagData> users;
+
+  @override
+  Widget build(BuildContext context) {
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    return ListView.builder(
+      itemCount: users.length ?? 0,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final followData = users[index];
+        return Column(
+          children: [
+            InkWell(
+              onTap: () {
+                Get.to(
+                  () => ChattingScreen(
+                    receiverName: followData.username ?? "",
+                    receiverImage: followData.image ?? "",
+                    senderName: PreferenceUtils.getString(key: 'username'),
+                    senderId:
+                        (PreferenceUtils.getInt(key: 'userid')).toString(),
+                    receiverId: followData.id.toString() ?? "",
+                    senderImage: PreferenceUtils.getString(key: 'profile'),
+                  ),
+                );
+              },
+              child: ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.w),
+                  child: Container(
+                    height: 10.w,
+                    width: 10.w,
+                    color: ColorUtils.greyFA,
+                    child: OctoImage(
+                      fit: BoxFit.cover,
+                      width: 24,
+                      height: 24,
+                      image: NetworkImage(followData.image ?? ""),
+                      progressIndicatorBuilder: (context, progress) {
+                        double? value;
+                        var expectedBytes = progress?.expectedTotalBytes;
+                        if (progress != null && expectedBytes != null) {
+                          value =
+                              progress.cumulativeBytesLoaded / expectedBytes;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: value,
+                            color: blackWhite,
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, error, stacktrace) => Container(
+                        width: 24,
+                        height: 24,
+                        color: ColorUtils.grey[200],
+                        child: Padding(
+                          padding: EdgeInsets.all(1.w),
+                          child: CommonImage(
+                            img: IconsWidgets.userImages,
+                            color: ColorUtils.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AdoroText(
+                      followData.username ?? VariableUtils.naError,
+                      fontSize: 13.sp,
+                      color: blackWhite,
+                      fontWeight: FontWeightClass.fontWeight600,
+                    ),
+                    SizeConfig.sH05,
+                  ],
+                ),
+                subtitle: AdoroText(
+                  followData.fullName ?? "",
+                  fontSize: 10.sp,
+                  color: blackWhite,
+                ),
+                trailing: MessageCount(
+                  receiverId: followData.id.toString(),
+                ),
+              ),
+            ),
+            Divider(indent: 10, endIndent: 20, color: black92White)
+          ],
+        );
+      },
+    );
+  }
+}
+
 class MessageCount extends StatelessWidget {
   final String receiverId;
+
   const MessageCount({Key? key, required this.receiverId}) : super(key: key);
 
   @override

@@ -46,6 +46,7 @@ class ChattingScreen extends StatefulWidget {
 class _ChattingScreenState extends State<ChattingScreen> {
   var message = TextEditingController(text: "");
   ChattingController chattingController = Get.find<ChattingController>();
+  RxBool isMsgSending = false.obs;
 
   @override
   void initState() {
@@ -214,8 +215,13 @@ class _ChattingScreenState extends State<ChattingScreen> {
               ),
             ),
             GetBuilder<ChattingController>(builder: (chattingController) {
+              print(
+                  'chattingController._sourcePath=>${chattingController._sourcePath}');
               String ext = chattingController._sourcePath.split("/").last;
-              if (ext == "jpg" || ext == "png" || ext == "jpeg") {
+              print('EXT ===>$ext');
+              if (ext.contains("jpg") ||
+                  ext.contains("png") ||
+                  ext.contains("jpeg")) {
                 if (chattingController._sourcePath != "")
                   return TempImageWidget(
                     isVideo: false,
@@ -306,31 +312,34 @@ class _ChattingScreenState extends State<ChattingScreen> {
             ),
           ),
           SizeConfig.sW2,
-          InkWell(
-            onTap: () async {
-              if (message.text.isNotEmpty) {
-                await sendMessage(
-                  message: message.text,
-                  messageType: MessageType.TEXT,
-                );
+          Obx(() => InkWell(
+                onTap: isMsgSending.value
+                    ? null
+                    : () async {
+                        if (message.text.isNotEmpty) {
+                          await sendMessage(
+                            message: message.text,
+                            messageType: MessageType.TEXT,
+                          );
 
-                message.clear();
-              }
-            },
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: ColorUtils.transparent,
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Center(
-                  child: Icon(Icons.send_sharp, size: 8.w, color: blackWhite),
+                          message.clear();
+                        }
+                      },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: ColorUtils.transparent,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                      child:
+                          Icon(Icons.send_sharp, size: 8.w, color: blackWhite),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )
+              ))
         ],
       ),
     );
@@ -363,6 +372,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
     required MessageType messageType,
   }) async {
     try {
+      isMsgSending.value = true;
+
       bool exists = (await FirebaseFirestore.instance
               .collection("Chat")
               .doc(chatId(widget.senderId, widget.receiverId))
@@ -377,21 +388,28 @@ class _ChattingScreenState extends State<ChattingScreen> {
       await FirebaseFirestore.instance
           .collection("Chat")
           .doc(chatId(widget.senderId, widget.receiverId))
-          .update({
-        "message": FieldValue.arrayUnion([
-          {
-            'date': DateTime.now(),
-            "message": message,
-            'senderId': widget.senderId,
-            'receiverId': widget.receiverId,
-            "seen": false,
-            "document": chatId(widget.senderId, widget.receiverId),
-            "messageType": messageType.name,
-          }
-        ])
-      });
+          .update(
+        {
+          "message": FieldValue.arrayUnion([
+            {
+              'date': DateTime.now(),
+              "message": message,
+              'senderId': widget.senderId,
+              'receiverId': widget.receiverId,
+              "seen": false,
+              "document": chatId(widget.senderId, widget.receiverId),
+              "messageType": messageType.name,
+            }
+          ]),
+          "last_message_time": DateTime.now().millisecondsSinceEpoch,
+          'senderId': widget.senderId,
+          'receiverId': widget.receiverId,
+        },
+      );
     } catch (e) {
       logs("no message:----> $e");
+    } finally {
+      isMsgSending.value = false;
     }
   }
 
@@ -969,6 +987,7 @@ Widget chattingProfileImage({required String image}) {
 
 class ChattingController extends GetxController {
   String _sourcePath = "";
+
   String get sourcePath => _sourcePath;
 
   set sourcePath(String value) {

@@ -71,284 +71,291 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                   });
                 },
                 builder: (createPostViewModel) {
-                  return Material(
-                    color: whiteBlack2E,
-                    child: SafeArea(
+                  return Scaffold(
+                    bottomSheet: sharePostController.sourcePath == ""
+                        ? UploadPhoto(
+                            sharePostController: sharePostController,
+                          )
+                        : SizedBox(),
+                    body: SafeArea(
                       child: Stack(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  SizeConfig.sW4,
-                                  InkWell(
-                                    splashColor: ColorUtils.transparent,
-                                    highlightColor: ColorUtils.transparent,
-                                    onTap: () {
-                                      Get.back();
-                                      bottomBarController.pageChange(0);
-                                    },
-                                    child: Icon(Icons.close,
-                                        size: 6.w, color: blackWhite),
-                                  ),
-                                  SizeConfig.sW2,
-                                  AdoroText(
-                                    VariableUtils.sharePost,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeightClass.fontWeightBold,
-                                    color: blackWhite,
-                                  ),
-                                  Spacer(),
-                                  InkWell(
-                                    splashColor: ColorUtils.transparent,
-                                    highlightColor: ColorUtils.transparent,
-                                    onTap: () {
-                                      createPostApi(
-                                        createPostReqModel,
-                                        sharePostController,
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 20.w,
-                                      height: 5.h,
-                                      child: Image.asset(
-                                        ImagesWidgets.submitButtonImage,
-                                        // fit: BoxFit.cover,
+                          SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizeConfig.sW4,
+                                    InkWell(
+                                      splashColor: ColorUtils.transparent,
+                                      highlightColor: ColorUtils.transparent,
+                                      onTap: () {
+                                        Get.back();
+                                        bottomBarController.pageChange(0);
+                                      },
+                                      child: Icon(Icons.close,
+                                          size: 6.w, color: blackWhite),
+                                    ),
+                                    SizeConfig.sW2,
+                                    AdoroText(
+                                      VariableUtils.sharePost,
+                                      fontSize: 12.sp,
+                                      fontWeight:
+                                          FontWeightClass.fontWeightBold,
+                                      color: blackWhite,
+                                    ),
+                                    Spacer(),
+                                    InkWell(
+                                      splashColor: ColorUtils.transparent,
+                                      highlightColor: ColorUtils.transparent,
+                                      onTap: () {
+                                        createPostApi(
+                                          createPostReqModel,
+                                          sharePostController,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 20.w,
+                                        height: 5.h,
+                                        child: Image.asset(
+                                          ImagesWidgets.submitButtonImage,
+                                          // fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizeConfig.sW4,
-                                ],
-                              ),
-                              SizeConfig.sH3,
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        CommonProfileImage(
-                                          heightWidth: 18.w,
-                                          bgColor: Colors.grey[200],
-                                        ),
-                                        SizeConfig.sW3,
-                                        Column(
-                                          children: [
-                                            AdoroText(
-                                              "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
-                                              color: blackWhite,
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeightClass
-                                                  .fontWeightBold,
-                                            ),
-                                            SizeConfig.sH1,
-                                            Container(
-                                              height: 5.h,
-                                              // width: 40.w,
-                                              decoration: BoxDecoration(
-                                                color: ColorUtils.white,
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.w),
-                                                ),
+                                    SizeConfig.sW4,
+                                  ],
+                                ),
+                                SizeConfig.sH3,
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 6.w),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          CommonProfileImage(
+                                            heightWidth: 18.w,
+                                            bgColor: Colors.grey[200],
+                                          ),
+                                          SizeConfig.sW3,
+                                          Column(
+                                            children: [
+                                              AdoroText(
+                                                "${PreferenceUtils.getString(key: PreferenceUtils.username)}",
+                                                color: blackWhite,
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeightClass
+                                                    .fontWeightBold,
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 3.w,
+                                              SizeConfig.sH1,
+                                              Container(
+                                                height: 5.h,
+                                                // width: 40.w,
+                                                decoration: BoxDecoration(
+                                                  color: ColorUtils.white,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(10.w),
+                                                  ),
                                                 ),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.add_box_outlined,
-                                                      color: ColorUtils.black,
-                                                    ),
-                                                    SizeConfig.sW2,
-                                                    DropdownButton(
-                                                      underline: SizedBox(),
-                                                      hint: Text(
-                                                        categoryName == ""
-                                                            ? "Category"
-                                                            : categoryName,
-                                                        style: TextStyle(
-                                                          color:
-                                                              ColorUtils.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 3.w,
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.add_box_outlined,
+                                                        color: ColorUtils.black,
                                                       ),
-                                                      icon: Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          horizontal: 1.w,
-                                                          vertical: 2.w,
-                                                        ),
-                                                        child: Image(
-                                                          image: AssetImage(
-                                                            IconsWidgets
-                                                                .dropdownButtonImage,
-                                                          ),
-                                                          height: 4.h,
-                                                          width: 4.w,
-                                                        ),
-                                                      ),
-                                                      items: categoryDataList
-                                                          .map((items) {
-                                                        return DropdownMenuItem(
-                                                          value: items.name,
-                                                          child: AdoroText(
-                                                            items.name ?? "",
-                                                            color: blackWhite,
+                                                      SizeConfig.sW2,
+                                                      DropdownButton(
+                                                        underline: SizedBox(),
+                                                        hint: Text(
+                                                          categoryName == ""
+                                                              ? "Category"
+                                                              : categoryName,
+                                                          style: TextStyle(
+                                                            color: ColorUtils
+                                                                .black,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        var index =
-                                                            categoryDataList
-                                                                .firstWhere(
-                                                          (element) =>
-                                                              element.name ==
-                                                              newValue,
-                                                        );
-                                                        setState(() {
-                                                          categoryName = index
-                                                              .name
-                                                              .toString();
+                                                        ),
+                                                        icon: Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                            horizontal: 1.w,
+                                                            vertical: 2.w,
+                                                          ),
+                                                          child: Image(
+                                                            image: AssetImage(
+                                                              IconsWidgets
+                                                                  .dropdownButtonImage,
+                                                            ),
+                                                            height: 4.h,
+                                                            width: 4.w,
+                                                          ),
+                                                        ),
+                                                        items: categoryDataList
+                                                            .map((items) {
+                                                          return DropdownMenuItem(
+                                                            value: items.name,
+                                                            child: AdoroText(
+                                                              items.name ?? "",
+                                                              color: blackWhite,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          );
+                                                        }).toList(),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          var index =
+                                                              categoryDataList
+                                                                  .firstWhere(
+                                                            (element) =>
+                                                                element.name ==
+                                                                newValue,
+                                                          );
+                                                          setState(() {
+                                                            categoryName = index
+                                                                .name
+                                                                .toString();
 
-                                                          categoryId = index.id
-                                                              .toString();
-                                                        });
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizeConfig.sH4,
-                                    CommonTextFormField(
-                                      color: blackWhite,
-                                      hintText:
-                                          VariableUtils.whatYouWantToTalkAbout,
-                                      hintStyle:
-                                          TextStyle(color: ColorUtils.grey),
-                                      validator: () {},
-                                      controller: description,
-                                    ),
-                                    SizeConfig.sH2,
-                                    if (sharePostController.sourcePath != "" &&
-                                        sharePostController.sourceName ==
-                                            "template")
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: AdoroText(
-                                              sharePostController.sourcePath
-                                                  .split("/")
-                                                  .last,
-                                              color: blackWhite,
-                                            ),
-                                          ),
-                                          IconButton(
-                                            splashRadius: 6.w,
-                                            onPressed: () {
-                                              sharePostController
-                                                  .clearSourcePath();
-                                            },
-                                            icon: Icon(
-                                              Icons.close,
-                                              color: blackWhite,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    if (sharePostController.sourcePath != "" &&
-                                        sharePostController.sourceName !=
-                                            "template")
-                                      Container(
-                                        height: 55.w,
-                                        width: Get.width,
-                                        child: Stack(
-                                          children: [
-                                            if (sharePostController
-                                                    .sourceName ==
-                                                "image")
-                                              Container(
-                                                height: 55.w,
-                                                width: Get.width,
-                                                child: Image.file(
-                                                  File(sharePostController
-                                                      .sourcePath),
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              ),
-                                            if (sharePostController
-                                                        .sourceName ==
-                                                    "video" ||
-                                                sharePostController
-                                                        .sourceName ==
-                                                    "gif")
-                                              Padding(
-                                                padding: EdgeInsets.all(4.w),
-                                                child: AspectRatio(
-                                                  aspectRatio: 18 / 10,
-                                                  child: FileVideoPlayer(
-                                                    url: sharePostController
-                                                        .sourcePath,
-                                                    fileVideo: true,
+                                                            categoryId = index
+                                                                .id
+                                                                .toString();
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
-                                            Positioned(
-                                              right: 0,
-                                              child: IconButton(
-                                                splashRadius: 2.w,
-                                                onPressed: () {
-                                                  sharePostController
-                                                      .clearSourcePath();
-                                                },
-                                                icon: Icon(
-                                                  Icons.close,
-                                                  color: black92White,
-                                                ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      SizeConfig.sH4,
+                                      CommonTextFormField(
+                                        color: blackWhite,
+                                        hintText: VariableUtils
+                                            .whatYouWantToTalkAbout,
+                                        hintStyle:
+                                            TextStyle(color: ColorUtils.grey),
+                                        validator: () {},
+                                        controller: description,
+                                      ),
+                                      SizeConfig.sH2,
+                                      if (sharePostController.sourcePath !=
+                                              "" &&
+                                          sharePostController.sourceName ==
+                                              "template")
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: AdoroText(
+                                                sharePostController.sourcePath
+                                                    .split("/")
+                                                    .last,
+                                                color: blackWhite,
                                               ),
                                             ),
-                                            Positioned(
-                                              left: 5,
-                                              bottom: 5,
-                                              child: InkWell(
-                                                highlightColor:
-                                                    ColorUtils.transparent,
-                                                splashColor:
-                                                    ColorUtils.transparent,
-                                                onTap: () =>
-                                                    Get.to(() => TagAPeople()),
-                                                child: CommonImageScale(
-                                                  img: IconsWidgets.tagImages,
-                                                  color: black92White,
-                                                  scale: 1.2.w,
-                                                ),
+                                            IconButton(
+                                              splashRadius: 6.w,
+                                              onPressed: () {
+                                                sharePostController
+                                                    .clearSourcePath();
+                                              },
+                                              icon: Icon(
+                                                Icons.close,
+                                                color: blackWhite,
                                               ),
                                             ),
                                           ],
                                         ),
-                                      )
-                                  ],
+                                      if (sharePostController.sourcePath !=
+                                              "" &&
+                                          sharePostController.sourceName !=
+                                              "template")
+                                        Container(
+                                          // height: 55.w,
+                                          width: Get.width,
+                                          child: Stack(
+                                            children: [
+                                              if (sharePostController
+                                                      .sourceName ==
+                                                  "image")
+                                                Container(
+                                                  // height: 55.w,
+                                                  width: Get.width,
+                                                  child: Image.file(
+                                                    File(sharePostController
+                                                        .sourcePath),
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ),
+                                              if (sharePostController
+                                                          .sourceName ==
+                                                      "video" ||
+                                                  sharePostController
+                                                          .sourceName ==
+                                                      "gif")
+                                                Padding(
+                                                  padding: EdgeInsets.all(4.w),
+                                                  child: AspectRatio(
+                                                    aspectRatio: 18 / 10,
+                                                    child: FileVideoPlayer(
+                                                      url: sharePostController
+                                                          .sourcePath,
+                                                      fileVideo: true,
+                                                    ),
+                                                  ),
+                                                ),
+                                              Positioned(
+                                                right: 0,
+                                                child: IconButton(
+                                                  splashRadius: 2.w,
+                                                  onPressed: () {
+                                                    sharePostController
+                                                        .clearSourcePath();
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.close,
+                                                    color: black92White,
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 5,
+                                                bottom: 5,
+                                                child: InkWell(
+                                                  highlightColor:
+                                                      ColorUtils.transparent,
+                                                  splashColor:
+                                                      ColorUtils.transparent,
+                                                  onTap: () => Get.to(
+                                                      () => TagAPeople()),
+                                                  child: CommonImageScale(
+                                                    img: IconsWidgets.tagImages,
+                                                    color: black92White,
+                                                    scale: 1.2.w,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Expanded(child: SizedBox()),
-                              sharePostController.sourcePath == ""
-                                  ? UploadPhoto(
-                                      sharePostController: sharePostController,
-                                    )
-                                  : SizedBox(),
-                              SizeConfig.sH2,
-                            ],
+                                SizeConfig.sH2,
+                              ],
+                            ),
                           ),
                           if (createPostViewModel
                                   .createPostApiResponse.status ==
@@ -368,6 +375,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   }
 
   final HomeController homeController = Get.find<HomeController>();
+
   createPostApi(
     CreatePostReqModel createPostReqModel,
     SharePostController sharePostController,
@@ -436,10 +444,13 @@ class UploadPhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 2.5.w),
+    return Container(
+      color: whiteBlack2E,
+      padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 5.sp),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Divider(color: blackWhite, thickness: 1),
           Padding(
@@ -568,13 +579,13 @@ class SharePostController extends GetxController {
         PlatformFile file = result.files.first;
 
         if (extension == "image") {
-          final cropImagePath = await cropImageClass.cropImage(
-            image: File(file.path!),
-            isBackGround: true,
-            context: context,
-          );
+          // final cropImagePath = await cropImageClass.cropImage(
+          //   image: File(file.path!),
+          //   isBackGround: true,
+          //   context: context,
+          // );
 
-          sourcePath = cropImagePath?.path ?? '';
+          sourcePath = file.path ?? '';
         } else if (extension == "video" ||
             extension == "gif" ||
             extension == "template") {
