@@ -313,6 +313,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                   message: message.text,
                   messageType: MessageType.TEXT,
                 );
+
                 message.clear();
               }
             },

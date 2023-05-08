@@ -84,266 +84,263 @@ class PostComponents extends StatelessWidget {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.05.w, horizontal: 3.w),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(1.5.w),
-              color: whiteBlack2E,
-              boxShadow: [
-                BoxShadow(blurRadius: 5, color: Colors.grey.shade300),
-              ],
-            ),
-            child: Column(
-              children: [
-                SizeConfig.sH1,
-                ListTile(
-                  title: AdoroText(
-                    userName,
-                    maxLines: 1,
-                    fontSize: 12.sp,
-                    color: Theme.of(context).textTheme.titleSmall!.color,
-                    overflow: TextOverflow.ellipsis,
-                    fontWeight: FontWeightClass.fontWeight600,
-                  ),
-                  subtitle: AdoroText(
-                    time,
-                    maxLines: 1,
-                    fontSize: 9.sp,
-                    color: black92White,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.w),
-                    child: Container(
-                      color: Colors.grey[200],
-                      child: OctoImage(
-                        fit: BoxFit.cover,
-                        width: 15.w,
-                        height: 15.w,
-                        image: NetworkImage(profileImage),
-                        progressIndicatorBuilder: (context, progress) {
-                          double? value;
-                          var expectedBytes = progress?.expectedTotalBytes;
-                          if (progress != null && expectedBytes != null) {
-                            value =
-                                progress.cumulativeBytesLoaded / expectedBytes;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: value,
-                              color: blackWhite,
-                            ),
-                          );
-                        },
-                        errorBuilder: (context, error, stacktrace) => Padding(
-                          padding: EdgeInsets.all(2.w),
-                          child: CommonImage(
-                            img: IconsWidgets.userImages,
-                            color: ColorUtils.black,
-                          ),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(1.5.w),
+          color: whiteBlack2E,
+          boxShadow: [
+            BoxShadow(blurRadius: 5, color: Colors.grey.shade300),
+          ],
+        ),
+        child: Column(
+          children: [
+            SizeConfig.sH1,
+            ListTile(
+              title: AdoroText(
+                userName,
+                maxLines: 1,
+                fontSize: 12.sp,
+                color: Theme.of(context).textTheme.titleSmall!.color,
+                overflow: TextOverflow.ellipsis,
+                fontWeight: FontWeightClass.fontWeight600,
+              ),
+              subtitle: AdoroText(
+                time,
+                maxLines: 1,
+                fontSize: 9.sp,
+                color: black92White,
+                overflow: TextOverflow.ellipsis,
+              ),
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(15.w),
+                child: Container(
+                  color: Colors.grey[200],
+                  child: OctoImage(
+                    fit: BoxFit.cover,
+                    width: 15.w,
+                    height: 15.w,
+                    image: NetworkImage(profileImage),
+                    progressIndicatorBuilder: (context, progress) {
+                      double? value;
+                      var expectedBytes = progress?.expectedTotalBytes;
+                      if (progress != null && expectedBytes != null) {
+                        value = progress.cumulativeBytesLoaded / expectedBytes;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: value,
+                          color: blackWhite,
                         ),
+                      );
+                    },
+                    errorBuilder: (context, error, stacktrace) => Padding(
+                      padding: EdgeInsets.all(2.w),
+                      child: CommonImage(
+                        img: IconsWidgets.userImages,
+                        color: ColorUtils.black,
                       ),
                     ),
                   ),
-                  trailing: IconButton(
-                    onPressed: () {
-                      dotDialog(
-                        postIdArg: postId,
-                        categoryFeedViewModel: categoryFeedViewModel,
-                      );
-                    },
-                    icon: Icon(Icons.more_horiz, color: black92White),
-                  ),
                 ),
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  dotDialog(
+                    postIdArg: postId,
+                    categoryFeedViewModel: categoryFeedViewModel,
+                  );
+                },
+                icon: Icon(Icons.more_horiz, color: black92White),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizeConfig.sH1,
                 Padding(
                   padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizeConfig.sH1,
-                      AdoroText(
-                        "$title",
-                        maxLines: 2,
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.ellipsis,
-                        color: black92White,
-                      ),
-                      SizeConfig.sH1,
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(2.w),
-                        child: Container(
-                          height: 75.w,
-                          width: Get.width,
-                          child: contentType.toLowerCase() == "video"
-                              ? InViewVideoComponents(
-                                  play: isInView,
-                                  url: contentImage,
-                                )
-                              : OctoImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(contentImage),
-                                  progressIndicatorBuilder:
-                                      (context, progress) {
-                                    double? value;
-                                    var expectedBytes =
-                                        progress?.expectedTotalBytes;
-                                    if (progress != null &&
-                                        expectedBytes != null) {
-                                      value = progress.cumulativeBytesLoaded /
-                                          expectedBytes;
-                                    }
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: value,
-                                        color: blackWhite,
-                                      ),
-                                    );
-                                  },
-                                  errorBuilder: (context, error, stacktrace) =>
-                                      Padding(
-                                    padding: EdgeInsets.all(7.w),
-                                    child: CommonImage(
-                                      img: IconsWidgets.userImages,
-                                      color: blackWhite,
-                                    ),
-                                  ),
+                  child: AdoroText(
+                    "$title",
+                    maxLines: 2,
+                    fontWeight: FontWeight.w500,
+                    overflow: TextOverflow.ellipsis,
+                    color: black92White,
+                  ),
+                ),
+                SizeConfig.sH1,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(2.w),
+                  child: Container(
+                    height: 75.w,
+                    width: Get.width,
+                    child: contentType.toLowerCase() == "video"
+                        ? InViewVideoComponents(
+                            play: isInView,
+                            url: contentImage,
+                          )
+                        : OctoImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(contentImage),
+                            progressIndicatorBuilder: (context, progress) {
+                              double? value;
+                              var expectedBytes = progress?.expectedTotalBytes;
+                              if (progress != null && expectedBytes != null) {
+                                value = progress.cumulativeBytesLoaded /
+                                    expectedBytes;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: value,
+                                  color: blackWhite,
                                 ),
+                              );
+                            },
+                            errorBuilder: (context, error, stacktrace) =>
+                                Padding(
+                              padding: EdgeInsets.all(7.w),
+                              child: CommonImage(
+                                img: IconsWidgets.userImages,
+                                color: blackWhite,
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+                SizeConfig.sH3,
+                Padding(
+                  padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
+                  child: Row(
+                    children: [
+                      categoryFeedViewModel.likeUnlink[postId] == true
+                          ? LikeWidget(
+                              postId: postId,
+                              disLikePostReqModel: disLikePostReqModel,
+                              categoryFeedViewModel: categoryFeedViewModel,
+                            )
+                          : UnlikeWidget(
+                              postId: postId,
+                              likePostReqModel: likePostReqModel,
+                              categoryFeedViewModel: categoryFeedViewModel,
+                            ),
+                      SizeConfig.sW1AndHalf,
+                      InkWell(
+                        onTap: () async {
+                          await Get.to(
+                            () => Comments(
+                              postId: postId,
+                              profileImage: profileImage,
+                            ),
+                          );
+                          categoryFeedViewModel.pageNumberIndex = 0;
+                          categoryFeedViewModel
+                              .categoryTrending(homeController.tabName);
+                        },
+                        child: CommonImageScale(
+                          scale: 25.w,
+                          color: black92White,
+                          img: IconsWidgets.chatImage,
                         ),
                       ),
-                      SizeConfig.sH3,
-                      Row(
-                        children: [
-                          categoryFeedViewModel.likeUnlink[postId] == true
-                              ? LikeWidget(
-                                  postId: postId,
-                                  disLikePostReqModel: disLikePostReqModel,
-                                  categoryFeedViewModel: categoryFeedViewModel,
-                                )
-                              : UnlikeWidget(
-                                  postId: postId,
-                                  likePostReqModel: likePostReqModel,
-                                  categoryFeedViewModel: categoryFeedViewModel,
-                                ),
-                          SizeConfig.sW1AndHalf,
-                          InkWell(
-                            onTap: () async {
-                              await Get.to(
-                                () => Comments(
-                                  postId: postId,
-                                  profileImage: profileImage,
-                                ),
-                              );
-                              categoryFeedViewModel.pageNumberIndex = 0;
-                              categoryFeedViewModel
-                                  .categoryTrending(homeController.tabName);
-                            },
-                            child: CommonImageScale(
-                              scale: 25.w,
-                              color: black92White,
-                              img: IconsWidgets.chatImage,
-                            ),
-                          ),
-                          SizeConfig.sW1AndHalf,
-                          CommonImageScale(
-                            scale: 25.w,
-                            color: black92White,
-                            img: IconsWidgets.sendImage,
-                          ),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              Get.to(
-                                () => Comments(
-                                  postId: postId,
-                                  profileImage: profileImage,
-                                ),
-                              );
-                            },
-                            child: AdoroText(
-                              "$commentCounter Comments",
-                              fontSize: 10.sp,
-                              color: black92White,
-                            ),
-                          )
-                        ],
+                      SizeConfig.sW1AndHalf,
+                      CommonImageScale(
+                        scale: 25.w,
+                        color: black92White,
+                        img: IconsWidgets.sendImage,
                       ),
-                      SizeConfig.sH1,
-                      DecorationUtils.dividerLine2(),
-                      SizeConfig.sH1,
-                      if (likeProfile?.length != null)
-                        Container(
-                          width: Get.width,
-                          child: Row(
-                            children: [
-                              if ((likeProfile?.length ?? 0) > 0)
-                                Container(
-                                  width: (24 *
-                                      (likeProfile!.length > 3
-                                              ? 3
-                                              : likeProfile!.length)
-                                          .toDouble()),
-                                  height: 24,
-                                  child: Stack(
-                                    children: List.generate(
-                                      (likeProfile!.length > 3
+                      Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Get.to(
+                            () => Comments(
+                              postId: postId,
+                              profileImage: profileImage,
+                            ),
+                          );
+                        },
+                        child: AdoroText(
+                          "$commentCounter Comments",
+                          fontSize: 10.sp,
+                          color: black92White,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizeConfig.sH1,
+                Padding(
+                  padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
+                  child: DecorationUtils.dividerLine2(),
+                ),
+                SizeConfig.sH1,
+                if (likeProfile?.length != null)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0.w),
+                    child: Container(
+                      width: Get.width,
+                      child: Row(
+                        children: [
+                          if ((likeProfile?.length ?? 0) > 0)
+                            Container(
+                              width: (24 *
+                                  (likeProfile!.length > 3
                                           ? 3
-                                          : likeProfile!.length),
-                                      (index) => Positioned(
-                                        left: (((likeProfile!.length > 3
-                                                    ? 2
-                                                    : likeProfile!.length -
-                                                        1)) -
-                                                index) *
-                                            18,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(24),
-                                          child: Container(
+                                          : likeProfile!.length)
+                                      .toDouble()),
+                              height: 24,
+                              child: Stack(
+                                children: List.generate(
+                                  (likeProfile!.length > 3
+                                      ? 3
+                                      : likeProfile!.length),
+                                  (index) => Positioned(
+                                    left: (((likeProfile!.length > 3
+                                                ? 2
+                                                : likeProfile!.length - 1)) -
+                                            index) *
+                                        18,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(24),
+                                      child: Container(
+                                        width: 24,
+                                        height: 24,
+                                        color: Colors.grey[200],
+                                        child: OctoImage(
+                                          fit: BoxFit.cover,
+                                          width: 24,
+                                          height: 24,
+                                          image: NetworkImage(
+                                            likeProfile?[index].image ?? "",
+                                          ),
+                                          progressIndicatorBuilder:
+                                              (context, progress) {
+                                            double? value;
+                                            var expectedBytes =
+                                                progress?.expectedTotalBytes;
+                                            if (progress != null &&
+                                                expectedBytes != null) {
+                                              value = progress
+                                                      .cumulativeBytesLoaded /
+                                                  expectedBytes;
+                                            }
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                value: value,
+                                                color: blackWhite,
+                                              ),
+                                            );
+                                          },
+                                          errorBuilder:
+                                              (context, error, stacktrace) =>
+                                                  Container(
                                             width: 24,
                                             height: 24,
-                                            color: Colors.grey[200],
-                                            child: OctoImage(
-                                              fit: BoxFit.cover,
-                                              width: 24,
-                                              height: 24,
-                                              image: NetworkImage(
-                                                likeProfile?[index].image ?? "",
-                                              ),
-                                              progressIndicatorBuilder:
-                                                  (context, progress) {
-                                                double? value;
-                                                var expectedBytes = progress
-                                                    ?.expectedTotalBytes;
-                                                if (progress != null &&
-                                                    expectedBytes != null) {
-                                                  value = progress
-                                                          .cumulativeBytesLoaded /
-                                                      expectedBytes;
-                                                }
-                                                return Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    value: value,
-                                                    color: blackWhite,
-                                                  ),
-                                                );
-                                              },
-                                              errorBuilder: (context, error,
-                                                      stacktrace) =>
-                                                  Container(
-                                                width: 24,
-                                                height: 24,
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(1.w),
-                                                  child: CommonImage(
-                                                    img:
-                                                        IconsWidgets.userImages,
-                                                    color: ColorUtils.black,
-                                                  ),
-                                                ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(1.w),
+                                              child: CommonImage(
+                                                img: IconsWidgets.userImages,
+                                                color: ColorUtils.black,
                                               ),
                                             ),
                                           ),
@@ -352,68 +349,65 @@ class PostComponents extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              if (likeProfile!.length == 1) SizeConfig.sW2,
-                              InkWell(
-                                onTap: () => Get.to(
-                                  () => LikeScreen(likeProfile: postId),
-                                ),
-                                child: Text.rich(
+                              ),
+                            ),
+                          if (likeProfile!.length == 1) SizeConfig.sW2,
+                          InkWell(
+                            onTap: () => Get.to(
+                              () => LikeScreen(likeProfile: postId),
+                            ),
+                            child: Text.rich(
+                              TextSpan(
+                                style: TextStyle(fontSize: 9.sp),
+                                children: <InlineSpan>[
                                   TextSpan(
-                                    style: TextStyle(fontSize: 9.sp),
-                                    children: <InlineSpan>[
-                                      TextSpan(
-                                        text: 'Liked by ',
-                                        style: TextStyle(
-                                          fontSize: 9.sp,
-                                          color: black92Blue,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: "$likeByMe ",
-                                        style: TextStyle(
-                                          fontSize: 9.5.sp,
-                                          color: blackWhite,
-                                          fontFamily: 'Poppins_Bold',
-                                          fontWeight:
-                                              FontWeightClass.fontWeight700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'and ',
-                                        style: TextStyle(
-                                          fontSize: 9.sp,
-                                          color: black92Blue,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '$likeCounter other',
-                                        style: TextStyle(
-                                          fontSize: 9.5.sp,
-                                          fontFamily: 'Poppins_Bold',
-                                          color: blackWhite,
-                                          fontWeight:
-                                              FontWeightClass.fontWeight800,
-                                        ),
-                                      ),
-                                    ],
+                                    text: 'Liked by ',
+                                    style: TextStyle(
+                                      fontSize: 9.sp,
+                                      color: black92Blue,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      SizeConfig.sH1,
-                    ],
+                                  TextSpan(
+                                    text: "$likeByMe ",
+                                    style: TextStyle(
+                                      fontSize: 9.5.sp,
+                                      color: blackWhite,
+                                      fontFamily: 'Poppins_Bold',
+                                      fontWeight: FontWeightClass.fontWeight700,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'and ',
+                                    style: TextStyle(
+                                      fontSize: 9.sp,
+                                      color: black92Blue,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '$likeCounter other',
+                                    style: TextStyle(
+                                      fontSize: 9.5.sp,
+                                      fontFamily: 'Poppins_Bold',
+                                      color: blackWhite,
+                                      fontWeight: FontWeightClass.fontWeight800,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                SizeConfig.sH1,
               ],
             ),
-          ),
+          ],
         ),
-        SizeConfig.sH05,
-      ],
+      ),
     );
   }
 

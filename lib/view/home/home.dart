@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
                                                       false
                                               ? Padding(
                                                   padding: EdgeInsets.fromLTRB(
-                                                      0, 2.w, 0, 0.5.w),
+                                                      0, 2.w, 0, 0.w),
                                                   child: PostComponents(
                                                     isInView: isInView,
                                                     userId: int.parse(

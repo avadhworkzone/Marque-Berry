@@ -51,9 +51,9 @@ class VariableUtils {
   static const weHaveSentDigitCode =
       "We have sent a 6 digit code to your mobile number";
 
-  ///InterestScreen
+  ///InterestScreenF
   static const welcomeToAdoro = "Welcome to adoro";
-  static const chooseOrMoreMemeCategories = "Choose 3 or more meme categories";
+  static const chooseOrMoreMemeCategories = "Choose max 3 meme categories";
 
   ///InterestScreen
   static const dontReceiveTheOTP = "Didn\'t Receive The OTP?";
