@@ -265,33 +265,44 @@ class _HomeState extends State<Home> {
 
 // GroupComponents(),
 class HomeController extends GetxController {
+  ScrollController tabScrollController = ScrollController();
   List tabBarList = [VariableUtils.relevantText, VariableUtils.trendingText];
 
+  void animateTabScroll(double pos) {
+    tabScrollController.animateTo(pos,
+        duration: Duration(milliseconds: 500), curve: Curves.ease);
+  }
+
   String tabName = "relevant";
+
   void tabNameChange(name) {
     tabName = name;
     update();
   }
 
   String parentId = "0";
+
   void parentCommentIdChange(String id) {
     parentId = id;
     update();
   }
 
   int tabCurrentIndex = 0;
+
   void tabChange(int index) {
     tabCurrentIndex = index;
     update();
   }
 
   bool isReportSuccess = false;
+
   void reportSuccess(val) {
     isReportSuccess = val;
     update();
   }
 
   List reportList = [];
+
   void addReport(int postId) {
     reportList.add(postId);
     update();

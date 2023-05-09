@@ -20,14 +20,18 @@ import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart'
 
 class CategoryFeedViewModel extends GetxController {
   int _pageNumberIndex = 0;
+
   int get pageNumberIndex => _pageNumberIndex;
+
   set pageNumberIndex(int value) {
     _pageNumberIndex = value;
     update();
   }
 
   bool _isPageLoading = false;
+
   bool get isPageLoading => _isPageLoading;
+
   set isPageLoading(bool value) {
     _isPageLoading = value;
     update();
@@ -84,17 +88,18 @@ class CategoryFeedViewModel extends GetxController {
 
   /// ======================= CATEGORY TRENDING VIEW MODEL ========================
 
-  Future<void> categoryTrending(String category) async {
+  Future<void> categoryTrending(String category, {bool isReload = true}) async {
     logs('loading..');
 
     if (pageNumberIndex == 0) {
-      categoryApiResponse = ApiResponse.loading('LOADING');
       _isPageLoading = false;
       pageNumberIndex = 0;
       clearLikeUnlink();
       clearFollowData();
-
-      categoryPostList.clear();
+      if (isReload) {
+        categoryApiResponse = ApiResponse.loading('LOADING');
+        categoryPostList.clear();
+      }
       update();
     } else {
       isPageLoading = true;
@@ -105,6 +110,9 @@ class CategoryFeedViewModel extends GetxController {
           category: category, pageNumber: pageNumberIndex.toString());
       categoryApiResponse = ApiResponse.complete(response);
       if (response.status == 200) {
+        if (pageNumberIndex == 0) {
+          categoryPostList.clear();
+        }
         pageNumberIndex += 1;
 
         // if (response.data != null) {

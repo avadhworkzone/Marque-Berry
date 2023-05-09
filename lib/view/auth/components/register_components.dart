@@ -19,16 +19,15 @@ import 'package:socialv/viewModel/auth_view_model.dart';
 
 import '../otp_screen.dart';
 
+final username = TextEditingController();
+final fullNameController = TextEditingController();
+final registerContact = TextEditingController();
+final _formKey = GlobalKey<FormState>();
+
 class RegisterComponents extends StatelessWidget {
   AuthViewModel authViewModel;
 
   RegisterComponents({Key? key, required this.authViewModel}) : super(key: key);
-
-  final registerKey = GlobalKey<FormState>();
-
-  var username = TextEditingController();
-  var fullNameController = TextEditingController();
-  var registerContact = TextEditingController();
 
   RegisterReqModel registerReqModel = RegisterReqModel();
 
@@ -38,7 +37,7 @@ class RegisterComponents extends StatelessWidget {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
 
     return Form(
-      key: registerKey,
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -85,7 +84,7 @@ class RegisterComponents extends StatelessWidget {
             child: CustomBtn(
               onTap: () async {
                 FocusScope.of(context).unfocus();
-                if (registerKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate()) {
                   registerReqModel.username = username.text;
                   registerReqModel.mobileNo = registerContact.text;
                   registerReqModel.fullName = fullNameController.text;
@@ -109,6 +108,7 @@ class RegisterComponents extends StatelessWidget {
                         ),
                       );
 
+                      _formKey.currentState!.reset();
                       // Get.toNamed(
                       //   RouteHelper.getValidateOTPRoute(),
                       //   arguments: {

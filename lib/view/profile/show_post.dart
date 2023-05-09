@@ -29,6 +29,7 @@ class _ShowPostState extends State<ShowPost> {
   @override
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
 
     return GetBuilder<HomeController>(builder: (homeController) {
       return GetBuilder<CategoryFeedViewModel>(initState: (_) {
@@ -37,7 +38,7 @@ class _ShowPostState extends State<ShowPost> {
         );
       }, builder: (categoryFeedViewModel) {
         return Scaffold(
-          backgroundColor: greyFABlack32,
+          backgroundColor: whiteBlack2E,
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(15.w),
             child: CommonAppBar(

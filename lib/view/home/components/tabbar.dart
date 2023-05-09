@@ -31,6 +31,7 @@ class TabBarComponents extends StatelessWidget {
       height: 17.w,
       alignment: Alignment.center,
       child: ListView.builder(
+        controller: homeController.tabScrollController,
         itemCount: 2 + categoryDataList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {

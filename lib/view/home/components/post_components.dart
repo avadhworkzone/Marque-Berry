@@ -237,8 +237,9 @@ class PostComponents extends StatelessWidget {
                             ),
                           );
                           categoryFeedViewModel.pageNumberIndex = 0;
-                          categoryFeedViewModel
-                              .categoryTrending(homeController.tabName);
+                          categoryFeedViewModel.categoryTrending(
+                              homeController.tabName,
+                              isReload: false);
                         },
                         child: CommonImageScale(
                           scale: 25.w,
@@ -254,13 +255,17 @@ class PostComponents extends StatelessWidget {
                       ),
                       Spacer(),
                       InkWell(
-                        onTap: () {
-                          Get.to(
+                        onTap: () async {
+                          await Get.to(
                             () => Comments(
                               postId: postId,
                               profileImage: profileImage,
                             ),
                           );
+                          categoryFeedViewModel.pageNumberIndex = 0;
+                          categoryFeedViewModel.categoryTrending(
+                              homeController.tabName,
+                              isReload: false);
                         },
                         child: AdoroText(
                           "$commentCounter Comments",

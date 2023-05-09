@@ -77,30 +77,49 @@ class MessageList extends StatelessWidget {
                   return Center(child: SomethingWentWrong());
                 }
                 List<TagData> users = getFollowerListResModel.data ?? [];
-                List<TagData> containChatUsers = [];
+                logs('users==>${users.map((e) => e.toJson()).toList()}');
+                List<TagData> tempUsersList = [];
+
+                final currentUser =
+                    (PreferenceUtils.getInt(key: 'userid')).toString();
+                logs('currentUser==>$currentUser');
                 if ((snapshot.data?.docs.isNotEmpty ?? false) == true) {
-                  final docs = snapshot.data!.docs;
-
-                  docs.forEach((element) {
-                    final mapData = (element.data() as Map<String, dynamic>);
-                    final containChatIndex =
-                        (getFollowerListResModel.data ?? []).indexWhere(
-                            (element) =>
-                                element.id.toString() == mapData['senderId'] ||
-                                element.id.toString() == mapData['receiverId']);
-
+                  final docs = snapshot.data!.docs
+                      .map((e) => e.data() as Map<String, dynamic>)
+                      .toList();
+                  users.forEach((element) {
+                    final containChatIndex = docs.indexWhere((fbData) =>
+                        (fbData['senderId'] == element.id.toString() &&
+                            currentUser == fbData['receiverId']) ||
+                        (fbData['receiverId'] == element.id.toString() &&
+                            currentUser == fbData['senderId']));
+                    logs('containChatIndex==>$containChatIndex');
                     if (containChatIndex > -1) {
-                      containChatUsers.add((getFollowerListResModel.data ??
-                          [])[containChatIndex]);
+                      var mapData = element.toJson();
+                      final lastMsgTime = DateTime.fromMillisecondsSinceEpoch(
+                          docs[containChatIndex]['last_message_time']);
+                      mapData.addAll({'last_message_time': lastMsgTime});
+                      tempUsersList.add(TagData.fromJson(mapData));
+                    } else {
+                      var mapData = element.toJson();
+                      mapData.addAll({
+                        'last_message_time':
+                            DateTime.now().subtract(Duration(days: 1))
+                      });
+                      tempUsersList.add(TagData.fromJson(mapData));
                     }
                   });
                 }
-                if (containChatUsers.isNotEmpty) {
-                  users = containChatUsers;
-                  users.addAll((getFollowerListResModel.data ?? [])
-                      .where((e1) =>
-                          users.indexWhere((e2) => e2.id == e1.id) == -1)
-                      .toList());
+                if (tempUsersList.isNotEmpty) {
+                  logs(
+                      'AFTER users==>${tempUsersList.map((e) => e.toJson()).toList()}');
+
+                  tempUsersList
+                      .sort((a, b) => b.lastMsgTime!.compareTo(a.lastMsgTime!));
+                  logs(
+                      'AFTER SORT users==>${tempUsersList.map((e) => e.toJson()).toList()}');
+
+                  users = tempUsersList;
                 }
 
                 return UserList(users: users);
@@ -228,7 +247,7 @@ class MessageCount extends StatelessWidget {
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
           if (!snapshot.data!.exists) {
-            return SizedBox();
+            return UnSeenCountBox(count: 0);
           }
 
           final mapData = snapshot.data!.data() as Map<String, dynamic>;
@@ -239,25 +258,43 @@ class MessageCount extends StatelessWidget {
                       (PreferenceUtils.getInt(key: 'userid')).toString())
               .toList()
               .length;
-          if (count == 0) {
-            return SizedBox();
-          }
-          return Container(
-            padding: EdgeInsets.all(2.w),
-            child: AdoroText(
-              "$count",
-              fontSize: 8.sp,
-              color: ColorUtils.white,
-            ),
-            decoration: BoxDecoration(
+          return UnSeenCountBox(count: count);
+        }
+        if (snapshot.hasError) {
+          return UnSeenCountBox(count: 0);
+        }
+
+        return UnSeenCountBox(count: 0);
+      },
+    );
+  }
+}
+
+class UnSeenCountBox extends StatelessWidget {
+  const UnSeenCountBox({
+    super.key,
+    required this.count,
+  });
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 30,
+      height: 30,
+      padding: EdgeInsets.all(2.w),
+      child: AdoroText(
+        "$count",
+        fontSize: 8.sp,
+        color: ColorUtils.white,
+      ),
+      decoration: count == 0
+          ? BoxDecoration()
+          : BoxDecoration(
               shape: BoxShape.circle,
               color: ColorUtils.blueB9,
             ),
-          );
-        }
-
-        return SizedBox();
-      },
     );
   }
 }

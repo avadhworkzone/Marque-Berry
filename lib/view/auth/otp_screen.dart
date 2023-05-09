@@ -57,6 +57,8 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
           init: OtpController(),
           initState: (_) {
             otpController.startTimer();
+            authViewModel.validateOTPApiResponse =
+                ApiResponse.initial('INITIAL');
           },
           builder: (otpController) {
             return Material(
@@ -229,6 +231,12 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                       // isCampaign: false,
                                       ));
                                   // Get.offAllNamed(RouteHelper.getDoneRoute());
+                                } else if (response.status.toString() ==
+                                    "500") {
+                                  showSnackBar(
+                                    message: response.msg ??
+                                        VariableUtils.somethingWentWrong,
+                                  );
                                 } else {
                                   showSnackBar(
                                     message: VariableUtils.somethingWentWrong,
@@ -272,10 +280,8 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
   }
 
   resendOTP({required AuthViewModel authViewModel}) async {
-    if (Get.arguments != null &&
-        Get.arguments.containsKey('mobile') &&
-        Get.arguments['mobile'] != "") {
-      loginReqModel.mobileNo = Get.arguments['mobile'];
+    if (widget.mobile != "") {
+      loginReqModel.mobileNo = widget.mobile;
       await authViewModel.login(loginReqModel);
       if (authViewModel.loginApiResponse.status == Status.COMPLETE) {
         LoginResModel response = authViewModel.loginApiResponse.data;
@@ -291,27 +297,6 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
           );
         }
       }
-
-      // if (Get.arguments['type'] == "register" &&
-      //     Get.arguments.containsKey('type')) {
-      //   registerReqModel.username = Get.arguments['username'];
-      //   registerReqModel.mobileNo = Get.arguments['mobile'];
-      //   await authViewModel.register(registerReqModel);
-      //   if (authViewModel.registerApiResponse.status == Status.COMPLETE) {
-      //     RegisterResModel response = authViewModel.registerApiResponse.data;
-      //
-      //     if (response.status.toString() == VariableUtils.status200) {
-      //       showSnackBar(
-      //         message: response.msg.toString(),
-      //         snackbarSuccess: true,
-      //       );
-      //     } else {
-      //       showSnackBar(
-      //         message: response.msg ?? VariableUtils.somethingWentWrong,
-      //       );
-      //     }
-      //   }
-      // }
     } else {
       logs("SOMETHING WRONG");
     }
