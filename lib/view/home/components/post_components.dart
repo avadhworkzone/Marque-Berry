@@ -173,12 +173,15 @@ class PostComponents extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(2.w),
                   child: Container(
-                    height: 75.w,
+                    // height: 75.w,
                     width: Get.width,
                     child: contentType.toLowerCase() == "video"
-                        ? InViewVideoComponents(
-                            play: isInView,
-                            url: contentImage,
+                        ? SizedBox(
+                            height: 75.w,
+                            child: InViewVideoComponents(
+                              play: isInView,
+                              url: contentImage,
+                            ),
                           )
                         : OctoImage(
                             fit: BoxFit.cover,

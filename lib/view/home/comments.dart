@@ -90,13 +90,14 @@ class _CommentsState extends State<Comments> {
                   ),
                 ),
                 if (response.status.toString() == VariableUtils.status500)
-                  Expanded(
-                    child: Center(
-                      child: AdoroText(
-                        response.msg ?? VariableUtils.somethingWentWrong,
-                      ),
-                    ),
-                  )
+                  // Expanded(
+                  //   child: Center(
+                  //     child: AdoroText(
+                  //       response.msg ?? VariableUtils.somethingWentWrong,
+                  //
+                  //     ),
+                  //   ),
+                  Expanded(child: SizedBox())
                 else
                   Expanded(
                     child: SingleChildScrollView(
