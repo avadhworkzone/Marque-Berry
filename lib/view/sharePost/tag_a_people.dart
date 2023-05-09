@@ -12,8 +12,8 @@ import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
-
 import '../../commanWidget/common_image.dart';
+import '../../commanWidget/custom_btn.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/custom_text_field.dart';
@@ -42,14 +42,33 @@ class TagAPeople extends StatelessWidget {
             title: 'Tag friend',
             context: context,
             icon: tagAPeopleController.tagList.isNotEmpty
-                ? IconButton(
-                    splashRadius: 6.w,
-                    onPressed: () {
+                ? CustomBtn(
+                    onTap: () {
                       tagAPeopleController.clearList();
                     },
-                    icon: Icon(Icons.close, color: blackWhite),
+                    text: 'DONE',
+                    width: 25.w,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          ColorUtils.linearGradient7,
+                          ColorUtils.linearGradient4,
+                          ColorUtils.linearGradient5,
+                          ColorUtils.linearGradient8,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(1.5.w),
+                    ),
                   )
                 : SizedBox(),
+
+            // IconButton(
+            //         splashRadius: 6.w,
+            //         onPressed: () {
+            //           tagAPeopleController.clearList();
+            //         },
+            //         icon: Icon(Icons.close, color: blackWhite),
+            // )
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 0.w),
