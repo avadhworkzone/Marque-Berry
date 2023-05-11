@@ -77,12 +77,10 @@ class MessageList extends StatelessWidget {
                   return Center(child: SomethingWentWrong());
                 }
                 List<TagData> users = getFollowerListResModel.data ?? [];
-                logs('users==>${users.map((e) => e.toJson()).toList()}');
                 List<TagData> tempUsersList = [];
 
                 final currentUser =
                     (PreferenceUtils.getInt(key: 'userid')).toString();
-                logs('currentUser==>$currentUser');
                 if ((snapshot.data?.docs.isNotEmpty ?? false) == true) {
                   final docs = snapshot.data!.docs
                       .map((e) => e.data() as Map<String, dynamic>)
@@ -93,7 +91,6 @@ class MessageList extends StatelessWidget {
                             currentUser == fbData['receiverId']) ||
                         (fbData['receiverId'] == element.id.toString() &&
                             currentUser == fbData['senderId']));
-                    logs('containChatIndex==>$containChatIndex');
                     if (containChatIndex > -1) {
                       var mapData = element.toJson();
                       final lastMsgTime = DateTime.fromMillisecondsSinceEpoch(
@@ -111,13 +108,9 @@ class MessageList extends StatelessWidget {
                   });
                 }
                 if (tempUsersList.isNotEmpty) {
-                  logs(
-                      'AFTER users==>${tempUsersList.map((e) => e.toJson()).toList()}');
 
                   tempUsersList
                       .sort((a, b) => b.lastMsgTime!.compareTo(a.lastMsgTime!));
-                  logs(
-                      'AFTER SORT users==>${tempUsersList.map((e) => e.toJson()).toList()}');
 
                   users = tempUsersList;
                 }
@@ -139,7 +132,7 @@ class UserList extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     return ListView.builder(
-      itemCount: users.length ?? 0,
+      itemCount: users.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
@@ -249,8 +242,14 @@ class MessageCount extends StatelessWidget {
           if (!snapshot.data!.exists) {
             return UnSeenCountBox(count: 0);
           }
-
+          if ((snapshot.data?.exists ?? false) == false) {
+            return UnSeenCountBox(count: 0);
+          }
           final mapData = snapshot.data!.data() as Map<String, dynamic>;
+          if (mapData["message"].isEmpty) {
+            return UnSeenCountBox(count: 0);
+          }
+
           final count = (mapData["message"] as List<dynamic>)
               .where((element) =>
                   element["seen"] == false &&
@@ -281,8 +280,6 @@ class UnSeenCountBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 30,
-      height: 30,
       padding: EdgeInsets.all(2.w),
       child: AdoroText(
         "$count",

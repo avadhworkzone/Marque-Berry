@@ -94,11 +94,12 @@ class CategoryFeedViewModel extends GetxController {
     if (pageNumberIndex == 0) {
       _isPageLoading = false;
       pageNumberIndex = 0;
-      clearLikeUnlink();
-      clearFollowData();
+
       if (isReload) {
         categoryApiResponse = ApiResponse.loading('LOADING');
         categoryPostList.clear();
+        clearLikeUnlink();
+        clearFollowData();
       }
       update();
     } else {

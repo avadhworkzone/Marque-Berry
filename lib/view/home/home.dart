@@ -165,7 +165,6 @@ class _HomeState extends State<Home> {
                                 builder: (BuildContext context, int index) {
                                   final categoryIndex = categoryPostList[index];
                                   final postId = (categoryIndex.id ?? 0);
-
                                   return LayoutBuilder(
                                     builder: (BuildContext context,
                                         BoxConstraints constraints) {
@@ -173,10 +172,12 @@ class _HomeState extends State<Home> {
                                         id: '$index',
                                         builder: (BuildContext context,
                                             bool isInView, Widget? child) {
-                                          return postId != 0 ||
-                                                  homeController.reportList
-                                                          .contains(postId) ==
-                                                      false
+                                          if (postId == 0) {
+                                            return SizedBox();
+                                          }
+                                          return homeController.reportList
+                                                      .contains(postId) ==
+                                                  false
                                               ? Padding(
                                                   padding: EdgeInsets.fromLTRB(
                                                       0, 2.w, 0, 0.w),
@@ -304,6 +305,7 @@ class HomeController extends GetxController {
   List reportList = [];
 
   void addReport(int postId) {
+    logs('POST ID ====>$postId');
     reportList.add(postId);
     update();
   }

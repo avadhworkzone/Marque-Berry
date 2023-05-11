@@ -221,11 +221,13 @@ class PostComponents extends StatelessWidget {
                               postId: postId,
                               disLikePostReqModel: disLikePostReqModel,
                               categoryFeedViewModel: categoryFeedViewModel,
+                              tabName: homeController.tabName,
                             )
                           : UnlikeWidget(
                               postId: postId,
                               likePostReqModel: likePostReqModel,
                               categoryFeedViewModel: categoryFeedViewModel,
+                              tabName: homeController.tabName,
                             ),
                       SizeConfig.sW1AndHalf,
                       InkWell(
@@ -558,11 +560,13 @@ class LikeWidget extends StatelessWidget {
     required this.disLikePostReqModel,
     required this.postId,
     required this.categoryFeedViewModel,
+    required this.tabName,
   });
 
   final DisLikePostReqModel disLikePostReqModel;
   final int postId;
   final CategoryFeedViewModel categoryFeedViewModel;
+  final String tabName;
 
   @override
   Widget build(BuildContext context) {
@@ -573,6 +577,8 @@ class LikeWidget extends StatelessWidget {
               disLikePostReqModel.postId = postId.toString();
               await categoryFeedViewModel.dislikePost(disLikePostReqModel);
               await categoryFeedViewModel.setLikeUnlike(postId, false);
+              categoryFeedViewModel.pageNumberIndex = 0;
+              categoryFeedViewModel.categoryTrending(tabName, isReload: false);
             },
       child: Padding(
         padding: EdgeInsets.only(left: 1.w),
@@ -592,11 +598,13 @@ class UnlikeWidget extends StatelessWidget {
     required this.likePostReqModel,
     required this.postId,
     required this.categoryFeedViewModel,
+    required this.tabName,
   });
 
   final LikePostReqModel likePostReqModel;
   final int postId;
   final CategoryFeedViewModel categoryFeedViewModel;
+  final String tabName;
 
   @override
   Widget build(BuildContext context) {
@@ -607,6 +615,8 @@ class UnlikeWidget extends StatelessWidget {
               likePostReqModel.postId = postId.toString();
               categoryFeedViewModel.setLikeUnlike(postId, true);
               await categoryFeedViewModel.likePost(likePostReqModel);
+              categoryFeedViewModel.pageNumberIndex = 0;
+              categoryFeedViewModel.categoryTrending(tabName, isReload: false);
             },
       child: Padding(
         padding: EdgeInsets.only(left: 1.w),
