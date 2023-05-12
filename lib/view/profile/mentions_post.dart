@@ -10,13 +10,9 @@ import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 
 class ShowMentions extends StatefulWidget {
-  final List<ImagesModel> mentionsList;
-
   final int index;
-
   ShowMentions({
     Key? key,
-    required this.mentionsList,
     required this.index,
   }) : super(key: key);
 
@@ -60,9 +56,9 @@ class _ShowMentionsState extends State<ShowMentions> {
                   return deltaTop < (0.5 * viewPortDimension) &&
                       deltaBottom > (0.5 * viewPortDimension);
                 },
-                itemCount: widget.mentionsList.length,
+                itemCount: 0,
                 builder: (BuildContext context, int index) {
-                  final categoryIndex = widget.mentionsList[index];
+                  final categoryIndex = "";
                   // final postId = (categoryIndex.id ?? 0);
                   return InViewNotifierWidget(
                     id: '$index',
@@ -82,7 +78,7 @@ class _ShowMentionsState extends State<ShowMentions> {
                         contentType: "image",
                         userName: "User name",
                         homeController: homeController,
-                        contentImage: categoryIndex.image,
+                        contentImage: "",
                         categoryFeedViewModel: categoryFeedViewModel,
                       );
                     },

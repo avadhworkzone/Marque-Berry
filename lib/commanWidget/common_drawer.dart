@@ -57,6 +57,9 @@ class MyDrawer extends StatelessWidget {
                 leading: CommonProfileImage(
                   heightWidth: 16.w,
                   bgColor: Colors.grey[200],
+                  image: PreferenceUtils.getString(
+                    key: PreferenceUtils.profileImage,
+                  ),
                 ),
                 title: AdoroText(
                   PreferenceUtils.getString(key: PreferenceUtils.fullname),

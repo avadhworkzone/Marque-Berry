@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/send_follow_request_req_model.dart';
 import 'package:socialv/model/repo/delete_follow_request_repo.dart';
 import 'package:socialv/model/repo/get_follower_list_repo.dart';
 import 'package:socialv/model/repo/get_following_list_repo.dart';
@@ -49,13 +48,13 @@ class FollowFollowingViewModel extends GetxController {
 
   /// ======================== SEND FOLLOW REQUEST ===================================
 
-  Future<void> sendFollowRequest(SendFollowReqModel reqModel) async {
+  Future<void> sendFollowRequest(String userId) async {
     logs('loading..');
     sendFollowRequestApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
       final response =
-          await SendFollowRequestRepo().sendFollowRequest(reqModel);
+          await SendFollowRequestRepo().sendFollowRequest(userId);
       sendFollowRequestApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('sendFollowRequestApiResponse ERROR :=> $e');

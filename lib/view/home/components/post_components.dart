@@ -8,10 +8,8 @@ import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/report_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
-import 'package:socialv/model/apiModel/requestModel/send_follow_request_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
@@ -25,6 +23,7 @@ import 'package:socialv/view/home/comment_components/like_screen.dart';
 import 'package:socialv/view/home/comments.dart';
 import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/home/home.dart';
+import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
@@ -72,9 +71,6 @@ class PostComponents extends StatelessWidget {
   LikePostReqModel likePostReqModel = LikePostReqModel();
   DisLikePostReqModel disLikePostReqModel = DisLikePostReqModel();
 
-  ReportPostReqModel reportPostReqModel = ReportPostReqModel();
-
-  SendFollowReqModel sendFollowReqModel = SendFollowReqModel();
   DeleteFollowReqModel deleteFollowReqModel = DeleteFollowReqModel();
 
   @override
@@ -98,6 +94,11 @@ class PostComponents extends StatelessWidget {
           children: [
             SizeConfig.sH1,
             ListTile(
+              onTap: () {
+                Get.to(() => Profile(
+                      userId: userId,
+                    ));
+              },
               title: AdoroText(
                 userName,
                 maxLines: 1,
@@ -485,9 +486,8 @@ class PostComponents extends StatelessWidget {
                         categoryFeedViewModel.setFollowData(userId, false);
                       }
                     } else {
-                      sendFollowReqModel.userId = userId.toString();
                       await followFollowingViewModel
-                          .sendFollowRequest(sendFollowReqModel);
+                          .sendFollowRequest(userId.toString());
 
                       if (followFollowingViewModel
                               .sendFollowRequestApiResponse.status ==
@@ -502,8 +502,8 @@ class PostComponents extends StatelessWidget {
                   text: 'Report post',
                   image: IconsWidgets.reportImages,
                   onTap: () async {
-                    reportPostReqModel.postId = postIdArg.toString();
-                    await categoryFeedViewModel.reportPost(reportPostReqModel);
+                    await categoryFeedViewModel
+                        .reportPost(postIdArg.toString());
 
                     if (categoryFeedViewModel.reportPostApiResponse.status ==
                         Status.COMPLETE) {

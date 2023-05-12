@@ -32,7 +32,10 @@ class _BottomBarState extends State<BottomBar> {
       Home(scaffoldKey: _scaffold),
       SharePost(),
       CampaignScreen(),
-      Profile()
+      Profile(
+        userId: PreferenceUtils.getInt(key: PreferenceUtils.userid),
+        fromBottomScreen: true,
+      )
     ];
     super.initState();
   }

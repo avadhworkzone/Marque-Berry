@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_comment_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/get_post_like_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/post_comment_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/report_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_comment_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/repo/Get_all_comment_repo.dart';
@@ -243,12 +242,12 @@ class CategoryFeedViewModel extends GetxController {
 
   /// ===================== REPORT POST ========================
 
-  Future<void> reportPost(ReportPostReqModel reqModel) async {
+  Future<void> reportPost(String postId) async {
     logs('loading..');
     reportPostApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
-      final response = await ReportPostRepo().reportPost(reqModel);
+      final response = await ReportPostRepo().reportPost(postId);
       reportPostApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('reportPostApiResponse ERROR :=> $e');

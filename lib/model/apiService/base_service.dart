@@ -28,6 +28,8 @@ abstract class BaseService {
   /// EDIT PROFILE
   final String getUserDetails =
       'getUserDetails?userId=${PreferenceUtils.getInt(key: PreferenceUtils.userid)}';
+  final String getProfileDetails =
+      'getProfileById?userId=';
   final String updateUserDetails = 'updateUserDetails';
   final String uploadProfilePicURL = 'upload_profile_pic';
   final String uploadCoverPhotoURL = 'upload_cover_photo';

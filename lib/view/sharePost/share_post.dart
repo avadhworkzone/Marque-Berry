@@ -144,6 +144,9 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                           CommonProfileImage(
                                             heightWidth: 18.w,
                                             bgColor: Colors.grey[200],
+                                            image: PreferenceUtils.getString(
+                                              key: PreferenceUtils.profileImage,
+                                            ),
                                           ),
                                           SizeConfig.sW3,
                                           Column(

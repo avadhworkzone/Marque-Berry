@@ -134,7 +134,7 @@ class _HomeState extends State<Home> {
                           Status.LOADING ||
                       categoryFeedViewModel.categoryApiResponse.status ==
                           Status.INITIAL) {
-                    return Expanded(child: Center(child: Loader()));
+                    return Expanded(child: Center(child: Loader())  );
                   } else if (categoryFeedViewModel.categoryApiResponse.status ==
                           Status.ERROR ||
                       categoryFeedViewModel.categoryApiResponse.data == null) {
