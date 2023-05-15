@@ -23,18 +23,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final loginKey = GlobalKey<FormState>();
-  final registerKey = GlobalKey<FormState>();
-
-  var loginContact = TextEditingController();
-
-  var fullName = TextEditingController();
-  var username = TextEditingController();
-  var registerContact = TextEditingController();
-
-  LoginReqModel loginReqModel = LoginReqModel();
-  RegisterReqModel registerReqModel = RegisterReqModel();
-
   AuthViewModel authViewModel = Get.find<AuthViewModel>();
 
   @override

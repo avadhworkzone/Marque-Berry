@@ -126,7 +126,6 @@ class _MyAppState extends State<MyApp> {
   HomeController homeController = Get.put(HomeController());
   LoginController loginController = Get.put(LoginController());
   SettingController settingController = Get.put(SettingController());
-  ProfileController profileController = Get.put(ProfileController());
 
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());
@@ -153,7 +152,7 @@ class _MyAppState extends State<MyApp> {
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Poppins',
-    cardColor: ColorUtils.grey.withOpacity(0.12),
+    cardColor: ColorUtils.greyE5,
     scaffoldBackgroundColor: ColorUtils.white,
     canvasColor: Colors.grey[200],
     primaryTextTheme: const TextTheme(

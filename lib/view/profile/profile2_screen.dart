@@ -173,7 +173,7 @@
 //                       decoration: BoxDecoration(
 //                           color: ColorUtils.black92,
 //                           borderRadius: BorderRadius.circular(10)),
-//                       child: const Center(
+//                       child:  Center(
 //                         child: AdoroText('Share Profile ',
 //                             fontSize: 17,
 //                             color: ColorUtils.white,

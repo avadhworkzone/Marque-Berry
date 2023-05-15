@@ -73,7 +73,10 @@ class _ChattingScreenState extends State<ChattingScreen> {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () => Get.back(),
+                  onPressed: () {
+                    seenOldMessage();
+                    Get.back();
+                  },
                   splashRadius: 6.w,
                   icon: Icon(Icons.arrow_back, color: blackWhite),
                 ),

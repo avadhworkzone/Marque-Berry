@@ -4,6 +4,7 @@ class ColorUtils {
   /// All grey Shadow Colors
   static const grey = Colors.grey;
   static const greyFA = Color(0xFFF8F9FA);
+  static const greyE5 = Color(0xffE5E5E5);
   // static const greyD9 = Color(0xFFD9D9D9);
 
   /// All White Shadow Colors
@@ -14,6 +15,7 @@ class ColorUtils {
   static const blueE7 = Color(0xFF8BAFE7);
 
   static const black = Color(0xFF000000);
+  static const black26=Colors.black26;
   // static const black3C = Color(0xFF0D253C);
   static const black92 = Color(0xFF6F7F92);
 

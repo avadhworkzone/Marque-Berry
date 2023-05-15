@@ -17,3 +17,5 @@ enum ValidationType { Password, Email, PNumber }
 enum FileExt { Image, Video, Doc }
 
 enum OtpType { Regular, Alternate }
+
+enum ProfileBtnStatus { Follow, FollowBack, Following, Confirm, EditProfile }

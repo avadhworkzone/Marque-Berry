@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
-import 'package:socialv/model/apiModel/requestModel/update_cover_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
@@ -47,8 +46,6 @@ class EditProfile extends StatelessWidget {
 
   UpdateProfilePicReqModel updateProfilePicReqModel =
       UpdateProfilePicReqModel();
-
-  UpdateCoverPicReqModel updateCoverPicReqModel = UpdateCoverPicReqModel();
 
   EditProfileController editProfileController =
       Get.find<EditProfileController>();
@@ -212,7 +209,10 @@ class EditProfile extends StatelessWidget {
                                 Container(
                                   height: 25.h,
                                   width: double.maxFinite,
-                                  child: CommonCoverImage(),
+                                  child: CommonCoverImage(
+                                      image: PreferenceUtils.getString(
+                                    key: PreferenceUtils.coverImage,
+                                  )),
                                 ),
                                 Container(
                                   height: 25.h,
@@ -247,6 +247,11 @@ class EditProfile extends StatelessWidget {
                                                       )
                                                     : CommonProfileImage(
                                                         heightWidth: 25.w,
+                                                        image: PreferenceUtils
+                                                            .getString(
+                                                          key: PreferenceUtils
+                                                              .profileImage,
+                                                        ),
                                                       ),
                                               ),
                                             ),

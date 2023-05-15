@@ -94,7 +94,7 @@ class ReferAndEarn extends StatelessWidget {
                               ),
                             ),
                             // border: Border.all(color: ColorUtils.black2E),
-                            borderRadius: BorderRadius.circular(3.w),
+                            borderRadius: BorderRadius.circular(5.w),
 
                             boxShadow: [
                               BoxShadow(

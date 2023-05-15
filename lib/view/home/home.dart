@@ -134,7 +134,7 @@ class _HomeState extends State<Home> {
                           Status.LOADING ||
                       categoryFeedViewModel.categoryApiResponse.status ==
                           Status.INITIAL) {
-                    return Expanded(child: Center(child: Loader()));
+                    return Expanded(child: Center(child: Loader())  );
                   } else if (categoryFeedViewModel.categoryApiResponse.status ==
                           Status.ERROR ||
                       categoryFeedViewModel.categoryApiResponse.data == null) {
@@ -165,7 +165,6 @@ class _HomeState extends State<Home> {
                                 builder: (BuildContext context, int index) {
                                   final categoryIndex = categoryPostList[index];
                                   final postId = (categoryIndex.id ?? 0);
-
                                   return LayoutBuilder(
                                     builder: (BuildContext context,
                                         BoxConstraints constraints) {
@@ -173,10 +172,12 @@ class _HomeState extends State<Home> {
                                         id: '$index',
                                         builder: (BuildContext context,
                                             bool isInView, Widget? child) {
-                                          return postId != 0 ||
-                                                  homeController.reportList
-                                                          .contains(postId) ==
-                                                      false
+                                          if (postId == 0) {
+                                            return SizedBox();
+                                          }
+                                          return homeController.reportList
+                                                      .contains(postId) ==
+                                                  false
                                               ? Padding(
                                                   padding: EdgeInsets.fromLTRB(
                                                       0, 2.w, 0, 0.w),
@@ -265,34 +266,46 @@ class _HomeState extends State<Home> {
 
 // GroupComponents(),
 class HomeController extends GetxController {
+  ScrollController tabScrollController = ScrollController();
   List tabBarList = [VariableUtils.relevantText, VariableUtils.trendingText];
 
+  void animateTabScroll(double pos) {
+    tabScrollController.animateTo(pos,
+        duration: Duration(milliseconds: 500), curve: Curves.ease);
+  }
+
   String tabName = "relevant";
+
   void tabNameChange(name) {
     tabName = name;
     update();
   }
 
   String parentId = "0";
+
   void parentCommentIdChange(String id) {
     parentId = id;
     update();
   }
 
   int tabCurrentIndex = 0;
+
   void tabChange(int index) {
     tabCurrentIndex = index;
     update();
   }
 
   bool isReportSuccess = false;
+
   void reportSuccess(val) {
     isReportSuccess = val;
     update();
   }
 
   List reportList = [];
+
   void addReport(int postId) {
+    logs('POST ID ====>$postId');
     reportList.add(postId);
     update();
   }

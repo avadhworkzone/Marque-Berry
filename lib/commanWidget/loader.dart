@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -55,7 +56,8 @@ class Loader extends StatelessWidget {
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
-    return CircularProgressIndicator(color: blackWhite);
+    // return CircularProgressIndicator(color: blackWhite);
+    return CupertinoActivityIndicator(color: blackWhite,);
   }
 }
 

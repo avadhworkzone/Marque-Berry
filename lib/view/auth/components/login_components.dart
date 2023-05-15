@@ -18,20 +18,20 @@ import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/auth/otp_screen.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 
+final loginContact = TextEditingController();
+final _formKey = GlobalKey<FormState>();
+
 class LoginComponents extends StatelessWidget {
   AuthViewModel authViewModel;
 
   LoginComponents({Key? key, required this.authViewModel}) : super(key: key);
-
-  final loginKey = GlobalKey<FormState>();
-  var loginContact = TextEditingController();
 
   LoginReqModel loginReqModel = LoginReqModel();
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: loginKey,
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +64,7 @@ class LoginComponents extends StatelessWidget {
             child: CustomBtn(
               onTap: () async {
                 FocusScope.of(context).unfocus();
-                if (loginKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate()) {
                   loginReqModel.mobileNo = loginContact.text;
                   await authViewModel.login(loginReqModel);
                   if (authViewModel.loginApiResponse.status ==
@@ -77,12 +77,13 @@ class LoginComponents extends StatelessWidget {
                         message: response.msg.toString(),
                         snackbarSuccess: true,
                       );
-                      Get.to(
+                      await Get.to(
                         () => ValidateOtpScreen(
                           mobile: loginContact.text,
                           type: 'login',
                         ),
                       );
+                      loginContact.clear();
                     } else {
                       showSnackBar(
                         message:

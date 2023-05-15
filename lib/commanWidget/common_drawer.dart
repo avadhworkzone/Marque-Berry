@@ -31,6 +31,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? subTitleColor = Theme.of(context).textTheme.titleMedium?.color;
 
     return SafeArea(
       child: Drawer(
@@ -56,20 +57,25 @@ class MyDrawer extends StatelessWidget {
                 leading: CommonProfileImage(
                   heightWidth: 16.w,
                   bgColor: Colors.grey[200],
+                  image: PreferenceUtils.getString(
+                    key: PreferenceUtils.profileImage,
+                  ),
                 ),
                 title: AdoroText(
-                  PreferenceUtils.getString(key: PreferenceUtils.username),
+                  PreferenceUtils.getString(key: PreferenceUtils.fullname),
                   color: blackWhite,
                   fontWeight: FontWeightClass.fontWeight600,
+                  fontSize: 16.sp,
                 ),
                 subtitle:
-                    PreferenceUtils.getString(key: PreferenceUtils.fullname) !=
+                    PreferenceUtils.getString(key: PreferenceUtils.username) !=
                             ""
                         ? Padding(
                             padding: EdgeInsets.only(top: 1.w),
                             child: AdoroText(
-                              '@${PreferenceUtils.getString(key: PreferenceUtils.fullname)}',
+                              '@${PreferenceUtils.getString(key: PreferenceUtils.username)}',
                               fontWeight: FontWeightClass.fontWeight500,
+                              color: subTitleColor,
                             ),
                           )
                         : SizedBox(),
@@ -161,13 +167,14 @@ class MyDrawer extends StatelessWidget {
     required String title,
   }) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color? iconColor = Theme.of(context).textTheme.titleMedium?.color;
     return Padding(
       padding: EdgeInsets.fromLTRB(3.w, 0.5.w, 3.w, 0),
       child: ListTile(
         leading: CommonImageWidth(
           img: image,
           width: 5.5.w,
-          color: blackWhite,
+          color: iconColor,
         ),
         minLeadingWidth: 5.w,
         title: AdoroText(

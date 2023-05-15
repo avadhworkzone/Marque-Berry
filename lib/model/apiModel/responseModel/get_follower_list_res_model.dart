@@ -33,8 +33,15 @@ class TagData {
   String? fullName;
   String? image;
   String? status;
+  DateTime? lastMsgTime;
 
-  TagData({this.id, this.username, this.fullName, this.image, this.status});
+  TagData(
+      {this.id,
+      this.username,
+      this.fullName,
+      this.image,
+      this.status,
+      this.lastMsgTime});
 
   TagData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -42,6 +49,7 @@ class TagData {
     fullName = json['full_name'];
     image = json['image'];
     status = json['status'];
+    lastMsgTime = json['last_message_time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +59,7 @@ class TagData {
     data['full_name'] = this.fullName;
     data['image'] = this.image;
     data['status'] = this.status;
+    data['last_message_time'] = this.lastMsgTime;
     return data;
   }
 }

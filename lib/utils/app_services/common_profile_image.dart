@@ -9,12 +9,14 @@ import 'package:socialv/utils/shared_preference_utils.dart';
 class CommonProfileImage extends StatelessWidget {
   double heightWidth;
   Color? bgColor;
+  String? image;
 
-  CommonProfileImage({
-    Key? key,
-    required this.heightWidth,
-    this.bgColor = ColorUtils.white,
-  }) : super(key: key);
+  CommonProfileImage(
+      {Key? key,
+      required this.heightWidth,
+      this.bgColor = ColorUtils.white,
+      this.image})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,34 +27,27 @@ class CommonProfileImage extends StatelessWidget {
         color: bgColor,
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: PreferenceUtils.getString(
-                    key: PreferenceUtils.profileImage,
-                  ) !=
-                  ""
-              ? NetworkImage(
-                  PreferenceUtils.getString(
-                    key: PreferenceUtils.profileImage,
-                  ),
-                ) as ImageProvider
+          image: image != "" && image != null
+              ? NetworkImage(image!) as ImageProvider
               : AssetImage(IconsWidgets.userImages),
           fit: BoxFit.contain,
         ),
       ),
+
       // color: ColorUtils.black,
     );
   }
 }
 
 class CommonCoverImage extends StatelessWidget {
-  const CommonCoverImage({Key? key}) : super(key: key);
+  const CommonCoverImage({Key? key, required this.image}) : super(key: key);
+  final String image;
 
   @override
   Widget build(BuildContext context) {
     return OctoImage(
       image: NetworkImage(
-        PreferenceUtils.getString(
-          key: PreferenceUtils.coverImage,
-        ),
+        image,
       ),
       placeholderBuilder: OctoPlaceholder.blurHash(
         'LEHV6nWB2yk8pyo0adR*.7kCMdnj',

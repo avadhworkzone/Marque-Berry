@@ -14,6 +14,7 @@ import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/view/home/components/video_components.dart';
@@ -45,6 +46,11 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   final bottomBarController = Get.find<BottomBarController>();
   CreatePostReqModel createPostReqModel = CreatePostReqModel();
   CreatePostViewModel createPostViewModel = Get.find<CreatePostViewModel>();
+
+  final HomeController homeController = Get.find<HomeController>();
+
+  final CategoryFeedViewModel categoryFeedViewModel =
+      Get.find<CategoryFeedViewModel>();
 
   TagAPeopleController tagAPeopleController = Get.find<TagAPeopleController>();
 
@@ -138,6 +144,9 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                           CommonProfileImage(
                                             heightWidth: 18.w,
                                             bgColor: Colors.grey[200],
+                                            image: PreferenceUtils.getString(
+                                              key: PreferenceUtils.profileImage,
+                                            ),
                                           ),
                                           SizeConfig.sW3,
                                           Column(
@@ -374,8 +383,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
     );
   }
 
-  final HomeController homeController = Get.find<HomeController>();
-
   createPostApi(
     CreatePostReqModel createPostReqModel,
     SharePostController sharePostController,
@@ -426,6 +433,14 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
           snackbarSuccess: true,
         );
         homeController.tabChange(categoryIndex + 2);
+
+        homeController.tabNameChange(
+          categoryName,
+        );
+        categoryFeedViewModel.pageNumberIndex = 0;
+        homeController.animateTabScroll(28.w * categoryIndex + 2);
+        categoryFeedViewModel.isPageLoading = false;
+        await categoryFeedViewModel.categoryTrending(categoryName);
       } else if (createPostViewModel.createPostApiResponse.status ==
           Status.ERROR) {
         showSnackBar(

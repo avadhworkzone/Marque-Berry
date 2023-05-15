@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/model/apiModel/responseModel/user_profile_res_model.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/view/profile/profile.dart';
@@ -11,7 +12,7 @@ import 'package:socialv/view/home/components/post_components.dart';
 
 class ShowPost extends StatefulWidget {
   final int index;
-  final List<ImagesModel> postList;
+  final List<Posts> postList;
 
   ShowPost({
     Key? key,
@@ -30,13 +31,14 @@ class _ShowPostState extends State<ShowPost> {
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
-    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return GetBuilder<HomeController>(builder: (homeController) {
       return GetBuilder<CategoryFeedViewModel>(initState: (_) {
-        scrollController = ScrollController(
-          initialScrollOffset: widget.index * (60.h),
-        );
+        scrollController=ScrollController(initialScrollOffset: widget.index * (85.h));
+        // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        //   scrollController.animateTo(widget.index * (85.h),
+        //       duration: Duration(milliseconds: 500), curve: Curves.ease);
+        // });
       }, builder: (categoryFeedViewModel) {
         return Scaffold(
           backgroundColor: whiteBlack2E,
@@ -59,26 +61,25 @@ class _ShowPostState extends State<ShowPost> {
             },
             itemCount: widget.postList.length,
             builder: (BuildContext context, int index) {
-              final categoryIndex = widget.postList[index];
-              // final postId = (categoryIndex.id ?? 0);
+              final post = widget.postList[index];
               return InViewNotifierWidget(
                 id: '$index',
                 builder: (BuildContext context, bool isInView, Widget? child) {
                   return PostComponents(
                     time: "",
-                    postId: 0,
-                    userId: 0,
-                    title: "Title",
+                    postId: post.id!,
+                    userId: post.userId!,
+                    title: post.content ?? '',
                     likeByMe: "you",
                     likeProfile: [],
                     isInView: isInView,
                     profileImage: "",
-                    likeCounter: "1",
-                    commentCounter: "0",
-                    contentType: "image",
-                    userName: "User name",
+                    likeCounter: (post.likesCount ?? 0).toString(),
+                    commentCounter: (post.commentsCount ?? 0).toString(),
+                    contentType: post.contentType!,
+                    userName: post.userUsername ?? "N/A",
                     homeController: homeController,
-                    contentImage: categoryIndex.image,
+                    contentImage: post.contentUrl ?? "",
                     categoryFeedViewModel: categoryFeedViewModel,
                   );
                 },

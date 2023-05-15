@@ -3,14 +3,12 @@ import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/model/apiService/api_service.dart';
 import 'package:socialv/model/apiService/base_service.dart';
 
-import '../apiModel/requestModel/update_cover_pic_req_model.dart';
-
 class UpdateUserCoverPicRepo extends BaseService {
-  Future<UpdateCoverPicResModel> updateUserCoverPic(
-      UpdateCoverPicReqModel reqModel) async {
+  Future<UpdateCoverPicResModel> updateUserCoverPic(String coverPhoto) async {
+    Map<String, dynamic> body = {'cover_photo': coverPhoto};
     var response = await ApiService().getResponse(
       apiType: APIType.aPost,
-      body: reqModel.toJson(),
+      body: body,
       url: '$baseURL$uploadCoverPhotoURL',
       fileUpload: true,
     );
