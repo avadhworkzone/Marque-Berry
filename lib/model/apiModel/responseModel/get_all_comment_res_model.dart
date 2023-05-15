@@ -32,6 +32,7 @@ class GetAllCommentResModel {
 
 class Data {
   String? username;
+  int? userid;
   String? fullName;
   String? image;
   int? commentId;
@@ -44,6 +45,7 @@ class Data {
 
   Data(
       {this.username,
+      this.userid,
       this.fullName,
       this.image,
       this.commentId,
@@ -56,6 +58,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     username = json['username'];
+    userid = json['user_id'];
     fullName = json['full_name'];
     image = json['image'];
     commentId = json['comment_id'];
@@ -75,6 +78,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['username'] = this.username;
+    data['user_id'] = this.userid;
     data['full_name'] = this.fullName;
     data['image'] = this.image;
     data['comment_id'] = this.commentId;
@@ -93,6 +97,7 @@ class Data {
 
 class ChildComment {
   String? username;
+  int? userid;
   String? fullName;
   String? image;
   int? commentId;
@@ -103,6 +108,7 @@ class ChildComment {
 
   ChildComment(
       {this.username,
+      this.userid,
       this.fullName,
       this.image,
       this.commentId,
@@ -113,6 +119,7 @@ class ChildComment {
 
   ChildComment.fromJson(Map<String, dynamic> json) {
     username = json['username'];
+    userid = json['user_id'];
     fullName = json['full_name'];
     image = json['image'];
     commentId = json['comment_id'];
@@ -125,6 +132,7 @@ class ChildComment {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['username'] = this.username;
+    data['user_id'] = this.userid;
     data['full_name'] = this.fullName;
     data['image'] = this.image;
     data['comment_id'] = this.commentId;

@@ -108,7 +108,6 @@ class MessageList extends StatelessWidget {
                   });
                 }
                 if (tempUsersList.isNotEmpty) {
-
                   tempUsersList
                       .sort((a, b) => b.lastMsgTime!.compareTo(a.lastMsgTime!));
 

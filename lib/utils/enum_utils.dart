@@ -18,4 +18,11 @@ enum FileExt { Image, Video, Doc }
 
 enum OtpType { Regular, Alternate }
 
-enum ProfileBtnStatus { Follow, FollowBack, Following, Confirm, EditProfile }
+enum ProfileBtnStatus {
+  Follow,
+  FollowBack,
+  Following,
+  Confirm,
+  EditProfile,
+  Requested
+}

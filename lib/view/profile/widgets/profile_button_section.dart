@@ -13,6 +13,10 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
 
+import '../../../utils/shared_preference_utils.dart';
+import '../../message/chatting.dart';
+import '../profile.dart';
+
 class ProfileButtonSection extends StatelessWidget {
   const ProfileButtonSection({
     super.key,
@@ -32,12 +36,17 @@ class ProfileButtonSection extends StatelessWidget {
       child: btnStatus == ProfileBtnStatus.EditProfile.name.toLowerCase()
           ? EditProfileBtn()
           : btnStatus == ProfileBtnStatus.Following.name.toLowerCase()
-              ? FollowingBtn()
+              ? FollowingBtn(
+                  profileUser: profile,
+                )
               : btnStatus == ProfileBtnStatus.FollowBack.name.toLowerCase()
                   ? FollowBackBtn()
                   : btnStatus == ProfileBtnStatus.Confirm.name.toLowerCase()
                       ? ConfirmBtn()
-                      : FollowBtn(userId: profile.id ?? 0),
+                      : btnStatus ==
+                              ProfileBtnStatus.Requested.name.toLowerCase()
+                          ? RequestedBtn(userId: profile.id ?? 0)
+                          : FollowBtn(userId: profile.id ?? 0),
     );
   }
 }
@@ -80,7 +89,8 @@ class ConfirmBtn extends StatelessWidget {
 
 /// ========================== FOLLOWING BTN ========================== ///
 class FollowingBtn extends StatelessWidget {
-  const FollowingBtn({Key? key}) : super(key: key);
+  FollowingBtn({Key? key, required this.profileUser}) : super(key: key);
+  final UserProfileData profileUser;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +116,17 @@ class FollowingBtn extends StatelessWidget {
         SizedBox(width: 10.sp),
         Expanded(
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => ChattingScreen(
+                    senderName: PreferenceUtils.getString(key: 'username'),
+                    senderId:
+                        (PreferenceUtils.getInt(key: 'userid')).toString(),
+                    senderImage: PreferenceUtils.getString(key: 'profile'),
+                    receiverId: profileUser.id!.toString(),
+                    receiverName: profileUser.username!,
+                    receiverImage: profileUser.image!,
+                  ));
+            },
             child: Container(
                 height: 6.2.h,
                 decoration: BoxDecoration(
@@ -131,8 +151,7 @@ class FollowBtn extends StatelessWidget {
   final int userId;
   final FollowFollowingViewModel viewModel =
       Get.find<FollowFollowingViewModel>();
-  final ProfileViewModel profileViewModel =
-      Get.find<ProfileViewModel>();
+  final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
   final CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
 
@@ -140,16 +159,44 @@ class FollowBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomBtn(
       onTap: () async {
-        profileViewModel.isLoading=true;
+        profileViewModel.isLoading = true;
         await viewModel.sendFollowRequest(userId.toString());
         if (viewModel.sendFollowRequestApiResponse.status == Status.COMPLETE) {
           categoryFeedViewModel.setFollowData(userId, true);
           await profileViewModel.getProfileDetail(userId.toString());
         }
-        profileViewModel.isLoading=false;
-
+        profileViewModel.isLoading = false;
       },
       text: 'Follow',
+    );
+  }
+}
+
+/// ========================== FOLLOW BTN ========================== ///
+class RequestedBtn extends StatelessWidget {
+  RequestedBtn({Key? key, required this.userId}) : super(key: key);
+  final int userId;
+  final FollowFollowingViewModel viewModel =
+      Get.find<FollowFollowingViewModel>();
+  final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+  final CategoryFeedViewModel categoryFeedViewModel =
+      Get.find<CategoryFeedViewModel>();
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+          height: 6.2.h,
+          decoration: BoxDecoration(
+              color: ColorUtils.black92,
+              borderRadius: BorderRadius.circular(10)),
+          child: const Center(
+            child: AdoroText('Requested',
+                // fontSize: 17,
+                color: ColorUtils.white,
+                fontWeight: FontWeight.bold),
+          )),
     );
   }
 }

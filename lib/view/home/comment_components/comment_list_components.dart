@@ -21,6 +21,7 @@ import 'package:socialv/model/apiModel/requestModel/delete_comment_req_model.dar
 import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
 
 import '../../../model/apis/api_response.dart';
+import '../../profile/profile.dart';
 
 class CommentList extends StatefulWidget {
   String img;
@@ -31,6 +32,7 @@ class CommentList extends StatefulWidget {
   String likeCount;
   int replayCount = 0;
   int commentId = 0;
+  int userId = 0;
   VoidCallback replayMessage;
 
   CategoryFeedViewModel categoryFeedViewModel;
@@ -49,6 +51,7 @@ class CommentList extends StatefulWidget {
     required this.time,
     required this.message,
     required this.likeCount,
+    required this.userId,
     required this.replayCount,
     required this.replayMessage,
     required this.categoryFeedViewModel,
@@ -73,12 +76,10 @@ class _CommentListState extends State<CommentList> {
             highlightColor: ColorUtils.transparent,
             splashColor: ColorUtils.transparent,
             onTap: () {
-              editDeleteBottomSheet(
-                message: widget.message,
-                categoryFeedViewModel: widget.categoryFeedViewModel,
-                commentId: widget.commentId,
-                context: context,
-              );
+              Get.to(() => Profile(
+                    // userId: widget.commentId,
+                    userId: widget.userId,
+                  ));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +112,16 @@ class _CommentListState extends State<CommentList> {
                   ),
                 ),
                 SizeConfig.sH2,
-                CommentDescription(message: widget.message),
+                InkWell(
+                    onTap: () {
+                      editDeleteBottomSheet(
+                        message: widget.message,
+                        categoryFeedViewModel: widget.categoryFeedViewModel,
+                        commentId: widget.commentId,
+                        context: context,
+                      );
+                    },
+                    child: CommentDescription(message: widget.message)),
                 SizeConfig.sH2,
               ],
             ),

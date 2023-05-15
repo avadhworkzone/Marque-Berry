@@ -8,14 +8,14 @@ class RegisterReqModel {
   RegisterReqModel.fromJson(Map<String, dynamic> json) {
     mobileNo = json['mobileNo'];
     username = json['username'];
-    fullName = json['full_Name'];
+    fullName = json['full_name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['mobileNo'] = this.mobileNo;
     data['username'] = this.username;
-    data['full_Name'] = this.fullName;
+    data['full_name'] = this.fullName;
     return data;
   }
 }

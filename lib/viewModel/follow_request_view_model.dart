@@ -53,8 +53,7 @@ class FollowFollowingViewModel extends GetxController {
     sendFollowRequestApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
-      final response =
-          await SendFollowRequestRepo().sendFollowRequest(userId);
+      final response = await SendFollowRequestRepo().sendFollowRequest(userId);
       sendFollowRequestApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('sendFollowRequestApiResponse ERROR :=> $e');

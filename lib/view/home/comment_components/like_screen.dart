@@ -16,10 +16,15 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/model/apiModel/requestModel/get_post_like_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_post_like_res_model.dart';
 
+import '../../profile/profile.dart';
+
 class LikeScreen extends StatelessWidget {
   int likeProfile;
 
-  LikeScreen({Key? key, required this.likeProfile}) : super(key: key);
+  LikeScreen({
+    Key? key,
+    required this.likeProfile,
+  }) : super(key: key);
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
@@ -96,6 +101,11 @@ class LikeScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final likeData = likeResponse.data?[index];
                           return ListTile(
+                            onTap: () {
+                              Get.to(() => Profile(
+                                    userId: likeData!.id!,
+                                  ));
+                            },
                             title: AdoroText(
                               likeData?.username ?? "",
                               color: blackWhite,

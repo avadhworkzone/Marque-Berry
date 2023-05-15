@@ -27,6 +27,7 @@ import '../../viewModel/category_view_model.dart';
 
 class Comments extends StatefulWidget {
   int? postId = 0;
+
   int? likeCount;
   String profileImage = "";
 
@@ -157,6 +158,7 @@ class _CommentsState extends State<Comments> {
                                     message: commentData.comment ?? "",
                                     commentId: commentData.commentId ?? 0,
                                     postId: widget.postId ?? 0,
+                                    userId: commentData.userid!,
                                   ),
                                 for (int i = 0;
                                     i < commentData.childComment!.length;
@@ -165,6 +167,8 @@ class _CommentsState extends State<Comments> {
                                     width: 80.w,
                                     padding: EdgeInsets.only(top: 5.w),
                                     child: CommentList(
+                                      userId:
+                                          commentData.childComment![i].userid!,
                                       commentId: commentData
                                               .childComment?[i].commentId ??
                                           0,
