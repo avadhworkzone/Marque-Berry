@@ -121,7 +121,7 @@ class Profile extends StatelessWidget {
   getUserProfile() async {
     profileViewModel.isLoading=false;
     await profileViewModel.getProfileDetail(userId.toString());
-    await profileViewModel.getUserProfile();
+    await profileViewModel.getUserProfile(userId);
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
       final GetUserResDetail response =
           profileViewModel.getUserProfileApiResponse.data;

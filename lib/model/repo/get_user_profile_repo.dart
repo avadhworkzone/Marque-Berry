@@ -6,10 +6,10 @@ import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
 
 /// =================  GET USER DETAIL =================== ///
 class GetUserProfileRepo extends BaseService {
-  Future<GetUserResDetail> getUserProfile() async {
+  Future<GetUserResDetail> getUserProfile(int userId) async {
     var response = await ApiService().getResponse(
       apiType: APIType.aGet,
-      url: '$baseURL$getUserDetails',
+      url: '$baseURL$getUserDetails$userId',
     );
 
     return GetUserResDetail.fromJson(response);

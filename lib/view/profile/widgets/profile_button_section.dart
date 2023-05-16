@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/custom_btn.dart';
+import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/user_profile_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/adoro_text.dart';
@@ -40,9 +41,9 @@ class ProfileButtonSection extends StatelessWidget {
                   profileUser: profile,
                 )
               : btnStatus == ProfileBtnStatus.FollowBack.name.toLowerCase()
-                  ? FollowBackBtn()
+                  ? FollowBackBtn(userId: profile.id ?? 0)
                   : btnStatus == ProfileBtnStatus.Confirm.name.toLowerCase()
-                      ? ConfirmBtn()
+                      ? ConfirmBtn(userId: profile.id ?? 0)
                       : btnStatus ==
                               ProfileBtnStatus.Requested.name.toLowerCase()
                           ? RequestedBtn(userId: profile.id ?? 0)
@@ -53,7 +54,13 @@ class ProfileButtonSection extends StatelessWidget {
 
 /// ========================== CONFIRM BTN ========================== ///
 class ConfirmBtn extends StatelessWidget {
-  const ConfirmBtn({Key? key}) : super(key: key);
+  ConfirmBtn({Key? key, required this.userId}) : super(key: key);
+  final int userId;
+  final FollowFollowingViewModel viewModel =
+      Get.find<FollowFollowingViewModel>();
+  final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+  final CategoryFeedViewModel categoryFeedViewModel =
+      Get.find<CategoryFeedViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +69,32 @@ class ConfirmBtn extends StatelessWidget {
       children: [
         Expanded(
             child: CustomBtn(
-          onTap: () {},
+          onTap: () async {
+            profileViewModel.isLoading = true;
+            await viewModel.acceptFollowRequest(userId.toString());
+            if (viewModel.acceptFollowRequestApiResponse.status ==
+                Status.COMPLETE) {
+              await profileViewModel.getProfileDetail(userId.toString());
+            }
+            profileViewModel.isLoading = false;
+          },
           text: 'Confirm',
         )),
         SizedBox(width: 10.sp),
         Expanded(
           child: InkWell(
-            onTap: () {},
+            onTap: () async {
+              profileViewModel.isLoading = true;
+              await viewModel.deleteFollowRequest(DeleteFollowReqModel(
+                  id: userId.toString(), flag: 'feed'));
+              if (viewModel.sendFollowRequestApiResponse.status ==
+                  Status.COMPLETE) {
+                categoryFeedViewModel.setFollowData(userId, false);
+                await profileViewModel
+                    .getProfileDetail(userId.toString());
+              }
+              profileViewModel.isLoading = false;
+            },
             child: Container(
                 height: 6.2.h,
                 decoration: BoxDecoration(
@@ -91,6 +117,11 @@ class ConfirmBtn extends StatelessWidget {
 class FollowingBtn extends StatelessWidget {
   FollowingBtn({Key? key, required this.profileUser}) : super(key: key);
   final UserProfileData profileUser;
+  final FollowFollowingViewModel viewModel =
+      Get.find<FollowFollowingViewModel>();
+  final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+  final CategoryFeedViewModel categoryFeedViewModel =
+      Get.find<CategoryFeedViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +130,18 @@ class FollowingBtn extends StatelessWidget {
       children: [
         Expanded(
           child: InkWell(
-            onTap: () {},
+            onTap: () async {
+              profileViewModel.isLoading = true;
+              await viewModel.deleteFollowRequest(DeleteFollowReqModel(
+                  id: profileUser.id.toString(), flag: 'feed'));
+              if (viewModel.sendFollowRequestApiResponse.status ==
+                  Status.COMPLETE) {
+                categoryFeedViewModel.setFollowData(profileUser.id!, false);
+                await profileViewModel
+                    .getProfileDetail(profileUser.id.toString());
+              }
+              profileViewModel.isLoading = false;
+            },
             child: Container(
                 height: 6.2.h,
                 decoration: BoxDecoration(
@@ -172,7 +214,7 @@ class FollowBtn extends StatelessWidget {
   }
 }
 
-/// ========================== FOLLOW BTN ========================== ///
+/// ========================== REQUESTED BTN ========================== ///
 class RequestedBtn extends StatelessWidget {
   RequestedBtn({Key? key, required this.userId}) : super(key: key);
   final int userId;
@@ -185,7 +227,16 @@ class RequestedBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () async {
+        profileViewModel.isLoading = true;
+        await viewModel.deleteFollowRequest(
+            DeleteFollowReqModel(id: userId.toString(), flag: 'feed'));
+        if (viewModel.sendFollowRequestApiResponse.status == Status.COMPLETE) {
+          categoryFeedViewModel.setFollowData(userId, false);
+          await profileViewModel.getProfileDetail(userId.toString());
+        }
+        profileViewModel.isLoading = false;
+      },
       child: Container(
           height: 6.2.h,
           decoration: BoxDecoration(
@@ -203,12 +254,26 @@ class RequestedBtn extends StatelessWidget {
 
 /// ========================== FOLLOW BACK BTN ========================== ///
 class FollowBackBtn extends StatelessWidget {
-  const FollowBackBtn({Key? key}) : super(key: key);
+  FollowBackBtn({Key? key, required this.userId}) : super(key: key);
+  final int userId;
+  final FollowFollowingViewModel viewModel =
+      Get.find<FollowFollowingViewModel>();
+  final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+  final CategoryFeedViewModel categoryFeedViewModel =
+      Get.find<CategoryFeedViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return CustomBtn(
-      onTap: () {},
+      onTap: () async {
+        profileViewModel.isLoading = true;
+        await viewModel.sendFollowRequest(userId.toString());
+        if (viewModel.sendFollowRequestApiResponse.status == Status.COMPLETE) {
+          categoryFeedViewModel.setFollowData(userId, true);
+          await profileViewModel.getProfileDetail(userId.toString());
+        }
+        profileViewModel.isLoading = false;
+      },
       text: 'Follow Back',
     );
   }

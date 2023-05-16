@@ -51,7 +51,7 @@ class EditProfile extends StatelessWidget {
       Get.find<EditProfileController>();
 
   getUserProfile() async {
-    await profileViewModel.getUserProfile();
+    await profileViewModel.getUserProfile(PreferenceUtils.getInt(key: PreferenceUtils.userid));
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
       final GetUserResDetail response =
           profileViewModel.getUserProfileApiResponse.data;

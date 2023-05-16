@@ -15,6 +15,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
@@ -81,7 +82,7 @@ class PostComponents extends StatelessWidget {
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 0),
+      padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(1.5.w),
@@ -436,7 +437,9 @@ class PostComponents extends StatelessWidget {
               topRight: Radius.circular(5.w),
             ),
           ),
-          height: 70.w,
+          height: userId.toString() !=
+            PreferenceUtils.getInt(key: PreferenceUtils.userid)
+                .toString()?70.w:50.w,
           width: 100.w,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.w),
@@ -466,37 +469,43 @@ class PostComponents extends StatelessWidget {
                   text: 'Copy link',
                   image: IconsWidgets.linkImages,
                 ),
-                SizeConfig.sH3,
-                bottomComponents(
-                  image: IconsWidgets.unfollowImages,
-                  text: categoryFeedViewModel.followUnfollow[userId] == true
-                      ? "Unfollow"
-                      : "Follow",
-                  onTap: () async {
-                    if (categoryFeedViewModel.followUnfollow[userId] == true) {
-                      deleteFollowReqModel.flag = "feed";
-                      deleteFollowReqModel.id = userId.toString();
+                if (userId.toString() !=
+                    PreferenceUtils.getInt(key: PreferenceUtils.userid)
+                        .toString()) SizeConfig.sH3,
+                if (userId.toString() !=
+                    PreferenceUtils.getInt(key: PreferenceUtils.userid)
+                        .toString())
+                  bottomComponents(
+                    image: IconsWidgets.unfollowImages,
+                    text: categoryFeedViewModel.followUnfollow[userId] == true
+                        ? "Unfollow"
+                        : "Follow",
+                    onTap: () async {
+                      if (categoryFeedViewModel.followUnfollow[userId] ==
+                          true) {
+                        deleteFollowReqModel.flag = "feed";
+                        deleteFollowReqModel.id = userId.toString();
 
-                      await followFollowingViewModel
-                          .deleteFollowRequest(deleteFollowReqModel);
+                        await followFollowingViewModel
+                            .deleteFollowRequest(deleteFollowReqModel);
 
-                      if (followFollowingViewModel
-                              .sendFollowRequestApiResponse.status ==
-                          Status.COMPLETE) {
-                        categoryFeedViewModel.setFollowData(userId, false);
+                        if (followFollowingViewModel
+                                .sendFollowRequestApiResponse.status ==
+                            Status.COMPLETE) {
+                          categoryFeedViewModel.setFollowData(userId, false);
+                        }
+                      } else {
+                        await followFollowingViewModel
+                            .sendFollowRequest(userId.toString());
+
+                        if (followFollowingViewModel
+                                .sendFollowRequestApiResponse.status ==
+                            Status.COMPLETE) {
+                          categoryFeedViewModel.setFollowData(userId, true);
+                        }
                       }
-                    } else {
-                      await followFollowingViewModel
-                          .sendFollowRequest(userId.toString());
-
-                      if (followFollowingViewModel
-                              .sendFollowRequestApiResponse.status ==
-                          Status.COMPLETE) {
-                        categoryFeedViewModel.setFollowData(userId, true);
-                      }
-                    }
-                  },
-                ),
+                    },
+                  ),
                 SizeConfig.sH3,
                 bottomComponents(
                   text: 'Report post',

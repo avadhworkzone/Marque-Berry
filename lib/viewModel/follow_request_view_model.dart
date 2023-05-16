@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
+import 'package:socialv/model/repo/accept_follow_request_repo.dart';
 import 'package:socialv/model/repo/delete_follow_request_repo.dart';
 import 'package:socialv/model/repo/get_follower_list_repo.dart';
 import 'package:socialv/model/repo/get_following_list_repo.dart';
@@ -13,6 +14,7 @@ class FollowFollowingViewModel extends GetxController {
 
   ApiResponse sendFollowRequestApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse deleteFollowRequestApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse acceptFollowRequestApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== GET FOLLOWING USER VIEW MODEL ================================
 
@@ -75,6 +77,23 @@ class FollowFollowingViewModel extends GetxController {
     } catch (e) {
       logs('deleteFollowRequestApiResponse ERROR :=> $e');
       deleteFollowRequestApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== ACCEPT FOLLOW REQUEST ===================================
+
+  Future<void> acceptFollowRequest(String requestId) async {
+    logs('loading..');
+    acceptFollowRequestApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response =
+          await AcceptFollowRequestRepo().acceptFollowRequest(requestId);
+      acceptFollowRequestApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('acceptFollowRequestApiResponse ERROR :=> $e');
+      acceptFollowRequestApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }
