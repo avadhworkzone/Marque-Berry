@@ -18,12 +18,12 @@ class FollowFollowingViewModel extends GetxController {
 
   /// ======================== GET FOLLOWING USER VIEW MODEL ================================
 
-  Future<void> getFollowerList() async {
+  Future<void> getFollowerList(String userId) async {
     logs('loading..');
     getFollowerListApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
-      final response = await GetFollowerListRepo().getFollowerList();
+      final response = await GetFollowerListRepo().getFollowerList(userId);
       getFollowerListApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('getFollowerListApiResponse ERROR :=> $e');
@@ -34,12 +34,12 @@ class FollowFollowingViewModel extends GetxController {
 
   /// ======================== GET FOLLOWER VIEW MODEL ================================
 
-  Future<void> getFollowingList() async {
+  Future<void> getFollowingList(String userId) async {
     logs('loading..');
     getFollowingListApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
-      final response = await GetFollowingListRepo().getFollowingList();
+      final response = await GetFollowingListRepo().getFollowingList(userId);
       getFollowingListApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('getFollowingListApiResponse ERROR :=> $e');

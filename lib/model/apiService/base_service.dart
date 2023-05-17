@@ -51,8 +51,8 @@ abstract class BaseService {
   final String getTrendingTemplatesURL = 'getTrendingTemplates';
 
   /// FOLLOWER FOLLOWING PENDING
-  final String getFollowerListURL = 'getFollowerList';
-  final String getFollowingListURL = 'getFollowingList';
+  final String getFollowerListURL = 'getFollowerList?user_id=';
+  final String getFollowingListURL = 'getFollowingList?user_id=';
   final String sendFollowRequestURL = 'sendFollowRequest';
   final String acceptFollowRequestURL = 'acceptFollowRequest';
   final String deleteFollowRequestURL = 'deleteFollowRequest';

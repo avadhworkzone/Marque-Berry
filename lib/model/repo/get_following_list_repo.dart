@@ -4,12 +4,10 @@ import 'package:socialv/model/apiService/api_service.dart';
 import 'package:socialv/model/apiService/base_service.dart';
 
 class GetFollowingListRepo extends BaseService {
-  Future<GetFollowingListResModel> getFollowingList() async {
-    Map<String, dynamic> body = {};
+  Future<GetFollowingListResModel> getFollowingList(String userId) async {
     var response = await ApiService().getResponse(
       apiType: APIType.aGet,
-      body: body,
-      url: '$baseURL$getFollowingListURL',
+      url: '$baseURL$getFollowingListURL$userId',
     );
 
     return GetFollowingListResModel.fromJson(response);

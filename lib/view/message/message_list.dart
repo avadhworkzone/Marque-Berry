@@ -41,7 +41,7 @@ class MessageList extends StatelessWidget {
       ),
       body: GetBuilder<FollowFollowingViewModel>(
         initState: (_) async {
-          await followRequestViewModel.getFollowerList();
+          await followRequestViewModel.getFollowerList( (PreferenceUtils.getInt(key: 'userid')).toString());
         },
         builder: (followRequestViewModel) {
           if (followRequestViewModel.getFollowerListApiResponse.status ==

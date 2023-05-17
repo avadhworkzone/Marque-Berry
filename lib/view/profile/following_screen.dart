@@ -21,13 +21,13 @@ import '../../utils/assets/images_utils.dart';
 
 class FollowerFollowing extends StatelessWidget {
   int followingCounter;
-
   String title;
-
+  String userId;
   FollowerFollowing({
     Key? key,
     required this.followingCounter,
     required this.title,
+    required this.userId
   }) : super(key: key);
 
   FollowerFollowingController followerFollowingController =
@@ -59,9 +59,8 @@ class FollowerFollowing extends StatelessWidget {
             initState: (_) {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                 followerFollowingController.changeTabIndex(followingCounter);
-                await followRequestViewModel.getFollowerList();
-
-                await followRequestViewModel.getFollowingList();
+                await followRequestViewModel.getFollowerList(userId);
+                await followRequestViewModel.getFollowingList(userId);
               });
             },
             builder: (followerFollowingController) {

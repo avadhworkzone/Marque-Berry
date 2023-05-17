@@ -10,6 +10,7 @@ import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
@@ -95,7 +96,7 @@ class TagAPeople extends StatelessWidget {
             SizeConfig.sH2,
             GetBuilder<FollowFollowingViewModel>(
               initState: (_) async {
-                await followRequestViewModel.getFollowerList();
+                await followRequestViewModel.getFollowerList( (PreferenceUtils.getInt(key: 'userid')).toString());
               },
               builder: (followRequestViewModel) {
                 if (followRequestViewModel.getFollowerListApiResponse.status ==

@@ -32,23 +32,25 @@ class ProfileHeaderSection extends StatelessWidget {
           richTextColumn(black92White, blackWhite,
               title: "Followers",
               value: profile.followersCount.toString(), onTap: () {
-                Get.to(
-                      () => FollowerFollowing(
-                    followingCounter: 1,
-                    title: 'Followers',
-                  ),
-                );
-              }),
+            Get.to(
+              () => FollowerFollowing(
+                followingCounter: 1,
+                title: 'Followers',
+                userId: profile.id.toString(),
+              ),
+            );
+          }),
           richTextColumn(black92White, blackWhite,
               title: "Following",
               value: profile.followingCount.toString(), onTap: () {
-                Get.to(
-                      () => FollowerFollowing(
-                    followingCounter: 0,
-                    title: 'Following',
-                  ),
-                );
-              }),
+            Get.to(
+              () => FollowerFollowing(
+                followingCounter: 0,
+                title: 'Following',
+                userId: profile.id.toString(),
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -56,8 +58,8 @@ class ProfileHeaderSection extends StatelessWidget {
 
   Widget richTextColumn(Color? black92White, Color? blackWhite,
       {required String title,
-        required String value,
-        required VoidCallback onTap}) {
+      required String value,
+      required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
