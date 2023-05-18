@@ -8,13 +8,17 @@ import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_following_list_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
+import 'package:socialv/viewModel/profile_view_model.dart';
 
 import '../../commanWidget/common_image.dart';
 import '../../utils/assets/images_utils.dart';
@@ -23,12 +27,13 @@ class FollowerFollowing extends StatelessWidget {
   int followingCounter;
   String title;
   String userId;
-  FollowerFollowing({
-    Key? key,
-    required this.followingCounter,
-    required this.title,
-    required this.userId
-  }) : super(key: key);
+
+  FollowerFollowing(
+      {Key? key,
+      required this.followingCounter,
+      required this.title,
+      required this.userId})
+      : super(key: key);
 
   FollowerFollowingController followerFollowingController =
       Get.find<FollowerFollowingController>();
@@ -36,69 +41,118 @@ class FollowerFollowing extends StatelessWidget {
   FollowFollowingViewModel followRequestViewModel =
       Get.find<FollowFollowingViewModel>();
 
+  final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+
+  getUserProfile() async {
+    await profileViewModel.getProfileDetail(userId);
+    await profileViewModel.getUserProfile(int.parse(userId));
+    if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
+      final GetUserResDetail response =
+          profileViewModel.getUserProfileApiResponse.data;
+
+      var profileData = response.data?[0];
+
+      await PreferenceUtils.setString(
+        key: PreferenceUtils.username,
+        value: profileData?.username ?? "",
+      );
+
+      await PreferenceUtils.setString(
+        key: PreferenceUtils.fullname,
+        value: profileData?.fullName ?? "",
+      );
+
+      await PreferenceUtils.setString(
+        key: PreferenceUtils.profileImage,
+        value: profileData?.image ?? "",
+      );
+
+      await PreferenceUtils.setString(
+        key: PreferenceUtils.coverImage,
+        value: profileData?.coverPhoto ?? "",
+      );
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(100.w, 70),
-        child: customAppbar(
-          context: context,
-          title: title,
-          icon: Icon(
-            Icons.search_rounded,
-            color: blackWhite,
+    return WillPopScope(
+      onWillPop: () {
+        getUserProfile();
+        return Future.value(true);
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size(100.w, 70),
+          child: customAppbar(
+            context: context,
+            title: title,
+            icon: Icon(
+              Icons.search_rounded,
+              color: blackWhite,
+            ),
+            leadingOnTap: () {
+              getUserProfile();
+              Get.back();
+            },
           ),
         ),
-      ),
-      body: GetBuilder<FollowFollowingViewModel>(
-        builder: (followRequestViewModel) {
-          return GetBuilder<FollowerFollowingController>(
-            initState: (_) {
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-                followerFollowingController.changeTabIndex(followingCounter);
-                await followRequestViewModel.getFollowerList(userId);
-                await followRequestViewModel.getFollowingList(userId);
-              });
-            },
-            builder: (followerFollowingController) {
-              return SizedBox(
-                height: Get.height,
-                width: Get.width,
-                child: Stack(
-                  children: [
-                    FollowTabBar(
-                      followerFollowingController: followerFollowingController,
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
-                        height: Get.height - 22.w - 70,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(8.w),
-                            topLeft: Radius.circular(8.w),
-                          ),
-                          color: whiteBlack2E,
-                        ),
-                        child: followerFollowingController.currentTabIndex == 0
-                            ? FollowingList(
-                                followRequestViewModel: followRequestViewModel,
-                              )
-                            : FollowerList(
-                                followRequestViewModel: followRequestViewModel,
-                              ),
+        body: GetBuilder<FollowFollowingViewModel>(
+          builder: (followRequestViewModel) {
+            return GetBuilder<FollowerFollowingController>(
+              initState: (_) {
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+                  followerFollowingController.changeTabIndex(followingCounter);
+                  await followRequestViewModel.getFollowerList(userId);
+                  await followRequestViewModel.getFollowingList(userId);
+                });
+              },
+              builder: (followerFollowingController) {
+                return SizedBox(
+                  height: Get.height,
+                  width: Get.width,
+                  child: Stack(
+                    children: [
+                      FollowTabBar(
+                        followerFollowingController:
+                            followerFollowingController,
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          height: Get.height - 22.w - 70,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(8.w),
+                              topLeft: Radius.circular(8.w),
+                            ),
+                            color: whiteBlack2E,
+                          ),
+                          child:
+                              followerFollowingController.currentTabIndex == 0
+                                  ? FollowingList(
+                                      followRequestViewModel:
+                                          followRequestViewModel,
+                                    )
+                                  : FollowerList(
+                                      followRequestViewModel:
+                                          followRequestViewModel,
+                                    ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -220,20 +274,25 @@ class FollowerList extends StatelessWidget {
 
       return ListView.builder(
         padding: EdgeInsets.only(bottom: 40.w),
-        itemCount: getFollowerListResModel.data?.length,
+        itemCount: getFollowerListResModel.data?.length ?? 0,
         itemBuilder: (context, index) {
-          final followingData = getFollowerListResModel.data?[index];
+          final followingData = getFollowerListResModel.data![index];
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w),
             child: Column(
               children: [
                 ListTile(
+                  onTap: () {
+                    Get.to(() => Profile(
+                          userId: followingData.id!,
+                        ));
+                  },
                   title: Text(
-                    followingData?.username ?? "",
+                    followingData.username ?? "",
                     style: TextStyle(color: blackWhite),
                   ),
                   subtitle: AdoroText(
-                    followingData?.fullName ?? "",
+                    followingData.fullName ?? "",
                     color: blackWhite,
                   ),
                   leading: ClipRRect(
@@ -246,7 +305,7 @@ class FollowerList extends StatelessWidget {
                         width: 24,
                         height: 24,
                         fit: BoxFit.cover,
-                        image: NetworkImage(followingData?.image ?? ""),
+                        image: NetworkImage(followingData.image ?? ""),
                         progressIndicatorBuilder: (context, progress) {
                           double? value;
                           var expectedBytes = progress?.expectedTotalBytes;
@@ -330,19 +389,24 @@ class FollowingList extends StatelessWidget {
 
       return ListView.builder(
         padding: EdgeInsets.only(bottom: 40.w),
-        itemCount: getFollowingListResModel.data?.length,
+        itemCount: getFollowingListResModel.data?.length??0,
         itemBuilder: (context, index) {
-          final followingData = getFollowingListResModel.data?[index];
+          final followingData = getFollowingListResModel.data![index];
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w),
             child: Column(
               children: [
                 ListTile(
+                  onTap: () {
+                    Get.to(() => Profile(
+                      userId: followingData.id!,
+                    ));
+                  },
                   title: Text(
-                    followingData?.username ?? "",
+                    followingData.username ?? "",
                     style: TextStyle(color: blackWhite),
                   ),
-                  subtitle: AdoroText(followingData?.fullName ?? "",
+                  subtitle: AdoroText(followingData.fullName ?? "",
                       color: blackWhite),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(10.w),
@@ -354,7 +418,7 @@ class FollowingList extends StatelessWidget {
                         fit: BoxFit.cover,
                         width: 24,
                         height: 24,
-                        image: NetworkImage(followingData?.image ?? ""),
+                        image: NetworkImage(followingData.image ?? ""),
                         progressIndicatorBuilder: (context, progress) {
                           double? value;
                           var expectedBytes = progress?.expectedTotalBytes;

@@ -8,6 +8,7 @@ import 'package:socialv/model/apiModel/responseModel/user_profile_res_model.dart
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
@@ -46,7 +47,7 @@ class Profile extends StatelessWidget {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     return WillPopScope(
       onWillPop: () async {
-        if(fromBottomScreen){
+        if (fromBottomScreen) {
           bottomBarController.pageChange(0);
           return Future.value(false);
         }
@@ -67,6 +68,7 @@ class Profile extends StatelessWidget {
         body: GetBuilder<ProfileViewModel>(initState: (_) {
           getUserProfile();
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            profileViewModel.isLoading = false;
             profileViewModel.clearCoverImage();
           });
         }, builder: (con) {
@@ -87,10 +89,12 @@ class Profile extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
+                    if (profileResModel.data!.first.subTag ==
+                        ProfileBtnStatus.Confirm.name)
+                      ConfirmBtn(userId: profileResModel.data!.first.id ?? 0),
                     SizeConfig.sH1,
                     CoverProfile(
                         con: con, profileData: profileResModel.data!.first),
-
                     ProfileHeaderSection(
                       profileResModel: profileResModel,
                     ),
@@ -104,12 +108,14 @@ class Profile extends StatelessWidget {
                   ],
                 ),
               ),
-              if(con.isLoading)
+              if (con.isLoading)
                 Container(
                   height: Get.height,
                   width: Get.width,
                   color: ColorUtils.black26,
-                  child: Center(child: Loader(),),
+                  child: Center(
+                    child: Loader(),
+                  ),
                 ),
             ],
           );
@@ -119,7 +125,6 @@ class Profile extends StatelessWidget {
   }
 
   getUserProfile() async {
-    profileViewModel.isLoading=false;
     await profileViewModel.getProfileDetail(userId.toString());
     await profileViewModel.getUserProfile(userId);
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {

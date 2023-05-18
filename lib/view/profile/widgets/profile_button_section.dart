@@ -86,8 +86,8 @@ class ConfirmBtn extends StatelessWidget {
             onTap: () async {
               profileViewModel.isLoading = true;
               await viewModel.deleteFollowRequest(DeleteFollowReqModel(
-                  id: userId.toString(), flag: 'feed'));
-              if (viewModel.sendFollowRequestApiResponse.status ==
+                  id: userId.toString(), flag: 'delete'));
+              if (viewModel.deleteFollowRequestApiResponse.status ==
                   Status.COMPLETE) {
                 categoryFeedViewModel.setFollowData(userId, false);
                 await profileViewModel
@@ -134,7 +134,7 @@ class FollowingBtn extends StatelessWidget {
               profileViewModel.isLoading = true;
               await viewModel.deleteFollowRequest(DeleteFollowReqModel(
                   id: profileUser.id.toString(), flag: 'feed'));
-              if (viewModel.sendFollowRequestApiResponse.status ==
+              if (viewModel.deleteFollowRequestApiResponse.status ==
                   Status.COMPLETE) {
                 categoryFeedViewModel.setFollowData(profileUser.id!, false);
                 await profileViewModel
@@ -231,7 +231,7 @@ class RequestedBtn extends StatelessWidget {
         profileViewModel.isLoading = true;
         await viewModel.deleteFollowRequest(
             DeleteFollowReqModel(id: userId.toString(), flag: 'feed'));
-        if (viewModel.sendFollowRequestApiResponse.status == Status.COMPLETE) {
+        if (viewModel.deleteFollowRequestApiResponse.status == Status.COMPLETE) {
           categoryFeedViewModel.setFollowData(userId, false);
           await profileViewModel.getProfileDetail(userId.toString());
         }

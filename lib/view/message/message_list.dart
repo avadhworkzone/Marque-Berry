@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
-import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/get_following_list_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -41,25 +41,25 @@ class MessageList extends StatelessWidget {
       ),
       body: GetBuilder<FollowFollowingViewModel>(
         initState: (_) async {
-          await followRequestViewModel.getFollowerList( (PreferenceUtils.getInt(key: 'userid')).toString());
+          await followRequestViewModel.getFollowingList((PreferenceUtils.getInt(key: 'userid')).toString());
         },
         builder: (followRequestViewModel) {
-          if (followRequestViewModel.getFollowerListApiResponse.status ==
+          if (followRequestViewModel.getFollowingListApiResponse.status ==
                   Status.LOADING ||
-              followRequestViewModel.getFollowerListApiResponse.status ==
+              followRequestViewModel.getFollowingListApiResponse.status ==
                   Status.INITIAL) {
             return Center(child: Loader());
-          } else if (followRequestViewModel.getFollowerListApiResponse.status ==
+          } else if (followRequestViewModel.getFollowingListApiResponse.status ==
               Status.ERROR) {
             return Center(child: SomethingWentWrong());
           }
-          final GetFollowerListResModel getFollowerListResModel =
-              followRequestViewModel.getFollowerListApiResponse.data;
-          if (getFollowerListResModel.status.toString() ==
+          final GetFollowingListResModel getFollowingListResModel =
+              followRequestViewModel.getFollowingListApiResponse.data;
+          if (getFollowingListResModel.status.toString() ==
               VariableUtils.status500) {
             return Center(
               child: AdoroText(
-                getFollowerListResModel.msg ?? VariableUtils.somethingWentWrong,
+                getFollowingListResModel.msg ?? VariableUtils.somethingWentWrong,
               ),
             );
           }
@@ -76,8 +76,8 @@ class MessageList extends StatelessWidget {
                 if (snapshot.hasError) {
                   return Center(child: SomethingWentWrong());
                 }
-                List<TagData> users = getFollowerListResModel.data ?? [];
-                List<TagData> tempUsersList = [];
+                List<FollowingData> users = getFollowingListResModel.data ?? [];
+                List<FollowingData> tempUsersList = [];
 
                 final currentUser =
                     (PreferenceUtils.getInt(key: 'userid')).toString();
@@ -96,14 +96,14 @@ class MessageList extends StatelessWidget {
                       final lastMsgTime = DateTime.fromMillisecondsSinceEpoch(
                           docs[containChatIndex]['last_message_time']);
                       mapData.addAll({'last_message_time': lastMsgTime});
-                      tempUsersList.add(TagData.fromJson(mapData));
+                      tempUsersList.add(FollowingData.fromJson(mapData));
                     } else {
                       var mapData = element.toJson();
                       mapData.addAll({
                         'last_message_time':
                             DateTime.now().subtract(Duration(days: 1))
                       });
-                      tempUsersList.add(TagData.fromJson(mapData));
+                      tempUsersList.add(FollowingData.fromJson(mapData));
                     }
                   });
                 }
@@ -124,7 +124,7 @@ class MessageList extends StatelessWidget {
 
 class UserList extends StatelessWidget {
   const UserList({Key? key, required this.users}) : super(key: key);
-  final List<TagData> users;
+  final List<FollowingData> users;
 
   @override
   Widget build(BuildContext context) {

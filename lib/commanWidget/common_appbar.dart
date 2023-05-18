@@ -49,6 +49,7 @@ AppBar customAppbar({
   required BuildContext context,
   Color? color,
   Widget? icon,
+  VoidCallback? leadingOnTap
 }) {
   Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
   Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
@@ -64,7 +65,7 @@ AppBar customAppbar({
       fontWeight: FontWeightClass.fontWeightBold,
     ),
     leading: IconButton(
-      onPressed: () => Get.back(),
+      onPressed:leadingOnTap?? () => Get.back(),
       splashRadius: 6.w,
       icon: Icon(Icons.arrow_back, color: blackWhite),
     ),

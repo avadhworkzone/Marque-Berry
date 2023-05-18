@@ -46,7 +46,7 @@ class UserProfileData {
       this.postsCount, 
       this.posts, 
       this.mention, 
-      this.tag,});
+      this.tag,this.subTag});
 
   UserProfileData.fromJson(dynamic json) {
     id = json['id'];
@@ -70,6 +70,7 @@ class UserProfileData {
     //   });
     // }
     tag = json['tag'];
+    subTag = json['sub_tag']??"";
   }
   int? id;
   String? username;
@@ -82,6 +83,7 @@ class UserProfileData {
   List<Posts>? posts;
   List<dynamic>? mention;
   String? tag;
+  String? subTag;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -100,6 +102,7 @@ class UserProfileData {
       map['mention'] = mention?.map((v) => v.toJson()).toList();
     }
     map['tag'] = tag;
+    map['sub_tag'] = subTag;
     return map;
   }
 

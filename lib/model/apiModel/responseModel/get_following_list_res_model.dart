@@ -1,7 +1,7 @@
 class GetFollowingListResModel {
   int? status;
   String? msg;
-  List<Data>? data;
+  List<FollowingData>? data;
 
   GetFollowingListResModel({this.status, this.msg, this.data});
 
@@ -9,9 +9,9 @@ class GetFollowingListResModel {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <FollowingData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new FollowingData.fromJson(v));
       });
     }
   }
@@ -27,21 +27,29 @@ class GetFollowingListResModel {
   }
 }
 
-class Data {
+class FollowingData {
   int? id;
   String? username;
   String? fullName;
   String? image;
   String? status;
+  DateTime? lastMsgTime;
 
-  Data({this.id, this.username, this.fullName, this.image, this.status});
+  FollowingData(
+      {this.id,
+      this.username,
+      this.fullName,
+      this.image,
+      this.status,
+      this.lastMsgTime});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  FollowingData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
     fullName = json['full_name'];
     image = json['image'];
     status = json['status'];
+    lastMsgTime = json['last_message_time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +59,8 @@ class Data {
     data['full_name'] = this.fullName;
     data['image'] = this.image;
     data['status'] = this.status;
+    data['last_message_time'] = this.lastMsgTime;
+
     return data;
   }
 }
