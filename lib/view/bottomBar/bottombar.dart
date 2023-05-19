@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/home.dart';
@@ -42,6 +43,13 @@ class _BottomBarState extends State<BottomBar> {
 
   String bottomPath = "assets/bottombar/";
 
+  /// --------------------------- NOTIFICATION INITIALISE -------------------------- ///
+  void notificationInitialization() {
+    NotificationService.notificationPermission();
+    NotificationService.inItNotification();
+    NotificationService.onNotification();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ConnectivityViewModel>(
@@ -51,11 +59,14 @@ class _BottomBarState extends State<BottomBar> {
           if (connectivityViewModel.isOnline!) {
             return GetBuilder<BottomBarController>(
               init: BottomBarController(),
-              initState: (_) {},
+              initState: (_) {
+                notificationInitialization();
+              },
               builder: (bottomBarController) {
                 return Scaffold(
                   key: _scaffold,
                   body: pageRoute[bottomBarController.selectedIndex],
+
                   drawer: bottomBarController.selectedIndex == 0
                       ? MyDrawer()
                       : null,
@@ -142,8 +153,8 @@ class _BottomBarState extends State<BottomBar> {
           if (index == 1) {
             Get.to(
               () => SharePost(),
-              duration: Duration(milliseconds: 500),
-              transition: Transition.leftToRight,
+              // duration: Duration(milliseconds: 500),
+              // transition: Transition.leftToRight,
             );
           } else {
             controller.pageChange(index);

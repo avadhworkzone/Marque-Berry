@@ -9,6 +9,15 @@ import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 
 class FollowFollowingViewModel extends GetxController {
+  String _searchUserStr="";
+
+  String get searchUserStr => _searchUserStr;
+
+  set searchUserStr(String value) {
+    _searchUserStr = value;
+    update();
+  }
+
   ApiResponse getFollowerListApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getFollowingListApiResponse = ApiResponse.initial('INITIAL');
 

@@ -66,6 +66,7 @@ class Profile extends StatelessWidget {
           ),
         ),
         body: GetBuilder<ProfileViewModel>(initState: (_) {
+
           getUserProfile();
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             profileViewModel.isLoading = false;
@@ -91,34 +92,7 @@ class Profile extends StatelessWidget {
                   children: [
                     if (profileResModel.data!.first.subTag ==
                         ProfileBtnStatus.Confirm.name)
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.person_add_outlined,
-                                size: 20,
-                                color: blackWhite,
-                              ),
-                              SizeConfig.sW1,
-                              Text(profileResModel.data!.first.username ?? "",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: blackWhite)),
-                              SizeConfig.sW2,
-                              Text(VariableUtils.wantsToFollowYou,
-                                  style: TextStyle(color: blackWhite)),
-                            ],
-                          ),
-                          SizeConfig.sH1,
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w),
-                            child: ConfirmBtn(
-                                userId: profileResModel.data!.first.id ?? 0),
-                          ),
-                        ],
-                      ),
+                      UpperConfirmUser(profileResModel: profileResModel),
                     SizeConfig.sH2,
                     CoverProfile(
                         con: con, profileData: profileResModel.data!.first),
@@ -153,6 +127,10 @@ class Profile extends StatelessWidget {
 
   getUserProfile() async {
     await profileViewModel.getProfileDetail(userId.toString());
+
+    if(PreferenceUtils.getInt(key: PreferenceUtils.userid)!=userId){
+      return;
+    }
     await profileViewModel.getUserProfile(userId);
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
       final GetUserResDetail response =
@@ -180,5 +158,45 @@ class Profile extends StatelessWidget {
         value: profileData?.coverPhoto ?? "",
       );
     }
+  }
+}
+
+class UpperConfirmUser extends StatelessWidget {
+  const UpperConfirmUser({
+    super.key,
+    required this.profileResModel,
+  });
+
+  final UserProfileResModel profileResModel;
+
+  @override
+  Widget build(BuildContext context) {
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.person_add_outlined,
+              size: 20,
+              color: blackWhite,
+            ),
+            SizeConfig.sW1,
+            Text(profileResModel.data!.first.username ?? "",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: blackWhite)),
+            SizeConfig.sW2,
+            Text(VariableUtils.wantsToFollowYou,
+                style: TextStyle(color: blackWhite)),
+          ],
+        ),
+        SizeConfig.sH1,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 6.w),
+          child: ConfirmBtn(userId: profileResModel.data!.first.id ?? 0),
+        ),
+      ],
+    );
   }
 }

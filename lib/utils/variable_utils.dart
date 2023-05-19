@@ -1,4 +1,6 @@
 class VariableUtils {
+  static const appName='Adoro';
+
   /// FONT-FAMILY VARIABLE
   static const poppinsBoldFontFamily = "Poppins_Bold";
   static const poppinsSemiBoldFontFamily = "Poppins_SemiBold";

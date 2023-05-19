@@ -327,6 +327,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                 ),
                                               Positioned(
                                                 right: 0,
+                                                top: -10,
                                                 child: IconButton(
                                                   splashRadius: 2.w,
                                                   onPressed: () {
@@ -336,6 +337,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                   icon: Icon(
                                                     Icons.close,
                                                     color: black92White,
+                                                    size: 40,
                                                   ),
                                                 ),
                                               ),
@@ -352,7 +354,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                   child: CommonImageScale(
                                                     img: IconsWidgets.tagImages,
                                                     color: black92White,
-                                                    scale: 1.2.w,
+                                                    scale: 3,
                                                   ),
                                                 ),
                                               ),
@@ -369,7 +371,11 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                           if (createPostViewModel
                                   .createPostApiResponse.status ==
                               Status.LOADING)
-                            Center(child: Loader())
+                            Container(
+                                color: Colors.black26,
+                                width: Get.width,
+                                height: Get.height,
+                                child: Center(child: Loader()))
                         ],
                       ),
                     ),

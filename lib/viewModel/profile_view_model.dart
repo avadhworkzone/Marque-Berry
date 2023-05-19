@@ -104,8 +104,8 @@ class ProfileViewModel extends GetxController {
   /// ======================== GET USER PROFILE DETAIL ================================
 
   Future<void> getProfileDetail(String userId) async {
-    // getProfileDetailApiResponse = ApiResponse.loading('LOADING');
-    // update();
+    getProfileDetailApiResponse = ApiResponse.loading('LOADING');
+    update();
     try {
       final response = await GetProfileDetailRepo().getProfileDetail(userId);
       getProfileDetailApiResponse = ApiResponse.complete(response);

@@ -23,6 +23,7 @@ import 'package:socialv/viewModel/follow_request_view_model.dart';
 import '../../commanWidget/common_image.dart';
 import '../../utils/assets/images_utils.dart';
 
+
 class MessageList extends StatelessWidget {
   MessageList({Key? key}) : super(key: key);
 
@@ -41,6 +42,9 @@ class MessageList extends StatelessWidget {
       ),
       body: GetBuilder<FollowFollowingViewModel>(
         initState: (_) async {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            followRequestViewModel.searchUserStr="";
+          });
           await followRequestViewModel.getFollowingList(
               (PreferenceUtils.getInt(key: 'userid')).toString());
         },
@@ -117,7 +121,7 @@ class MessageList extends StatelessWidget {
                   users = tempUsersList;
                 }
 
-                return UserList(users: users);
+                return UserList(users: users,controller: followRequestViewModel,);
               });
         },
       ),
@@ -126,102 +130,154 @@ class MessageList extends StatelessWidget {
 }
 
 class UserList extends StatelessWidget {
-  const UserList({Key? key, required this.users}) : super(key: key);
+  const UserList({Key? key, required this.users, required this.controller}) : super(key: key);
   final List<FollowingData> users;
+  final  FollowFollowingViewModel controller;
 
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-    return ListView.builder(
-      itemCount: users.length,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final followData = users[index];
-        return Column(
-          children: [
-            InkWell(
-              onTap: () {
-                Get.to(
-                  () => ChattingScreen(
-                    receiverName: followData.username ?? "",
-                    receiverImage: followData.image ?? "",
-                    senderName: PreferenceUtils.getString(key: 'username'),
-                    senderId:
-                        (PreferenceUtils.getInt(key: 'userid')).toString(),
-                    receiverId: followData.id.toString() ?? "",
-                    senderImage: PreferenceUtils.getString(key: 'profile'),
-                  ),
-                );
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.sp),
+            child: TextField(
+              cursorColor: ColorUtils.black,
+              onChanged: (value) {
+                controller.searchUserStr = value;
               },
-              child: ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.w),
-                  child: Container(
-                    height: 10.w,
-                    width: 10.w,
-                    color: ColorUtils.greyFA,
-                    child: OctoImage(
-                      fit: BoxFit.cover,
-                      width: 24,
-                      height: 24,
-                      image: NetworkImage(followData.image ?? ""),
-                      progressIndicatorBuilder: (context, progress) {
-                        double? value;
-                        var expectedBytes = progress?.expectedTotalBytes;
-                        if (progress != null && expectedBytes != null) {
-                          value =
-                              progress.cumulativeBytesLoaded / expectedBytes;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: value,
-                            color: blackWhite,
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stacktrace) => Container(
-                        width: 24,
-                        height: 24,
-                        color: ColorUtils.grey[200],
-                        child: Padding(
-                          padding: EdgeInsets.all(1.w),
-                          child: CommonImage(
-                            img: IconsWidgets.userImages,
-                            color: ColorUtils.black,
+              decoration: InputDecoration(
+                  fillColor: ColorUtils.white,
+                  filled: true,
+                  hintText: 'Search..',
+                  // suffixIcon: Icon(Icons.search,color: whiteBlack2E,),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: black92White!),
+                      borderRadius: BorderRadius.circular(10.sp)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: black92White),
+                      borderRadius: BorderRadius.circular(10.sp)),
+                  disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: black92White),
+                      borderRadius: BorderRadius.circular(10.sp)),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: black92White),
+                      borderRadius: BorderRadius.circular(10.sp))),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ListView.builder(
+            itemCount: users.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final followData = users[index];
+              if (controller.searchUserStr.isNotEmpty) {
+                if (!(followData.username ?? "")
+                        .toLowerCase()
+                        .contains(controller.searchUserStr.toLowerCase()) &&
+                    !(followData.fullName ?? "")
+                        .toLowerCase()
+                        .contains(controller.searchUserStr.toLowerCase())) {
+                  return SizedBox();
+                }
+              }
+              return Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.to(
+                        () => ChattingScreen(
+                          receiverName: followData.username ?? "",
+                          receiverImage: followData.image ?? "",
+                          senderName:
+                              PreferenceUtils.getString(key: 'username'),
+                          senderId: (PreferenceUtils.getInt(key: 'userid'))
+                              .toString(),
+                          receiverId: followData.id.toString() ?? "",
+                          senderImage:
+                              PreferenceUtils.getString(key: 'profile'),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.w),
+                        child: Container(
+                          height: 10.w,
+                          width: 10.w,
+                          color: ColorUtils.greyFA,
+                          child: OctoImage(
+                            fit: BoxFit.cover,
+                            width: 24,
+                            height: 24,
+                            image: NetworkImage(followData.image ?? ""),
+                            progressIndicatorBuilder: (context, progress) {
+                              double? value;
+                              var expectedBytes = progress?.expectedTotalBytes;
+                              if (progress != null && expectedBytes != null) {
+                                value = progress.cumulativeBytesLoaded /
+                                    expectedBytes;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: value,
+                                  color: blackWhite,
+                                ),
+                              );
+                            },
+                            errorBuilder: (context, error, stacktrace) =>
+                                Container(
+                              width: 24,
+                              height: 24,
+                              color: ColorUtils.grey[200],
+                              child: Padding(
+                                padding: EdgeInsets.all(1.w),
+                                child: CommonImage(
+                                  img: IconsWidgets.userImages,
+                                  color: ColorUtils.black,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AdoroText(
+                            followData.username ?? VariableUtils.naError,
+                            fontSize: 13.sp,
+                            color: blackWhite,
+                            fontWeight: FontWeightClass.fontWeight600,
+                          ),
+                          SizeConfig.sH05,
+                        ],
+                      ),
+                      subtitle: AdoroText(
+                        followData.fullName ?? "",
+                        fontSize: 10.sp,
+                        color: blackWhite,
+                      ),
+                      trailing: MessageCount(
+                        receiverId: followData.id.toString(),
+                      ),
                     ),
                   ),
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AdoroText(
-                      followData.username ?? VariableUtils.naError,
-                      fontSize: 13.sp,
-                      color: blackWhite,
-                      fontWeight: FontWeightClass.fontWeight600,
-                    ),
-                    SizeConfig.sH05,
-                  ],
-                ),
-                subtitle: AdoroText(
-                  followData.fullName ?? "",
-                  fontSize: 10.sp,
-                  color: blackWhite,
-                ),
-                trailing: MessageCount(
-                  receiverId: followData.id.toString(),
-                ),
-              ),
-            ),
-            Divider(indent: 10, endIndent: 20, color: black92White)
-          ],
-        );
-      },
+                  Divider(indent: 10, endIndent: 20, color: black92White)
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
