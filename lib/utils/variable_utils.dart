@@ -81,6 +81,7 @@ class VariableUtils {
   static const beneficiaryName = " Beneficiary Name";
   static const accountNumber = " Account Number";
   static const ifscCode = " IFSC Code";
+  static const wantsToFollowYou = "wants to follow you";
 
   /// DRAWER SCREEN
   // static const note = " Note";

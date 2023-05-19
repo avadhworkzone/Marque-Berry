@@ -41,7 +41,8 @@ class MessageList extends StatelessWidget {
       ),
       body: GetBuilder<FollowFollowingViewModel>(
         initState: (_) async {
-          await followRequestViewModel.getFollowingList((PreferenceUtils.getInt(key: 'userid')).toString());
+          await followRequestViewModel.getFollowingList(
+              (PreferenceUtils.getInt(key: 'userid')).toString());
         },
         builder: (followRequestViewModel) {
           if (followRequestViewModel.getFollowingListApiResponse.status ==
@@ -49,7 +50,8 @@ class MessageList extends StatelessWidget {
               followRequestViewModel.getFollowingListApiResponse.status ==
                   Status.INITIAL) {
             return Center(child: Loader());
-          } else if (followRequestViewModel.getFollowingListApiResponse.status ==
+          } else if (followRequestViewModel
+                  .getFollowingListApiResponse.status ==
               Status.ERROR) {
             return Center(child: SomethingWentWrong());
           }
@@ -59,7 +61,8 @@ class MessageList extends StatelessWidget {
               VariableUtils.status500) {
             return Center(
               child: AdoroText(
-                getFollowingListResModel.msg ?? VariableUtils.somethingWentWrong,
+                getFollowingListResModel.msg ??
+                    VariableUtils.somethingWentWrong,
               ),
             );
           }

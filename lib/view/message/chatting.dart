@@ -19,6 +19,8 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/view/home/components/video_components.dart';
 
+import '../profile/profile.dart';
+
 class ChattingScreen extends StatefulWidget {
   String senderId;
   String receiverId;
@@ -172,8 +174,10 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                       message: messageFirebase,
                                       date: timeConvert,
                                       senderImage: widget.senderImage,
+                                      userId: widget.senderId,
                                     )
                                   : LeftAlignTextWidget(
+                                      userId: widget.receiverId,
                                       receiverImage: widget.receiverImage,
                                       message: messageFirebase,
                                       date: timeConvert,
@@ -186,12 +190,14 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                       time: timeConvert,
                                       image: messageFirebase,
                                       isVideo: true,
+                                      userId: widget.senderId,
                                     )
                                   : LeftImageWidget(
                                       rImage: widget.receiverImage,
                                       time: timeConvert,
                                       isVideo: true,
                                       image: messageFirebase,
+                                      userId: widget.receiverId,
                                     );
                             } else if (messageTypeFirebase ==
                                 MessageType.IMAGE.name) {
@@ -201,12 +207,14 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                       time: timeConvert,
                                       image: messageFirebase,
                                       isVideo: false,
+                                      userId: widget.senderId,
                                     )
                                   : LeftImageWidget(
                                       rImage: widget.receiverImage,
                                       time: timeConvert,
                                       isVideo: false,
                                       image: messageFirebase,
+                                      userId: widget.receiverId,
                                     );
                             }
                             return SizedBox();
@@ -231,6 +239,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                     image: chattingController._sourcePath,
                     sImage: widget.senderImage,
                     time: '',
+                    userId: widget.senderId,
                   );
                 return SizedBox();
               } else if (chattingController._sourcePath != "")
@@ -239,6 +248,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                   image: chattingController._sourcePath,
                   sImage: widget.senderImage,
                   time: '',
+                  userId: widget.senderId,
                 );
               return SizedBox();
             }),
@@ -469,6 +479,7 @@ class LeftImageWidget extends StatelessWidget {
   final String image;
   final String time;
   final String rImage;
+  final String userId;
 
   bool? isVideo = false;
 
@@ -478,6 +489,7 @@ class LeftImageWidget extends StatelessWidget {
     required this.image,
     required this.rImage,
     required this.time,
+    required this.userId,
   });
 
   @override
@@ -491,14 +503,21 @@ class LeftImageWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.w),
-                child: Container(
-                  height: 9.w,
-                  width: 9.w,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: chattingProfileImage(image: rImage),
+              InkWell(
+                onTap: () {
+                  Get.to(() => Profile(
+                        userId: int.parse(userId),
+                      ));
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.w),
+                  child: Container(
+                    height: 9.w,
+                    width: 9.w,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: chattingProfileImage(image: rImage),
+                    ),
                   ),
                 ),
               ),
@@ -585,6 +604,8 @@ class RightImageWidget extends StatelessWidget {
   final String image;
   final String time;
   final String sImage;
+  final String userId;
+
   bool? isVideo = false;
 
   RightImageWidget({
@@ -593,6 +614,7 @@ class RightImageWidget extends StatelessWidget {
     required this.image,
     required this.sImage,
     required this.time,
+    required this.userId,
   });
 
   @override
@@ -676,7 +698,13 @@ class RightImageWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              LeftRightSideUserImage(sImage: sImage),
+              InkWell(
+                  onTap: () {
+                    Get.to(() => Profile(
+                          userId: int.parse(userId),
+                        ));
+                  },
+                  child: LeftRightSideUserImage(sImage: sImage)),
             ],
           ),
           SizeConfig.sH1AndHalf,
@@ -690,6 +718,7 @@ class TempImageWidget extends StatelessWidget {
   final String image;
   final String time;
   final String sImage;
+  final String userId;
   bool? isVideo = false;
 
   TempImageWidget({
@@ -698,6 +727,7 @@ class TempImageWidget extends StatelessWidget {
     required this.image,
     required this.sImage,
     required this.time,
+    required this.userId,
   });
 
   @override
@@ -780,7 +810,15 @@ class TempImageWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              LeftRightSideUserImage(sImage: sImage),
+              InkWell(
+                  onTap: () {
+                    Get.to(() => Profile(
+                          userId: int.parse(userId),
+                        ));
+                  },
+                  child: LeftRightSideUserImage(
+                    sImage: sImage,
+                  )),
             ],
           ),
           SizeConfig.sH1AndHalf,
@@ -820,12 +858,14 @@ class LeftAlignTextWidget extends StatelessWidget {
   final String date;
   final String message;
   final String receiverImage;
+  final String userId;
 
   const LeftAlignTextWidget({
     super.key,
     required this.receiverImage,
     required this.message,
     required this.date,
+    required this.userId,
   });
 
   @override
@@ -839,9 +879,17 @@ class LeftAlignTextWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: chattingProfileImage(image: receiverImage),
+              InkWell(
+                onTap: () {
+                  Get.to(() => Profile(
+                        userId: int.parse(userId),
+                      ));
+                  print("chattingProfileImage");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: chattingProfileImage(image: receiverImage),
+                ),
               ),
               Flexible(
                 child: Padding(
@@ -895,12 +943,14 @@ class RightAlignTextWidget extends StatelessWidget {
   final String date;
   final String message;
   final String senderImage;
+  final String userId;
 
   const RightAlignTextWidget({
     super.key,
     required this.senderImage,
     required this.message,
     required this.date,
+    required this.userId,
   });
 
   @override
@@ -950,9 +1000,16 @@ class RightAlignTextWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: chattingProfileImage(image: senderImage),
+              InkWell(
+                onTap: () {
+                  Get.to(() => Profile(
+                        userId: int.parse(userId),
+                      ));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: chattingProfileImage(image: senderImage),
+                ),
               ),
               SizeConfig.sW4,
             ],

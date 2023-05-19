@@ -91,8 +91,35 @@ class Profile extends StatelessWidget {
                   children: [
                     if (profileResModel.data!.first.subTag ==
                         ProfileBtnStatus.Confirm.name)
-                      ConfirmBtn(userId: profileResModel.data!.first.id ?? 0),
-                    SizeConfig.sH1,
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.person_add_outlined,
+                                size: 20,
+                                color: blackWhite,
+                              ),
+                              SizeConfig.sW1,
+                              Text(profileResModel.data!.first.username ?? "",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: blackWhite)),
+                              SizeConfig.sW2,
+                              Text(VariableUtils.wantsToFollowYou,
+                                  style: TextStyle(color: blackWhite)),
+                            ],
+                          ),
+                          SizeConfig.sH1,
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 6.w),
+                            child: ConfirmBtn(
+                                userId: profileResModel.data!.first.id ?? 0),
+                          ),
+                        ],
+                      ),
+                    SizeConfig.sH2,
                     CoverProfile(
                         con: con, profileData: profileResModel.data!.first),
                     ProfileHeaderSection(
