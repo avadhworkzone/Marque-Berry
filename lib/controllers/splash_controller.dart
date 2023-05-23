@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/done_screen.dart';
 import 'package:socialv/view/auth/login_screen.dart';
@@ -9,17 +10,7 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     getMode();
-    Future.delayed(
-      const Duration(seconds: 3),
-      () => Get.offAll(
-        () => PreferenceUtils.getInt(key: PreferenceUtils.login) == 0
-            ? LoginScreen()
-            : PreferenceUtils.getWelcome() == 0
-                ? DoneScreen()
-                : BottomBar(),
-      ),
-    );
-
+    DynamicLink.getInitialDynamicLinks();
     super.onInit();
   }
 

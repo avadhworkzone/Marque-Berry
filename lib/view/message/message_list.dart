@@ -193,6 +193,7 @@ class UserList extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
+                      FocusScope.of(context).unfocus();
                       Get.to(
                         () => ChattingScreen(
                           receiverName: followData.username ?? "",

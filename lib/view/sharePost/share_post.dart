@@ -316,13 +316,10 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                       "gif")
                                                 Padding(
                                                   padding: EdgeInsets.all(4.w),
-                                                  child: AspectRatio(
-                                                    aspectRatio: 18 / 10,
-                                                    child: FileVideoPlayer(
-                                                      url: sharePostController
-                                                          .sourcePath,
-                                                      fileVideo: true,
-                                                    ),
+                                                  child: FileVideoPlayer(
+                                                    url: sharePostController
+                                                        .sourcePath,
+                                                    fileVideo: true,
                                                   ),
                                                 ),
                                               Positioned(
@@ -600,13 +597,13 @@ class SharePostController extends GetxController {
         PlatformFile file = result.files.first;
 
         if (extension == "image") {
-          // final cropImagePath = await cropImageClass.cropImage(
-          //   image: File(file.path!),
-          //   isBackGround: true,
-          //   context: context,
-          // );
+          final cropImagePath = await cropImageClass.postCropImage(
+            image: File(file.path!),
+            isBackGround: true,
+            context: context,
+          );
 
-          sourcePath = file.path ?? '';
+          sourcePath = cropImagePath?.path ?? '';
         } else if (extension == "video" ||
             extension == "gif" ||
             extension == "template") {

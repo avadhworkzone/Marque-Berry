@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
-class ConstUtils {}
 
 logs(String message) {
   if (kDebugMode) {
@@ -97,6 +96,47 @@ class CropImage {
               : CropAspectRatioPreset.square,
           lockAspectRatio: true,
         ),
+        IOSUiSettings(
+          minimumAspectRatio: 1.0,
+          hidesNavigationBar: true,
+          aspectRatioLockEnabled: true,
+        )
+      ],
+    );
+    logs('croppedFile:=>$croppedFile');
+    if (croppedFile == null) {
+      return null;
+    }
+
+    return File(croppedFile.path);
+  }
+
+  Future<File?> postCropImage({
+    required File image,
+    required bool isBackGround,
+    required BuildContext context,
+  }) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: image.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      // aspectRatioPresets: isBackGround
+      //     ? [CropAspectRatioPreset.ratio3x2]
+      //     : [CropAspectRatioPreset.square],
+
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            initAspectRatio: CropAspectRatioPreset.original
+            // initAspectRatio: isBackGround
+            //     ? CropAspectRatioPreset.ratio16x9
+            //     : CropAspectRatioPreset.square,
+            ),
         IOSUiSettings(
           minimumAspectRatio: 1.0,
           hidesNavigationBar: true,

@@ -1,9 +1,11 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
+import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
@@ -13,6 +15,7 @@ import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model
 import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -178,12 +181,9 @@ class PostComponents extends StatelessWidget {
                     // height: 75.w,
                     width: Get.width,
                     child: contentType.toLowerCase() == "video"
-                        ? SizedBox(
-                            height: 75.w,
-                            child: InViewVideoComponents(
-                              play: isInView,
-                              url: contentImage,
-                            ),
+                        ? InViewVideoComponents(
+                            play: isInView,
+                            url: contentImage,
                           )
                         : OctoImage(
                             fit: BoxFit.cover,
@@ -438,8 +438,9 @@ class PostComponents extends StatelessWidget {
             ),
           ),
           height: userId.toString() !=
-            PreferenceUtils.getInt(key: PreferenceUtils.userid)
-                .toString()?70.w:50.w,
+                  PreferenceUtils.getInt(key: PreferenceUtils.userid).toString()
+              ? 70.w
+              : 50.w,
           width: 100.w,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.w),
@@ -465,13 +466,21 @@ class PostComponents extends StatelessWidget {
                 ),
                 SizeConfig.sH3,
                 bottomComponents(
-                  onTap: () {},
+                  onTap: () async {
+                    final postLink = await DynamicLink.createDynamicLinkForUser(
+                        postId: postId.toString());
+                    Clipboard.setData(new ClipboardData(text: postLink))
+                        .then((_) {
+                      showSnackBar(message: "Copied to your clipboard !");
+                    });
+                  },
                   text: 'Copy link',
                   image: IconsWidgets.linkImages,
                 ),
                 if (userId.toString() !=
                     PreferenceUtils.getInt(key: PreferenceUtils.userid)
-                        .toString()) SizeConfig.sH3,
+                        .toString())
+                  SizeConfig.sH3,
                 if (userId.toString() !=
                     PreferenceUtils.getInt(key: PreferenceUtils.userid)
                         .toString())

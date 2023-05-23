@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:chewie/chewie.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:video_player/video_player.dart';
+
+bool isMute = false;
 
 class InViewVideoComponents extends StatefulWidget {
   final String url;
@@ -12,6 +16,7 @@ class InViewVideoComponents extends StatefulWidget {
 
   const InViewVideoComponents({Key? key, required this.url, required this.play})
       : super(key: key);
+
   @override
   _InViewVideoComponentsState createState() => _InViewVideoComponentsState();
 }
@@ -25,13 +30,16 @@ class _InViewVideoComponentsState extends State<InViewVideoComponents> {
     super.initState();
     _controller = VideoPlayerController.network(widget.url);
     _initializeVideoPlayerFuture = _controller.initialize().then((_) {
+
       setState(() {});
     });
-
+    _controller.setVolume(isMute?0:1.0);
     if (widget.play) {
       _controller.play();
       _controller.setLooping(false);
+
     }
+
   }
 
   @override
@@ -39,7 +47,7 @@ class _InViewVideoComponentsState extends State<InViewVideoComponents> {
     if (oldWidget.play != widget.play) {
       if (widget.play) {
         _controller.play();
-        _controller.setVolume(1.0);
+        _controller.setVolume(isMute?0:1.0);
         _controller.setLooping(true);
       } else {
         _controller.setVolume(0.0);
@@ -61,10 +69,37 @@ class _InViewVideoComponentsState extends State<InViewVideoComponents> {
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return VideoPlayer(_controller);
+          return AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: Stack(
+                children: [
+                  VideoPlayer(_controller),
+                  Positioned(
+                    bottom: 10,
+                    right: 10,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isMute=!isMute;
+                        });
+                        _controller.setVolume(isMute?0:1.0);
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.black45,
+                        child: isMute
+                            ? Icon(Icons.volume_off)
+                            : Icon(Icons.volume_up),
+                      ),
+                    ),
+                  ),
+                ],
+              ));
         } else {
-          return Center(
-            child: CircularProgressIndicator(),
+          return AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Center(
+              child: CupertinoActivityIndicator(),
+            ),
           );
         }
       },
@@ -118,28 +153,31 @@ class _FileVideoPlayerState extends State<FileVideoPlayer> {
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Stack(
-            children: [
-              VideoPlayer(_controller),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
+          return AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: Stack(
+              children: [
+                VideoPlayer(_controller),
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _controller.value.isPlaying
+                            ? _controller.pause()
+                            : _controller.play();
+                      });
+                    },
+                    child: Icon(
                       _controller.value.isPlaying
-                          ? _controller.pause()
-                          : _controller.play();
-                    });
-                  },
-                  child: Icon(
-                    _controller.value.isPlaying
-                        ? Icons.pause_circle
-                        : Icons.play_circle,
-                    color: ColorUtils.grey,
-                    size: 15.w,
+                          ? Icons.pause_circle
+                          : Icons.play_circle,
+                      color: ColorUtils.grey,
+                      size: 15.w,
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           );
         } else {
           return Center(child: Loader());

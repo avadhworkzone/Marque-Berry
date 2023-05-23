@@ -22,8 +22,8 @@ abstract class BaseService {
   final String likeURL = 'like';
   final String dislikeURL = 'deleteLike';
   final String reportPostURL = 'ReportPost';
-
   final String createPostURL = 'createPost';
+  final String getPostById = 'getPostById?post_id=';
 
   /// EDIT PROFILE
   final String getUserDetails = 'getUserDetails?userId=';

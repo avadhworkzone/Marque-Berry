@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -52,6 +53,7 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    DynamicLink.listenDynamicLinks();
     return GetBuilder<ConnectivityViewModel>(
       init: ConnectivityViewModel(),
       builder: (connectivityViewModel) {
@@ -66,7 +68,6 @@ class _BottomBarState extends State<BottomBar> {
                 return Scaffold(
                   key: _scaffold,
                   body: pageRoute[bottomBarController.selectedIndex],
-
                   drawer: bottomBarController.selectedIndex == 0
                       ? MyDrawer()
                       : null,
