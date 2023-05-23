@@ -125,8 +125,8 @@ class _HomeState extends State<Home> {
               GetBuilder<CategoryFeedViewModel>(
                 init: CategoryFeedViewModel(),
                 initState: (_) {
-                  categoryFeedViewModel.pageNumberIndex = 0;
-                  categoryFeedViewModel.isPageLoading = false;
+                  categoryFeedViewModel.initCall();
+                  // categoryFeedViewModel.isPageLoading = false;
                   paginationListen(homeController);
                 },
                 builder: (categoryFeedViewModel) {

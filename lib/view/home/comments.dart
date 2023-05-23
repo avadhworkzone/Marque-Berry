@@ -27,13 +27,10 @@ import '../../viewModel/category_view_model.dart';
 
 class Comments extends StatefulWidget {
   int? postId = 0;
-
-  int? likeCount;
   String profileImage = "";
 
   Comments({
     Key? key,
-    this.likeCount,
     required this.postId,
     required this.profileImage,
   }) : super(key: key);
@@ -122,11 +119,26 @@ class _CommentsState extends State<Comments> {
                               children: [
                                 if (commentData.parentId == "0")
                                   CommentList(
+                                    likeOnTap: () async {
+                                      await categoryFeedViewModel
+                                          .postLikeInComment(
+                                              commentId: commentData.commentId
+                                                  .toString(),
+                                              postId: commentData.postId!,
+                                      isLiked: commentData.isLikedByMe ?? false);
+                                      if (categoryFeedViewModel
+                                              .postLikeInCommentApiResponse
+                                              .status ==
+                                          Status.COMPLETE) {
+                                        postCommentApiCall(homeController);
+                                      }
+                                    },
                                     homeController: homeController,
+                                    isLiked: commentData.isLikedByMe ?? false,
                                     categoryFeedViewModel:
                                         categoryFeedViewModel,
-                                    likeCount:
-                                        (widget.likeCount ?? 0).toString(),
+                                    likeCount: (commentData.likesCount ?? 0)
+                                        .toString(),
                                     replayCount: 0,
                                     time: postTimeCalculate(
                                       commentData.createdOn.toString(),
@@ -158,7 +170,7 @@ class _CommentsState extends State<Comments> {
                                     message: commentData.comment ?? "",
                                     commentId: commentData.commentId ?? 0,
                                     postId: widget.postId ?? 0,
-                                    userId: commentData.userid!,
+                                    userId: commentData.userId!,
                                   ),
                                 for (int i = 0;
                                     i < commentData.childComment!.length;
@@ -167,8 +179,28 @@ class _CommentsState extends State<Comments> {
                                     width: 80.w,
                                     padding: EdgeInsets.only(top: 5.w),
                                     child: CommentList(
+                                      likeOnTap: () async {
+                                        await categoryFeedViewModel
+                                            .postLikeInComment(
+                                                commentId: commentData
+                                                    .childComment![i].commentId
+                                                    .toString(),
+                                                postId: commentData
+                                                    .childComment![i].postId!,isLiked: commentData
+                                            .childComment![i].isLikedByMe ??
+                                            false);
+                                        if (categoryFeedViewModel
+                                                .postLikeInCommentApiResponse
+                                                .status ==
+                                            Status.COMPLETE) {
+                                          postCommentApiCall(homeController);
+                                        }
+                                      },
+                                      isLiked: commentData
+                                              .childComment![i].isLikedByMe ??
+                                          false,
                                       userId:
-                                          commentData.childComment![i].userid!,
+                                          commentData.childComment![i].userId!,
                                       commentId: commentData
                                               .childComment?[i].commentId ??
                                           0,
@@ -194,8 +226,10 @@ class _CommentsState extends State<Comments> {
                                           ),
                                         );
                                       },
-                                      likeCount:
-                                          (widget.likeCount ?? 0).toString(),
+                                      likeCount: (commentData.childComment![i]
+                                                  .likesCount ??
+                                              0)
+                                          .toString(),
                                       replayCount: 0,
                                       time: postTimeCalculate(
                                         commentData.childComment?[i].createdOn,

@@ -10,8 +10,10 @@ import 'package:socialv/utils/adoro_text.dart';
 
 class LikeButton extends StatelessWidget {
   String likecounter;
+  bool isLiked;
 
-  LikeButton({Key? key, required this.likecounter}) : super(key: key);
+  LikeButton({Key? key, required this.likecounter, this.isLiked = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,17 @@ class LikeButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CommonImageScale(
-              img: IconsWidgets.heartImage,
-              scale: 25.w,
-              color: ColorUtils.black92,
-            ),
+            isLiked
+                ? Image.asset(
+                    IconsWidgets.heartFilledImage,
+                    scale: 1.w,
+                    color: Colors.red,
+                  )
+                : CommonImageScale(
+                    img: IconsWidgets.heartImage,
+                    scale: 25.w,
+                    color: ColorUtils.black92,
+                  ),
             SizeConfig.sW2,
             AdoroText('$likecounter', color: ColorUtils.black92),
           ],

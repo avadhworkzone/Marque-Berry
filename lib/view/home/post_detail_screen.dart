@@ -15,11 +15,10 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 
 class PostDetailScreen extends StatelessWidget {
-  PostDetailScreen({
-    Key? key,
-    required this.postId,
-  }) : super(key: key);
+  PostDetailScreen({Key? key, required this.postId, this.isFromListen = false})
+      : super(key: key);
   final String postId;
+  final bool isFromListen;
 
   final CreatePostViewModel viewModel = Get.find<CreatePostViewModel>();
   final HomeController homeController = Get.find<HomeController>();
@@ -48,7 +47,8 @@ class PostDetailScreen extends StatelessWidget {
           child: CommonAppBar(
             color: ColorUtils.transparent,
             title: 'Post',
-            onTap: () => Get.offAll(() => BottomBar()),
+            onTap: () =>
+                Get.offAll(() => BottomBar()),
           ),
         ),
         body: GetBuilder<CreatePostViewModel>(
@@ -73,7 +73,7 @@ class PostDetailScreen extends StatelessWidget {
                   isLiked = true;
                 }
               }
-              categoryFeedViewModel.setLikeUnlike(postId, isLiked);
+              categoryFeedViewModel.setLikeUnlike(int.parse(postId), isLiked);
             }
           },
           builder: (controller) {
@@ -93,35 +93,43 @@ class PostDetailScreen extends StatelessWidget {
               return Center(child: NoDataFound());
             }
             final postDetail = postDetailResModel.data!;
-            return PostComponents(
-              isInView: true,
-              userId: int.parse(postDetail.userId!),
-              contentType: postDetail.contentType ?? "image",
-              homeController: homeController,
-              postId: postDetail.id ?? 0,
-              categoryFeedViewModel: categoryFeedViewModel,
-              likeByMe: (postDetail.likedByPeople?.isNotEmpty ?? false) == true
-                  ? postDetail.likedByPeople!.indexWhere((element) =>
-                              element.id ==
-                              PreferenceUtils.getInt(
-                                  key: PreferenceUtils.userid)) >
-                          -1
-                      ? "You"
-                      : (postDetail.likedByPeople?[0].username ?? "")
-                  : (postDetail.likedByPeople?[0].username ?? ""),
-              likeProfile: postDetail.likedByPeople,
-              profileImage: postDetail.image ?? "",
-              userName: postDetail.username ?? "",
-              time: postTimeCalculate(
-                postDetail.createdOn,
-                'ago',
-              ),
-              contentImage: postDetail.contentUrl.toString(),
-              title: postDetail.content.toString(),
-              // title: (categoryIndex.id ?? 0)
-              //     .toString(),
-              likeCounter: (postDetail.likedByPeople?.length ?? 0).toString(),
-              commentCounter: (postDetail.comments ?? 0).toString(),
+            return SingleChildScrollView(
+              child: GetBuilder<CategoryFeedViewModel>(
+                  builder: (categoryFeedViewModel) {
+                return PostComponents(
+                  isInView: true,
+                  isPostDetailFromLink: true,
+                  userId: int.parse(postDetail.userId!),
+                  contentType: postDetail.contentType ?? "image",
+                  homeController: homeController,
+                  postId: postDetail.id ?? 0,
+                  categoryFeedViewModel: categoryFeedViewModel,
+                  likeByMe:
+                      (postDetail.likedByPeople?.isNotEmpty ?? false) == true
+                          ? postDetail.likedByPeople!.indexWhere((element) =>
+                                      element.id ==
+                                      PreferenceUtils.getInt(
+                                          key: PreferenceUtils.userid)) >
+                                  -1
+                              ? "You"
+                              : (postDetail.likedByPeople?[0].username ?? "")
+                          : (postDetail.likedByPeople?[0].username ?? ""),
+                  likeProfile: postDetail.likedByPeople,
+                  profileImage: postDetail.image ?? "",
+                  userName: postDetail.username ?? "",
+                  time: postTimeCalculate(
+                    postDetail.createdOn,
+                    'ago',
+                  ),
+                  contentImage: postDetail.contentUrl.toString(),
+                  title: postDetail.content.toString(),
+                  // title: (categoryIndex.id ?? 0)
+                  //     .toString(),
+                  likeCounter:
+                      (postDetail.likedByPeople?.length ?? 0).toString(),
+                  commentCounter: (postDetail.comments ?? 0).toString(),
+                );
+              }),
             );
           },
         ),

@@ -14,3 +14,19 @@ class LikePostRepo extends BaseService {
     return LikePostResModel.fromJson(response);
   }
 }
+
+/// LIKE COMMENT POST
+class LikeCommentRepo extends BaseService {
+  Future<LikePostResModel> likeComment(
+      {required String commentId,
+      required String postId,
+      bool isLiked = false}) async {
+    Map<String, dynamic> body = {"comment_id": commentId, "post_id": postId};
+    var response = await ApiService().getResponse(
+      apiType: APIType.aPost,
+      body: body,
+      url: '$baseURL${isLiked ? deleteLikesInComments : postLikesInComments}',
+    );
+    return LikePostResModel.fromJson(response);
+  }
+}

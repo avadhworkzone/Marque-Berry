@@ -28,36 +28,36 @@ class CommentList extends StatefulWidget {
   String time;
   String name;
   String message;
-
   String likeCount;
   int replayCount = 0;
   int commentId = 0;
   int userId = 0;
   VoidCallback replayMessage;
-
+  VoidCallback likeOnTap;
   CategoryFeedViewModel categoryFeedViewModel;
   HomeController homeController;
-
   int postId;
+  bool isLiked;
 
-  // VoidCallback updateCallBack;
-
-  CommentList({
-    Key? key,
-    required this.img,
-    required this.postId,
-    required this.commentId,
-    required this.name,
-    required this.time,
-    required this.message,
-    required this.likeCount,
-    required this.userId,
-    required this.replayCount,
-    required this.replayMessage,
-    required this.categoryFeedViewModel,
-    required this.homeController,
-    // required this.updateCallBack,
-  }) : super(key: key);
+  CommentList(
+      {Key? key,
+      required this.img,
+      required this.postId,
+      required this.commentId,
+      required this.name,
+      required this.time,
+      required this.message,
+      required this.likeCount,
+      required this.userId,
+      required this.replayCount,
+      required this.replayMessage,
+      required this.categoryFeedViewModel,
+      required this.homeController,
+      required this.isLiked,
+      required this.likeOnTap
+      // required this.updateCallBack,
+      })
+      : super(key: key);
 
   @override
   State<CommentList> createState() => _CommentListState();
@@ -129,7 +129,10 @@ class _CommentListState extends State<CommentList> {
           Row(
             children: [
               SizeConfig.sW2,
-              LikeButton(likecounter: widget.likeCount),
+              InkWell(
+                  onTap: widget.likeOnTap,
+                  child: LikeButton(
+                      likecounter: widget.likeCount, isLiked: widget.isLiked)),
               SizeConfig.sW2,
               InkWell(
                 onTap: () => widget.replayMessage(),

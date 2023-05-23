@@ -11,6 +11,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/routes/route_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:socialv/view/drawer/setting.dart';
+import 'package:socialv/view/home/post_detail_screen.dart';
 import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/view/drawer/template.dart';
 import 'package:socialv/routes/route_constant.dart';
@@ -93,26 +94,38 @@ class _MyAppState extends State<MyApp> {
               navigatorKey: Get.key,
               debugShowCheckedModeBanner: false,
               smartManagement: SmartManagement.full,
-              home: GetBuilder<ConnectivityViewModel>(
-                init: ConnectivityViewModel(),
-                builder: (connectivityViewModel) {
-                  if (connectivityViewModel.isOnline != null) {
-                    if (connectivityViewModel.isOnline!) {
-                      // return InterestScreen();
-                      return SplashScreen();
-                    } else {
-                      return const NoInterNetConnected();
-                    }
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-              ),
+              onGenerateRoute: generateRoute,
+              initialRoute: '/',
             );
           },
         );
       },
     );
+  }
+
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case '/':
+        return MaterialPageRoute(builder: (_) => SplashScreen());
+      default:
+        return MaterialPageRoute(
+          builder: (_) => GetBuilder<ConnectivityViewModel>(
+            init: ConnectivityViewModel(),
+            builder: (connectivityViewModel) {
+              if (connectivityViewModel.isOnline != null) {
+                if (connectivityViewModel.isOnline!) {
+                  // return InterestScreen();
+                  return SplashScreen();
+                } else {
+                  return const NoInterNetConnected();
+                }
+              } else {
+                return const SizedBox();
+              }
+            },
+          ),
+        );
+    }
   }
 
   AuthViewModel authViewModel = Get.put(AuthViewModel());
@@ -138,6 +151,7 @@ class _MyAppState extends State<MyApp> {
   BottomBarController bottomController = Get.put(BottomBarController());
   SharePostController sharePostController = Get.put(SharePostController());
   TagAPeopleController tagAPeopleController = Get.put(TagAPeopleController());
+
   // MyTemplateController myTemplateController = Get.put(MyTemplateController());
 
   DownloadTemplateController downloadTemplateController =

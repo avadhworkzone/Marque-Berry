@@ -27,6 +27,11 @@ class CategoryFeedViewModel extends GetxController {
     update();
   }
 
+  void initCall() {
+    _pageNumberIndex = 0;
+    _isPageLoading = false;
+  }
+
   bool _isPageLoading = false;
 
   bool get isPageLoading => _isPageLoading;
@@ -49,6 +54,7 @@ class CategoryFeedViewModel extends GetxController {
 
   ApiResponse reportPostApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getLikeByUserApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse postLikeInCommentApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== CATEGORY VIEW MODEL ================================
   Map<int, bool> likeUnlink = {};
@@ -268,6 +274,24 @@ class CategoryFeedViewModel extends GetxController {
     } catch (e) {
       logs('getLikeByUserApiResponse ERROR :=> $e');
       getLikeByUserApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ===================== POST LIKE IN COMMENT ========================
+
+  Future<void> postLikeInComment(
+      {required String commentId, required String postId, bool isLiked = false}) async {
+    logs('loading..');
+    postLikeInCommentApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await LikeCommentRepo()
+          .likeComment(commentId: commentId, postId: postId,isLiked: isLiked);
+      postLikeInCommentApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('postLikeInCommentApiResponse ERROR :=> $e');
+      postLikeInCommentApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }

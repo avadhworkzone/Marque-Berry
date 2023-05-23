@@ -31,6 +31,145 @@ class GetAllCommentResModel {
 }
 
 class Data {
+  Data({
+    this.userId,
+    this.username,
+    this.fullName,
+    this.image,
+    this.commentId,
+    this.comment,
+    this.parentId,
+    this.postId,
+    this.createdOn,
+    this.likesCount,
+    this.isLikedByMe,
+    this.replyCount,
+    this.childComment,
+  });
+
+  Data.fromJson(dynamic json) {
+    userId = json['user_id'];
+    username = json['username'];
+    fullName = json['full_name'];
+    image = json['image'];
+    commentId = json['comment_id'];
+    comment = json['comment'];
+    parentId = json['parent_id'];
+    postId = json['post_id'];
+    createdOn = json['created_on'];
+    likesCount = json['likes_count'];
+    isLikedByMe = (json['is_liked_by_me'] is String)
+        ? json['is_liked_by_me'] == 'true'
+            ? true
+            : false
+        : (json['is_liked_by_me'] ?? false);
+    replyCount = json['reply_count'];
+    if (json['child_comment'] != null) {
+      childComment = [];
+      json['child_comment'].forEach((v) {
+        childComment?.add(ChildComment.fromJson(v));
+      });
+    }
+  }
+
+  int? userId;
+  String? username;
+  String? fullName;
+  dynamic image;
+  int? commentId;
+  String? comment;
+  String? parentId;
+  String? postId;
+  String? createdOn;
+  int? likesCount;
+  bool? isLikedByMe;
+  int? replyCount;
+  List<ChildComment>? childComment;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['user_id'] = userId;
+    map['username'] = username;
+    map['full_name'] = fullName;
+    map['image'] = image;
+    map['comment_id'] = commentId;
+    map['comment'] = comment;
+    map['parent_id'] = parentId;
+    map['post_id'] = postId;
+    map['created_on'] = createdOn;
+    map['likes_count'] = likesCount;
+    map['is_liked_by_me'] = isLikedByMe;
+    map['reply_count'] = replyCount;
+    if (childComment != null) {
+      map['child_comment'] = childComment?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+class ChildComment {
+  ChildComment({
+    this.userId,
+    this.username,
+    this.fullName,
+    this.image,
+    this.commentId,
+    this.comment,
+    this.parentId,
+    this.postId,
+    this.createdOn,
+    this.likesCount,
+    this.isLikedByMe,
+  });
+
+  ChildComment.fromJson(dynamic json) {
+    userId = json['user_id'];
+    username = json['username'];
+    fullName = json['full_name'];
+    image = json['image'];
+    commentId = json['comment_id'];
+    comment = json['comment'];
+    parentId = json['parent_id'];
+    postId = json['post_id'];
+    createdOn = json['created_on'];
+    likesCount = json['likes_count'];
+    isLikedByMe = json['is_liked_by_me'] is String
+        ? json['is_liked_by_me'] == 'false'
+            ? false
+            : true
+        : (json['is_liked_by_me'] ?? false);
+  }
+
+  int? userId;
+  String? username;
+  String? fullName;
+  String? image;
+  int? commentId;
+  String? comment;
+  String? parentId;
+  String? postId;
+  String? createdOn;
+  int? likesCount;
+  bool? isLikedByMe;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['user_id'] = userId;
+    map['username'] = username;
+    map['full_name'] = fullName;
+    map['image'] = image;
+    map['comment_id'] = commentId;
+    map['comment'] = comment;
+    map['parent_id'] = parentId;
+    map['post_id'] = postId;
+    map['created_on'] = createdOn;
+    map['likes_count'] = likesCount;
+    map['is_liked_by_me'] = isLikedByMe;
+    return map;
+  }
+}
+
+/*class Data {
   String? username;
   int? userid;
   String? fullName;
@@ -142,4 +281,4 @@ class ChildComment {
     data['created_on'] = this.createdOn;
     return data;
   }
-}
+}*/

@@ -42,6 +42,7 @@ class ValidateOTPData {
   String? ifscCode;
   String? isCategorySelected;
   String? createdOn;
+  String? deviceToken;
 
   ValidateOTPData({
     this.id,
@@ -58,6 +59,7 @@ class ValidateOTPData {
     this.ifscCode,
     this.isCategorySelected,
     this.createdOn,
+    this.deviceToken
   });
 
   ValidateOTPData.fromJson(Map<String, dynamic> json) {
@@ -75,6 +77,7 @@ class ValidateOTPData {
     ifscCode = json['ifscCode'] ?? "";
     isCategorySelected = json['isCategorySelected'] ?? "";
     createdOn = json['created_on'] ?? "";
+    deviceToken = json['device_token'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -93,6 +96,7 @@ class ValidateOTPData {
     data['ifscCode'] = this.ifscCode;
     data['isCategorySelected'] = this.isCategorySelected;
     data['created_on'] = this.createdOn;
+    data['device_token'] = this.deviceToken;
     return data;
   }
 }

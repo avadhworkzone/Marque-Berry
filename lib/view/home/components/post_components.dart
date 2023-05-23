@@ -52,25 +52,27 @@ class PostComponents extends StatelessWidget {
   List<LikedByPeople>? likeProfile;
   HomeController homeController;
   CategoryFeedViewModel categoryFeedViewModel;
+  bool isPostDetailFromLink;
 
-  PostComponents({
-    Key? key,
-    required this.isInView,
-    required this.homeController,
-    required this.contentType,
-    required this.postId,
-    required this.userId,
-    required this.userName,
-    required this.time,
-    required this.title,
-    required this.likeByMe,
-    required this.likeProfile,
-    required this.profileImage,
-    required this.contentImage,
-    required this.likeCounter,
-    required this.commentCounter,
-    required this.categoryFeedViewModel,
-  }) : super(key: key);
+  PostComponents(
+      {Key? key,
+      required this.isInView,
+      required this.homeController,
+      required this.contentType,
+      required this.postId,
+      required this.userId,
+      required this.userName,
+      required this.time,
+      required this.title,
+      required this.likeByMe,
+      required this.likeProfile,
+      required this.profileImage,
+      required this.contentImage,
+      required this.likeCounter,
+      required this.commentCounter,
+      required this.categoryFeedViewModel,
+      this.isPostDetailFromLink = false})
+      : super(key: key);
 
   LikePostReqModel likePostReqModel = LikePostReqModel();
   DisLikePostReqModel disLikePostReqModel = DisLikePostReqModel();
@@ -150,15 +152,17 @@ class PostComponents extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: IconButton(
-                onPressed: () {
-                  dotDialog(
-                    postIdArg: postId,
-                    categoryFeedViewModel: categoryFeedViewModel,
-                  );
-                },
-                icon: Icon(Icons.more_horiz, color: black92White),
-              ),
+              trailing: isPostDetailFromLink
+                  ? SizedBox()
+                  : IconButton(
+                      onPressed: () {
+                        dotDialog(
+                          postIdArg: postId,
+                          categoryFeedViewModel: categoryFeedViewModel,
+                        );
+                      },
+                      icon: Icon(Icons.more_horiz, color: black92White),
+                    ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -499,9 +503,14 @@ class PostComponents extends StatelessWidget {
                             .deleteFollowRequest(deleteFollowReqModel);
 
                         if (followFollowingViewModel
-                                .sendFollowRequestApiResponse.status ==
+                                .deleteFollowRequestApiResponse.status ==
                             Status.COMPLETE) {
+                          Get.back();
                           categoryFeedViewModel.setFollowData(userId, false);
+                          categoryFeedViewModel.pageNumberIndex = 0;
+                          categoryFeedViewModel.categoryTrending(
+                            homeController.tabName,
+                          );
                         }
                       } else {
                         await followFollowingViewModel

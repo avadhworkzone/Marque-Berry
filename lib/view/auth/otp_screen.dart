@@ -3,6 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:socialv/appService/notification_service.dart';
 
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
@@ -194,10 +195,17 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     message: "Login successfully",
                                     snackbarSuccess: true,
                                   );
-
+                                  final deviceToken = await NotificationService
+                                      .getDeviceToken();
+                                  await PreferenceUtils.setString(
+                                    key: PreferenceUtils.deviceToken,
+                                    value:
+                                        response.data?.deviceToken.toString() ??
+                                            deviceToken,
+                                  );
                                   await PreferenceUtils.setString(
                                     key: PreferenceUtils.token,
-                                    value: response.token.toString(),
+                                    value: response.token ?? "",
                                   );
 
                                   await PreferenceUtils.setString(

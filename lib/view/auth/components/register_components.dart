@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/custom_btn.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
@@ -88,6 +89,7 @@ class RegisterComponents extends StatelessWidget {
                   registerReqModel.username = username.text;
                   registerReqModel.mobileNo = registerContact.text;
                   registerReqModel.fullName = fullNameController.text;
+                  registerReqModel.deviceToken = await NotificationService.getDeviceToken();
                   await authViewModel.register(registerReqModel);
 
                   if (authViewModel.registerApiResponse.status ==

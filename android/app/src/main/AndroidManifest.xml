@@ -9,6 +9,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:label="Adoro"
+        android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
 
         <activity
@@ -25,6 +26,15 @@
                 android:name="flutter_deeplinking_enabled"
                 android:value="true" />
 
+
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
             <!-- Deep linking -->
             <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
             <intent-filter android:autoVerify="true">
@@ -33,13 +43,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" android:host="socialv.page.link" />
                 <data android:scheme="https" />
-            </intent-filter>
-            <meta-data
-                android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 

@@ -28,7 +28,7 @@ class DynamicLink {
       uriPrefix: uriPrefix,
 
       ///ADD YOUR FIREBASE LINK URL....
-      link: Uri.parse("$uriPrefix/refer?djId=$postId"),
+      link: Uri.parse("$uriPrefix/post?postId=$postId"),
 
       ///ADD YOUR DOMAIN URL...
       androidParameters: AndroidParameters(
@@ -103,7 +103,7 @@ class DynamicLink {
               .toString()
               .substring(deepLink.toString().indexOf('=') + 1);
           print('POST ID ==>$postId');
-          Get.to(()=>PostDetailScreen(postId: postId,));
+          Get.to(()=>PostDetailScreen(postId: postId,isFromListen: true,));
         }
       } else {
         print('CONTINUE WITHOUT DEEP LINK.............');

@@ -24,6 +24,8 @@ abstract class BaseService {
   final String reportPostURL = 'ReportPost';
   final String createPostURL = 'createPost';
   final String getPostById = 'getPostById?post_id=';
+  final String postLikesInComments = 'postLikesInComments';
+  final String deleteLikesInComments = 'deleteLikesInComments';
 
   /// EDIT PROFILE
   final String getUserDetails = 'getUserDetails?userId=';
