@@ -8,6 +8,7 @@ import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/bottomBar/bottombar.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/view/home/home.dart';
@@ -15,10 +16,11 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 
 class PostDetailScreen extends StatelessWidget {
-  PostDetailScreen({Key? key, required this.postId, this.isFromListen = false})
+  PostDetailScreen(
+      {Key? key, required this.postId, this.isFromBackScreen = false})
       : super(key: key);
   final String postId;
-  final bool isFromListen;
+  final bool isFromBackScreen;
 
   final CreatePostViewModel viewModel = Get.find<CreatePostViewModel>();
   final HomeController homeController = Get.find<HomeController>();
@@ -37,7 +39,11 @@ class PostDetailScreen extends StatelessWidget {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     return WillPopScope(
       onWillPop: () {
-        Get.offAll(() => BottomBar());
+        if (isFromBackScreen) {
+          Get.back();
+        } else {
+          Get.offAll(() => BottomBar());
+        }
         return Future.value(false);
       },
       child: Scaffold(
@@ -46,9 +52,8 @@ class PostDetailScreen extends StatelessWidget {
           preferredSize: Size.fromHeight(15.w),
           child: CommonAppBar(
             color: ColorUtils.transparent,
-            title: 'Post',
-            onTap: () =>
-                Get.offAll(() => BottomBar()),
+            title: VariableUtils.appName,
+            onTap: () => isFromBackScreen?Get.back():Get.offAll(() => BottomBar()),
           ),
         ),
         body: GetBuilder<CreatePostViewModel>(

@@ -18,6 +18,7 @@ class VariableUtils {
   ///
   static const noInternetText = "No internet connection";
   static const noInternetDescText = "Please check your internet \nconnection";
+  static const send="Send";
 
   ///  VIREN VAR ///
   ///DRAWER

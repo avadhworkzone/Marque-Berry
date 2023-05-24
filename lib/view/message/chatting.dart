@@ -7,17 +7,23 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:socialv/appService/dynamic_link.dart';
+import 'package:socialv/appService/notification_service.dart';
+import 'package:socialv/model/apiModel/responseModel/notification_chating_model.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/view/home/components/video_components.dart';
+import 'package:socialv/view/home/post_detail_screen.dart';
 
 import '../profile/profile.dart';
 
@@ -27,25 +33,28 @@ class ChattingScreen extends StatefulWidget {
 
   String senderName;
   String receiverName;
+  String receiverFcmToken;
 
   String senderImage;
   String receiverImage;
 
-  ChattingScreen({
-    Key? key,
-    required this.senderId,
-    required this.receiverId,
-    required this.senderName,
-    required this.receiverName,
-    required this.senderImage,
-    required this.receiverImage,
-  }) : super(key: key);
+  ChattingScreen(
+      {Key? key,
+      required this.senderId,
+      required this.receiverId,
+      required this.senderName,
+      required this.receiverName,
+      required this.senderImage,
+      required this.receiverImage,
+      required this.receiverFcmToken})
+      : super(key: key);
 
   @override
   State<ChattingScreen> createState() => _ChattingScreenState();
 }
 
-class _ChattingScreenState extends State<ChattingScreen> {
+class _ChattingScreenState extends State<ChattingScreen>
+    with WidgetsBindingObserver {
   var message = TextEditingController(text: "");
   ChattingController chattingController = Get.find<ChattingController>();
   RxBool isMsgSending = false.obs;
@@ -53,7 +62,28 @@ class _ChattingScreenState extends State<ChattingScreen> {
   @override
   void initState() {
     super.initState();
+    widget.senderImage =
+        PreferenceUtils.getString(key: PreferenceUtils.profileImage);
+    ConstUtils.selectedChattingUserId = widget.receiverId;
     seenOldMessage();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (
+        // state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      ConstUtils.selectedChattingUserId = "";
+    } else if (state == AppLifecycleState.resumed) {
+      ConstUtils.selectedChattingUserId = widget.receiverId;
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    ConstUtils.selectedChattingUserId = "";
+    super.dispose();
   }
 
   @override
@@ -95,7 +125,9 @@ class _ChattingScreenState extends State<ChattingScreen> {
                         'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
                       ),
                       errorBuilder: (context, obj, stack) => Image.asset(
-                        'assets/images/profile.png',
+                        // 'assets/images/profile.png',
+                        IconsWidgets.userImages,
+                        scale: 4,
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -398,6 +430,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
             .doc(chatId(widget.senderId, widget.receiverId))
             .set({"message": {}});
       }
+
       await FirebaseFirestore.instance
           .collection("Chat")
           .doc(chatId(widget.senderId, widget.receiverId))
@@ -418,7 +451,32 @@ class _ChattingScreenState extends State<ChattingScreen> {
           'senderId': widget.senderId,
           'receiverId': widget.receiverId,
         },
-      );
+      ).then((value) async {
+        final deviceToken = await NotificationService.getDeviceToken();
+        final messageData = NotificationChattingModel(
+          receiverFcmToken: deviceToken,
+          receiverId: widget.senderId,
+          receiverImage: widget.senderImage,
+          receiverName: widget.senderName,
+          senderId: widget.receiverId,
+          senderImage: widget.receiverImage,
+          senderName: widget.receiverName,
+        );
+
+        NotificationService.sendMessage(
+            receivedToken: widget.receiverFcmToken,
+            msg: messageType == MessageType.TEXT
+                ? message
+                : messageType == MessageType.IMAGE
+                    ? "📷 Photo"
+                    : '🎥 Video',
+            title: widget.senderName,
+            data: {
+              'data': messageData.toJson(),
+              'id': DateTime.now().millisecond.toString(),
+              'notification_type': NotificationType.Chatting.name
+            });
+      });
     } catch (e) {
       logs("no message:----> $e");
     } finally {
@@ -911,9 +969,26 @@ class LeftAlignTextWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Flexible(
-                            child: AdoroText(
-                              message,
-                              color: ColorUtils.black,
+                            child: InkWell(
+                              onTap: !message.contains(DynamicLink.uriPrefix)
+                                  ? null
+                                  : () {
+                                      final postId = message
+                                          .toString()
+                                          .substring(
+                                              message.toString().indexOf('=') +
+                                                  1);
+                                      Get.to(() => PostDetailScreen(
+                                            postId: postId,
+                                            isFromBackScreen: true,
+                                          ));
+                                    },
+                              child: AdoroText(
+                                message,
+                                color: message.contains(DynamicLink.uriPrefix)
+                                    ? ColorUtils.blueB9
+                                    : ColorUtils.black,
+                              ),
                             ),
                           ),
                           Padding(
@@ -984,7 +1059,28 @@ class RightAlignTextWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Flexible(
-                            child: AdoroText(message, color: ColorUtils.black),
+                            child: InkWell(
+                              onTap: !message.contains(DynamicLink.uriPrefix)
+                                  ? null
+                                  : () {
+                                      final postId = message
+                                          .toString()
+                                          .substring(
+                                              message.toString().indexOf('=') +
+                                                  1);
+                                      Get.to(
+                                        () => PostDetailScreen(
+                                            postId: postId,
+                                            isFromBackScreen: true),
+                                      );
+                                    },
+                              child: AdoroText(
+                                message,
+                                color: message.contains(DynamicLink.uriPrefix)
+                                    ? ColorUtils.blueB9
+                                    : ColorUtils.black,
+                              ),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10),

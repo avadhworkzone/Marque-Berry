@@ -33,6 +33,7 @@ class FollowingData {
   String? fullName;
   String? image;
   String? status;
+  String? deviceToken;
   DateTime? lastMsgTime;
 
   FollowingData(
@@ -41,7 +42,8 @@ class FollowingData {
       this.fullName,
       this.image,
       this.status,
-      this.lastMsgTime});
+      this.lastMsgTime,
+      this.deviceToken});
 
   FollowingData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -50,6 +52,7 @@ class FollowingData {
     image = json['image'];
     status = json['status'];
     lastMsgTime = json['last_message_time'];
+    deviceToken = json['device_token'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,7 +63,7 @@ class FollowingData {
     data['image'] = this.image;
     data['status'] = this.status;
     data['last_message_time'] = this.lastMsgTime;
-
+    data['device_token'] = this.deviceToken;
     return data;
   }
 }

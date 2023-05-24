@@ -6,9 +6,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:socialv/model/apiModel/responseModel/notification_chating_model.dart';
 import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/message/chatting.dart';
 
 ///---------------------------------------------------------------------------------------------------------------------------------
 List<String> notiIds = [];
@@ -87,7 +91,8 @@ class NotificationService {
     /// On notification click when app is open (local notification click)
     flutterLocalNotificationsPlugin.initialize(
         const InitializationSettings(
-            android: AndroidInitializationSettings('@drawable/notification_icon'),
+            android:
+                AndroidInitializationSettings('@drawable/notification_icon'),
             iOS: DarwinInitializationSettings()),
         onDidReceiveNotificationResponse: (notificationResponse) async {
       logs('FORE GROUND PAYLOAD :=>${notificationResponse.payload}');
@@ -104,10 +109,9 @@ class NotificationService {
       } else {
         notiIds.add(messageData['id']);
       }
-      /*routeScreenOnNotificationClick(
-          context: context,
-          data: messageData,
-        );*/
+      routeScreenOnNotificationClick(
+        data: messageData,
+      );
     });
   }
 
@@ -121,6 +125,18 @@ class NotificationService {
       /// If `onMessage` is triggered with a notification, construct our own
       /// local notification to show to users using the created channel.
       if (notification != null && android != null) {
+        logs('SHOW NOTI==>${jsonEncode(message.data)}');
+        if(message.data.containsKey('notification_type')){
+          if(message.data['notification_type']== NotificationType.Chatting.name){
+            final notificationData =
+            NotificationChattingModel.fromJson(jsonDecode(message.data['data']));
+            if(notificationData.receiverId==ConstUtils.selectedChattingUserId){
+              logs('SAME ID ------------------');
+              return;
+            }
+          }
+        }
+
         await flutterLocalNotificationsPlugin.show(notification.hashCode,
             notification.title, notification.body, platformChannelSpecifics,
             payload: jsonEncode(message.data));
@@ -137,10 +153,9 @@ class NotificationService {
         } else {
           notiIds.add(messageData['id']);
         }
-        /*routeScreenOnNotificationClick(
-          context: context,
+        routeScreenOnNotificationClick(
           data: messageData,
-        );*/
+        );
       }
     });
 
@@ -157,10 +172,9 @@ class NotificationService {
         } else {
           notiIds.add(messageData['id']);
         }
-        /*routeScreenOnNotificationClick(
-          context: context,
+        routeScreenOnNotificationClick(
           data: messageData,
-        );*/
+        );
       }
     });
   }
@@ -172,7 +186,6 @@ class NotificationService {
     ///FIREBASE INITIALIZATION
     await Firebase.initializeApp();
     print('Handling a background message ${message.messageId}');
-
   }
 
   /// --------------------------- SEND MANUALLY NOTIFICATIONS -------------------------- ///
@@ -203,6 +216,8 @@ class NotificationService {
         },
       );
 
+      logs('NOTIFICATION REQ MODEL =>$body');
+
       http.Response response = await http.post(
         Uri.parse('https://fcm.googleapis.com/fcm/send'),
         headers: <String, String>{
@@ -217,29 +232,24 @@ class NotificationService {
       logs("error push notification");
     }
   }
-/*
-  Future<void> routeScreenOnNotificationClick(
-      {required Map<String, dynamic> data,
-      required BuildContext context}) async {
+
+  static Future<void> routeScreenOnNotificationClick({
+    required Map<String, dynamic> data,
+  }) async {
     log('DATA :=>$data');
 
-    if (data['notification_type'] == 'chat') {
-      Order order = Order.fromJson(jsonDecode(data['order']));
-      ChatWith chatWith = ChatWith.fromJson(jsonDecode(data['chat_with_data']));
-      bool chatWithCustomer = data['chat_with'] == ChatWithEnum.Customer.name;
-
-      Get.to(() => ChatScreen(
-            receiver: chatWith,
-            order: order,
-            chatWithCustomer: chatWithCustomer,
-          ));
-    } else if (data['notification_type'] == 'assignOrder') {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      DeliveryBoy deliveryBoy = DeliveryBoy.fromJson(
-          jsonDecode(preferences.getString('delivery_boy')!));
-      Get.offAll(() => DashboardScreen(
-            deliveryBoy: deliveryBoy,
+    if (data['notification_type'] == NotificationType.Chatting.name) {
+      final notificationData =
+          NotificationChattingModel.fromJson(jsonDecode(data['data']));
+      Get.to(() => ChattingScreen(
+            senderId: notificationData.senderId!,
+            senderImage: notificationData.senderImage!,
+            senderName: notificationData.senderName!,
+            receiverId: notificationData.receiverId!,
+            receiverImage: notificationData.receiverImage!,
+            receiverName: notificationData.receiverName!,
+            receiverFcmToken: notificationData.receiverFcmToken!,
           ));
     }
-  }*/
+  }
 }

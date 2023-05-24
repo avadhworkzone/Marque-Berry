@@ -1,6 +1,8 @@
 /// API CALLING METHOD
 // ignore_for_file: constant_identifier_names
 
+enum NotificationType{Chatting}
+
 enum APIType { aPost, aGet, aDelete, aPut }
 
 /// API HEADER TYPE

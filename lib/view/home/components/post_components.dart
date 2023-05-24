@@ -2,6 +2,7 @@
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
@@ -32,6 +33,7 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
 import '../../../utils/variable_utils.dart';
+import 'widgets/share_post_bottom_sheet.dart';
 
 class PostComponents extends StatelessWidget {
   String likeCounter;
@@ -256,10 +258,16 @@ class PostComponents extends StatelessWidget {
                         ),
                       ),
                       SizeConfig.sW1AndHalf,
-                      CommonImageScale(
-                        scale: 25.w,
-                        color: black92White,
-                        img: IconsWidgets.sendImage,
+                      InkWell(
+                        onTap: () {
+                          sharePostBottomSheet(  postIdArg: postId,
+                            categoryFeedViewModel: categoryFeedViewModel,);
+                        },
+                        child: CommonImageScale(
+                          scale: 25.w,
+                          color: black92White,
+                          img: IconsWidgets.sendImage,
+                        ),
                       ),
                       Spacer(),
                       InkWell(
@@ -466,7 +474,11 @@ class PostComponents extends StatelessWidget {
                 bottomComponents(
                   image: IconsWidgets.shareImages,
                   text: 'Share via',
-                  onTap: () {},
+                  onTap: () async {
+                    final postLink = await DynamicLink.createDynamicLinkForUser(
+                        postId: postId.toString());
+                    Share.share(postLink);
+                  },
                 ),
                 SizeConfig.sH3,
                 bottomComponents(
@@ -580,6 +592,8 @@ class PostComponents extends StatelessWidget {
     );
   }
 }
+
+
 
 class LikeWidget extends StatelessWidget {
   const LikeWidget({

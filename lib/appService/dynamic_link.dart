@@ -103,7 +103,7 @@ class DynamicLink {
               .toString()
               .substring(deepLink.toString().indexOf('=') + 1);
           print('POST ID ==>$postId');
-          Get.to(()=>PostDetailScreen(postId: postId,isFromListen: true,));
+          Get.to(()=>PostDetailScreen(postId: postId));
         }
       } else {
         print('CONTINUE WITHOUT DEEP LINK.............');

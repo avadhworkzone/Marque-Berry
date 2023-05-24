@@ -85,13 +85,12 @@ class ConfirmBtn extends StatelessWidget {
           child: InkWell(
             onTap: () async {
               profileViewModel.isLoading = true;
-              await viewModel.deleteFollowRequest(DeleteFollowReqModel(
-                  id: userId.toString(), flag: 'delete'));
+              await viewModel.deleteFollowRequest(
+                  DeleteFollowReqModel(id: userId.toString(), flag: 'delete'));
               if (viewModel.deleteFollowRequestApiResponse.status ==
                   Status.COMPLETE) {
                 categoryFeedViewModel.setFollowData(userId, false);
-                await profileViewModel
-                    .getProfileDetail(userId.toString());
+                await profileViewModel.getProfileDetail(userId.toString());
               }
               profileViewModel.isLoading = false;
             },
@@ -165,8 +164,9 @@ class FollowingBtn extends StatelessWidget {
                         (PreferenceUtils.getInt(key: 'userid')).toString(),
                     senderImage: PreferenceUtils.getString(key: 'profile'),
                     receiverId: profileUser.id!.toString(),
-                    receiverName: profileUser.username!,
-                    receiverImage: profileUser.image!,
+                    receiverName: profileUser.username??"",
+                    receiverImage: profileUser.image??"",
+                    receiverFcmToken: profileUser.deviceToken??"",
                   ));
             },
             child: Container(
@@ -231,7 +231,8 @@ class RequestedBtn extends StatelessWidget {
         profileViewModel.isLoading = true;
         await viewModel.deleteFollowRequest(
             DeleteFollowReqModel(id: userId.toString(), flag: 'feed'));
-        if (viewModel.deleteFollowRequestApiResponse.status == Status.COMPLETE) {
+        if (viewModel.deleteFollowRequestApiResponse.status ==
+            Status.COMPLETE) {
           categoryFeedViewModel.setFollowData(userId, false);
           await profileViewModel.getProfileDetail(userId.toString());
         }

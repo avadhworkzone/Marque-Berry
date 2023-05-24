@@ -152,3 +152,9 @@ class CropImage {
     return File(croppedFile.path);
   }
 }
+
+
+/// ========================== CONST UTILS ========================== ///
+class ConstUtils{
+  static String selectedChattingUserId="";
+}

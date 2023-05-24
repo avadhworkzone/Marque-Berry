@@ -51,7 +51,8 @@ class EditProfile extends StatelessWidget {
       Get.find<EditProfileController>();
 
   getUserProfile() async {
-    await profileViewModel.getUserProfile(PreferenceUtils.getInt(key: PreferenceUtils.userid));
+    await profileViewModel
+        .getUserProfile(PreferenceUtils.getInt(key: PreferenceUtils.userid));
     if (profileViewModel.getUserProfileApiResponse.status == Status.COMPLETE) {
       final GetUserResDetail response =
           profileViewModel.getUserProfileApiResponse.data;
@@ -467,7 +468,12 @@ class EditProfile extends StatelessWidget {
                           profileViewModel
                                   .updateUserProfilePicApiResponse.status ==
                               Status.LOADING)
-                        Expanded(child: Center(child: Loader()))
+                        Expanded(
+                            child: Container(
+                                width: Get.width,
+                                height: Get.height,
+                                color: ColorUtils.black26,
+                                child: Center(child: Loader())))
                     ],
                   );
                 },

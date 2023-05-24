@@ -1,9 +1,10 @@
 class UserProfileResModel {
   UserProfileResModel({
-      this.status, 
-      this.message, 
-      this.data, 
-      this.myProfile,});
+    this.status,
+    this.message,
+    this.data,
+    this.myProfile,
+  });
 
   UserProfileResModel.fromJson(dynamic json) {
     status = json['status'];
@@ -16,6 +17,7 @@ class UserProfileResModel {
     }
     myProfile = json['my_profile'];
   }
+
   int? status;
   String? message;
   List<UserProfileData>? data;
@@ -31,22 +33,23 @@ class UserProfileResModel {
     map['my_profile'] = myProfile;
     return map;
   }
-
 }
 
 class UserProfileData {
-  UserProfileData({
-      this.id, 
-      this.username, 
-      this.fullName, 
-      this.image, 
-      this.coverPhoto, 
-      this.followersCount, 
-      this.followingCount, 
-      this.postsCount, 
-      this.posts, 
-      this.mention, 
-      this.tag,this.subTag});
+  UserProfileData(
+      {this.id,
+      this.username,
+      this.fullName,
+      this.image,
+      this.coverPhoto,
+      this.followersCount,
+      this.followingCount,
+      this.postsCount,
+      this.posts,
+      this.mention,
+      this.tag,
+      this.subTag,
+      this.deviceToken});
 
   UserProfileData.fromJson(dynamic json) {
     id = json['id'];
@@ -70,8 +73,10 @@ class UserProfileData {
     //   });
     // }
     tag = json['tag'];
-    subTag = json['sub_tag']??"";
+    subTag = json['sub_tag'] ?? "";
+    deviceToken = json['device_token'] ?? "";
   }
+
   int? id;
   String? username;
   String? fullName;
@@ -84,6 +89,7 @@ class UserProfileData {
   List<dynamic>? mention;
   String? tag;
   String? subTag;
+  String? deviceToken;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -103,25 +109,26 @@ class UserProfileData {
     }
     map['tag'] = tag;
     map['sub_tag'] = subTag;
+    map['device_token'] = deviceToken;
     return map;
   }
-
 }
 
 class Posts {
   Posts({
-      this.id, 
-      this.content, 
-      this.contentType, 
-      this.contentUrl, 
-      this.createdOn, 
-      this.userId, 
-      this.userUsername, 
-      this.userFullName, 
-      this.userImage, 
-      this.userCoverPhoto, 
-      this.likesCount, 
-      this.commentsCount,});
+    this.id,
+    this.content,
+    this.contentType,
+    this.contentUrl,
+    this.createdOn,
+    this.userId,
+    this.userUsername,
+    this.userFullName,
+    this.userImage,
+    this.userCoverPhoto,
+    this.likesCount,
+    this.commentsCount,
+  });
 
   Posts.fromJson(dynamic json) {
     id = json['id'];
@@ -137,6 +144,7 @@ class Posts {
     likesCount = json['likes_count'];
     commentsCount = json['comments_count'];
   }
+
   int? id;
   String? content;
   String? contentType;
@@ -166,5 +174,4 @@ class Posts {
     map['comments_count'] = commentsCount;
     return map;
   }
-
 }

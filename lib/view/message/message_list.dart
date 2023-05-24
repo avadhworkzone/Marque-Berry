@@ -23,7 +23,6 @@ import 'package:socialv/viewModel/follow_request_view_model.dart';
 import '../../commanWidget/common_image.dart';
 import '../../utils/assets/images_utils.dart';
 
-
 class MessageList extends StatelessWidget {
   MessageList({Key? key}) : super(key: key);
 
@@ -43,7 +42,7 @@ class MessageList extends StatelessWidget {
       body: GetBuilder<FollowFollowingViewModel>(
         initState: (_) async {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            followRequestViewModel.searchUserStr="";
+            followRequestViewModel.searchUserStr = "";
           });
           await followRequestViewModel.getFollowingList(
               (PreferenceUtils.getInt(key: 'userid')).toString());
@@ -121,7 +120,10 @@ class MessageList extends StatelessWidget {
                   users = tempUsersList;
                 }
 
-                return UserList(users: users,controller: followRequestViewModel,);
+                return UserList(
+                  users: users,
+                  controller: followRequestViewModel,
+                );
               });
         },
       ),
@@ -130,9 +132,10 @@ class MessageList extends StatelessWidget {
 }
 
 class UserList extends StatelessWidget {
-  const UserList({Key? key, required this.users, required this.controller}) : super(key: key);
+  const UserList({Key? key, required this.users, required this.controller})
+      : super(key: key);
   final List<FollowingData> users;
-  final  FollowFollowingViewModel controller;
+  final FollowFollowingViewModel controller;
 
   @override
   Widget build(BuildContext context) {
@@ -196,6 +199,7 @@ class UserList extends StatelessWidget {
                       FocusScope.of(context).unfocus();
                       Get.to(
                         () => ChattingScreen(
+                          receiverFcmToken: followData.deviceToken??"",
                           receiverName: followData.username ?? "",
                           receiverImage: followData.image ?? "",
                           senderName:
@@ -341,7 +345,7 @@ class UnSeenCountBox extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(2.w),
       child: AdoroText(
-        "$count",
+        count == 0 ? "" : "$count",
         fontSize: 8.sp,
         color: ColorUtils.white,
       ),
