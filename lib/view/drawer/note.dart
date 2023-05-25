@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/model/apiModel/responseModel/note_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/viewModel/auth_view_model.dart';
+import 'package:socialv/viewModel/drawer_viewmodel.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
 import '../../utils/variable_utils.dart';
@@ -16,100 +21,91 @@ class Note extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  ConnectivityViewModel connectivityViewModel =
-      Get.find<ConnectivityViewModel>();
+  final DrawerVideModel viewModel = Get.find<DrawerVideModel>();
 
   @override
   Widget build(BuildContext context) {
-    return _bulidBody();
+    return _buildBody(context);
   }
 
-  GetBuilder<ConnectivityViewModel> _bulidBody() {
-    return GetBuilder<ConnectivityViewModel>(
-      init: ConnectivityViewModel(),
-      initState: (_) {
-        connectivityViewModel.startMonitoring();
-      },
-      builder: (connectivityViewModel) {
-        if (connectivityViewModel.isOnline != null) {
-          if (connectivityViewModel.isOnline!) {
-            return Scaffold(
-              appBar: PreferredSize(
-                preferredSize: Size.fromHeight(16.w),
-                child: CommonAppBar(
-                    title: VariableUtils.note, onTap: () => Get.back()),
-              ),
-              body: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 2.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+  Widget _buildBody(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(16.w),
+        child: CommonAppBar(
+            title: VariableUtils.note,
+            onTap: () => Get.back(),
+            color: Theme.of(context).cardColor),
+      ),
+      body: GetBuilder<DrawerVideModel>(initState: (_) {
+        viewModel.getNote();
+      }, builder: (con) {
+        if (con.getNoteApiResponse.status == Status.LOADING ||
+            con.getNoteApiResponse.status == Status.INITIAL) {
+          return Center(child: Loader());
+        } else if (con.getNoteApiResponse.status == Status.ERROR) {
+          return Center(child: SomethingWentWrong());
+        }
+        final NoteResModel noteResModel = con.getNoteApiResponse.data;
+        if (noteResModel.status != 200) {
+          return Center(
+            child: AdoroText(VariableUtils.noDataFound),
+          );
+        }
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                padding: EdgeInsets.symmetric(vertical: 5.sp),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 10.w,
-                          child: AdoroText(
-                            "•",
-                            textAlign: TextAlign.center,
-                            fontSize: 20.sp,
-                            color: ColorUtils.black92,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 2.w),
-                            child: AdoroText(
-                              'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-                              color: ColorUtils.black92,
-                              fontSize: 11.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ), // SizeConfig.sH3,
                     Container(
-                      width: 85.w,
+                      width: 10.w,
+                      child: AdoroText(
+                        "•",
+                        textAlign: TextAlign.center,
+                        fontSize: 20.sp,
+                        color: ColorUtils.black92,
+                      ),
+                    ),
+                    Expanded(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 2.w,
-                          vertical: 3.w,
-                        ),
-                        child: Container(
-                          height: 22.h,
-                          width: 70.w,
-                          // color: ColorUtils.note,
-
-                          child: InkWell(
-                              onTap: () {
-                                launchUrl(
-                                  Uri.parse(
-                                      'https://www.youtube.com/watch?v=4xl9KfUg8Lc'),
-                                );
-                              },
-                              child: Image(
-                                image: NetworkImage(
-                                    'https://www.bollywoodhungama.com/wp-content/uploads/2022/11/Pathaan-5.jpg'),
-                                fit: BoxFit.fill,
-                              )
-                              // Image.asset(
-                              //   'assets/images/playmusic.png',
-                              //   scale: 0.5.w,
-                              // ),
-                              ),
+                        padding: EdgeInsets.only(left: 2.w),
+                        child: AdoroText(
+                          noteResModel.data!.note ?? "'N/A",
+                          color: ColorUtils.black92,
+                          fontSize: 11.sp,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              ),
-            );
-          } else {
-            return const NoInterNetConnected();
-          }
-        } else {
-          return const SizedBox();
-        }
-      },
+              ), // SizeConfig.sH3,
+              Padding(
+                padding:  EdgeInsets.symmetric(vertical: 10.sp),
+                child: Container(
+                  width: 80.w,
+                  height: 50.w,
+                  child: InkWell(
+                      onTap: () {
+                        launchUrl(
+                          Uri.parse(noteResModel.data?.videoUrl ?? ""),
+                        );
+                      },
+                      child: Image(
+                        image: NetworkImage(
+                            'https://www.bollywoodhungama.com/wp-content/uploads/2022/11/Pathaan-5.jpg',),
+                        fit: BoxFit.fill,
+                      )),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }

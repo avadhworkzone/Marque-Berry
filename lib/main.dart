@@ -40,6 +40,8 @@ import 'package:socialv/viewModel/follow_request_view_model.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
 
+import 'viewModel/drawer_viewmodel.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -168,6 +170,8 @@ class _MyAppState extends State<MyApp> {
 
   EditProfileController editProfileController =
       Get.put(EditProfileController());
+  DrawerVideModel drawerVideModel =
+      Get.put(DrawerVideModel());
 }
 
 class AppTheme {
@@ -175,15 +179,17 @@ class AppTheme {
     fontFamily: 'Poppins',
     cardColor: ColorUtils.greyE5,
     scaffoldBackgroundColor: ColorUtils.white,
+
     canvasColor: Colors.grey[200],
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
+      caption: TextStyle(color: ColorUtils.grey),
     ),
     colorScheme: const ColorScheme.light(
-      primary: ColorUtils.white,
-      onPrimary: ColorUtils.white,
-      secondary: ColorUtils.white,
-    ),
+        primary: ColorUtils.white,
+        onPrimary: ColorUtils.white,
+        secondary: ColorUtils.white,
+        background: ColorUtils.lightGreyFA),
     iconTheme: const IconThemeData(color: ColorUtils.black),
     hintColor: ColorUtils.black,
     textTheme: TextTheme(
@@ -208,16 +214,18 @@ class AppTheme {
 
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
+      caption: TextStyle(color: ColorUtils.white),
+
     ),
     // appBarTheme: const AppBarTheme(
     //   brightness: Brightness.light,
     //   iconTheme: IconThemeData(color: ColorUtils.black),
     // ),
     colorScheme: const ColorScheme.light(
-      primary: ColorUtils.white,
-      onPrimary: ColorUtils.white,
-      secondary: ColorUtils.white,
-    ),
+        primary: ColorUtils.white,
+        onPrimary: ColorUtils.white,
+        secondary: ColorUtils.white,
+        background: ColorUtils.darkBlue3A,),
     iconTheme: const IconThemeData(color: ColorUtils.black),
     hintColor: ColorUtils.black,
     textTheme: const TextTheme(

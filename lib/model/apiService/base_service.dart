@@ -27,6 +27,10 @@ abstract class BaseService {
   final String postLikesInComments = 'postLikesInComments';
   final String deleteLikesInComments = 'deleteLikesInComments';
 
+  /// DRAWER
+  final String noteFromAdoro = 'noteFromAdoro';
+  final String support = 'support';
+
   /// EDIT PROFILE
   final String getUserDetails = 'getUserDetails?userId=';
   final String getProfileDetails = 'getProfileById?userId=';

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/user_category_req_model.dart';
+import 'package:socialv/model/repo/get_note_repo.dart';
 import 'package:socialv/model/repo/meme_category_repo.dart';
 import 'package:socialv/model/repo/user_category_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -17,6 +18,7 @@ class AuthViewModel extends GetxController {
   ApiResponse validateOTPApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse memeCategoryApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse userCategoryApiResponse = ApiResponse.initial('INITIAL');
+
 
   /// ======================== LOGIN VIEW MODEL ================================
 
@@ -93,4 +95,6 @@ class AuthViewModel extends GetxController {
     }
     update();
   }
+
+
 }

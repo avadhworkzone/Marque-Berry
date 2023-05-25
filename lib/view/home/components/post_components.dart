@@ -95,7 +95,7 @@ class PostComponents extends StatelessWidget {
           borderRadius: BorderRadius.circular(1.5.w),
           color: whiteBlack2E,
           boxShadow: [
-            BoxShadow(blurRadius: 5, color: Colors.grey.shade300),
+            BoxShadow(blurRadius: 5,color: Theme.of(context).colorScheme.background),
           ],
         ),
         child: Column(
