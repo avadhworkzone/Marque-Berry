@@ -10,7 +10,7 @@ import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 
 class FollowFollowingViewModel extends GetxController {
-  String _searchUserStr="";
+  String _searchUserStr = "";
 
   String get searchUserStr => _searchUserStr;
 
@@ -26,6 +26,7 @@ class FollowFollowingViewModel extends GetxController {
   ApiResponse sendFollowRequestApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse deleteFollowRequestApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse acceptFollowRequestApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse checkFollowApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== GET FOLLOWING USER VIEW MODEL ================================
 
@@ -121,6 +122,22 @@ class FollowFollowingViewModel extends GetxController {
     } catch (e) {
       logs('acceptFollowRequestApiResponse ERROR :=> $e');
       acceptFollowRequestApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== CHECK FOLLOW ===================================
+
+  Future<void> checkFollow(String userId) async {
+    logs('loading..');
+    checkFollowApiResponse = ApiResponse.loading('LOADING');
+    // update();
+    try {
+      final response = await CheckFollowUserRepo().checkFollowUser(userId);
+      checkFollowApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('checkFollowApiResponse ERROR :=> $e');
+      checkFollowApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }

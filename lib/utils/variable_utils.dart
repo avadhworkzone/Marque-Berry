@@ -129,7 +129,7 @@ class VariableUtils {
   static const verify = "Verify";
 
   /// Notification
-  static const SeeAllRequests = "See all requests (1)";
+  static const SeeAllRequests = "See all requests";
   static const ritiKraj = "ritikraj2022 ";
   static const requestedTo = "requested to ";
   static const followYou = "follow you · 2hrs";

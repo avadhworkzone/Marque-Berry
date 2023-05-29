@@ -22,6 +22,8 @@ import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
+import 'search_user.dart';
+
 class Home extends StatefulWidget {
   Home({Key? key, required this.scaffoldKey}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -77,11 +79,16 @@ class _HomeState extends State<Home> {
           img: IconsWidgets.adoroTextImages,
         ),
         actions: [
-          CommonImageHeightWidth(
-            img: IconsWidgets.searchImage,
-            width: 7.w,
-            height: 7.w,
-            color: blackWhite,
+          GestureDetector(
+            onTap: () {
+              Get.to(() => SearchUser());
+            },
+            child: CommonImageHeightWidth(
+              img: IconsWidgets.searchImage,
+              width: 7.w,
+              height: 7.w,
+              color: blackWhite,
+            ),
           ),
           GestureDetector(
             onTap: () => Get.to(
@@ -102,7 +109,7 @@ class _HomeState extends State<Home> {
       body: GetBuilder<HomeController>(
         initState: (_) {
           if (PreferenceUtils.getCategory().isNotEmpty) {
-            categoryDataList =
+            selectedCategoryDataList =
                 (jsonDecode(PreferenceUtils.getCategory()) as List)
                     .map((e) => Category.fromJson(e))
                     .toList();
@@ -119,7 +126,7 @@ class _HomeState extends State<Home> {
           return Column(
             children: [
               TabBarComponents(
-                categoryDataList: categoryDataList,
+                categoryDataList: selectedCategoryDataList,
                 homeController: homeController,
                 categoryFeedViewModel: categoryFeedViewModel,
               ),

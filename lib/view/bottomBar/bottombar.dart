@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_drawer.dart';
+import 'package:socialv/controllers/intrest_controller.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
 import '../drawer/campaign_screen.dart';
 import '../sharePost/share_post.dart';
@@ -25,11 +27,14 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
   late List pageRoute;
+  AuthViewModel authViewModel = Get.find<AuthViewModel>();
+
 
   // List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
 
   @override
   void initState() {
+    getCategories();
     pageRoute = [
       Home(scaffoldKey: _scaffold),
       SharePost(),
@@ -41,6 +46,12 @@ class _BottomBarState extends State<BottomBar> {
     ];
     super.initState();
   }
+
+  void getCategories(){
+    authViewModel.memeCategory();
+  }
+
+
 
   String bottomPath = "assets/bottombar/";
 

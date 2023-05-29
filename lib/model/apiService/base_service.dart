@@ -30,6 +30,7 @@ abstract class BaseService {
   /// DRAWER
   final String noteFromAdoro = 'noteFromAdoro';
   final String support = 'support';
+  final String getNotification = 'getNotification';
 
   /// EDIT PROFILE
   final String getUserDetails = 'getUserDetails?userId=';
@@ -43,6 +44,7 @@ abstract class BaseService {
   final String deleteCommentURL = 'deleteComment';
   final String getAllCommentURL = 'getAllcomments';
   final String updateCommentURL = 'updateComment';
+  final String searchUsers = 'search?content=';
 
   /// CAMPAIGN AND CONTEST
   final String getAllCampaignAndContestAppURL = 'getAllcampaignAndContestApp';
@@ -63,5 +65,5 @@ abstract class BaseService {
   final String acceptFollowRequestURL = 'acceptFollowRequest';
   final String deleteFollowRequestURL = 'deleteFollowRequest';
   final String getPendingRequestListURL = 'getpendingRequestList';
-
+  final String checkUserFollowedByMe = 'checkUserFollowedByMe?user_id=';
 }

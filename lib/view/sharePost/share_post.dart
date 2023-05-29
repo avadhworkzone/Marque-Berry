@@ -1,9 +1,11 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:socialv/utils/const_utils.dart';
@@ -14,6 +16,7 @@ import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
@@ -39,11 +42,14 @@ class SharePost extends StatefulWidget {
 class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   String categoryId = '';
   String categoryName = '';
+  List<Category> categoryDataList = [];
 
   final description = TextEditingController();
   SharePostController sharePostController = Get.find<SharePostController>();
 
   final bottomBarController = Get.find<BottomBarController>();
+  AuthViewModel authViewModel = Get.find<AuthViewModel>();
+
   CreatePostReqModel createPostReqModel = CreatePostReqModel();
   CreatePostViewModel createPostViewModel = Get.find<CreatePostViewModel>();
 
@@ -53,6 +59,29 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
       Get.find<CategoryFeedViewModel>();
 
   TagAPeopleController tagAPeopleController = Get.find<TagAPeopleController>();
+
+  @override
+  void initState() {
+    getCategory();
+    super.initState();
+  }
+
+  void getCategory(){
+    print('categoryDataList=>$categoryDataList');
+    categoryDataList = selectedCategoryDataList;
+    print('selectedCategoryDataList=>$selectedCategoryDataList');
+    if (authViewModel.memeCategoryApiResponse.status == Status.COMPLETE) {
+      MemeCategoryResModel memeCategoryResModel =
+          authViewModel.memeCategoryApiResponse.data;
+      if (memeCategoryResModel.status == 200) {
+        categoryDataList = memeCategoryResModel.data!
+            .map((e) => Category(id: e.id.toString(), name: e.title!))
+            .toList();
+      }
+    }
+
+    logs('categoryDataList======>${categoryDataList.map((e) =>jsonEncode( e.toJson())).toList()}');
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -89,7 +89,9 @@ class RegisterComponents extends StatelessWidget {
                   registerReqModel.username = username.text;
                   registerReqModel.mobileNo = registerContact.text;
                   registerReqModel.fullName = fullNameController.text;
-                  registerReqModel.deviceToken = await NotificationService.getDeviceToken();
+                  registerReqModel.deviceToken =
+                      await NotificationService.getDeviceToken();
+                  registerReqModel.referId = "";
                   await authViewModel.register(registerReqModel);
 
                   if (authViewModel.registerApiResponse.status ==

@@ -7,6 +7,7 @@ import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model
 import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.dart';
+import 'package:socialv/model/repo/get_search_users_repo.dart';
 import 'package:socialv/model/repo/update_user_cover_pic_repo.dart';
 import 'package:socialv/model/repo/update_user_profile_pic_repo.dart';
 import 'package:socialv/model/repo/update_user_profile_repo.dart';
@@ -96,6 +97,7 @@ class ProfileViewModel extends GetxController {
   }
 
   ApiResponse getUserProfileApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse searchUserProfileApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getProfileDetailApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse updateUserProfileApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse updateUserProfilePicApiResponse = ApiResponse.initial('INITIAL');
@@ -112,6 +114,21 @@ class ProfileViewModel extends GetxController {
     } catch (e) {
       logs('getProfileDetailApiResponse ERROR :=> $e');
       getProfileDetailApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+/// ======================== GET USER PROFILE DETAIL ================================
+
+  Future<void> searchUsers(String searchStr) async {
+    searchUserProfileApiResponse = ApiResponse.loading('LOADING');
+    // update();
+    try {
+      final response = await SearchUsersRepo().searchUsersRepo(searchStr);
+      searchUserProfileApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('searchUserProfileApiResponse ERROR :=> $e');
+      searchUserProfileApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }

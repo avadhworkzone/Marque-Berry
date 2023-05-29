@@ -213,16 +213,16 @@ class InterestScreen extends StatelessWidget {
 
   userDetails({required AuthViewModel authViewModel}) async {
     if (PreferenceUtils.getCategory().isNotEmpty) {
-      categoryDataList = (jsonDecode(PreferenceUtils.getCategory()) as List)
+      selectedCategoryDataList = (jsonDecode(PreferenceUtils.getCategory()) as List)
           .map((e) => Category.fromJson(e))
           .toList();
     }
 
     List<String> tempUserCategoryIdList = [];
 
-    for (int i = 0; i < categoryDataList.length; i++) {
+    for (int i = 0; i < selectedCategoryDataList.length; i++) {
       tempUserCategoryIdList.add(
-        ((categoryDataList[i].id ?? 0).toString()),
+        ((selectedCategoryDataList[i].id ?? 0).toString()),
       );
     }
 

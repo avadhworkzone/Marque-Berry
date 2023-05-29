@@ -12,7 +12,7 @@ logs(String message) {
   }
 }
 
-List<Category> categoryDataList = [];
+List<Category> selectedCategoryDataList = [];
 
 String postTimeCalculate(date, ext) {
   try {

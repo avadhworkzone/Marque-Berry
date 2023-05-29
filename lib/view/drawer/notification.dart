@@ -1,8 +1,12 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/model/apiModel/responseModel/get_notification_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/view/profile/follow_request_screen.dart';
+import 'package:socialv/viewModel/drawer_viewmodel.dart';
 import '../../commanWidget/common_appbar.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
@@ -10,58 +14,143 @@ import '../../utils/font_style_utils.dart';
 import '../../utils/size_config_utils.dart';
 import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+  NotificationScreen({Key? key}) : super(key: key);
+
+  final DrawerVideModel viewModel = Get.find<DrawerVideModel>();
 
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-    preferredSize: Size.fromHeight(16.w),
-    child: CommonAppBar(
-      title: VariableUtils.notificationText,
-      onTap: () => Get.back(),
-    ),
+        preferredSize: Size.fromHeight(16.w),
+        child: CommonAppBar(
+          title: VariableUtils.notificationText,
+          color: Theme.of(context).cardColor,
+          onTap: () => Get.back(),
+        ),
       ),
-      body: Padding(
-    padding: EdgeInsets.symmetric(horizontal: 3.w),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InkWell(
-          onTap: (){
-            Get.to(()=>FollowRequestScreen());
-          },
-          child: AdoroText(
-            VariableUtils.SeeAllRequests,
-            fontSize: 13.sp,
-            fontWeight: FontWeightClass.fontWeightBold,
-            color: ColorUtils.blueB9,
+      body: GetBuilder<DrawerVideModel>(initState: (state) {
+        viewModel.getNotificationList();
+      }, builder: (cont) {
+        if (cont.getNotificationListApiResponse.status == Status.LOADING ||
+            cont.getNotificationListApiResponse.status == Status.INITIAL) {
+          return Center(
+            child: CupertinoActivityIndicator(),
+          );
+        }
+        if (cont.getNotificationListApiResponse.status == Status.ERROR) {
+          return Center(child: SomethingWentWrong());
+        }
+        GetNotificationListResModel notificationListResModel =
+            cont.getNotificationListApiResponse.data;
+        if (notificationListResModel.status != 200 ||
+            (notificationListResModel.data?.isEmpty ?? true) == true) {
+          return Center(
+            child: AdoroText(
+              VariableUtils.noDataFound,
+            ),
+          );
+        }
+        final totalPendingRequest = notificationListResModel.data
+                ?.where((element) =>
+                    element.title?.replaceAll(" ", "") == 'FollowRequest')
+                .toList()
+                .length ??
+            0;
+        return SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (totalPendingRequest > 0)
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20, left: 3.w, right: 3.w),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(() => FollowRequestScreen());
+                    },
+                    child: AdoroText(
+                      VariableUtils.SeeAllRequests + " ($totalPendingRequest)",
+                      fontSize: 13.sp,
+                      fontWeight: FontWeightClass.fontWeightBold,
+                      color: ColorUtils.blueB9,
+                    ),
+                  ),
+                ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: notificationListResModel.data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final notification = notificationListResModel.data![index];
+                  return Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 5.sp, horizontal: 10.sp),
+                    margin: EdgeInsets.only(bottom: 5.sp),
+                    child: AdoroText(
+                      (notification.message ?? 'N/A')+"  "+getTime(notification.createdOn!),
+                      fontSize: 11.sp,
+                      color: ColorUtils.black92,
+                      fontWeight: FontWeightClass.fontWeight600,
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-        ),
-        SizeConfig.sH2,
-        Ritikraj(),
-        SizeConfig.sH5,
-        AdoroText(
-          VariableUtils.SuggestedForYou,
-          fontSize: 13.sp,
-          fontWeight: FontWeightClass.fontWeightBold,
-          color: blackWhite,
-        ),
-        SizeConfig.sH4,
-        UserNameFollow(),
-        SizeConfig.sH3, UserNameFollow(),
-        SizeConfig.sH3, UserNameFollow(),
-        SizeConfig.sH3,
-        // UserNameCircleAvatar(),
-        // SizeConfig.sH3,
-        // UserNameContainer(),
-      ],
-    ),
-      ),
+        );
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 3.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {
+                  Get.to(() => FollowRequestScreen());
+                },
+                child: AdoroText(
+                  VariableUtils.SeeAllRequests,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeightClass.fontWeightBold,
+                  color: ColorUtils.blueB9,
+                ),
+              ),
+              SizeConfig.sH2,
+              Ritikraj(),
+              SizeConfig.sH5,
+              AdoroText(
+                VariableUtils.SuggestedForYou,
+                fontSize: 13.sp,
+                fontWeight: FontWeightClass.fontWeightBold,
+                color: blackWhite,
+              ),
+              SizeConfig.sH4,
+              UserNameFollow(),
+              SizeConfig.sH3,
+              UserNameFollow(),
+              SizeConfig.sH3,
+              UserNameFollow(),
+              SizeConfig.sH3,
+            ],
+          ),
+        );
+      }),
     );
+  }
+
+  String getTime(String date) {
+    return timeago
+        .format(
+          DateTime.parse(date),
+          allowFromNow: true,
+        )
+        .replaceAll('ago', "");
   }
 }
 
