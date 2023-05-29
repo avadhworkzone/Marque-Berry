@@ -347,6 +347,7 @@ class EditProfile extends StatelessWidget {
                                             .copyWith(
                                                 color: ColorUtils.black92),
                                         keyboardType: TextInputType.name,
+                                        denyInput: true,
                                         validator: (v) => userValidation(v),
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,

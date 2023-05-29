@@ -148,6 +148,7 @@ class UserList extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.sp),
             child: TextField(
+              style: TextStyle(color: Colors.black),
               cursorColor: ColorUtils.black,
               onChanged: (value) {
                 controller.searchUserStr = value;
@@ -156,6 +157,7 @@ class UserList extends StatelessWidget {
                   fillColor: ColorUtils.white,
                   filled: true,
                   hintText: 'Search..',
+
                   // suffixIcon: Icon(Icons.search,color: whiteBlack2E,),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -199,7 +201,7 @@ class UserList extends StatelessWidget {
                       FocusScope.of(context).unfocus();
                       Get.to(
                         () => ChattingScreen(
-                          receiverFcmToken: followData.deviceToken??"",
+                          receiverFcmToken: followData.deviceToken ?? "",
                           receiverName: followData.username ?? "",
                           receiverImage: followData.image ?? "",
                           senderName:

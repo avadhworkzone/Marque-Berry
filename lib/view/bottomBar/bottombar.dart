@@ -154,6 +154,7 @@ class _BottomBarState extends State<BottomBar> {
           if (index == 1) {
             Get.to(
               () => SharePost(),
+
               // duration: Duration(milliseconds: 500),
               // transition: Transition.leftToRight,
             );

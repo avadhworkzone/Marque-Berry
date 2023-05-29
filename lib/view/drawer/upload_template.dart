@@ -124,14 +124,18 @@ class _UploadTemplateState extends State<UploadTemplate> {
                 child: Container(
                   height: 80.w,
                   width: 80.w,
-                  child: selectedImagePath == ""
+                  child: (selectedImagePath == "" && selectedTabIndex == 0) ||
+                          (selectedLicensedImagePath == '' &&
+                              selectedTabIndex == 1)
                       ? Image.asset(
                           '$imagesbasePath/Vector.png',
                           scale: 1.1.w,
                           color: blackWhite,
                         )
                       : Image.file(
-                          File(selectedImagePath),
+                          selectedTabIndex == 0
+                              ? File(selectedImagePath)
+                              : File(selectedLicensedImagePath),
                           fit: BoxFit.contain,
                         ),
                 ),
@@ -159,8 +163,12 @@ class _UploadTemplateState extends State<UploadTemplate> {
               height: 5.h,
               onTap: () {
                 if (uploadTemplateCaption.text.isNotEmpty) {
-                  if (selectedImagePath != "") {
-                    uploadTemplateApi(selectedImagePath);
+                  if ((selectedImagePath != "" && selectedTabIndex == 0) ||
+                      (selectedLicensedImagePath != "" &&
+                          selectedTabIndex == 1)) {
+                    uploadTemplateApi(selectedTabIndex == 0
+                        ? selectedImagePath
+                        : selectedLicensedImagePath);
                   } else {
                     showSnackBar(message: "Image not selected");
                   }
@@ -180,6 +188,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
 
   CropImage cropImageClass = CropImage();
   String selectedImagePath = "";
+  String selectedLicensedImagePath = "";
 
   void selectImage() async {
     try {
@@ -194,11 +203,19 @@ class _UploadTemplateState extends State<UploadTemplate> {
           isBackGround: true,
           context: context,
         );
-        selectedImagePath = cropImagePath?.path ?? "";
+        if (selectedTabIndex == 0) {
+          selectedImagePath = cropImagePath?.path ?? "";
+        } else {
+          selectedLicensedImagePath = cropImagePath?.path ?? "";
+        }
       }
       setState(() {});
     } catch (e) {
-      selectedImagePath = "";
+      if (selectedTabIndex == 0) {
+        selectedImagePath = "";
+      } else {
+        selectedLicensedImagePath = "";
+      }
       showSnackBar(message: " Permission is required.");
     }
   }

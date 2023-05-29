@@ -22,8 +22,6 @@ import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
-
-
 class Home extends StatefulWidget {
   Home({Key? key, required this.scaffoldKey}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -49,8 +47,6 @@ class _HomeState extends State<Home> {
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -184,8 +180,9 @@ class _HomeState extends State<Home> {
                                                       .contains(postId) ==
                                                   false
                                               ? Padding(
-                                                padding:  EdgeInsets.only(top: index==0?10:0),
-                                                child: PostComponents(
+                                                  padding: EdgeInsets.only(
+                                                      top: index == 0 ? 10 : 0),
+                                                  child: PostComponents(
                                                     isInView: isInView,
                                                     userId: int.parse(
                                                         categoryIndex.userId
@@ -195,7 +192,8 @@ class _HomeState extends State<Home> {
                                                         "image",
                                                     homeController:
                                                         homeController,
-                                                    postId: categoryIndex.id ?? 0,
+                                                    postId:
+                                                        categoryIndex.id ?? 0,
                                                     categoryFeedViewModel:
                                                         categoryFeedViewModel,
                                                     likeByMe: categoryIndex
@@ -204,16 +202,18 @@ class _HomeState extends State<Home> {
                                                             'true'
                                                         ? "You"
                                                         : (categoryIndex
-                                                                .likedByPeople?[0]
+                                                                .likedByPeople?[
+                                                                    0]
                                                                 .username ??
                                                             ""),
                                                     likeProfile: categoryIndex
                                                         .likedByPeople,
                                                     profileImage:
-                                                        categoryIndex.image ?? "",
-                                                    userName:
-                                                        categoryIndex.username ??
+                                                        categoryIndex.image ??
                                                             "",
+                                                    userName: categoryIndex
+                                                            .username ??
+                                                        "",
                                                     time: postTimeCalculate(
                                                       categoryIndex.createdOn,
                                                       'ago',
@@ -231,11 +231,12 @@ class _HomeState extends State<Home> {
                                                             0)
                                                         .toString(),
                                                     commentCounter:
-                                                        (categoryIndex.comments ??
+                                                        (categoryIndex
+                                                                    .comments ??
                                                                 0)
                                                             .toString(),
                                                   ),
-                                              )
+                                                )
                                               : SizedBox();
                                         },
                                       );

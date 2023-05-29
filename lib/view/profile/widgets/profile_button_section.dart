@@ -164,9 +164,9 @@ class FollowingBtn extends StatelessWidget {
                         (PreferenceUtils.getInt(key: 'userid')).toString(),
                     senderImage: PreferenceUtils.getString(key: 'profile'),
                     receiverId: profileUser.id!.toString(),
-                    receiverName: profileUser.username??"",
-                    receiverImage: profileUser.image??"",
-                    receiverFcmToken: profileUser.deviceToken??"",
+                    receiverName: profileUser.username ?? "",
+                    receiverImage: profileUser.image ?? "",
+                    receiverFcmToken: profileUser.deviceToken ?? "",
                   ));
             },
             child: Container(
@@ -291,16 +291,19 @@ class EditProfileBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? black92blueB9 = Theme.of(context).textTheme.titleLarge?.color;
     return InkWell(
       onTap: () => Get.to(() => EditProfile()),
       child: Container(
         height: 15.w,
         width: Get.width,
-        color: whiteBlack2E,
+        decoration: BoxDecoration(
+            color: ColorUtils.white, borderRadius: BorderRadius.circular(3.w)),
         child: Center(
           child: AdoroText(
             'Edit Profile',
-            color: black92White,
+            color: black92blueB9,
             fontWeight: FontWeightClass.fontWeight600,
           ),
         ),

@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
@@ -636,7 +637,18 @@ class LeftImageWidget extends StatelessWidget {
                             child: Container(
                               height: 60.w,
                               width: 55.w,
-                              child: Image.network(image, fit: BoxFit.cover),
+                              child: InkWell(
+                                  onTap: () {
+                                    Get.to(() => Dialog(
+                                          child: PhotoView(
+                                            imageProvider: NetworkImage(
+                                              image,
+                                            ),
+                                          ),
+                                        ));
+                                  },
+                                  child:
+                                      Image.network(image, fit: BoxFit.cover)),
                             ),
                           ),
                         Padding(
@@ -737,10 +749,21 @@ class RightImageWidget extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 10, right: 10, left: 10),
-                            child: Container(
-                              height: 60.w,
-                              width: 55.w,
-                              child: Image.network(image, fit: BoxFit.cover),
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(() => Dialog(
+                                      child: PhotoView(
+                                        imageProvider: NetworkImage(
+                                          image,
+                                        ),
+                                      ),
+                                    ));
+                              },
+                              child: Container(
+                                height: 60.w,
+                                width: 55.w,
+                                child: Image.network(image, fit: BoxFit.cover),
+                              ),
                             ),
                           ),
                         Padding(
