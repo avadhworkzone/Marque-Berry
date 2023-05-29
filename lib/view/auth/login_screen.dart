@@ -16,7 +16,8 @@ import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key, this.referId}) : super(key: key);
+  final String? referId;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();

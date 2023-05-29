@@ -102,10 +102,12 @@ class PostComponents extends StatelessWidget {
           children: [
             SizeConfig.sH1,
             ListTile(
-              onTap: () {
-                Get.to(() => Profile(
+              onTap: () async {
+                isScreenOpen=false;
+                await Get.to(() => Profile(
                       userId: userId,
                     ));
+                isScreenOpen=true;
               },
               title: AdoroText(
                 userName,
@@ -240,12 +242,14 @@ class PostComponents extends StatelessWidget {
                       SizeConfig.sW1AndHalf,
                       InkWell(
                         onTap: () async {
+                          isScreenOpen=false;
                           await Get.to(
                             () => Comments(
                               postId: postId,
                               profileImage: profileImage,
                             ),
                           );
+                          isScreenOpen=true;
                           categoryFeedViewModel.pageNumberIndex = 0;
                           categoryFeedViewModel.categoryTrending(
                               homeController.tabName,
@@ -272,12 +276,14 @@ class PostComponents extends StatelessWidget {
                       Spacer(),
                       InkWell(
                         onTap: () async {
+                          isScreenOpen=false;
                           await Get.to(
                             () => Comments(
                               postId: postId,
                               profileImage: profileImage,
                             ),
                           );
+                          isScreenOpen=true;
                           categoryFeedViewModel.pageNumberIndex = 0;
                           categoryFeedViewModel.categoryTrending(
                               homeController.tabName,
@@ -377,9 +383,14 @@ class PostComponents extends StatelessWidget {
                             ),
                           if (likeProfile!.length == 1) SizeConfig.sW2,
                           InkWell(
-                            onTap: () => Get.to(
-                              () => LikeScreen(likeProfile: postId),
-                            ),
+                            onTap: ()
+                            async {
+                              isScreenOpen=false;
+                              await Get.to(
+                                () => LikeScreen(likeProfile: postId),
+                              );
+                              isScreenOpen=true;
+                            },
                             child: Text.rich(
                               TextSpan(
                                 style: TextStyle(fontSize: 9.sp),
@@ -475,7 +486,7 @@ class PostComponents extends StatelessWidget {
                   image: IconsWidgets.shareImages,
                   text: 'Share via',
                   onTap: () async {
-                    final postLink = await DynamicLink.createDynamicLinkForUser(
+                    final postLink = await DynamicLink.createDynamicLinkForPost(
                         postId: postId.toString());
                     Share.share(postLink);
                   },
@@ -483,7 +494,7 @@ class PostComponents extends StatelessWidget {
                 SizeConfig.sH3,
                 bottomComponents(
                   onTap: () async {
-                    final postLink = await DynamicLink.createDynamicLinkForUser(
+                    final postLink = await DynamicLink.createDynamicLinkForPost(
                         postId: postId.toString());
                     Clipboard.setData(new ClipboardData(text: postLink))
                         .then((_) {

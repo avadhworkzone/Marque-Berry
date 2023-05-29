@@ -12,7 +12,9 @@ import 'package:socialv/model/apiModel/responseModel/notification_chating_model.
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/home/post_detail_screen.dart';
 import 'package:socialv/view/message/chatting.dart';
+import 'package:socialv/view/profile/profile.dart';
 
 ///---------------------------------------------------------------------------------------------------------------------------------
 List<String> notiIds = [];
@@ -126,12 +128,13 @@ class NotificationService {
       /// local notification to show to users using the created channel.
       if (notification != null && android != null) {
         logs('SHOW NOTI==>${jsonEncode(message.data)}');
-        if(message.data.containsKey('notification_type')){
-          if(message.data['notification_type']== NotificationType.Chatting.name){
-            final notificationData =
-            NotificationChattingModel.fromJson(jsonDecode(message.data['data']));
-            if(notificationData.receiverId==ConstUtils.selectedChattingUserId){
-              logs('SAME ID ------------------');
+        if (message.data.containsKey('notification_type')) {
+          if (message.data['notification_type'] ==
+              NotificationType.Chatting.name) {
+            final notificationData = NotificationChattingModel.fromJson(
+                jsonDecode(message.data['data']));
+            if (notificationData.receiverId ==
+                ConstUtils.selectedChattingUserId) {
               return;
             }
           }
@@ -250,6 +253,13 @@ class NotificationService {
             receiverName: notificationData.receiverName!,
             receiverFcmToken: notificationData.receiverFcmToken!,
           ));
+    } else if (data['notification_type'] == NotificationType.Like.name ||
+        data['notification_type'] == NotificationType.Comment.name) {
+      Get.to(() => PostDetailScreen(postId: data['data_id'].toString()));
+    } else if (data['notification_type'] ==
+            NotificationType.FollowRequest.name ||
+        data['notification_type'] == NotificationType.ConfirmRequest.name) {
+      Get.to(() => Profile(userId: int.parse(data['data_id'].toString())));
     }
   }
 }

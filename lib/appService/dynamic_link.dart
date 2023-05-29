@@ -21,14 +21,48 @@ class DynamicLink {
   static String iosBundleIdUser = "";
   static String appStoreIdUser = "";
 
-  /// CREATE DEEP LINK URL
-  static Future<String> createDynamicLinkForUser(
+  /// CREATE DEEP LINK URL FOR POST
+  static Future<String> createDynamicLinkForPost(
       {bool short = true, required String postId}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: uriPrefix,
 
       ///ADD YOUR FIREBASE LINK URL....
       link: Uri.parse("$uriPrefix/post?postId=$postId"),
+
+      ///ADD YOUR DOMAIN URL...
+      androidParameters: AndroidParameters(
+        packageName: androidBundleIdUser,
+        minimumVersion: 0,
+      ),
+
+      iosParameters: IOSParameters(
+          bundleId: iosBundleIdUser,
+          minimumVersion: '1',
+          appStoreId: appStoreIdUser),
+    );
+
+    Uri url;
+    if (short) {
+      final ShortDynamicLink shortLink =
+          await dynamicLinks.buildShortLink(parameters);
+      url = shortLink.shortUrl;
+    } else {
+      url = await dynamicLinks.buildLink(parameters);
+    }
+
+    print("SHORT LINK ${url.toString()}");
+    return url.toString();
+  }
+
+  /// CREATE DEEP LINK URL FOR POST
+  static Future<String> createDynamicLinkForReferAndErn(
+      {bool short = true, required String referId}) async {
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: uriPrefix,
+
+      ///ADD YOUR FIREBASE LINK URL....
+      link: Uri.parse("$uriPrefix/refer?referId=$referId"),
 
       ///ADD YOUR DOMAIN URL...
       androidParameters: AndroidParameters(
@@ -63,12 +97,18 @@ class DynamicLink {
     print('DEEP LINK :$deepLink');
     if (deepLink != null) {
       if (PreferenceUtils.getInt(key: PreferenceUtils.login) == 0) {
-        Get.off(() => LoginScreen());
+        String? referId;
+        if(deepLink.toString().contains('referId')){
+          referId=deepLink.toString().substring(deepLink.toString().indexOf('=') + 1);
+        }
+        Get.off(() => LoginScreen(referId: referId,));
       } else {
         final postId =
             deepLink.toString().substring(deepLink.toString().indexOf('=') + 1);
         logs('GET INIT POSt ID =>$postId');
-        Get.to(()=>PostDetailScreen(postId: postId,));
+        Get.to(() => PostDetailScreen(
+              postId: postId,
+            ));
       }
     } else {
       navigatePage();
@@ -97,13 +137,17 @@ class DynamicLink {
 
       if (deepLink != null) {
         if (PreferenceUtils.getInt(key: PreferenceUtils.login) == 0) {
-          Get.off(() => LoginScreen());
+          String? referId;
+          if(deepLink.toString().contains('referId')){
+            referId=deepLink.toString().substring(deepLink.toString().indexOf('=') + 1);
+          }
+          Get.off(() => LoginScreen(referId: referId,));
         } else {
           final postId = deepLink
               .toString()
               .substring(deepLink.toString().indexOf('=') + 1);
           print('POST ID ==>$postId');
-          Get.to(()=>PostDetailScreen(postId: postId));
+          Get.to(() => PostDetailScreen(postId: postId));
         }
       } else {
         print('CONTINUE WITHOUT DEEP LINK.............');

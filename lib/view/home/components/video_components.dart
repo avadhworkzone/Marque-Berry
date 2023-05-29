@@ -9,6 +9,7 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:video_player/video_player.dart';
 
 bool isMute = false;
+bool isScreenOpen = true;
 
 class InViewVideoComponents extends StatefulWidget {
   final String url;
@@ -44,6 +45,7 @@ class _InViewVideoComponentsState extends State<InViewVideoComponents> {
 
   @override
   void didUpdateWidget(InViewVideoComponents oldWidget) {
+
     if (oldWidget.play != widget.play) {
       if (widget.play) {
         _controller.play();
@@ -53,12 +55,27 @@ class _InViewVideoComponentsState extends State<InViewVideoComponents> {
         _controller.setVolume(0.0);
         _controller.pause();
       }
+    }else{
+      if(!isMute){
+        if(!isScreenOpen){
+          _controller.setVolume(0.0);
+          _controller.pause();
+        }else{
+          _controller.play();
+          _controller.setVolume(1.0);
+        }
+      }
+
     }
+
+
+    print('didUpdateWidget=====>$mounted');
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
+    print('didUpdateWidget=====>DISPOSE ');
     _controller.dispose();
     super.dispose();
   }

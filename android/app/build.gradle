@@ -43,9 +43,9 @@ android {
         applicationId "com.iconic.socialv"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 16
         multiDexEnabled true
-        versionName '4.2.2'
+        versionCode 1
+        versionName "1.0.0"
     }
 
 //    signingConfigs {

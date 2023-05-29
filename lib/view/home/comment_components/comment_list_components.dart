@@ -72,47 +72,46 @@ class _CommentListState extends State<CommentList> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InkWell(
-            highlightColor: ColorUtils.transparent,
-            splashColor: ColorUtils.transparent,
-            onTap: () {
-              Get.to(() => Profile(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+
+                onTap: () {
+                  Get.to(() => Profile(
                     // userId: widget.commentId,
                     userId: widget.userId,
                   ));
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(
-                    radius: 6.w,
-                    backgroundColor: Colors.grey[100],
-                    backgroundImage: NetworkImage(widget.img),
-                    onBackgroundImageError: (_, __) {
-                      CommonImage(
-                        img: IconsWidgets.userImages,
-                        color: blackWhite,
-                      );
-                    },
-                  ),
-                  title: AdoroText(
-                    "${widget.name}",
-                    maxLines: 1,
-                    fontSize: 13.sp,
-                    overflow: TextOverflow.ellipsis,
-                    fontWeight: FontWeightClass.fontWeight700,
-                    color: blackWhite,
-                  ),
-                  trailing: AdoroText(
-                    "${widget.time}",
-                    fontSize: 10.sp,
-                    color: Theme.of(context).textTheme.titleMedium?.color,
-                  ),
+                },
+                leading: CircleAvatar(
+                  radius: 6.w,
+                  backgroundColor: Colors.grey[100],
+                  backgroundImage: NetworkImage(widget.img),
+                  onBackgroundImageError: (_, __) {
+                    CommonImage(
+                      img: IconsWidgets.userImages,
+                      color: blackWhite,
+                    );
+                  },
                 ),
-                SizeConfig.sH2,
-                InkWell(
+                title: AdoroText(
+                  "${widget.name}",
+                  maxLines: 1,
+                  fontSize: 13.sp,
+                  overflow: TextOverflow.ellipsis,
+                  fontWeight: FontWeightClass.fontWeight700,
+                  color: blackWhite,
+                ),
+                trailing: AdoroText(
+                  "${widget.time}",
+                  fontSize: 10.sp,
+                  color: Theme.of(context).textTheme.titleMedium?.color,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2.h),
+                child: InkWell(
                     onTap: () {
                       editDeleteBottomSheet(
                         message: widget.message,
@@ -121,10 +120,9 @@ class _CommentListState extends State<CommentList> {
                         context: context,
                       );
                     },
-                    child: CommentDescription(message: widget.message)),
-                SizeConfig.sH2,
-              ],
-            ),
+                    child: SizedBox(width: Get.width,child: CommentDescription(message: widget.message))),
+              ),
+            ],
           ),
           Row(
             children: [

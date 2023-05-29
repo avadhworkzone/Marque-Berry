@@ -12,6 +12,7 @@ import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/message/message_list.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/view/home/components/tabbar.dart';
@@ -20,6 +21,8 @@ import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
+
+
 
 class Home extends StatefulWidget {
   Home({Key? key, required this.scaffoldKey}) : super(key: key);
@@ -46,6 +49,8 @@ class _HomeState extends State<Home> {
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
+
+
 
   @override
   Widget build(BuildContext context) {
