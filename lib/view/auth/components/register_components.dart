@@ -27,8 +27,10 @@ final _formKey = GlobalKey<FormState>();
 
 class RegisterComponents extends StatelessWidget {
   AuthViewModel authViewModel;
+  final String? referId;
 
-  RegisterComponents({Key? key, required this.authViewModel}) : super(key: key);
+  RegisterComponents({Key? key, required this.authViewModel, this.referId})
+      : super(key: key);
 
   RegisterReqModel registerReqModel = RegisterReqModel();
 
@@ -91,7 +93,7 @@ class RegisterComponents extends StatelessWidget {
                   registerReqModel.fullName = fullNameController.text;
                   registerReqModel.deviceToken =
                       await NotificationService.getDeviceToken();
-                  registerReqModel.referId = "";
+                  registerReqModel.referId = referId;
                   await authViewModel.register(registerReqModel);
 
                   if (authViewModel.registerApiResponse.status ==

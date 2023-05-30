@@ -204,6 +204,10 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                             deviceToken,
                                   );
                                   await PreferenceUtils.setString(
+                                    key: PreferenceUtils.referId,
+                                    value: response.data?.referId ?? "",
+                                  );
+                                  await PreferenceUtils.setString(
                                     key: PreferenceUtils.token,
                                     value: response.token ?? "",
                                   );

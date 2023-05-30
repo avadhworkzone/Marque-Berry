@@ -43,6 +43,7 @@ class ValidateOTPData {
   String? isCategorySelected;
   String? createdOn;
   String? deviceToken;
+  String? referId;
 
   ValidateOTPData({
     this.id,
@@ -59,7 +60,8 @@ class ValidateOTPData {
     this.ifscCode,
     this.isCategorySelected,
     this.createdOn,
-    this.deviceToken
+    this.deviceToken,
+    this.referId,
   });
 
   ValidateOTPData.fromJson(Map<String, dynamic> json) {
@@ -78,6 +80,7 @@ class ValidateOTPData {
     isCategorySelected = json['isCategorySelected'] ?? "";
     createdOn = json['created_on'] ?? "";
     deviceToken = json['device_token'] ?? "";
+    referId = json['refer_id'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -97,6 +100,7 @@ class ValidateOTPData {
     data['isCategorySelected'] = this.isCategorySelected;
     data['created_on'] = this.createdOn;
     data['device_token'] = this.deviceToken;
+    data['refer_id'] = this.referId;
     return data;
   }
 }

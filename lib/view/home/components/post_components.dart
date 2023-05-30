@@ -214,7 +214,7 @@ class PostComponents extends StatelessWidget {
                                 Padding(
                               padding: EdgeInsets.all(7.w),
                               child: CommonImage(
-                                img: IconsWidgets.userImages,
+                                img: IconsWidgets.imageImages,
                                 color: blackWhite,
                               ),
                             ),

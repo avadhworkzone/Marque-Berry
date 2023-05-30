@@ -121,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             1)
                                           RegisterComponents(
                                             authViewModel: authViewModel,
+                                            referId: widget.referId,
                                           ),
                                       ],
                                     ),

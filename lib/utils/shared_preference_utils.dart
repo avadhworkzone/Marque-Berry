@@ -12,6 +12,7 @@ class PreferenceUtils {
   static String login = 'login';
   static String userid = 'userid';
   static String token = 'token';
+  static String referId = 'ReferId';
   static String deviceToken = 'deviceToken';
 
   static String username = 'username';

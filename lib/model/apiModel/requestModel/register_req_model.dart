@@ -5,14 +5,19 @@ class RegisterReqModel {
   String? deviceToken;
   String? referId;
 
-  RegisterReqModel({this.mobileNo, this.username, this.fullName,this.deviceToken,this.referId});
+  RegisterReqModel(
+      {this.mobileNo,
+      this.username,
+      this.fullName,
+      this.deviceToken,
+      this.referId});
 
   RegisterReqModel.fromJson(Map<String, dynamic> json) {
     mobileNo = json['mobileNo'];
     username = json['username'];
     fullName = json['full_name'];
     deviceToken = json['device_token'];
-    referId = json['Refer_id'];
+    referId = json['referred_by'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,7 +26,7 @@ class RegisterReqModel {
     data['username'] = this.username;
     data['full_name'] = this.fullName;
     data['device_token'] = this.deviceToken;
-    data['Refer_id'] = this.referId;
+    data['referred_by'] = this.referId ?? "";
     return data;
   }
 }
