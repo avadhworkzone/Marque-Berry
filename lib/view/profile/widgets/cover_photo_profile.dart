@@ -43,7 +43,8 @@ class CoverProfile extends StatelessWidget {
                     ? Image.file(
                         File(con.coverImagePath),
                         // fit: BoxFit.fill,
-                        fit: BoxFit.fitWidth,
+                        // fit: BoxFit.fitWidth,
+                        // fit: BoxFit.contain,
                       )
                     : CommonCoverImage(image: profileData.coverPhoto ?? ""),
               ),

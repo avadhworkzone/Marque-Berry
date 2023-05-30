@@ -85,7 +85,7 @@ class Note extends StatelessWidget {
                 ),
               ), // SizeConfig.sH3,
               Padding(
-                padding:  EdgeInsets.symmetric(vertical: 10.sp),
+                padding: EdgeInsets.symmetric(vertical: 10.sp),
                 child: Container(
                   width: 80.w,
                   height: 50.w,
@@ -96,8 +96,7 @@ class Note extends StatelessWidget {
                         );
                       },
                       child: Image(
-                        image: NetworkImage(
-                            'https://www.bollywoodhungama.com/wp-content/uploads/2022/11/Pathaan-5.jpg',),
+                        image: NetworkImage(noteResModel.data!.thumbnail ?? ""),
                         fit: BoxFit.fill,
                       )),
                 ),

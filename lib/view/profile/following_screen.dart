@@ -74,8 +74,6 @@ class FollowerFollowing extends StatelessWidget {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
@@ -201,7 +199,7 @@ class FollowTabBar extends StatelessWidget {
                   followerFollowingController.changeTabIndex(0);
                 },
                 child: AdoroText(
-                  "FOLLOWINNG",
+                  "FOLLOWING",
                   fontSize: 11.sp,
                   color: followerFollowingController.currentTabIndex == 0
                       ? ColorUtils.white
@@ -335,10 +333,10 @@ class FollowerList extends StatelessWidget {
                       ),
                     ),
                   ),
-                  trailing: const Icon(
-                    Icons.more_vert,
-                    color: ColorUtils.black92,
-                  ),
+                  // trailing: const Icon(
+                  //   Icons.more_vert,
+                  //   color: ColorUtils.black92,
+                  // ),
                   contentPadding: EdgeInsets.all(0.w),
                 ),
                 DecorationUtils.dividerLine2(),
@@ -389,7 +387,7 @@ class FollowingList extends StatelessWidget {
 
       return ListView.builder(
         padding: EdgeInsets.only(bottom: 40.w),
-        itemCount: getFollowingListResModel.data?.length??0,
+        itemCount: getFollowingListResModel.data?.length ?? 0,
         itemBuilder: (context, index) {
           final followingData = getFollowingListResModel.data![index];
           return Padding(
@@ -399,8 +397,8 @@ class FollowingList extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     Get.to(() => Profile(
-                      userId: followingData.id!,
-                    ));
+                          userId: followingData.id!,
+                        ));
                   },
                   title: Text(
                     followingData.username ?? "",
@@ -449,10 +447,10 @@ class FollowingList extends StatelessWidget {
                       ),
                     ),
                   ),
-                  trailing: const Icon(
-                    Icons.more_vert,
-                    color: ColorUtils.black92,
-                  ),
+                  // trailing: const Icon(
+                  //   Icons.more_vert,
+                  //   color: ColorUtils.black92,
+                  // ),
                   contentPadding: EdgeInsets.all(0.w),
                 ),
                 DecorationUtils.dividerLine2(),
