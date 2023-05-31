@@ -71,6 +71,7 @@ class Profile extends StatelessWidget {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             profileViewModel.isLoading = false;
             profileViewModel.clearCoverImage();
+            profileViewModel.changeTab(0);
           });
         }, builder: (con) {
           if (con.getProfileDetailApiResponse.status == Status.LOADING ||

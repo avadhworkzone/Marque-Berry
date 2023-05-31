@@ -87,7 +87,6 @@ class PostComponents extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
-    logs('profileImage==>$profileImage');
     return Padding(
       padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
       child: Container(

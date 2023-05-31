@@ -2,7 +2,9 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
@@ -16,6 +18,7 @@ import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/template/browser_template.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
@@ -104,6 +107,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                 initState: (_) {
                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                     sharePostController.clearSourcePath();
+                    createPostViewModel.createPostApiResponse =
+                        ApiResponse.initial('INITIAL');
                   });
                 },
                 builder: (createPostViewModel) {
@@ -144,24 +149,45 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       color: blackWhite,
                                     ),
                                     Spacer(),
-                                    InkWell(
-                                      splashColor: ColorUtils.transparent,
-                                      highlightColor: ColorUtils.transparent,
-                                      onTap: () {
-                                        createPostApi(
-                                          createPostReqModel,
-                                          sharePostController,
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 20.w,
-                                        height: 5.h,
-                                        child: Image.asset(
-                                          ImagesWidgets.submitButtonImage,
-                                          // fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
+                                    sharePostController.sourcePath != ""
+                                        ? InkWell(
+                                            splashColor: ColorUtils.transparent,
+                                            highlightColor:
+                                                ColorUtils.transparent,
+                                            onTap: () {
+                                              createPostApi(
+                                                createPostReqModel,
+                                                sharePostController,
+                                              );
+                                            },
+                                            child: Container(
+                                              width: 20.w,
+                                              height: 5.h,
+                                              child: Image.asset(
+                                                ImagesWidgets.submitButtonImage,
+                                                // fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          )
+                                        : Opacity(
+                                            opacity: 0.5,
+                                            child: Container(
+                                              width: 20.w,
+                                              height: 27,
+                                              decoration: BoxDecoration(
+                                                  color: ColorUtils.grey,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Center(
+                                                  child: AdoroText(
+                                                VariableUtils.Post,
+                                                fontSize: 12,
+                                                fontWeight: FontWeightClass
+                                                    .fontWeight600,
+                                                letterSpacing: 0.5,
+                                              )),
+                                            ),
+                                          ),
                                     SizeConfig.sW4,
                                   ],
                                 ),
@@ -298,7 +324,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                         controller: description,
                                       ),
                                       SizeConfig.sH2,
-                                      if (sharePostController.sourcePath !=
+                                      /*  if (sharePostController.sourcePath !=
                                               "" &&
                                           sharePostController.sourceName ==
                                               "template")
@@ -324,16 +350,37 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                               ),
                                             ),
                                           ],
-                                        ),
-                                      if (sharePostController.sourcePath !=
-                                              "" &&
-                                          sharePostController.sourceName !=
-                                              "template")
+                                        ),*/
+                                      if (sharePostController.sourcePath != "")
                                         Container(
                                           // height: 55.w,
                                           width: Get.width,
                                           child: Stack(
                                             children: [
+                                              if (sharePostController
+                                                      .sourceName ==
+                                                  "template")
+                                                Container(
+                                                  // height: 55.w,
+                                                  width: Get.width,
+                                                  child: Image.network(
+                                                    sharePostController
+                                                        .sourcePath,
+                                                    fit: BoxFit.contain,
+                                                    loadingBuilder: (context,
+                                                        child,
+                                                        loadingProgress) {
+                                                      if (loadingProgress !=
+                                                          null) {
+                                                        return SizedBox(
+                                                            height: 55.w,
+                                                            child:
+                                                                CupertinoActivityIndicator());
+                                                      }
+                                                      return child;
+                                                    },
+                                                  ),
+                                                ),
                                               if (sharePostController
                                                       .sourceName ==
                                                   "image")
@@ -453,9 +500,13 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
       createPostReqModel.contentType = sharePostController.sourceName;
 
       if (tagAPeopleController.tagList.isNotEmpty) {
-        createPostReqModel.tag = "(${tagAPeopleController.tagList.join(",")})";
+        // createPostReqModel.tag = "(${tagAPeopleController.tagList.join(",")})";
+        List<String> tagList =
+            tagAPeopleController.tagList.map((e) => e).toList();
+        tagList.add(
+            PreferenceUtils.getInt(key: PreferenceUtils.userid).toString());
+        createPostReqModel.tag = jsonEncode(tagList);
       }
-
       await createPostViewModel.createPost(createPostReqModel);
       if (createPostViewModel.createPostApiResponse.status == Status.LOADING ||
           createPostViewModel.createPostApiResponse.status == Status.INITIAL) {
@@ -463,7 +514,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
           Status.COMPLETE) {
         final CreatePostResModel createPostResModel =
             createPostViewModel.createPostApiResponse.data;
-
         await sharePostController.clearSourcePath();
         tagAPeopleController.clearList();
         description.clear();
@@ -619,7 +669,44 @@ class SharePostController extends GetxController {
     required BuildContext context,
   }) async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
+      print('extension=>$extension');
+      if (extension == "image") {
+        final imgFile =
+            await ImagePicker.platform.getImage(source: ImageSource.gallery);
+        if (imgFile != null) {
+          final cropImagePath = await cropImageClass.postCropImage(
+            image: File(imgFile.path),
+            isBackGround: true,
+          );
+          sourcePath = cropImagePath?.path ?? '';
+        }
+      } else if (extension == "gif") {
+        final videoFile = await ImagePicker.platform.getVideo(
+          source: ImageSource.gallery,
+          maxDuration: Duration(seconds: 2),
+        );
+        if (videoFile != null) {
+          print('GIF videoFile.path=>${videoFile.path}');
+          sourcePath = videoFile.path;
+        }
+      } else if (extension == "video") {
+        final videoFile = await ImagePicker.platform.getVideo(
+          source: ImageSource.gallery,
+        );
+        if (videoFile != null) {
+          print('VIDEO videoFile.path=>${videoFile.path}');
+          sourcePath = videoFile.path;
+        }
+      } else if (extension == "template") {
+        final templateUrl = await Get.to(() => BrowserTemplate(
+              isFromCreatePost: true,
+            ));
+        print('templateUrl==>$templateUrl');
+        if (templateUrl != null) {
+          sourcePath = templateUrl;
+        }
+      }
+      /*FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: extension == "image"
             ? ['jpg', 'jpeg', 'png']
@@ -648,9 +735,10 @@ class SharePostController extends GetxController {
 
           logs("sourcePath----->  $sourcePath");
         }
-      } else {
-        sourcePath = "";
       }
+      else {
+        sourcePath = "";
+      }*/
       sourceName = extension;
       update();
     } catch (e) {

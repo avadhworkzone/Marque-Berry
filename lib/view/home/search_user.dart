@@ -55,14 +55,14 @@ class SearchUser extends StatelessWidget {
           }
           GetSearchUsersResModel searchUsersResModel =
               cont.searchUserProfileApiResponse.data;
-          if (searchUsersResModel.status != 200 ||
-              (searchUsersResModel.data?.isEmpty ?? true) == true) {
-            return Center(
-              child: AdoroText(
-                VariableUtils.noDataFound,
-              ),
-            );
-          }
+          // if (searchUsersResModel.status != 200 ||
+          //     (searchUsersResModel.data?.isEmpty ?? true) == true) {
+          //   return Center(
+          //     child: AdoroText(
+          //       VariableUtils.noDataFound,
+          //     ),
+          //   );
+          // }
 
           return Column(
             children: [

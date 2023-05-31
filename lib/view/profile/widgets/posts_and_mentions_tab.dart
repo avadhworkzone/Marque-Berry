@@ -7,6 +7,7 @@ import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
+import 'package:socialv/view/home/post_detail_screen.dart';
 import 'package:socialv/view/profile/mentions_post.dart';
 import 'package:socialv/view/profile/show_post.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
@@ -146,25 +147,7 @@ class PostsAndMentionsTab extends StatelessWidget {
                                         color: whiteBlack2E,
                                       ),
                                     )
-                                  : Image.network(
-                                      post.contentUrl ?? '',
-                                      fit: BoxFit.fill,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress != null) {
-                                          return Center(
-                                              child:
-                                                  CupertinoActivityIndicator());
-                                        }
-                                        return child;
-                                      },
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return Center(
-                                          child: Icon(Icons.error_outline),
-                                        );
-                                      },
-                                    ),
+                                  : PostImage(url: post.contentUrl ?? ''),
                             ),
                           );
                         },
@@ -174,7 +157,7 @@ class PostsAndMentionsTab extends StatelessWidget {
                       width: 90.w,
                       child: GridView.builder(
                         shrinkWrap: true,
-                        itemCount: profile.mention?.length ?? 0,
+                        itemCount: profile.mentions?.length ?? 0,
                         physics: NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
@@ -182,21 +165,12 @@ class PostsAndMentionsTab extends StatelessWidget {
                           crossAxisSpacing: 3.2.w,
                         ),
                         itemBuilder: (c, index) {
+                          final mention = profile.mentions![index];
                           return InkWell(
-                            onTap: () => Get.to(
-                              () => ShowMentions(
-                                index: index,
-                                // mentionsList: [],
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(1.5.w),
-                              child: Image.network(
-                                '',
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          );
+                              onTap: () {
+                                Get.to(()=>PostDetailScreen(postId: mention.id.toString(),isFromBackScreen: true,));
+                              },
+                              child: PostImage(url: mention.contentUrl ?? ''));
                         },
                       ),
                     ),
@@ -204,6 +178,34 @@ class PostsAndMentionsTab extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PostImage extends StatelessWidget {
+  const PostImage({
+    super.key,
+    required this.url,
+  });
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      url,
+      fit: BoxFit.fill,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress != null) {
+          return Center(child: CupertinoActivityIndicator());
+        }
+        return child;
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return Center(
+          child: Icon(Icons.error_outline),
+        );
+      },
     );
   }
 }

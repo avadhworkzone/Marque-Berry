@@ -21,7 +21,9 @@ import '../../utils/size_config_utils.dart';
 import '../../utils/variable_utils.dart';
 
 class BrowserTemplate extends StatefulWidget {
-  BrowserTemplate({Key? key}) : super(key: key);
+  BrowserTemplate({Key? key, this.isFromCreatePost = false}) : super(key: key);
+
+  final bool isFromCreatePost;
 
   @override
   State<BrowserTemplate> createState() => _BrowserTemplateState();
@@ -228,6 +230,12 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                                       splashColor: ColorUtils.transparent,
                                       highlightColor: ColorUtils.transparent,
                                       onTap: () {
+                                        if (widget.isFromCreatePost) {
+                                          Get.back(
+                                              result:
+                                                  standardList[i].templateUrl);
+                                          return;
+                                        }
                                         Get.to(
                                           () => DownloadTemplateList(
                                             index: i,
@@ -309,6 +317,12 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                                     splashColor: ColorUtils.transparent,
                                     highlightColor: ColorUtils.transparent,
                                     onTap: () {
+                                      if (widget.isFromCreatePost) {
+                                        Get.back(
+                                            result: browserResponse.data!
+                                                .licensed![i].templateUrl);
+                                        return;
+                                      }
                                       Get.to(
                                         () => DownloadTemplateList(
                                           index: i,
@@ -379,12 +393,14 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
 
 class BrowserTemplateController extends GetxController {
   int tabIndex = 0;
+
   changeTab(value) {
     tabIndex = value;
     update();
   }
 
   String search = "";
+
   searchFunction(value) {
     search = value;
     update();

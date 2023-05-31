@@ -46,7 +46,7 @@ class UserProfileData {
       this.followingCount,
       this.postsCount,
       this.posts,
-      this.mention,
+      this.mentions,
       this.tag,
       this.subTag,
       this.deviceToken});
@@ -66,12 +66,12 @@ class UserProfileData {
         posts?.add(Posts.fromJson(v));
       });
     }
-    // if (json['mention'] != null) {
-    //   mention = [];
-    //   json['mention'].forEach((v) {
-    //     mention?.add(Dynamic.fromJson(v));
-    //   });
-    // }
+    if (json['mention'] != null) {
+      mentions = [];
+      json['mention'].forEach((v) {
+        mentions?.add(Mention.fromJson(v));
+      });
+    }
     tag = json['tag'];
     subTag = json['sub_tag'] ?? "";
     deviceToken = json['device_token'] ?? "";
@@ -86,7 +86,7 @@ class UserProfileData {
   int? followingCount;
   int? postsCount;
   List<Posts>? posts;
-  List<dynamic>? mention;
+  List<Mention>? mentions;
   String? tag;
   String? subTag;
   String? deviceToken;
@@ -104,13 +104,54 @@ class UserProfileData {
     if (posts != null) {
       map['posts'] = posts?.map((v) => v.toJson()).toList();
     }
-    if (mention != null) {
-      map['mention'] = mention?.map((v) => v.toJson()).toList();
+    if (mentions != null) {
+      map['mention'] = mentions?.map((v) => v.toJson()).toList();
     }
     map['tag'] = tag;
     map['sub_tag'] = subTag;
     map['device_token'] = deviceToken;
     return map;
+  }
+}
+
+class Mention {
+  int? id;
+  String? content;
+  String? contentType;
+  String? contentUrl;
+  String? createdOn;
+  String? username;
+  String? image;
+
+  Mention(
+      {this.id,
+      this.content,
+      this.contentType,
+      this.contentUrl,
+      this.createdOn,
+      this.username,
+      this.image});
+
+  Mention.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    content = json['content'];
+    contentType = json['content_type'];
+    contentUrl = json['content_url'];
+    createdOn = json['created_on'];
+    username = json['username'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['content'] = this.content;
+    data['content_type'] = this.contentType;
+    data['content_url'] = this.contentUrl;
+    data['created_on'] = this.createdOn;
+    data['username'] = this.username;
+    data['image'] = this.image;
+    return data;
   }
 }
 

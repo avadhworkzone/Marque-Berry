@@ -16,7 +16,7 @@ enum APIHeaderType {
 
 enum ValidationType { Password, Email, PNumber }
 
-enum FileExt { Image, Video, Doc }
+// enum CreatePostType { Image, Video, Gif,Template}
 
 enum OtpType { Regular, Alternate }
 
