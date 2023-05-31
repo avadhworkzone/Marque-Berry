@@ -29,7 +29,6 @@ class _BottomBarState extends State<BottomBar> {
   late List pageRoute;
   AuthViewModel authViewModel = Get.find<AuthViewModel>();
 
-
   // List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
 
   @override
@@ -47,11 +46,9 @@ class _BottomBarState extends State<BottomBar> {
     super.initState();
   }
 
-  void getCategories(){
+  void getCategories() {
     authViewModel.memeCategory();
   }
-
-
 
   String bottomPath = "assets/bottombar/";
 
@@ -173,7 +170,7 @@ class _BottomBarState extends State<BottomBar> {
             controller.pageChange(index);
           }
         },
-        child: Image.asset(img, scale: 5.w),
+        child: Image.asset(img, scale: index == 0 ? 5.5.w : 5.w),
       ),
     );
   }

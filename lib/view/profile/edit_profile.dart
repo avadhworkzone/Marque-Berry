@@ -368,7 +368,7 @@ class EditProfile extends StatelessWidget {
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,
                                         allowInputFormatters: RegularExpression
-                                            .alphabetDigitsPattern,
+                                            .alphabetDigitsUnderPattern,
                                       ),
                                       SizeConfig.sH2,
                                       CommonTextFormField(
@@ -444,12 +444,11 @@ class EditProfile extends StatelessWidget {
                                         textstyle: FontTextStyle.profileText
                                             .copyWith(
                                                 color: ColorUtils.black92),
-
                                         validator: (v) => userValidation(v),
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,
                                         allowInputFormatters: RegularExpression
-                                            .alphabetDigitsPattern,
+                                            .alphabetDigitsUnderPattern,
                                       ),
                                       SizeConfig.sH2,
                                     ],

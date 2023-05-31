@@ -66,7 +66,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
     super.initState();
   }
 
-  void getCategory(){
+  void getCategory() {
     print('categoryDataList=>$categoryDataList');
     categoryDataList = selectedCategoryDataList;
     print('selectedCategoryDataList=>$selectedCategoryDataList');
@@ -80,7 +80,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
       }
     }
 
-    logs('categoryDataList======>${categoryDataList.map((e) =>jsonEncode( e.toJson())).toList()}');
+    logs(
+        'categoryDataList======>${categoryDataList.map((e) => jsonEncode(e.toJson())).toList()}');
   }
 
   @override
@@ -108,9 +109,11 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                 builder: (createPostViewModel) {
                   return Scaffold(
                     bottomSheet: sharePostController.sourcePath == ""
-                        ? UploadPhoto(
-                            sharePostController: sharePostController,
-                          )
+                        ? MediaQuery.of(context).viewInsets.bottom == 0
+                            ? UploadPhoto(
+                                sharePostController: sharePostController,
+                              )
+                            : SizedBox()
                         : SizedBox(),
                     body: SafeArea(
                       child: Stack(
@@ -635,7 +638,6 @@ class SharePostController extends GetxController {
           final cropImagePath = await cropImageClass.postCropImage(
             image: File(file.path!),
             isBackGround: true,
-
           );
 
           sourcePath = cropImagePath?.path ?? '';

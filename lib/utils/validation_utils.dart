@@ -7,6 +7,7 @@ class RegularExpression {
   static String alphabetSpacePattern = r"[a-zA-Z ]";
   static String alphabetDigitsSpacePattern = r"[a-zA-Z0-9 ]";
   static String alphabetDigitsPattern = r"[a-zA-Z0-9]";
+  static String alphabetDigitsUnderPattern = r"[a-zA-Z0-9_]";
 
   /// Validation Expression Pattern
   static String emailValidationPattern =
