@@ -635,7 +635,7 @@ class SharePostController extends GetxController {
           final cropImagePath = await cropImageClass.postCropImage(
             image: File(file.path!),
             isBackGround: true,
-            context: context,
+
           );
 
           sourcePath = cropImagePath?.path ?? '';

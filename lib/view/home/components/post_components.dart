@@ -87,7 +87,7 @@ class PostComponents extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
-
+    logs('profileImage==>$profileImage');
     return Padding(
       padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
       child: Container(
@@ -95,7 +95,8 @@ class PostComponents extends StatelessWidget {
           borderRadius: BorderRadius.circular(1.5.w),
           color: whiteBlack2E,
           boxShadow: [
-            BoxShadow(blurRadius: 5,color: Theme.of(context).colorScheme.background),
+            BoxShadow(
+                blurRadius: 5, color: Theme.of(context).colorScheme.background),
           ],
         ),
         child: Column(
@@ -103,11 +104,11 @@ class PostComponents extends StatelessWidget {
             SizeConfig.sH1,
             ListTile(
               onTap: () async {
-                isScreenOpen=false;
+                isScreenOpen = false;
                 await Get.to(() => Profile(
                       userId: userId,
                     ));
-                isScreenOpen=true;
+                isScreenOpen = true;
               },
               title: AdoroText(
                 userName,
@@ -124,7 +125,7 @@ class PostComponents extends StatelessWidget {
                 color: black92White,
                 overflow: TextOverflow.ellipsis,
               ),
-              leading: ClipRRect(
+               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(15.w),
                 child: Container(
                   color: Colors.grey[200],
@@ -156,6 +157,7 @@ class PostComponents extends StatelessWidget {
                   ),
                 ),
               ),
+
               trailing: isPostDetailFromLink
                   ? SizedBox()
                   : IconButton(
@@ -242,14 +244,14 @@ class PostComponents extends StatelessWidget {
                       SizeConfig.sW1AndHalf,
                       InkWell(
                         onTap: () async {
-                          isScreenOpen=false;
+                          isScreenOpen = false;
                           await Get.to(
                             () => Comments(
                               postId: postId,
                               profileImage: profileImage,
                             ),
                           );
-                          isScreenOpen=true;
+                          isScreenOpen = true;
                           categoryFeedViewModel.pageNumberIndex = 0;
                           categoryFeedViewModel.categoryTrending(
                               homeController.tabName,
@@ -264,8 +266,10 @@ class PostComponents extends StatelessWidget {
                       SizeConfig.sW1AndHalf,
                       InkWell(
                         onTap: () {
-                          sharePostBottomSheet(  postIdArg: postId,
-                            categoryFeedViewModel: categoryFeedViewModel,);
+                          sharePostBottomSheet(
+                            postIdArg: postId,
+                            categoryFeedViewModel: categoryFeedViewModel,
+                          );
                         },
                         child: CommonImageScale(
                           scale: 25.w,
@@ -276,14 +280,14 @@ class PostComponents extends StatelessWidget {
                       Spacer(),
                       InkWell(
                         onTap: () async {
-                          isScreenOpen=false;
+                          isScreenOpen = false;
                           await Get.to(
                             () => Comments(
                               postId: postId,
                               profileImage: profileImage,
                             ),
                           );
-                          isScreenOpen=true;
+                          isScreenOpen = true;
                           categoryFeedViewModel.pageNumberIndex = 0;
                           categoryFeedViewModel.categoryTrending(
                               homeController.tabName,
@@ -383,13 +387,12 @@ class PostComponents extends StatelessWidget {
                             ),
                           if (likeProfile!.length == 1) SizeConfig.sW2,
                           InkWell(
-                            onTap: ()
-                            async {
-                              isScreenOpen=false;
+                            onTap: () async {
+                              isScreenOpen = false;
                               await Get.to(
                                 () => LikeScreen(likeProfile: postId),
                               );
-                              isScreenOpen=true;
+                              isScreenOpen = true;
                             },
                             child: Text.rich(
                               TextSpan(
@@ -603,8 +606,6 @@ class PostComponents extends StatelessWidget {
     );
   }
 }
-
-
 
 class LikeWidget extends StatelessWidget {
   const LikeWidget({

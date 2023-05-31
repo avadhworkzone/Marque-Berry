@@ -41,12 +41,13 @@ class CoverProfile extends StatelessWidget {
                         profileData.id ==
                             PreferenceUtils.getInt(key: PreferenceUtils.userid)
                     ? Image.file(
-                        File(con.coverImagePath),
+                        File(con.coverImagePath,),
                         // fit: BoxFit.fill,
-                        // fit: BoxFit.fitWidth,
+                        fit: BoxFit.fitWidth,
                         // fit: BoxFit.contain,
                       )
-                    : CommonCoverImage(image: profileData.coverPhoto ?? ""),
+                    :
+                CommonCoverImage(image: profileData.coverPhoto ?? ""),
               ),
             ),
             if (profileData.id ==

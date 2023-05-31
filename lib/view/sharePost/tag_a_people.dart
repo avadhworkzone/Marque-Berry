@@ -90,7 +90,7 @@ class TagAPeople extends StatelessWidget {
                 hintText: 'Search...',
                 hintStyle: TextStyle(color: blackWhite),
                 denyInputFormatters: '[]',
-                allowInputFormatters: RegularExpression.alphabetDigitsPattern,
+                allowInputFormatters: RegularExpression.alphabetDigitsSpacePattern,
               ),
             ),
             SizeConfig.sH2,

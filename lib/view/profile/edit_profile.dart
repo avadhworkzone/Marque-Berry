@@ -352,7 +352,7 @@ class EditProfile extends StatelessWidget {
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,
                                         allowInputFormatters: RegularExpression
-                                            .nameKeyboardPattern,
+                                            .alphabetSpacePattern,
                                       ),
                                       SizeConfig.sH2,
                                       CommonTextFormField(
@@ -368,7 +368,7 @@ class EditProfile extends StatelessWidget {
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,
                                         allowInputFormatters: RegularExpression
-                                            .nameKeyboardPattern,
+                                            .alphabetDigitsPattern,
                                       ),
                                       SizeConfig.sH2,
                                       CommonTextFormField(
@@ -401,7 +401,7 @@ class EditProfile extends StatelessWidget {
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,
                                         allowInputFormatters: RegularExpression
-                                            .nameKeyboardPattern,
+                                            .alphabetDigitsSpacePattern,
                                       ),
                                       SizeConfig.sH2,
                                       CommonTextFormField(
@@ -417,7 +417,7 @@ class EditProfile extends StatelessWidget {
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,
                                         allowInputFormatters: RegularExpression
-                                            .nameKeyboardPattern,
+                                            .alphabetDigitsSpacePattern,
                                       ),
                                       SizeConfig.sH2,
                                       CommonTextFormField(
@@ -444,12 +444,12 @@ class EditProfile extends StatelessWidget {
                                         textstyle: FontTextStyle.profileText
                                             .copyWith(
                                                 color: ColorUtils.black92),
-                                        keyboardType: TextInputType.number,
+
                                         validator: (v) => userValidation(v),
                                         denyInputFormatters: RegularExpression
                                             .noSpaceAllowPattern,
                                         allowInputFormatters: RegularExpression
-                                            .contactKeyboardPattern,
+                                            .alphabetDigitsPattern,
                                       ),
                                       SizeConfig.sH2,
                                     ],

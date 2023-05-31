@@ -114,7 +114,7 @@ class CropImage {
   Future<File?> postCropImage({
     required File image,
     required bool isBackGround,
-    required BuildContext context,
+    // required BuildContext context,
   }) async {
     final croppedFile = await ImageCropper().cropImage(
       sourcePath: image.path,

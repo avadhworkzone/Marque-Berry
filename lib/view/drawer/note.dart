@@ -85,9 +85,10 @@ class Note extends StatelessWidget {
                 ),
               ), // SizeConfig.sH3,
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.sp),
+                padding: EdgeInsets.fromLTRB(10.w, 10.sp, 10.w, 10.sp),
                 child: Container(
                   width: 80.w,
+
                   height: 50.w,
                   child: InkWell(
                       onTap: () {

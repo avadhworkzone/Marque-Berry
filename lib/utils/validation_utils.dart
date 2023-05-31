@@ -5,7 +5,8 @@ class RegularExpression {
   /// TextField Enter Pattern Expression
   static String passwordPattern = r"[a-zA-Z0-9#!_@$%^&*-]";
   static String alphabetSpacePattern = r"[a-zA-Z ]";
-  static String alphabetDigitsPattern = r"[a-zA-Z0-9 ]";
+  static String alphabetDigitsSpacePattern = r"[a-zA-Z0-9 ]";
+  static String alphabetDigitsPattern = r"[a-zA-Z0-9]";
 
   /// Validation Expression Pattern
   static String emailValidationPattern =

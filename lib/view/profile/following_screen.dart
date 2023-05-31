@@ -16,6 +16,7 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/home/search_user.dart';
 import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
@@ -90,9 +91,14 @@ class FollowerFollowing extends StatelessWidget {
           child: customAppbar(
             context: context,
             title: title,
-            icon: Icon(
-              Icons.search_rounded,
-              color: blackWhite,
+            icon: IconButton(
+              onPressed: (){
+                Get.to(()=>SearchUser());
+              },
+              icon: Icon(
+                Icons.search_rounded,
+                color: blackWhite,
+              ),
             ),
             leadingOnTap: () {
               getUserProfile();

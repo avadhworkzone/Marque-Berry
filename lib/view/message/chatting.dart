@@ -10,6 +10,7 @@ import 'package:octo_image/octo_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/notification_service.dart';
+import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/model/apiModel/responseModel/check_follow_user_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/notification_chating_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
@@ -27,6 +28,7 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/home/post_detail_screen.dart';
+import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
 import '../profile/profile.dart';
@@ -42,14 +44,15 @@ class ChattingScreen extends StatefulWidget {
   String senderImage;
   String receiverImage;
 
-  ChattingScreen({Key? key,
-    required this.senderId,
-    required this.receiverId,
-    required this.senderName,
-    required this.receiverName,
-    required this.senderImage,
-    required this.receiverImage,
-    required this.receiverFcmToken})
+  ChattingScreen(
+      {Key? key,
+      required this.senderId,
+      required this.receiverId,
+      required this.senderName,
+      required this.receiverName,
+      required this.senderImage,
+      required this.receiverImage,
+      required this.receiverFcmToken})
       : super(key: key);
 
   @override
@@ -60,8 +63,8 @@ class _ChattingScreenState extends State<ChattingScreen>
     with WidgetsBindingObserver {
   var message = TextEditingController(text: "");
   ChattingController chattingController = Get.find<ChattingController>();
-  FollowFollowingViewModel followingViewModel = Get.find<
-      FollowFollowingViewModel>();
+  FollowFollowingViewModel followingViewModel =
+      Get.find<FollowFollowingViewModel>();
   RxBool isMsgSending = false.obs;
   bool isUserFollowed = false;
 
@@ -78,8 +81,8 @@ class _ChattingScreenState extends State<ChattingScreen>
   Future<void> checkUserFollow() async {
     await followingViewModel.checkFollow(widget.receiverId);
     if (followingViewModel.checkFollowApiResponse.status == Status.COMPLETE) {
-      CheckFollowUserResModel userResModel = followingViewModel
-          .checkFollowApiResponse.data;
+      CheckFollowUserResModel userResModel =
+          followingViewModel.checkFollowApiResponse.data;
       if (userResModel.status == 200) {
         if ((userResModel.data?.first.followStatus ?? 'false') == "true") {
           isUserFollowed = true;
@@ -91,8 +94,8 @@ class _ChattingScreenState extends State<ChattingScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (
-    // state == AppLifecycleState.paused ||
-    state == AppLifecycleState.inactive) {
+        // state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
       ConstUtils.selectedChattingUserId = "";
     } else if (state == AppLifecycleState.resumed) {
       ConstUtils.selectedChattingUserId = widget.receiverId;
@@ -108,11 +111,7 @@ class _ChattingScreenState extends State<ChattingScreen>
 
   @override
   Widget build(BuildContext context) {
-    Color? blackWhite = Theme
-        .of(context)
-        .textTheme
-        .titleSmall
-        ?.color;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return WillPopScope(
       onWillPop: () {
@@ -120,6 +119,7 @@ class _ChattingScreenState extends State<ChattingScreen>
         return Future.value(true);
       },
       child: Scaffold(
+
         appBar: AppBar(
           backgroundColor: ColorUtils.transparent,
           titleSpacing: 0,
@@ -148,12 +148,11 @@ class _ChattingScreenState extends State<ChattingScreen>
                       placeholderBuilder: OctoPlaceholder.blurHash(
                         'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
                       ),
-                      errorBuilder: (context, obj, stack) =>
-                          Image.asset(
-                            // 'assets/images/profile.png',
-                            IconsWidgets.userImages,
-                            scale: 4,
-                          ),
+                      errorBuilder: (context, obj, stack) => Image.asset(
+                        // 'assets/images/profile.png',
+                        IconsWidgets.userImages,
+                        scale: 4,
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -175,143 +174,148 @@ class _ChattingScreenState extends State<ChattingScreen>
             ),
           ),
         ),
+
         body: Column(
           children: [
             Expanded(
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("Chat")
-                    .doc(chatId(widget.senderId, widget.receiverId))
-                    .snapshots(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(child: Loader());
-                  }
+              child: SingleChildScrollView(
+                reverse: true,
+                child: Column(
+                  children: [
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("Chat")
+                          .doc(chatId(widget.senderId, widget.receiverId))
+                          .snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(child: Padding(
+                            padding: EdgeInsets.only(bottom: 30.h),
+                            child: Loader(),
+                          ));
+                        }
 
-                  if (snapshot.hasError) {
-                    return SizedBox();
-                  }
-                  if (!snapshot.data.exists) {
-                    return SizedBox();
-                  }
-                  if (!snapshot.hasData) {
-                    return SizedBox();
-                  } else {
-                    if (snapshot.data!["message"].length < 1)
-                      return SizedBox();
-                    else
-                      return SingleChildScrollView(
-                        reverse: true,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          primary: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: snapshot.data!["message"].length,
-                          itemBuilder: (context, index) {
-                            String messageTypeFirebase =
-                            snapshot.data?["message"][index]["messageType"];
-                            String senderIdFirebase =
-                            snapshot.data?["message"][index]["senderId"];
-                            String messageFirebase =
-                            snapshot.data?["message"][index]["message"];
-
-                            /// DATE CONVERTER
-                            final Timestamp timestamp =
-                            snapshot.data?["message"][index]["date"];
-                            final DateTime dateTime = timestamp.toDate();
-                            final timeConvert =
-                            DateFormat('hh:mm a').format(dateTime);
-
-                            ///
-
-                            if (messageTypeFirebase ==
-                                MessageType.TEXT.name.toString()) {
-                              return senderIdFirebase == widget.senderId
-                                  ? RightAlignTextWidget(
-                                message: messageFirebase,
-                                date: timeConvert,
-                                senderImage: widget.senderImage,
-                                userId: widget.senderId,
-                              )
-                                  : LeftAlignTextWidget(
-                                userId: widget.receiverId,
-                                receiverImage: widget.receiverImage,
-                                message: messageFirebase,
-                                date: timeConvert,
-                              );
-                            } else if (messageTypeFirebase ==
-                                MessageType.VIDEO.name) {
-                              return senderIdFirebase == widget.senderId
-                                  ? RightImageWidget(
-                                sImage: widget.senderImage,
-                                time: timeConvert,
-                                image: messageFirebase,
-                                isVideo: true,
-                                userId: widget.senderId,
-                              )
-                                  : LeftImageWidget(
-                                rImage: widget.receiverImage,
-                                time: timeConvert,
-                                isVideo: true,
-                                image: messageFirebase,
-                                userId: widget.receiverId,
-                              );
-                            } else if (messageTypeFirebase ==
-                                MessageType.IMAGE.name) {
-                              return senderIdFirebase == widget.senderId
-                                  ? RightImageWidget(
-                                sImage: widget.senderImage,
-                                time: timeConvert,
-                                image: messageFirebase,
-                                isVideo: false,
-                                userId: widget.senderId,
-                              )
-                                  : LeftImageWidget(
-                                rImage: widget.receiverImage,
-                                time: timeConvert,
-                                isVideo: false,
-                                image: messageFirebase,
-                                userId: widget.receiverId,
-                              );
-                            }
+                        if (snapshot.hasError) {
+                          return SizedBox();
+                        }
+                        if (!snapshot.data.exists) {
+                          return SizedBox();
+                        }
+                        if (!snapshot.hasData) {
+                          return SizedBox();
+                        } else {
+                          if (snapshot.data!["message"].length < 1)
                             return SizedBox();
-                          },
-                        ),
-                      );
-                  }
-                },
+                          else
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              primary: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data!["message"].length,
+                              itemBuilder: (context, index) {
+                                String messageTypeFirebase =
+                                    snapshot.data?["message"][index]["messageType"];
+                                String senderIdFirebase =
+                                    snapshot.data?["message"][index]["senderId"];
+                                String messageFirebase =
+                                    snapshot.data?["message"][index]["message"];
+
+                                /// DATE CONVERTER
+                                final Timestamp timestamp =
+                                    snapshot.data?["message"][index]["date"];
+                                final DateTime dateTime = timestamp.toDate();
+                                final timeConvert =
+                                    DateFormat('hh:mm a').format(dateTime);
+
+                                ///
+
+                                if (messageTypeFirebase ==
+                                    MessageType.TEXT.name.toString()) {
+                                  return senderIdFirebase == widget.senderId
+                                      ? RightAlignTextWidget(
+                                          message: messageFirebase,
+                                          date: timeConvert,
+                                          senderImage: widget.senderImage,
+                                          userId: widget.senderId,
+                                        )
+                                      : LeftAlignTextWidget(
+                                          userId: widget.receiverId,
+                                          receiverImage: widget.receiverImage,
+                                          message: messageFirebase,
+                                          date: timeConvert,
+                                        );
+                                } else if (messageTypeFirebase ==
+                                    MessageType.VIDEO.name) {
+                                  return senderIdFirebase == widget.senderId
+                                      ? RightImageWidget(
+                                          sImage: widget.senderImage,
+                                          time: timeConvert,
+                                          image: messageFirebase,
+                                          isVideo: true,
+                                          userId: widget.senderId,
+                                        )
+                                      : LeftImageWidget(
+                                          rImage: widget.receiverImage,
+                                          time: timeConvert,
+                                          isVideo: true,
+                                          image: messageFirebase,
+                                          userId: widget.receiverId,
+                                        );
+                                } else if (messageTypeFirebase ==
+                                    MessageType.IMAGE.name) {
+                                  return senderIdFirebase == widget.senderId
+                                      ? RightImageWidget(
+                                          sImage: widget.senderImage,
+                                          time: timeConvert,
+                                          image: messageFirebase,
+                                          isVideo: false,
+                                          userId: widget.senderId,
+                                        )
+                                      : LeftImageWidget(
+                                          rImage: widget.receiverImage,
+                                          time: timeConvert,
+                                          isVideo: false,
+                                          image: messageFirebase,
+                                          userId: widget.receiverId,
+                                        );
+                                }
+                                return SizedBox();
+                              },
+                            );
+                        }
+                      },
+                    ),
+                    GetBuilder<ChattingController>(builder: (chattingController) {
+                      print(
+                          'chattingController._sourcePath=>${chattingController._sourcePath}');
+                      String ext = chattingController._sourcePath.split("/").last;
+                      print('EXT ===>$ext');
+                      if (ext.contains("jpg") ||
+                          ext.contains("png") ||
+                          ext.contains("jpeg")) {
+                        if (chattingController._sourcePath != "")
+                          return TempImageWidget(
+                            isVideo: false,
+                            image: chattingController._sourcePath,
+                            sImage: widget.senderImage,
+                            time: '',
+                            userId: widget.senderId,
+                          );
+                        return SizedBox();
+                      } else if (chattingController._sourcePath != "")
+                        return TempImageWidget(
+                          isVideo: true,
+                          image: chattingController._sourcePath,
+                          sImage: widget.senderImage,
+                          time: '',
+                          userId: widget.senderId,
+                        );
+                      return SizedBox();
+                    }),
+                  ],
+                ),
               ),
             ),
-            GetBuilder<ChattingController>(builder: (chattingController) {
-              print(
-                  'chattingController._sourcePath=>${chattingController
-                      ._sourcePath}');
-              String ext = chattingController._sourcePath
-                  .split("/")
-                  .last;
-              print('EXT ===>$ext');
-              if (ext.contains("jpg") ||
-                  ext.contains("png") ||
-                  ext.contains("jpeg")) {
-                if (chattingController._sourcePath != "")
-                  return TempImageWidget(
-                    isVideo: false,
-                    image: chattingController._sourcePath,
-                    sImage: widget.senderImage,
-                    time: '',
-                    userId: widget.senderId,
-                  );
-                return SizedBox();
-              } else if (chattingController._sourcePath != "")
-                return TempImageWidget(
-                  isVideo: true,
-                  image: chattingController._sourcePath,
-                  sImage: widget.senderImage,
-                  time: '',
-                  userId: widget.senderId,
-                );
-              return SizedBox();
-            }),
             textFormWidget(
               chattingController: chattingController,
               color: blackWhite,
@@ -328,17 +332,9 @@ class _ChattingScreenState extends State<ChattingScreen>
     required ChattingController chattingController,
     required BuildContext context,
   }) {
-    Color greyFABlack32 = Theme
-        .of(context)
-        .cardColor;
-    Color? blackWhite = Theme
-        .of(context)
-        .textTheme
-        .titleSmall
-        ?.color;
-    Color whiteBlack2E = Theme
-        .of(context)
-        .scaffoldBackgroundColor;
+    Color greyFABlack32 = Theme.of(context).cardColor;
+    Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+    Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
 
     return Container(
       height: 16.w,
@@ -353,9 +349,7 @@ class _ChattingScreenState extends State<ChattingScreen>
               if (getPath != "") {
                 uploadImgFirebaseStorage(
                   chattingController: chattingController,
-                  ext: getPath
-                      .split(".")
-                      .last,
+                  ext: getPath.split(".").last,
                   file: getPath,
                 );
               }
@@ -395,20 +389,19 @@ class _ChattingScreenState extends State<ChattingScreen>
             ),
           ),
           SizeConfig.sW2,
-          Obx(() =>
-              InkWell(
+          Obx(() => InkWell(
                 onTap: isMsgSending.value
                     ? null
                     : () async {
-                  if (message.text.isNotEmpty) {
-                    await sendMessage(
-                      message: message.text,
-                      messageType: MessageType.TEXT,
-                    );
+                        if (message.text.isNotEmpty) {
+                          await sendMessage(
+                            message: message.text,
+                            messageType: MessageType.TEXT,
+                          );
 
-                    message.clear();
-                  }
-                },
+                          message.clear();
+                        }
+                      },
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
@@ -419,7 +412,7 @@ class _ChattingScreenState extends State<ChattingScreen>
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Center(
                       child:
-                      Icon(Icons.send_sharp, size: 8.w, color: blackWhite),
+                          Icon(Icons.send_sharp, size: 8.w, color: blackWhite),
                     ),
                   ),
                 ),
@@ -459,7 +452,7 @@ class _ChattingScreenState extends State<ChattingScreen>
       // FocusScope.of(context).unfocus();
       isMsgSending.value = true;
 
-      if(!isUserFollowed){
+      if (!isUserFollowed) {
         showSnackBar(
           message: "Please first follow this user",
           snackbarSuccess: true,
@@ -467,9 +460,9 @@ class _ChattingScreenState extends State<ChattingScreen>
         return;
       }
       bool exists = (await FirebaseFirestore.instance
-          .collection("Chat")
-          .doc(chatId(widget.senderId, widget.receiverId))
-          .get())
+              .collection("Chat")
+              .doc(chatId(widget.senderId, widget.receiverId))
+              .get())
           .exists;
       if (exists == false) {
         await FirebaseFirestore.instance
@@ -494,9 +487,7 @@ class _ChattingScreenState extends State<ChattingScreen>
               "messageType": messageType.name,
             }
           ]),
-          "last_message_time": DateTime
-              .now()
-              .millisecondsSinceEpoch,
+          "last_message_time": DateTime.now().millisecondsSinceEpoch,
           'senderId': widget.senderId,
           'receiverId': widget.receiverId,
         },
@@ -517,15 +508,12 @@ class _ChattingScreenState extends State<ChattingScreen>
             msg: messageType == MessageType.TEXT
                 ? message
                 : messageType == MessageType.IMAGE
-                ? "📷 Photo"
-                : '🎥 Video',
+                    ? "📷 Photo"
+                    : '🎥 Video',
             title: widget.senderName,
             data: {
               'data': messageData.toJson(),
-              'id': DateTime
-                  .now()
-                  .millisecond
-                  .toString(),
+              'id': DateTime.now().millisecond.toString(),
               'notification_type': NotificationType.Chatting.name
             });
       });
@@ -548,9 +536,7 @@ class _ChattingScreenState extends State<ChattingScreen>
       if (ext == "jpg" || ext == "jpeg" || ext == "png") {
         var snapshot = await storage
             .ref()
-            .child('ChatImage/${DateTime
-            .now()
-            .microsecondsSinceEpoch}')
+            .child('ChatImage/${DateTime.now().microsecondsSinceEpoch}')
             .putFile(File(file));
         String downloadUrl = await snapshot.ref.getDownloadURL();
 
@@ -566,9 +552,7 @@ class _ChattingScreenState extends State<ChattingScreen>
           ext == "gif") {
         var snapshot = await storage
             .ref()
-            .child('ChatVideos/${DateTime
-            .now()
-            .microsecondsSinceEpoch}')
+            .child('ChatVideos/${DateTime.now().microsecondsSinceEpoch}')
             .putFile(File(file));
         String downloadUrl = await snapshot.ref.getDownloadURL();
 
@@ -619,8 +603,7 @@ class LeftImageWidget extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Get.to(() =>
-                      Profile(
+                  Get.to(() => Profile(
                         userId: int.parse(userId),
                       ));
                 },
@@ -641,22 +624,22 @@ class LeftImageWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: isVideo == true
                       ? () {
-                    Get.dialog(
-                      Dialog(
-                        insetPadding: EdgeInsets.zero,
-                        child: Container(
-                          color: Colors.black26,
-                          child: Center(
-                            child: AspectRatio(
-                              aspectRatio: 2 / 3,
-                              child: FileVideoPlayer(url: image),
+                          Get.dialog(
+                            Dialog(
+                              insetPadding: EdgeInsets.zero,
+                              child: Container(
+                                color: Colors.black26,
+                                child: Center(
+                                  child: AspectRatio(
+                                    aspectRatio: 2 / 3,
+                                    child: FileVideoPlayer(url: image),
+                                  ),
+                                  // BetterPlayer.network(image),
+                                ),
+                              ),
                             ),
-                            // BetterPlayer.network(image),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
+                          );
+                        }
                       : null,
                   child: Card(
                     color: Colors.grey[100],
@@ -695,8 +678,7 @@ class LeftImageWidget extends StatelessWidget {
                               width: 55.w,
                               child: InkWell(
                                   onTap: () {
-                                    Get.to(() =>
-                                        Dialog(
+                                    Get.to(() => Dialog(
                                           child: PhotoView(
                                             imageProvider: NetworkImage(
                                               image,
@@ -705,7 +687,7 @@ class LeftImageWidget extends StatelessWidget {
                                         ));
                                   },
                                   child:
-                                  Image.network(image, fit: BoxFit.cover)),
+                                      Image.network(image, fit: BoxFit.cover)),
                             ),
                           ),
                         Padding(
@@ -759,20 +741,20 @@ class RightImageWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: isVideo == true
                       ? () {
-                    Get.dialog(
-                      Dialog(
-                        backgroundColor: Colors.black87,
-                        insetPadding: EdgeInsets.zero,
-                        child: Center(
-                          child: AspectRatio(
-                            aspectRatio: 16 / 9,
-                            child: FileVideoPlayer(url: image),
-                          ),
-                          // BetterPlayer.network(image),
-                        ),
-                      ),
-                    );
-                  }
+                          Get.dialog(
+                            Dialog(
+                              backgroundColor: Colors.black87,
+                              insetPadding: EdgeInsets.zero,
+                              child: Center(
+                                child: AspectRatio(
+                                  aspectRatio: 16 / 9,
+                                  child: FileVideoPlayer(url: image),
+                                ),
+                                // BetterPlayer.network(image),
+                              ),
+                            ),
+                          );
+                        }
                       : null,
                   child: Card(
                     elevation: 0, color: Colors.grey[100],
@@ -808,14 +790,38 @@ class RightImageWidget extends StatelessWidget {
                                 top: 10, right: 10, left: 10),
                             child: InkWell(
                               onTap: () {
-                                Get.to(() =>
-                                    Dialog(
+                                Get.dialog(
+                                  Dialog(
+                                    backgroundColor: Colors.black87,
+                                    insetPadding: EdgeInsets.zero,
+                                    child: Center(
                                       child: PhotoView(
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return CommonImage(
+                                            img: IconsWidgets.imageImages,
+                                            color: ColorUtils.black,
+                                          );
+                                        },
+                                        loadingBuilder: (context, event) {
+                                          return Loader();
+                                        },
+                                        backgroundDecoration: BoxDecoration(
+                                          color: Colors.transparent
+                                        ),
                                         imageProvider: NetworkImage(
                                           image,
                                         ),
-                                      ),
-                                    ));
+                                      )
+                                    ),
+                                  ),
+                                );
+                                // Get.to(() => Dialog(
+                                //       child: PhotoView(
+                                //         imageProvider: NetworkImage(
+                                //           image,
+                                //         ),
+                                //       ),
+                                //     ));
                               },
                               child: Container(
                                 height: 60.w,
@@ -839,8 +845,7 @@ class RightImageWidget extends StatelessWidget {
               ),
               InkWell(
                   onTap: () {
-                    Get.to(() =>
-                        Profile(
+                    Get.to(() => Profile(
                           userId: int.parse(userId),
                         ));
                   },
@@ -885,23 +890,23 @@ class TempImageWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: isVideo == true
                       ? () {
-                    Get.dialog(
-                      Dialog(
-                        // backgroundColor: Colors.red,
-                        insetPadding: EdgeInsets.zero,
-                        child: Center(
-                          child: AspectRatio(
-                            aspectRatio: 16 / 9,
-                            child: FileVideoPlayer(
-                              url: image,
-                              fileVideo: true,
+                          Get.dialog(
+                            Dialog(
+                              // backgroundColor: Colors.red,
+                              insetPadding: EdgeInsets.zero,
+                              child: Center(
+                                child: AspectRatio(
+                                  aspectRatio: 16 / 9,
+                                  child: FileVideoPlayer(
+                                    url: image,
+                                    fileVideo: true,
+                                  ),
+                                ),
+                                // BetterPlayer.file(image),
+                              ),
                             ),
-                          ),
-                          // BetterPlayer.file(image),
-                        ),
-                      ),
-                    );
-                  }
+                          );
+                        }
                       : null,
                   child: Card(
                     elevation: 0, color: Colors.grey[100],
@@ -952,8 +957,7 @@ class TempImageWidget extends StatelessWidget {
               ),
               InkWell(
                   onTap: () {
-                    Get.to(() =>
-                        Profile(
+                    Get.to(() => Profile(
                           userId: int.parse(userId),
                         ));
                   },
@@ -1022,8 +1026,7 @@ class LeftAlignTextWidget extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Get.to(() =>
-                      Profile(
+                  Get.to(() => Profile(
                         userId: int.parse(userId),
                       ));
                   print("chattingProfileImage");
@@ -1057,17 +1060,16 @@ class LeftAlignTextWidget extends StatelessWidget {
                               onTap: !message.contains(DynamicLink.uriPrefix)
                                   ? null
                                   : () {
-                                final postId = message
-                                    .toString()
-                                    .substring(
-                                    message.toString().indexOf('=') +
-                                        1);
-                                Get.to(() =>
-                                    PostDetailScreen(
-                                      postId: postId,
-                                      isFromBackScreen: true,
-                                    ));
-                              },
+                                      final postId = message
+                                          .toString()
+                                          .substring(
+                                              message.toString().indexOf('=') +
+                                                  1);
+                                      Get.to(() => PostDetailScreen(
+                                            postId: postId,
+                                            isFromBackScreen: true,
+                                          ));
+                                    },
                               child: AdoroText(
                                 message,
                                 color: message.contains(DynamicLink.uriPrefix)
@@ -1148,18 +1150,17 @@ class RightAlignTextWidget extends StatelessWidget {
                               onTap: !message.contains(DynamicLink.uriPrefix)
                                   ? null
                                   : () {
-                                final postId = message
-                                    .toString()
-                                    .substring(
-                                    message.toString().indexOf('=') +
-                                        1);
-                                Get.to(
-                                      () =>
-                                      PostDetailScreen(
-                                          postId: postId,
-                                          isFromBackScreen: true),
-                                );
-                              },
+                                      final postId = message
+                                          .toString()
+                                          .substring(
+                                              message.toString().indexOf('=') +
+                                                  1);
+                                      Get.to(
+                                        () => PostDetailScreen(
+                                            postId: postId,
+                                            isFromBackScreen: true),
+                                      );
+                                    },
                               child: AdoroText(
                                 message,
                                 color: message.contains(DynamicLink.uriPrefix)
@@ -1184,8 +1185,7 @@ class RightAlignTextWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Get.to(() =>
-                      Profile(
+                  Get.to(() => Profile(
                         userId: int.parse(userId),
                       ));
                 },
@@ -1259,6 +1259,17 @@ class ChattingController extends GetxController {
       if (result != null) {
         PlatformFile file = result.files.first;
         _sourcePath = file.path!;
+        if (_sourcePath.contains('.jpg') ||
+            _sourcePath.contains('.jpeg') ||
+            _sourcePath.contains('.png')) {
+          final cropImagePath = await cropImageClass.postCropImage(
+            image: File(file.path!),
+            isBackGround: true,
+          );
+          if (cropImagePath != null) {
+            _sourcePath = cropImagePath.path;
+          }
+        }
       } else {
         _sourcePath = "";
       }

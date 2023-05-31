@@ -52,7 +52,8 @@ class CommonCoverImage extends StatelessWidget {
       placeholderBuilder: OctoPlaceholder.blurHash(
         'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
       ),
-      fit: BoxFit.fill,
+      // fit: BoxFit.fill,
+      fit: BoxFit.fitWidth,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(
           ImagesWidgets.bgProfileImage,

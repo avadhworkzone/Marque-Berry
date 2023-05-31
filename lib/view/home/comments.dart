@@ -63,6 +63,7 @@ class _CommentsState extends State<Comments> {
       child: GetBuilder<HomeController>(builder: (homeController) {
         return GetBuilder<CategoryFeedViewModel>(
           initState: (_) {
+            categoryFeedViewModel.postCommentApiResponse=ApiResponse.initial('INITIAL');
             postCommentApiCall(homeController);
           },
           builder: (categoryFeedViewModel) {
@@ -125,7 +126,9 @@ class _CommentsState extends State<Comments> {
                                               commentId: commentData.commentId
                                                   .toString(),
                                               postId: commentData.postId!,
-                                      isLiked: commentData.isLikedByMe ?? false);
+                                              isLiked:
+                                                  commentData.isLikedByMe ??
+                                                      false);
                                       if (categoryFeedViewModel
                                               .postLikeInCommentApiResponse
                                               .status ==
@@ -186,9 +189,11 @@ class _CommentsState extends State<Comments> {
                                                     .childComment![i].commentId
                                                     .toString(),
                                                 postId: commentData
-                                                    .childComment![i].postId!,isLiked: commentData
-                                            .childComment![i].isLikedByMe ??
-                                            false);
+                                                    .childComment![i].postId!,
+                                                isLiked: commentData
+                                                        .childComment![i]
+                                                        .isLikedByMe ??
+                                                    false);
                                         if (categoryFeedViewModel
                                                 .postLikeInCommentApiResponse
                                                 .status ==
@@ -311,6 +316,11 @@ class _CommentsState extends State<Comments> {
                           SizeConfig.sW1,
                           TextButton(
                             onPressed: () async {
+                              if (categoryFeedViewModel
+                                      .postCommentApiResponse.status ==
+                                  Status.LOADING) {
+                                return;
+                              }
                               FocusScope.of(context).unfocus();
                               if (commentTextEditing.text.isEmpty) {
                                 showSnackBar(message: 'Field is required');
