@@ -74,9 +74,14 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        title: CommonImageWidth(
-          width: 25.w,
-          img: IconsWidgets.adoroTextImages,
+        title: Padding(
+          padding: EdgeInsets.only(
+            bottom: 6,
+          ),
+          child: CommonImageWidth(
+            width: 25.w,
+            img: IconsWidgets.adoroTextImages,
+          ),
         ),
         actions: [
           GestureDetector(

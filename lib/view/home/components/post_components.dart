@@ -125,7 +125,7 @@ class PostComponents extends StatelessWidget {
                 color: black92White,
                 overflow: TextOverflow.ellipsis,
               ),
-               leading: ClipRRect(
+              leading: ClipRRect(
                 borderRadius: BorderRadius.circular(15.w),
                 child: Container(
                   color: Colors.grey[200],
@@ -157,7 +157,6 @@ class PostComponents extends StatelessWidget {
                   ),
                 ),
               ),
-
               trailing: isPostDetailFromLink
                   ? SizedBox()
                   : IconButton(

@@ -130,12 +130,15 @@ class WithdrawlAmount extends StatelessWidget {
               //     topRight: Radius.circular(10.w))
             ),
             child: Center(
-                child: AdoroText(
-              VariableUtils.adoro,
-              color: ColorUtils.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold,
-            )),
+              child: Image.asset("assets/images/adoro.png", scale: 1.5.w),
+
+              //     child: AdoroText(
+              //   VariableUtils.adoro,
+              //   color: ColorUtils.white,
+              //   fontSize: 25.sp,
+              //   fontWeight: FontWeight.bold,
+              // )
+            ),
           )
         ],
       ),
