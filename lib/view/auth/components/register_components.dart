@@ -69,7 +69,7 @@ class RegisterComponents extends StatelessWidget {
             keyboardType: TextInputType.name,
             validator: (v) => userValidation(v),
             denyInputFormatters: RegularExpression.noSpaceAllowPattern,
-            allowInputFormatters: RegularExpression.alphabetDigitsPattern,
+            allowInputFormatters: RegularExpression.alphabetDigitsUnderPattern,
           ),
           SizeConfig.sH2,
           AdoroText(VariableUtils.mobileNumber, color: black92White),

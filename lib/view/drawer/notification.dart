@@ -34,6 +34,7 @@ class NotificationScreen extends StatelessWidget {
           onTap: () => Get.back(),
         ),
       ),
+
       body: GetBuilder<DrawerVideModel>(initState: (state) {
         viewModel.getNotificationList();
       }, builder: (cont) {

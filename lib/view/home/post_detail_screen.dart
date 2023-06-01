@@ -103,6 +103,7 @@ class PostDetailScreen extends StatelessWidget {
                   builder: (categoryFeedViewModel) {
                 return PostComponents(
                   isInView: true,
+                  tagList: postDetail.tagUser??[],
                   isPostDetailFromLink: true,
                   userId: int.parse(postDetail.userId!),
                   contentType: postDetail.contentType ?? "image",

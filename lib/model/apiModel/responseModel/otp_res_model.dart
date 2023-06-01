@@ -44,6 +44,7 @@ class ValidateOTPData {
   String? createdOn;
   String? deviceToken;
   String? referId;
+  bool? notification;
 
   ValidateOTPData({
     this.id,
@@ -62,6 +63,7 @@ class ValidateOTPData {
     this.createdOn,
     this.deviceToken,
     this.referId,
+    this.notification,
   });
 
   ValidateOTPData.fromJson(Map<String, dynamic> json) {
@@ -81,6 +83,7 @@ class ValidateOTPData {
     createdOn = json['created_on'] ?? "";
     deviceToken = json['device_token'] ?? "";
     referId = json['refer_id'] ?? "";
+    notification = json['notification'] == 'false' ? false : true;
   }
 
   Map<String, dynamic> toJson() {
@@ -101,6 +104,7 @@ class ValidateOTPData {
     data['created_on'] = this.createdOn;
     data['device_token'] = this.deviceToken;
     data['refer_id'] = this.referId;
+    data['notification'] = this.notification;
     return data;
   }
 }

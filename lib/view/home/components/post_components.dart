@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -55,6 +56,7 @@ class PostComponents extends StatelessWidget {
   HomeController homeController;
   CategoryFeedViewModel categoryFeedViewModel;
   bool isPostDetailFromLink;
+  List<TagUser> tagList;
 
   PostComponents(
       {Key? key,
@@ -73,6 +75,7 @@ class PostComponents extends StatelessWidget {
       required this.likeCounter,
       required this.commentCounter,
       required this.categoryFeedViewModel,
+      required this.tagList,
       this.isPostDetailFromLink = false})
       : super(key: key);
 
@@ -87,6 +90,10 @@ class PostComponents extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color? black92Blue = Theme.of(context).textTheme.titleLarge?.color;
+    final finalTagList = tagList
+        .where((element) =>
+            element.id != PreferenceUtils.getInt(key: PreferenceUtils.userid))
+        .toList();
     return Padding(
       padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
       child: Container(
@@ -102,20 +109,37 @@ class PostComponents extends StatelessWidget {
           children: [
             SizeConfig.sH1,
             ListTile(
-              onTap: () async {
-                isScreenOpen = false;
-                await Get.to(() => Profile(
-                      userId: userId,
-                    ));
-                isScreenOpen = true;
-              },
-              title: AdoroText(
-                userName,
-                maxLines: 1,
-                fontSize: 12.sp,
-                color: Theme.of(context).textTheme.titleSmall!.color,
-                overflow: TextOverflow.ellipsis,
-                fontWeight: FontWeightClass.fontWeight600,
+              title: Wrap(
+                children: [
+                  UserNameText(userId: userId, userName: userName, tagList: []),
+                  if (finalTagList.isNotEmpty)
+                    AdoroText(
+                      ' is with ',
+                      fontSize: 12.sp,
+                      color: ColorUtils.grey,
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeightClass.fontWeight400,
+                    ),
+                  if (finalTagList.length > 0)
+                    UserNameText(
+                      userId: finalTagList.first.id!,
+                      userName: finalTagList.first.username!,
+                      tagList: [],
+                    ),
+                  if (finalTagList.length > 1)
+                    AdoroText(
+                      ' and ',
+                      fontSize: 12.sp,
+                      color: ColorUtils.grey,
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeightClass.fontWeight400,
+                    ),
+                  if (finalTagList.length > 1)
+                    UserNameText(
+                        userId: -1,
+                        userName: '${finalTagList.length - 1} others',
+                        tagList: finalTagList),
+                ],
               ),
               subtitle: AdoroText(
                 time,
@@ -124,33 +148,39 @@ class PostComponents extends StatelessWidget {
                 color: black92White,
                 overflow: TextOverflow.ellipsis,
               ),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(15.w),
-                child: Container(
-                  color: Colors.grey[200],
-                  child: OctoImage(
-                    fit: BoxFit.cover,
-                    width: 15.w,
-                    height: 15.w,
-                    image: NetworkImage(profileImage),
-                    progressIndicatorBuilder: (context, progress) {
-                      double? value;
-                      var expectedBytes = progress?.expectedTotalBytes;
-                      if (progress != null && expectedBytes != null) {
-                        value = progress.cumulativeBytesLoaded / expectedBytes;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: value,
-                          color: blackWhite,
+              leading: InkWell(
+                onTap: () {
+                  Get.to(() => Profile(userId: userId));
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.w),
+                  child: Container(
+                    color: Colors.grey[200],
+                    child: OctoImage(
+                      fit: BoxFit.cover,
+                      width: 15.w,
+                      height: 15.w,
+                      image: NetworkImage(profileImage),
+                      progressIndicatorBuilder: (context, progress) {
+                        double? value;
+                        var expectedBytes = progress?.expectedTotalBytes;
+                        if (progress != null && expectedBytes != null) {
+                          value =
+                              progress.cumulativeBytesLoaded / expectedBytes;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: value,
+                            color: blackWhite,
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, error, stacktrace) => Padding(
+                        padding: EdgeInsets.all(2.w),
+                        child: CommonImage(
+                          img: IconsWidgets.userImages,
+                          color: ColorUtils.black,
                         ),
-                      );
-                    },
-                    errorBuilder: (context, error, stacktrace) => Padding(
-                      padding: EdgeInsets.all(2.w),
-                      child: CommonImage(
-                        img: IconsWidgets.userImages,
-                        color: ColorUtils.black,
                       ),
                     ),
                   ),
@@ -602,6 +632,128 @@ class PostComponents extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class UserNameText extends StatelessWidget {
+  const UserNameText({
+    super.key,
+    required this.userId,
+    required this.userName,
+    required this.tagList,
+  });
+
+  final int userId;
+  final String userName;
+  final List<TagUser> tagList;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return InkWell(
+      onTap: () {
+        if (userId == -1) {
+
+          showOtherUserBottomSheet(context);
+          return;
+        }
+        Get.to(() => Profile(userId: userId));
+      },
+      child: AdoroText(
+        userName,
+        fontSize: 14.sp,
+        color: Theme.of(context).textTheme.titleSmall!.color,
+        overflow: TextOverflow.ellipsis,
+        fontWeight: FontWeightClass.fontWeight600,
+      ),
+    );
+  }
+
+  void showOtherUserBottomSheet(BuildContext context){
+
+    List<TagUser> tempTagUser=tagList;
+    tempTagUser.removeAt(0);
+    Get.bottomSheet(
+        Container(
+          decoration: BoxDecoration(
+            color: ColorUtils.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(5.w),
+              topRight: Radius.circular(5.w),
+            ),
+          ),
+          height: 80.h,
+          width: 100.w,
+          padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 4.w),
+          child: SingleChildScrollView(
+            child: Column(
+              children: tempTagUser.map((user) => ListTile(
+                onTap: () {
+                  Get.to(() => Profile(userId: user.id!));
+                },
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.w),
+                  child: Container(
+                    height: 10.w,
+                    width: 10.w,
+                    color: ColorUtils.greyFA,
+                    child: OctoImage(
+                      fit: BoxFit.cover,
+                      width: 24,
+                      height: 24,
+                      // image: NetworkImage(''),
+                      image: NetworkImage(user.image ?? ""),
+                      progressIndicatorBuilder: (context, progress) {
+                        double? value;
+                        var expectedBytes = progress?.expectedTotalBytes;
+                        if (progress != null && expectedBytes != null) {
+                          value = progress.cumulativeBytesLoaded /
+                              expectedBytes;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: value,
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, error, stacktrace) =>
+                          Container(
+                            width: 24,
+                            height: 24,
+                            color: ColorUtils.grey[200],
+                            child: Padding(
+                              padding: EdgeInsets.all(1.w),
+                              child: CommonImage(
+                                img: IconsWidgets.userImages,
+                                color: ColorUtils.black,
+                              ),
+                            ),
+                          ),
+                    ),
+                  ),
+                ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AdoroText(
+                      user.username ?? VariableUtils.naError,
+                      fontSize: 13.sp,
+                      color:  ColorUtils.black92,
+                      fontWeight: FontWeightClass.fontWeight600,
+                    ),
+                    SizeConfig.sH05,
+                  ],
+                ),
+                subtitle: AdoroText(
+                  user.fullName ?? "",
+                  fontSize: 10.sp,
+                  color:  ColorUtils.black92,
+                ),
+              )).toList(),
+            ),
+          ),
+        ),
+        isScrollControlled: true);
   }
 }
 

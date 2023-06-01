@@ -196,6 +196,9 @@ class _HomeState extends State<Home> {
                                                       top: index == 0 ? 10 : 0),
                                                   child: PostComponents(
                                                     isInView: isInView,
+                                                    tagList:
+                                                        categoryIndex.tagUser ??
+                                                            [],
                                                     userId: int.parse(
                                                         categoryIndex.userId
                                                             .toString()),

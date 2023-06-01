@@ -41,24 +41,25 @@ class CategoryData {
   int? comments;
   List<Author>? author;
   List<LikedByPeople>? likedByPeople;
+  List<TagUser>? tagUser;
   bool? likedByMe;
 
-  CategoryData({
-    this.id,
-    this.userId,
-    this.content,
-    this.image,
-    this.username,
-    this.followedByMe,
-    this.contentType,
-    this.contentUrl,
-    this.categoryId,
-    this.createdOn,
-    this.comments,
-    this.author,
-    this.likedByPeople,
-    this.likedByMe,
-  });
+  CategoryData(
+      {this.id,
+      this.userId,
+      this.content,
+      this.image,
+      this.username,
+      this.followedByMe,
+      this.contentType,
+      this.contentUrl,
+      this.categoryId,
+      this.createdOn,
+      this.comments,
+      this.author,
+      this.likedByPeople,
+      this.likedByMe,
+      this.tagUser});
 
   CategoryData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -76,6 +77,12 @@ class CategoryData {
       author = <Author>[];
       json['author'].forEach((v) {
         author!.add(new Author.fromJson(v));
+      });
+    }
+    if (json['tag_user'] != null) {
+      tagUser = <TagUser>[];
+      json['tag_user'].forEach((v) {
+        tagUser!.add(new TagUser.fromJson(v));
       });
     }
     if (json['likedByPeople'] != null) {
@@ -104,11 +111,39 @@ class CategoryData {
     if (this.author != null) {
       data['author'] = this.author!.map((v) => v.toJson()).toList();
     }
+    if (this.tagUser != null) {
+      data['tag_user'] = this.tagUser!.map((v) => v.toJson()).toList();
+    }
     if (this.likedByPeople != null) {
       data['likedByPeople'] =
           this.likedByPeople!.map((v) => v.toJson()).toList();
     }
     data['likedByMe'] = this.likedByMe;
+    return data;
+  }
+}
+
+class TagUser {
+  int? id;
+  String? username;
+  String? fullName;
+  String? image;
+
+  TagUser({this.id, this.username, this.fullName,this.image});
+
+  TagUser.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    username = json['username'];
+    fullName = json['full_name'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['username'] = this.username;
+    data['full_name'] = this.fullName;
+    data['image'] = this.image;
     return data;
   }
 }

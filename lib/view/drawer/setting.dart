@@ -10,6 +10,7 @@ import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/auth/login_screen.dart';
+import 'package:socialv/viewModel/setting_viewmodel.dart';
 
 import '../../commanWidget/noInternet_screen.dart';
 import '../../utils/assets/images_utils.dart';
@@ -19,9 +20,7 @@ import '../../viewModel/connectivity_view_model.dart';
 class Setting extends StatelessWidget {
   Setting({Key? key}) : super(key: key);
 
-  SettingController settingController = Get.find<SettingController>();
-  ConnectivityViewModel connectivityViewModel =
-      Get.find<ConnectivityViewModel>();
+  SettingViewModel settingController = Get.find<SettingViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class Setting extends StatelessWidget {
         context: context,
         title: VariableUtils.settingsText,
       ),
-      body: GetBuilder<SettingController>(builder: (settingController) {
+      body: GetBuilder<SettingViewModel>(builder: (settingController) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
           child: Column(
@@ -53,7 +52,8 @@ class Setting extends StatelessWidget {
                         splashColor: ColorUtils.transparent,
                         highlightColor: ColorUtils.transparent,
                         onTap: () {
-                          settingController.notificationTap();
+                          settingController.isNotification=!settingController.isNotification;
+                          settingController.changeNotificationStatus();
                         },
                         child: Container(
                           height: 7.3.w,
@@ -73,7 +73,7 @@ class Setting extends StatelessWidget {
                           ),
                           child: Row(
                             mainAxisAlignment:
-                            settingController.isNotificationTap ==
+                            settingController.isNotification ==
                                 true
                                 ? MainAxisAlignment.end
                                 : MainAxisAlignment.start,
@@ -220,51 +220,3 @@ class Setting extends StatelessWidget {
   }
 }
 
-class SettingController extends GetxController {
-  bool isNotificationTap = PreferenceUtils.getBool(
-            key: PreferenceUtils.notification,
-          ) ==
-          false
-      ? false
-      : true;
-
-  String isThemeTap = PreferenceUtils.getString(
-            key: PreferenceUtils.mode,
-          ) ==
-          ""
-      ? "light"
-      : PreferenceUtils.getString(
-          key: PreferenceUtils.mode,
-        );
-
-  void themeTap() async {
-    isThemeTap = isThemeTap == "dark" ? "light" : "dark";
-
-    await PreferenceUtils.setInt(
-      key: PreferenceUtils.system,
-      value: 1,
-    );
-    await PreferenceUtils.setString(
-      key: PreferenceUtils.mode,
-      value: isThemeTap == "light" ? "dark" : "light",
-    );
-
-    isLightTheme.add(isThemeTap == "light" ? true : false);
-    // if (isThemeTap == "light") {
-    //   isLightTheme.add(true);
-    // } else {
-    //   isLightTheme.add(false);
-    // }
-
-    update();
-  }
-
-  notificationTap() {
-    isNotificationTap = !isNotificationTap;
-    PreferenceUtils.setBool(
-      key: PreferenceUtils.notification,
-      value: isNotificationTap,
-    );
-    update();
-  }
-}

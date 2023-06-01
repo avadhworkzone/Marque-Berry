@@ -120,8 +120,8 @@ class SearchUser extends StatelessWidget {
                             fit: BoxFit.cover,
                             width: 24,
                             height: 24,
-                            image: NetworkImage(''),
-                            // image: NetworkImage(userData.image ?? ""),
+                            // image: NetworkImage(''),
+                            image: NetworkImage(userData.image ?? ""),
                             progressIndicatorBuilder: (context, progress) {
                               double? value;
                               var expectedBytes = progress?.expectedTotalBytes;

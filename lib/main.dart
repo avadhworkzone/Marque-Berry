@@ -41,6 +41,7 @@ import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
 
 import 'viewModel/drawer_viewmodel.dart';
+import 'viewModel/setting_viewmodel.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -147,7 +148,7 @@ class _MyAppState extends State<MyApp> {
   OtpController otpController = Get.put(OtpController());
   HomeController homeController = Get.put(HomeController());
   LoginController loginController = Get.put(LoginController());
-  SettingController settingController = Get.put(SettingController());
+  SettingViewModel settingController = Get.put(SettingViewModel());
 
   InterestController interestController = Get.put(InterestController());
   BottomBarController bottomController = Get.put(BottomBarController());

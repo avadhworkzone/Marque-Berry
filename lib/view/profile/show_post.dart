@@ -34,7 +34,8 @@ class _ShowPostState extends State<ShowPost> {
 
     return GetBuilder<HomeController>(builder: (homeController) {
       return GetBuilder<CategoryFeedViewModel>(initState: (_) {
-        scrollController=ScrollController(initialScrollOffset: widget.index * (85.h));
+        scrollController =
+            ScrollController(initialScrollOffset: widget.index * (85.h));
         // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         //   scrollController.animateTo(widget.index * (85.h),
         //       duration: Duration(milliseconds: 500), curve: Curves.ease);
@@ -67,6 +68,7 @@ class _ShowPostState extends State<ShowPost> {
                 builder: (BuildContext context, bool isInView, Widget? child) {
                   return PostComponents(
                     time: "",
+                    tagList: [],
                     postId: post.id!,
                     userId: post.userId!,
                     title: post.content ?? '',

@@ -36,9 +36,10 @@ class LikeScreen extends StatelessWidget {
     Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     final size = MediaQuery.of(context).size;
-
+    Color? bgColor = Theme.of(context).colorScheme.background;
+    Color? boxBgColor = Theme.of(context).scaffoldBackgroundColor;
     return Scaffold(
-      backgroundColor: ColorUtils.white,
+      backgroundColor: bgColor,
       appBar: customAppbar(
         title: 'Likes',
         context: context,
@@ -76,7 +77,7 @@ class LikeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: Container(
               decoration: BoxDecoration(
-                color: whiteBlack,
+                color: boxBgColor,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20),
                   topLeft: Radius.circular(20),
@@ -161,10 +162,6 @@ class LikeScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),
-                            trailing: const Icon(
-                              Icons.more_vert,
-                              color: ColorUtils.black92,
                             ),
                             contentPadding: const EdgeInsets.all(10),
                           );

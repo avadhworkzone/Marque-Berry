@@ -15,6 +15,8 @@ import 'package:socialv/controllers/validate_otp_controller.dart';
 import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/otp_res_model.dart';
 import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
+import 'package:socialv/viewModel/drawer_viewmodel.dart';
+import 'package:socialv/viewModel/setting_viewmodel.dart';
 
 import 'interest.dart';
 import '../../utils/adoro_text.dart';
@@ -239,6 +241,12 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                     key: PreferenceUtils.login,
                                     value: 1,
                                   );
+                                  await PreferenceUtils.setBool(
+                                    key: PreferenceUtils.isNotification,
+                                    value: response.data?.notification ?? true,
+                                  );
+                                  Get.find<SettingViewModel>().isNotification =
+                                      response.data?.notification ?? true;
                                   Get.to(() => InterestScreen(
                                       // isCampaign: false,
                                       ));

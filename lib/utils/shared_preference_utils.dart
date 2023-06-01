@@ -10,6 +10,7 @@ class PreferenceUtils {
   static String mode = 'mode';
   static String notification = 'notification';
   static String login = 'login';
+  static String isNotification = 'IS_NOTIFICATION';
   static String userid = 'userid';
   static String token = 'token';
   static String referId = 'ReferId';
@@ -42,6 +43,9 @@ class PreferenceUtils {
 
   static bool getBool({required String key}) {
     return getStorage.read(key) ?? false;
+  }
+  static bool getNotificationBool({required String key}) {
+    return getStorage.read(key) ?? true;
   }
 
   /// SET INT PREFERENCE

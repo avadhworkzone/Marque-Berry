@@ -16,7 +16,6 @@ import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
-import 'package:socialv/view/profile/mentions_post.dart';
 import 'package:socialv/view/profile/show_post.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';

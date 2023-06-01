@@ -32,6 +32,8 @@ abstract class BaseService {
   final String noteFromAdoro = 'noteFromAdoro';
   final String support = 'support';
   final String getNotification = 'getNotification';
+  final String getWalletBalance = 'getWalletBalance';
+  final String changeNotificationStatus = 'changeNotificationStatus';
 
   /// EDIT PROFILE
   final String getUserDetails = 'getUserDetails?userId=';

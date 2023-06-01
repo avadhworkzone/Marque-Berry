@@ -3,13 +3,18 @@ import 'package:socialv/model/apiModel/requestModel/suppor_req_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/model/repo/get_note_repo.dart';
 import 'package:socialv/model/repo/get_notification_repo.dart';
+import 'package:socialv/model/repo/get_wallet_balance_repo.dart';
 import 'package:socialv/model/repo/support_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 
 class DrawerVideModel extends GetxController {
+
+
   ApiResponse getNoteApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse postSupportApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getNotificationListApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse getWalletBalanceApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== GET NOTE VIEW MODEL ================================
   Future<void> getNote() async {
@@ -52,6 +57,21 @@ class DrawerVideModel extends GetxController {
     } catch (e) {
       logs('getNotificationListApiResponse ERROR :=> $e');
       getNotificationListApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== GET NOTIFICATION LIST ================================
+  Future<void> getWalletBalance() async {
+    logs('loading..');
+    getWalletBalanceApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await GetWalletBalanceRepo().getWalletBalanceRepo();
+      getWalletBalanceApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('getWalletBalanceApiResponse ERROR :=> $e');
+      getWalletBalanceApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }
