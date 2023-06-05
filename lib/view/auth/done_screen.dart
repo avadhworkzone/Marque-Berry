@@ -19,7 +19,8 @@ class DoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      // color: Theme.of(context).scaffoldBackgroundColor,
+      color: Theme.of(context).cardColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

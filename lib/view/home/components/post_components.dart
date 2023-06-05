@@ -286,7 +286,7 @@ class PostComponents extends StatelessWidget {
                               isReload: false);
                         },
                         child: CommonImageScale(
-                          scale: 25.w,
+                          scale: 23.w,
                           color: black92White,
                           img: IconsWidgets.chatImage,
                         ),
@@ -300,7 +300,7 @@ class PostComponents extends StatelessWidget {
                           );
                         },
                         child: CommonImageScale(
-                          scale: 25.w,
+                          scale: 23.w,
                           color: black92White,
                           img: IconsWidgets.sendImage,
                         ),
@@ -825,7 +825,7 @@ class UnlikeWidget extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.w),
         child: CommonImageScale(
           img: IconsWidgets.heartImage,
-          scale: 25.w,
+          scale: 23.w,
           color: Theme.of(context).textTheme.titleMedium?.color,
         ),
       ),

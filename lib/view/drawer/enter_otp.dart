@@ -18,6 +18,7 @@ class EnterOtpScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
         child: CommonAppBar(title: '', onTap: () => Get.back()),

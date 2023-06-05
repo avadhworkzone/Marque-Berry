@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 
@@ -37,12 +38,13 @@ class LikeButton extends StatelessWidget {
                     color: Colors.red,
                   )
                 : CommonImageScale(
-                    img: IconsWidgets.heartImage,
-                    scale: 25.w,
+                    img: IconsWidgets.unLikeComment,
+                    // img: IconsWidgets.heartImage,
+                    scale: 2.5,
                     color: ColorUtils.black92,
                   ),
             SizeConfig.sW2,
-            AdoroText('$likecounter', color: ColorUtils.black92),
+            AdoroText('$likecounter', color: ColorUtils.black92,fontWeight: FontWeightClass.fontWeight600,),
           ],
         ),
       ),

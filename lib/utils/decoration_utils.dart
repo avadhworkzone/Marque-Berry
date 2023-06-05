@@ -158,7 +158,7 @@ class DecorationUtils {
   }
 
   static Divider dividerLine2() {
-    return const Divider(thickness: 0.5, color: ColorUtils.grey);
+    return const Divider(thickness: 0.8, color: ColorUtils.greyF1);
   }
 
   static BoxShadow boxShadow = BoxShadow(

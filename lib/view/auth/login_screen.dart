@@ -36,7 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
         return GetBuilder<AuthViewModel>(
           builder: (authViewModel) {
             return Scaffold(
-              backgroundColor: whiteBlack2E,
+              // backgroundColor: whiteBlack2E,
+              backgroundColor: Theme.of(context).cardColor,
               body: Stack(
                 children: [
                   SingleChildScrollView(
@@ -46,7 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ImagesWidgets.adoroImage,
+                            Image.asset(
+                              ImagesWidgets.logoImage,
+                              scale: 2,
+                            ),
                           ],
                         ),
                         SizeConfig.sH4,

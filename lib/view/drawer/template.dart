@@ -63,11 +63,13 @@ class Template extends StatelessWidget {
         if (connectivityViewModel.isOnline != null) {
           if (connectivityViewModel.isOnline!) {
             return Scaffold(
+              backgroundColor: Theme.of(context).cardColor,
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(16.w),
                 child: CommonAppBar(
                   title: VariableUtils.templateText,
                   onTap: () => Get.back(),
+
                 ),
               ),
               body: Padding(

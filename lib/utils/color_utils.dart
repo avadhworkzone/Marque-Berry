@@ -4,6 +4,7 @@ class ColorUtils {
   /// All grey Shadow Colors
   static const grey = Colors.grey;
   static const greyFA = Color(0xFFF8F9FA);
+  static const greyF1 = Color(0xFFF1F1F1);
   // static const greyE5 = Color(0xffE5E5E5);
   static const greyE5 = Color(0xfff8f9fa);
   static const lightGreyFA = Color(0xffebeffa);

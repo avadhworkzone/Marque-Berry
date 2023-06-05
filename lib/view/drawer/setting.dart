@@ -25,6 +25,7 @@ class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: customAppbar(
         context: context,
         title: VariableUtils.settingsText,

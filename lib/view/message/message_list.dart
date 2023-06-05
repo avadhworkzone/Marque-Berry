@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/commanWidget/search_textfield.dart';
 import 'package:socialv/model/apiModel/responseModel/get_following_list_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -32,6 +33,7 @@ class MessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
         child: CommonAppBar(
@@ -145,7 +147,7 @@ class UserList extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(
+          /*Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.sp),
             child: TextField(
               style: TextStyle(color: Colors.black),
@@ -174,7 +176,10 @@ class UserList extends StatelessWidget {
                       borderSide: BorderSide(color: black92White),
                       borderRadius: BorderRadius.circular(10.sp))),
             ),
-          ),
+          ),*/
+          SearchTextField(onChangedString: (value) {
+            controller.searchUserStr = value;
+          }),
           SizedBox(
             height: 10,
           ),

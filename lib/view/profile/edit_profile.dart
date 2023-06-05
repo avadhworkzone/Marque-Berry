@@ -165,7 +165,8 @@ class EditProfile extends StatelessWidget {
         return Future.value(false);
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).canvasColor,
+        // backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).cardColor,
         body: SafeArea(
           child: GetBuilder<EditProfileController>(
             init: EditProfileController(),

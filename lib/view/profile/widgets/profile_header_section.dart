@@ -31,12 +31,7 @@ class ProfileHeaderSection extends StatelessWidget {
             blackWhite,
             title: "Posts",
             value: profile.postsCount.toString(),
-            onTap: () => Get.to(
-              () => ShowPost(
-                index: 0,
-                postList: profile.posts ?? [],
-              ),
-            ),
+            onTap: (){}
           ),
           richTextColumn(black92White, blackWhite,
               title: "Followers",

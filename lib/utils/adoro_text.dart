@@ -42,7 +42,7 @@ class AdoroText extends StatelessWidget {
         overflow: overflow,
         fontStyle: fontStyle,
         fontWeight: fontWeight,
-        fontFamily: fontFamily,
+        fontFamily: fontFamily??"Poppins",
         decoration: decoration,
         fontSize: fontSize ?? 14,
         letterSpacing: letterSpacing,

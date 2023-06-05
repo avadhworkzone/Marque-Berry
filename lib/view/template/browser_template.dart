@@ -6,6 +6,7 @@ import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/commanWidget/search_textfield.dart';
 import 'package:socialv/model/apiModel/responseModel/browser_template_res.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
@@ -42,6 +43,7 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
     // var search = TextEditingController();
 
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: customAppbar(title: "Browse Template", context: context),
       body: GetBuilder<TemplateViewModel>(
         builder: (templateViewModel) {
@@ -93,7 +95,11 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
               return Column(
                 children: [
                   SizeConfig.sH2,
-                  Container(
+                  SearchTextField(onChangedString: (value) {
+                    browserTemplateController.searchFunction(value);
+                    setState(() {});
+                  }),
+                 /* Container(
                     width: 90.w,
                     decoration: BoxDecoration(
                       boxShadow: [
@@ -130,7 +136,7 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                         ),
                       ),
                     ),
-                  ),
+                  ),*/
                   SizeConfig.sH2,
                   Container(
                     height: 12.w,

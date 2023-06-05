@@ -13,6 +13,7 @@ class CommonAppBar extends StatelessWidget {
   Color? color;
 
   OnTab onTap;
+
   CommonAppBar({
     Key? key,
     this.title,
@@ -28,7 +29,7 @@ class CommonAppBar extends StatelessWidget {
     return AppBar(
       elevation: 0,
       centerTitle: true,
-      backgroundColor: color ?? whiteBlack,
+      backgroundColor: color ?? Theme.of(context).cardColor,
       leading: IconButton(
         splashRadius: 7.w,
         onPressed: () => onTap(),
@@ -44,20 +45,19 @@ class CommonAppBar extends StatelessWidget {
   }
 }
 
-AppBar customAppbar({
-  required String title,
-  required BuildContext context,
-  Color? color,
-  Widget? icon,
-  VoidCallback? leadingOnTap
-}) {
+AppBar customAppbar(
+    {required String title,
+    required BuildContext context,
+    Color? color,
+    Widget? icon,
+    VoidCallback? leadingOnTap}) {
   Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
   Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
 
   return AppBar(
     centerTitle: true,
     elevation: 0,
-    backgroundColor: color ?? whiteBlack,
+    backgroundColor: color ?? Theme.of(context).cardColor,
     title: AdoroText(
       title,
       fontSize: 15.sp,
@@ -65,7 +65,7 @@ AppBar customAppbar({
       fontWeight: FontWeightClass.fontWeightBold,
     ),
     leading: IconButton(
-      onPressed:leadingOnTap?? () => Get.back(),
+      onPressed: leadingOnTap ?? () => Get.back(),
       splashRadius: 6.w,
       icon: Icon(Icons.arrow_back, color: blackWhite),
     ),

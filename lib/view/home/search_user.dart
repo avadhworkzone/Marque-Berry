@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/commanWidget/search_textfield.dart';
 import 'package:socialv/model/apiModel/responseModel/get_search_users_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/adoro_text.dart';
@@ -13,6 +14,7 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
+import 'package:socialv/utils/typedef_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
@@ -32,6 +34,7 @@ class SearchUser extends StatelessWidget {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(15.w),
         child: CommonAppBar(
@@ -66,7 +69,10 @@ class SearchUser extends StatelessWidget {
 
           return Column(
             children: [
-              Padding(
+              SearchTextField(onChangedString: (value) {
+                profileViewModel.searchUsers(value);
+              }),
+              /*  Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.sp),
                 child: TextField(
                   style: TextStyle(color: Colors.black),
@@ -82,25 +88,25 @@ class SearchUser extends StatelessWidget {
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: black92White!),
+                          // borderSide: BorderSide(color: black92White!),
                           borderRadius: BorderRadius.circular(10.sp)),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: black92White),
+                          // borderSide: BorderSide(color: black92White),
                           borderRadius: BorderRadius.circular(10.sp)),
                       disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: black92White),
+                          // borderSide: BorderSide(color: black92White),
                           borderRadius: BorderRadius.circular(10.sp)),
                       border: OutlineInputBorder(
-                          borderSide: BorderSide(color: black92White),
+                          // borderSide: BorderSide(color: black92White),
                           borderRadius: BorderRadius.circular(10.sp))),
                 ),
-              ),
+              ),*/
               SizedBox(
                 height: 10,
               ),
               Expanded(
                 child: ListView.separated(
-                  itemCount: searchUsersResModel.data?.length??0,
+                  itemCount: searchUsersResModel.data?.length ?? 0,
                   physics: BouncingScrollPhysics(),
                   separatorBuilder: (context, index) =>
                       Divider(indent: 10, endIndent: 20, color: black92White),

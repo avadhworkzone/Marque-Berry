@@ -47,6 +47,7 @@ class DownloadTemplateList extends StatelessWidget {
       builder: (downloadTemplateController) {
         logs(index.toString());
         return Material(
+          color: Theme.of(context).cardColor,
           child: Column(
             children: [
               customAppbar(

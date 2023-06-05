@@ -26,6 +26,7 @@ class TrendingTemplate extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: customAppbar(title: "Trending Template", context: context),
       body: GetBuilder<TemplateViewModel>(
         initState: (_) {

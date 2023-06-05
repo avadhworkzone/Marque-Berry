@@ -37,7 +37,8 @@ class InterestScreen extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return Material(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      // color: Theme.of(context).scaffoldBackgroundColor,
+      color: Theme.of(context).cardColor,
       child: GetBuilder<AuthViewModel>(builder: (authViewModel) {
         return GetBuilder<InterestController>(
           init: InterestController(),

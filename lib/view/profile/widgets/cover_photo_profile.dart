@@ -32,22 +32,26 @@ class CoverProfile extends StatelessWidget {
       children: [
         Stack(
           children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Container(
-                width: Get.width,
-                margin: EdgeInsets.only(bottom: 9.w),
-                child: con.coverImagePath != "" &&
-                        profileData.id ==
-                            PreferenceUtils.getInt(key: PreferenceUtils.userid)
-                    ? Image.file(
-                        File(con.coverImagePath,),
-                        // fit: BoxFit.fill,
-                        fit: BoxFit.fitWidth,
-                        // fit: BoxFit.contain,
-                      )
-                    :
-                CommonCoverImage(image: profileData.coverPhoto ?? ""),
+            ClipRRect(
+              borderRadius:  BorderRadius.vertical(top: Radius.circular(10)),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  width: Get.width,
+
+                  margin: EdgeInsets.only(bottom: 9.w),
+                  child: con.coverImagePath != "" &&
+                          profileData.id ==
+                              PreferenceUtils.getInt(key: PreferenceUtils.userid)
+                      ? Image.file(
+                          File(con.coverImagePath,),
+                          // fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
+                          // fit: BoxFit.contain,
+                        )
+                      :
+                  CommonCoverImage(image: profileData.coverPhoto ?? ""),
+                ),
               ),
             ),
             if (profileData.id ==

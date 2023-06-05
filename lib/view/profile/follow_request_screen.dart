@@ -29,7 +29,8 @@ class FollowRequestScreen extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: bgColor,
+      // backgroundColor: bgColor,
+      backgroundColor: Theme.of(context).cardColor,
       appBar: customAppbar(
         context: context,
         title: 'Follow request',

@@ -49,6 +49,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(16.w),
         child: CommonAppBar(

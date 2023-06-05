@@ -86,6 +86,7 @@ class FollowerFollowing extends StatelessWidget {
         return Future.value(true);
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
         appBar: PreferredSize(
           preferredSize: Size(100.w, 70),
           child: customAppbar(

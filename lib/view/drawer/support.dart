@@ -34,6 +34,7 @@ class Support extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(8.h),
         child: CommonAppBar(

@@ -113,6 +113,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                 },
                 builder: (createPostViewModel) {
                   return Scaffold(
+                    backgroundColor: Theme.of(context).cardColor,
                     bottomSheet: sharePostController.sourcePath == ""
                         ? MediaQuery.of(context).viewInsets.bottom == 0
                             ? UploadPhoto(
@@ -127,6 +128,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                SizeConfig.sH2,
                                 Row(
                                   children: [
                                     SizeConfig.sW4,
@@ -143,9 +145,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                     SizeConfig.sW2,
                                     AdoroText(
                                       VariableUtils.sharePost,
-                                      fontSize: 12.sp,
-                                      fontWeight:
-                                          FontWeightClass.fontWeightBold,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeightClass.fontWeight600,
                                       color: blackWhite,
                                     ),
                                     Spacer(),
@@ -246,6 +247,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                       SizeConfig.sW2,
                                                       DropdownButton(
                                                         underline: SizedBox(),
+                                                        menuMaxHeight: 200,
                                                         hint: Text(
                                                           categoryName == ""
                                                               ? "Category"
@@ -254,7 +256,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                             color: ColorUtils
                                                                 .black,
                                                             fontWeight:
-                                                                FontWeight.bold,
+                                                                FontWeightClass
+                                                                    .fontWeight600,
                                                           ),
                                                         ),
                                                         icon: Padding(
@@ -382,8 +385,11 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                   ),
                                                 ),
                                               if (sharePostController
-                                                      .sourceName ==
-                                                  "image")
+                                                          .sourceName ==
+                                                      "image" ||
+                                                  sharePostController
+                                                          .sourceName ==
+                                                      "gif")
                                                 Container(
                                                   // height: 55.w,
                                                   width: Get.width,
@@ -394,11 +400,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                   ),
                                                 ),
                                               if (sharePostController
-                                                          .sourceName ==
-                                                      "video" ||
-                                                  sharePostController
-                                                          .sourceName ==
-                                                      "gif")
+                                                      .sourceName ==
+                                                  "video")
                                                 Padding(
                                                   padding: EdgeInsets.all(4.w),
                                                   child: FileVideoPlayer(
@@ -435,7 +438,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                       () => TagAPeople()),
                                                   child: CommonImageScale(
                                                     img: IconsWidgets.tagImages,
-                                                    color: black92White,
+                                                    color: ColorUtils.white,
                                                     scale: 3,
                                                   ),
                                                 ),
@@ -670,7 +673,7 @@ class SharePostController extends GetxController {
   }) async {
     try {
       print('extension=>$extension');
-      if (extension == "image") {
+      /*  if (extension == "image") {
         final imgFile =
             await ImagePicker.platform.getImage(source: ImageSource.gallery);
         if (imgFile != null) {
@@ -697,7 +700,9 @@ class SharePostController extends GetxController {
           print('VIDEO videoFile.path=>${videoFile.path}');
           sourcePath = videoFile.path;
         }
-      } else if (extension == "template") {
+      } else*/
+
+      if (extension == "template") {
         final templateUrl = await Get.to(() => BrowserTemplate(
               isFromCreatePost: true,
             ));
@@ -705,40 +710,71 @@ class SharePostController extends GetxController {
         if (templateUrl != null) {
           sourcePath = templateUrl;
         }
-      }
-      /*FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: extension == "image"
-            ? ['jpg', 'jpeg', 'png']
-            : extension == "video"
-                ? ['mp4', 'mov', 'wmv', 'avi', 'mpg', '3gp', 'mkv']
-                : extension == "gif"
-                    ? ['gif']
-                    : extension == "template"
-                        ? ['pdf', 'doc', 'docx', 'xlsx', 'xltx']
-                        : [],
-      );
-      if (result != null) {
-        PlatformFile file = result.files.first;
+      } else {
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: extension == "image"
+              ? ['jpg', 'jpeg', 'png']
+              : extension == "video"
+                  ? ['mp4', 'mov', 'wmv', 'avi', 'mpg', '3gp', 'mkv']
+                  : extension == "gif"
+                      ? ['gif']
+                      : extension == "template"
+                          ? ['pdf', 'doc', 'docx', 'xlsx', 'xltx']
+                          : [],
+        );
+        if (result != null) {
+          PlatformFile file = result.files.first;
 
-        if (extension == "image") {
-          final cropImagePath = await cropImageClass.postCropImage(
-            image: File(file.path!),
-            isBackGround: true,
-          );
+          if (extension == "image") {
+            final cropImagePath = await cropImageClass.postCropImage(
+              image: File(file.path!),
+              isBackGround: true,
+            );
 
-          sourcePath = cropImagePath?.path ?? '';
-        } else if (extension == "video" ||
-            extension == "gif" ||
-            extension == "template") {
-          sourcePath = file.path ?? '';
+            sourcePath = cropImagePath?.path ?? '';
+          } else if (extension == "video" || extension == "gif") {
+            sourcePath = file.path ?? '';
 
-          logs("sourcePath----->  $sourcePath");
+            logs("sourcePath----->  $sourcePath");
+          }
+        } else {
+          sourcePath = "";
         }
       }
-      else {
+
+      if (extension == 'gif' &&
+          !sourcePath.contains('.gif') &&
+          sourcePath.isNotEmpty) {
+        showSnackBar(message: "Opps this is not GIF,Please select GIF");
         sourcePath = "";
-      }*/
+        update();
+        return;
+      }
+      if (extension == 'image' && sourcePath.isNotEmpty) {
+        if (!sourcePath.contains('.jpg') &&
+            !sourcePath.contains('.jpeg') &&
+            !sourcePath.contains('.png')) {
+          showSnackBar(message: "Opps this is not image,Please select image");
+          sourcePath = "";
+          update();
+          return;
+        }
+      }
+      if (extension == 'video' && sourcePath.isNotEmpty) {
+        if (!sourcePath.contains('.mp4') &&
+            !sourcePath.contains('.mov') &&
+            !sourcePath.contains('.wmv') &&
+            !sourcePath.contains('.avi') &&
+            !sourcePath.contains('.mpg') &&
+            !sourcePath.contains('.3gp') &&
+            !sourcePath.contains('.mkv')) {
+          showSnackBar(message: "Opps this is not video,Please select video");
+          sourcePath = "";
+          update();
+          return;
+        }
+      }
       sourceName = extension;
       update();
     } catch (e) {

@@ -119,7 +119,7 @@ class _ChattingScreenState extends State<ChattingScreen>
         return Future.value(true);
       },
       child: Scaffold(
-
+        backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
           backgroundColor: ColorUtils.transparent,
           titleSpacing: 0,

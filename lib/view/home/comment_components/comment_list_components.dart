@@ -100,7 +100,7 @@ class _CommentListState extends State<CommentList> {
                   maxLines: 1,
                   fontSize: 13.sp,
                   overflow: TextOverflow.ellipsis,
-                  fontWeight: FontWeightClass.fontWeight700,
+                  fontWeight: FontWeightClass.fontWeight600,
                   color: blackWhite,
                 ),
                 trailing: AdoroText(
@@ -126,7 +126,7 @@ class _CommentListState extends State<CommentList> {
           ),
           Row(
             children: [
-              SizeConfig.sW2,
+
               InkWell(
                   onTap: widget.likeOnTap,
                   child: LikeButton(
@@ -329,7 +329,7 @@ Text mentionsText(message) => Text(
       style: TextStyle(
         fontSize: 11.5.sp,
         color: ColorUtils.blueB9,
-        fontWeight: FontWeightClass.fontWeight800,
+        fontWeight: FontWeightClass.fontWeight600,
       ),
     );
 
@@ -338,6 +338,6 @@ Text normalText(message) => Text(
       style: TextStyle(
         fontSize: 11.5.sp,
         color: ColorUtils.black92,
-        fontWeight: FontWeightClass.fontWeight800,
+        fontWeight: FontWeightClass.fontWeight600,
       ),
     );

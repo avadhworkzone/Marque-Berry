@@ -32,6 +32,7 @@ class Wallet extends StatelessWidget {
     final fullName = PreferenceUtils.getString(key: PreferenceUtils.fullname);
     final userName = PreferenceUtils.getString(key: PreferenceUtils.username);
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(16.w),
         child: CommonAppBar(

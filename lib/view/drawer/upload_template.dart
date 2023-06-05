@@ -45,6 +45,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(16.w),
         child: CommonAppBar(

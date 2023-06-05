@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/commanWidget/search_textfield.dart';
 import 'package:socialv/model/apiModel/responseModel/get_search_users_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/adoro_text.dart';
@@ -92,7 +93,7 @@ class TagAPeople extends StatelessWidget {
 
           return Column(
             children: [
-              Padding(
+            /*  Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.sp),
                 child: TextField(
                   style: TextStyle(color: Colors.black),
@@ -123,7 +124,10 @@ class TagAPeople extends StatelessWidget {
                           borderSide: BorderSide(color: black92White),
                           borderRadius: BorderRadius.circular(5.sp))),
                 ),
-              ),
+              ),*/
+              SearchTextField(onChangedString: (value) {
+                profileViewModel.searchUsers(value);
+              }),
               SizedBox(
                 height: 10,
               ),

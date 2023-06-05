@@ -60,6 +60,7 @@ class _CommentsState extends State<Comments> {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return Material(
+      color: Theme.of(context).cardColor,
       child: GetBuilder<HomeController>(builder: (homeController) {
         return GetBuilder<CategoryFeedViewModel>(
           initState: (_) {

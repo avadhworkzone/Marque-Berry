@@ -65,7 +65,10 @@ dependencies:
 
   url_launcher: ^6.0.7
   dio: ^5.1.1
+
+  # GRADIENT
   gradient_borders: ^1.0.0
+  simple_gradient_text: ^1.2.4
 
 
 dev_dependencies:
@@ -89,18 +92,20 @@ flutter:
     - assets/bottombar/
 
   fonts:
-    - family: Poppins_light
-      fonts:
-        - asset: assets/fonts/Poppins-Light.ttf
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-regular.ttf
-    - family: Poppins_Bold
-      fonts:
-        - asset: assets/fonts/Poppins-Bold.ttf
-    - family: Poppins_SemiBold
-      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
         - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins-Black.ttf
+          weight: 900
 
 #  fonts:
 #    - family: Poppins

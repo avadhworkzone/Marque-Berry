@@ -18,7 +18,8 @@ class ViewResult extends StatelessWidget {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return Scaffold(
-      backgroundColor: whiteBlack2E,
+      // backgroundColor: whiteBlack2E,
+      backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(16.w),
         child: CommonAppBar(

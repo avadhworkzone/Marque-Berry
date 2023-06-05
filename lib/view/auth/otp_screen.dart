@@ -65,7 +65,8 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
           },
           builder: (otpController) {
             return Material(
-              color: Theme.of(context).scaffoldBackgroundColor,
+              // color: Theme.of(context).scaffoldBackgroundColor,
+              color: Theme.of(context).cardColor,
               child: Stack(
                 children: [
                   Form(

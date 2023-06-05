@@ -74,6 +74,7 @@ class _BottomBarState extends State<BottomBar> {
               },
               builder: (bottomBarController) {
                 return Scaffold(
+                  backgroundColor: Theme.of(context).cardColor,
                   key: _scaffold,
                   body: pageRoute[bottomBarController.selectedIndex],
                   drawer: bottomBarController.selectedIndex == 0

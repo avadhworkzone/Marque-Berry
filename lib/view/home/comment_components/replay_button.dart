@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 
 class ReplayButton extends StatelessWidget {
   int? replaycount = 0;
@@ -22,8 +23,8 @@ class ReplayButton extends StatelessWidget {
           vertical: 2.1.w,
         ),
         child: replaycount == 0
-            ? AdoroText("REPLY", color: ColorUtils.black92)
-            : AdoroText("$replaycount REPLY", color: ColorUtils.black92),
+            ? AdoroText("REPLY", color: ColorUtils.black92,fontWeight: FontWeightClass.fontWeight600,)
+            : AdoroText("$replaycount REPLY", color: ColorUtils.black92,fontWeight: FontWeightClass.fontWeight600,),
       ),
     );
   }

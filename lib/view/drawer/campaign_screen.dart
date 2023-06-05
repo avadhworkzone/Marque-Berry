@@ -52,6 +52,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
           return DefaultTabController(
             length: 2,
             child: Scaffold(
+              backgroundColor: Theme.of(context).cardColor,
               appBar: AppBar(
                 elevation: 0,
                 titleSpacing: 0,
