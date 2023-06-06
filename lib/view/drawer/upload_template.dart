@@ -145,18 +145,37 @@ class _UploadTemplateState extends State<UploadTemplate> {
             SizeConfig.sH2,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: CommonTextFormField(
-                color: ColorUtils.black,
-                // color: Colors.redAccent,
-                // color: blackWhite,
-                controller: uploadTemplateCaption,
-                hintText: "Write a wittiest caption",
-                hintStyle: TextStyle(
-                    color: ColorUtils.black92,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.bold),
-                keyboardType: TextInputType.name,
-                validator: (v) => userValidation(v),
+              child: Column(
+                children: [
+                  CommonTextFormField(
+                    color: ColorUtils.black,
+                    // color: Colors.redAccent,
+                    // color: blackWhite,
+                    controller: uploadTemplateCaption,
+                    hintText: "Write a wittiest caption",
+                    hintStyle: TextStyle(
+                        color: ColorUtils.black92,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.bold),
+                    keyboardType: TextInputType.name,
+                    validator: (v) => userValidation(v),
+                  ),
+                  Container(
+                    height: 0.2.h,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            ColorUtils.linearGradient7,
+                            ColorUtils.linearGradient4,
+                            ColorUtils.linearGradient5,
+                            ColorUtils.linearGradient8,
+                          ],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(2.w))),
+                  )
+                ],
               ),
             ),
             SizeConfig.sH5,

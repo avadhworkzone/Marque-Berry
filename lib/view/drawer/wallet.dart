@@ -71,9 +71,9 @@ class Wallet extends StatelessWidget {
                   SizeConfig.sH7,
                   AdoroText(
                     fullName == null || fullName == "" ? userName : fullName,
-                    fontSize: 14.sp,
+                    fontSize: 20.sp,
                   ),
-                  SizeConfig.sH2,
+                  SizeConfig.sH3,
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -91,14 +91,16 @@ class Wallet extends StatelessWidget {
                             fit: BoxFit.cover,
                             width: 27.w,
                             height: 27.w,
-                            image: NetworkImage( PreferenceUtils.getString(
-                                key: PreferenceUtils.profileImage),),
+                            image: NetworkImage(
+                              PreferenceUtils.getString(
+                                  key: PreferenceUtils.profileImage),
+                            ),
                             progressIndicatorBuilder: (context, progress) {
                               double? value;
                               var expectedBytes = progress?.expectedTotalBytes;
                               if (progress != null && expectedBytes != null) {
-                                value =
-                                    progress.cumulativeBytesLoaded / expectedBytes;
+                                value = progress.cumulativeBytesLoaded /
+                                    expectedBytes;
                               }
                               return Center(
                                 child: CircularProgressIndicator(
@@ -107,7 +109,8 @@ class Wallet extends StatelessWidget {
                                 ),
                               );
                             },
-                            errorBuilder: (context, error, stacktrace) => Padding(
+                            errorBuilder: (context, error, stacktrace) =>
+                                Padding(
                               padding: EdgeInsets.all(2.w),
                               child: CommonImage(
                                 img: IconsWidgets.userImages,
@@ -119,7 +122,7 @@ class Wallet extends StatelessWidget {
                       ),
                     ],
                   ),
-                /*  CircleAvatar(
+                  /*  CircleAvatar(
                     radius: 15.w,
                     child: Stack(
                       children: [
@@ -155,37 +158,35 @@ class Wallet extends StatelessWidget {
                   AdoroText(
                     VariableUtils.youHaveEarned,
                     color: blackWhite,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w400,
                     // color: blackWhite,
-                    fontSize: 12.sp,
+                    fontSize: 15.sp,
                   ),
                   SizeConfig.sH1,
                   AdoroText(
                     // VariableUtils.wallet75,
                     '${balanceList!.reduce((value, element) => value + element)} C',
                     color: blackWhite,
-                    fontSize: 30.sp,
+                    fontSize: 40.sp,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizeConfig.sH2,
+                  // SizeConfig.sH2,
                   InkWell(
                     splashColor: ColorUtils.transparent,
                     highlightColor: ColorUtils.transparent,
                     onTap: () => Get.to(WithdrawlAmount()),
                     child: Container(
-                      height: 5.h,
-                      width: 53.w,
+                      height: 18.w,
+                      width: 55.w,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            ImagesWidgets.rectangleImage,
-                          ),
-                        ),
-                      ),
+                          image: DecorationImage(
+                              image: AssetImage(
+                        ImagesWidgets.rectangleImage,
+                      ))),
                       child: Center(
                         child: AdoroText(
                           VariableUtils.withdrawMoney,
-                          fontSize: 12.sp,
+                          fontSize: 17.sp,
                           color: ColorUtils.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -196,11 +197,15 @@ class Wallet extends StatelessWidget {
                   AdoroText(
                     VariableUtils.withdrawMinimumLimit,
                     color: blackWhite,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13.sp,
                   ),
                   SizeConfig.sH1,
                   AdoroText(
                     VariableUtils.cashCoin,
                     color: blackWhite,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13.sp,
                   ),
                 ],
               ),

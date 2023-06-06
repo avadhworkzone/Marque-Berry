@@ -22,7 +22,6 @@ import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
-
 import 'widgets/cover_photo_profile.dart';
 import 'widgets/posts_and_mentions_tab.dart';
 import 'widgets/profile_button_section.dart';
@@ -65,7 +64,6 @@ class Profile extends StatelessWidget {
           ),
         ),
         body: GetBuilder<ProfileViewModel>(initState: (_) {
-
           getUserProfile();
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             profileViewModel.isLoading = false;
@@ -128,7 +126,7 @@ class Profile extends StatelessWidget {
   getUserProfile() async {
     await profileViewModel.getProfileDetail(userId.toString());
 
-    if(PreferenceUtils.getInt(key: PreferenceUtils.userid)!=userId){
+    if (PreferenceUtils.getInt(key: PreferenceUtils.userid) != userId) {
       return;
     }
     await profileViewModel.getUserProfile(userId);

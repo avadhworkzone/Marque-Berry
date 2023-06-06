@@ -28,7 +28,7 @@ class WithdrawlAmount extends StatelessWidget {
         //mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 20.h,
+            height: 15.h,
           ),
           AdoroText(
             VariableUtils.deepanshuSarmandal,
@@ -72,7 +72,7 @@ class WithdrawlAmount extends StatelessWidget {
                   Positioned(
                       top: 10.w,
                       child: Container(
-                        height: 0.3.h,
+                        height: 0.2.h,
                         width: 65.w,
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -118,7 +118,7 @@ class WithdrawlAmount extends StatelessWidget {
           ),
           const Spacer(),
           Container(
-            height: 25.h,
+            height: 28.h,
             width: size.width,
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -131,7 +131,7 @@ class WithdrawlAmount extends StatelessWidget {
               //     topRight: Radius.circular(10.w))
             ),
             child: Center(
-              child: Image.asset("assets/images/adoro.png", scale: 1.5.w),
+              child: Image.asset("assets/images/adoro.png", scale: 1.3.w),
 
               //     child: AdoroText(
               //   VariableUtils.adoro,
