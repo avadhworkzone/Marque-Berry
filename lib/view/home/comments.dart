@@ -54,6 +54,7 @@ class _CommentsState extends State<Comments> {
 
   FocusNode focusNode = FocusNode();
   var commentTextEditing = TextEditingController();
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,8 @@ class _CommentsState extends State<Comments> {
       child: GetBuilder<HomeController>(builder: (homeController) {
         return GetBuilder<CategoryFeedViewModel>(
           initState: (_) {
-            categoryFeedViewModel.postCommentApiResponse=ApiResponse.initial('INITIAL');
+            categoryFeedViewModel.postCommentApiResponse =
+                ApiResponse.initial('INITIAL');
             postCommentApiCall(homeController);
           },
           builder: (categoryFeedViewModel) {
@@ -101,6 +103,7 @@ class _CommentsState extends State<Comments> {
                 else
                   Expanded(
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       // reverse: true,
                       child: ListView.builder(
                         shrinkWrap: true,
@@ -345,8 +348,15 @@ class _CommentsState extends State<Comments> {
 
                                 if (postCommentRes.status.toString() ==
                                     VariableUtils.status200) {
-                                  postCommentApiCall(homeController);
                                   commentTextEditing.clear();
+                                  await postCommentApiCall(homeController);
+                                  Future.delayed(Duration(seconds: 1), () {
+                                    scrollController.animateTo(
+                                        scrollController
+                                            .position.maxScrollExtent,
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  });
                                 }
                               }
                             },

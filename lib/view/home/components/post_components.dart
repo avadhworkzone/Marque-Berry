@@ -271,7 +271,8 @@ class PostComponents extends StatelessWidget {
                               categoryFeedViewModel: categoryFeedViewModel,
                               tabName: homeController.tabName,
                             ),
-                      SizeConfig.sW1AndHalf,
+                      SizeConfig.sW3,
+                      // SizeConfig.sW1AndHalf,
                       InkWell(
                         onTap: () async {
                           isScreenOpen = false;
@@ -293,7 +294,8 @@ class PostComponents extends StatelessWidget {
                           img: IconsWidgets.chatImage,
                         ),
                       ),
-                      SizeConfig.sW1AndHalf,
+                      SizeConfig.sW2,
+                      // SizeConfig.sW1AndHalf,
                       InkWell(
                         onTap: () {
                           sharePostBottomSheet(
@@ -473,7 +475,7 @@ class PostComponents extends StatelessWidget {
                 SizeConfig.sH1,
               ],
             ),
-            DecorationUtils.dividerLine2(thickness:2.5),
+            DecorationUtils.dividerLine2(thickness: 2.5),
           ],
         ),
       ),
@@ -652,11 +654,9 @@ class UserNameText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       onTap: () {
         if (userId == -1) {
-
           showOtherUserBottomSheet(context);
           return;
         }
@@ -672,9 +672,8 @@ class UserNameText extends StatelessWidget {
     );
   }
 
-  void showOtherUserBottomSheet(BuildContext context){
-
-    List<TagUser> tempTagUser=tagList;
+  void showOtherUserBottomSheet(BuildContext context) {
+    List<TagUser> tempTagUser = tagList;
     tempTagUser.removeAt(0);
     Get.bottomSheet(
         Container(
@@ -690,69 +689,72 @@ class UserNameText extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 4.w),
           child: SingleChildScrollView(
             child: Column(
-              children: tempTagUser.map((user) => ListTile(
-                onTap: () {
-                  Get.to(() => Profile(userId: user.id!));
-                },
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.w),
-                  child: Container(
-                    height: 10.w,
-                    width: 10.w,
-                    color: ColorUtils.greyFA,
-                    child: OctoImage(
-                      fit: BoxFit.cover,
-                      width: 24,
-                      height: 24,
-                      // image: NetworkImage(''),
-                      image: NetworkImage(user.image ?? ""),
-                      progressIndicatorBuilder: (context, progress) {
-                        double? value;
-                        var expectedBytes = progress?.expectedTotalBytes;
-                        if (progress != null && expectedBytes != null) {
-                          value = progress.cumulativeBytesLoaded /
-                              expectedBytes;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: value,
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stacktrace) =>
-                          Container(
-                            width: 24,
-                            height: 24,
-                            color: ColorUtils.grey[200],
-                            child: Padding(
-                              padding: EdgeInsets.all(1.w),
-                              child: CommonImage(
-                                img: IconsWidgets.userImages,
-                                color: ColorUtils.black,
+              children: tempTagUser
+                  .map((user) => ListTile(
+                        onTap: () {
+                          Get.to(() => Profile(userId: user.id!));
+                        },
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.w),
+                          child: Container(
+                            height: 10.w,
+                            width: 10.w,
+                            color: ColorUtils.greyFA,
+                            child: OctoImage(
+                              fit: BoxFit.cover,
+                              width: 24,
+                              height: 24,
+                              // image: NetworkImage(''),
+                              image: NetworkImage(user.image ?? ""),
+                              progressIndicatorBuilder: (context, progress) {
+                                double? value;
+                                var expectedBytes =
+                                    progress?.expectedTotalBytes;
+                                if (progress != null && expectedBytes != null) {
+                                  value = progress.cumulativeBytesLoaded /
+                                      expectedBytes;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: value,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, error, stacktrace) =>
+                                  Container(
+                                width: 24,
+                                height: 24,
+                                color: ColorUtils.grey[200],
+                                child: Padding(
+                                  padding: EdgeInsets.all(1.w),
+                                  child: CommonImage(
+                                    img: IconsWidgets.userImages,
+                                    color: ColorUtils.black,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                    ),
-                  ),
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AdoroText(
-                      user.username ?? VariableUtils.naError,
-                      fontSize: 13.sp,
-                      color:  ColorUtils.black92,
-                      fontWeight: FontWeightClass.fontWeight600,
-                    ),
-                    SizeConfig.sH05,
-                  ],
-                ),
-                subtitle: AdoroText(
-                  user.fullName ?? "",
-                  fontSize: 10.sp,
-                  color:  ColorUtils.black92,
-                ),
-              )).toList(),
+                        ),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AdoroText(
+                              user.username ?? VariableUtils.naError,
+                              fontSize: 13.sp,
+                              color: ColorUtils.black92,
+                              fontWeight: FontWeightClass.fontWeight600,
+                            ),
+                            SizeConfig.sH05,
+                          ],
+                        ),
+                        subtitle: AdoroText(
+                          user.fullName ?? "",
+                          fontSize: 10.sp,
+                          color: ColorUtils.black92,
+                        ),
+                      ))
+                  .toList(),
             ),
           ),
         ),
@@ -790,7 +792,7 @@ class LikeWidget extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.w),
         child: Image.asset(
           IconsWidgets.heartFilledImage,
-          scale: 1.w,
+          scale: 0.8.w,
           color: Colors.red,
         ),
       ),

@@ -77,12 +77,11 @@ class _CommentListState extends State<CommentList> {
             children: [
               ListTile(
                 contentPadding: EdgeInsets.zero,
-
                 onTap: () {
                   Get.to(() => Profile(
-                    // userId: widget.commentId,
-                    userId: widget.userId,
-                  ));
+                        // userId: widget.commentId,
+                        userId: widget.userId,
+                      ));
                 },
                 leading: CircleAvatar(
                   radius: 6.w,
@@ -120,13 +119,16 @@ class _CommentListState extends State<CommentList> {
                         context: context,
                       );
                     },
-                    child: SizedBox(width: Get.width,child: CommentDescription(message: widget.message))),
+                    child: SizedBox(
+                        width: Get.width,
+                        child: CommentDescription(
+                          message: widget.message,
+                        ))),
               ),
             ],
           ),
           Row(
             children: [
-
               InkWell(
                   onTap: widget.likeOnTap,
                   child: LikeButton(
@@ -334,7 +336,7 @@ Text mentionsText(message) => Text(
     );
 
 Text normalText(message) => Text(
-      message,
+      message + " ",
       style: TextStyle(
         fontSize: 11.5.sp,
         color: ColorUtils.black92,

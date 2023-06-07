@@ -44,7 +44,11 @@ class LikeButton extends StatelessWidget {
                     color: ColorUtils.black92,
                   ),
             SizeConfig.sW2,
-            AdoroText('$likecounter', color: ColorUtils.black92,fontWeight: FontWeightClass.fontWeight600,),
+            AdoroText(
+              '$likecounter',
+              color: ColorUtils.black92,
+              fontWeight: FontWeightClass.fontWeight600,
+            ),
           ],
         ),
       ),
