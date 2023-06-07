@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
-
 logs(String message) {
   if (kDebugMode) {
     log(message);
@@ -14,7 +13,7 @@ logs(String message) {
 
 List<Category> selectedCategoryDataList = [];
 
-String postTimeCalculate(date, ext) {
+String postTimeCalculate(date, ext, {bool isUtc = false}) {
   try {
     if (date != "") {
       DateTime date1 = DateTime.parse(date);
@@ -22,14 +21,16 @@ String postTimeCalculate(date, ext) {
 
       int data = date2.difference(date1).inDays;
 
-      var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
-      date1 = dateTime.toLocal();
+      if (!isUtc) {
+        var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
+        date1 = dateTime.toLocal();
+      }
 
       if (date2.difference(date1).inSeconds < 60) {
         return "now";
       } else if (date2.difference(date1).inMinutes < 60) {
         return "${date2.difference(date1).inMinutes} min $ext";
-      } else if (date2.difference(date1).inHours < 60) {
+      } else if (date2.difference(date1).inHours < 24) {
         return "${date2.difference(date1).inHours} h $ext";
       } else if (date2.difference(date1).inDays < 8) {
         return "${date2.difference(date1).inDays} d $ext";
@@ -153,8 +154,7 @@ class CropImage {
   }
 }
 
-
 /// ========================== CONST UTILS ========================== ///
-class ConstUtils{
-  static String selectedChattingUserId="";
+class ConstUtils {
+  static String selectedChattingUserId = "";
 }

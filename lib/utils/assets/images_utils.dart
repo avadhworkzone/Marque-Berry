@@ -11,6 +11,7 @@ String lottiebasePath = 'assets/lotties';
 class ImagesWidgets {
   /// LOGO & SPLASH
   static String logoImage = '$imagesbasePath/logo.png';
+  static String templatePlaceHolder = '$imagesbasePath/templatePlaceHolder.png';
   static String circleImage = '$imagesbasePath/circle.png';
   static String profile2Image = '$imagesbasePath/profile2.png';
   static String rectangleImage = '$imagesbasePath/Rectangle.png';
@@ -19,7 +20,9 @@ class ImagesWidgets {
   static String profileImagesImage = '$imagesbasePath/profileimages.png';
   static String submitButtonImage = '$imagesbasePath/submitButton.png';
   static String gradientRectangle = '$imagesbasePath/gradientRectangle.png';
-  static String splashImage = '$imagesbasePath/splash.png';
+  // static String splashImage = '$imagesbasePath/splash.png';
+  static String splashGifImage = '$imagesbasePath/splashGif.gif';
+  static String doneGifImage = '$imagesbasePath/doneGif.gif';
   static String tickSquareImage = '$imagesbasePath/TickSquare.png';
   static String closeSquareImage = '$imagesbasePath/CloseSquare.png';
   static String referEarnImage = '$imagesbasePath/referEarn.png';

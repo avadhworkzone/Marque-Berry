@@ -8,9 +8,11 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/commanWidget/success_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/model/apiModel/requestModel/apply_now_campaign_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/apply_now_contest_req_model.dart';
+import 'package:socialv/model/apiModel/responseModel/apply_now_campaign_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/compaign_contest_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
@@ -20,7 +22,6 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
-import 'package:socialv/view/auth/done_screen.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 
 import '../../model/apiModel/responseModel/apply_now_contest_res_model.dart';
@@ -49,58 +50,78 @@ class _CampaignScreenState extends State<CampaignScreen> {
           campaignScreenController.campaignContestApiCall();
         },
         builder: (campaignContestViewModel) {
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              backgroundColor: Theme.of(context).cardColor,
-              appBar: AppBar(
-                elevation: 0,
-                titleSpacing: 0,
-                backgroundColor: whiteBlack2E,
-                automaticallyImplyLeading: false,
-                leading: Padding(
-                  padding: EdgeInsets.all(1.w),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(8.w),
-                    onTap: () => bottomBarController.pageChange(0),
-                    child: Icon(Icons.arrow_back, color: blackWhite),
-                  ),
-                ),
-                title: TabBar(
-                  labelColor: ColorUtils.blueB9,
-                  unselectedLabelColor: ColorUtils.grey,
-                  indicatorColor: ColorUtils.blueB9,
-                  tabs: [
-                    Tab(
-                      child: Text(
-                        'Campaign',
-                        style: TextStyle(
-                          fontWeight: FontWeightClass.fontWeight700,
+          return Stack(
+            children: [
+              DefaultTabController(
+                length: 2,
+                child: Scaffold(
+                  backgroundColor: Theme.of(context).cardColor,
+                  appBar: PreferredSize(
+                    preferredSize: Size(Get.width, 70),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: AppBar(
+                        elevation: 0,
+                        titleSpacing: 0,
+                        backgroundColor: Theme.of(context).cardColor,
+                        automaticallyImplyLeading: false,
+                        leading: Padding(
+                          padding: EdgeInsets.all(1.w),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(8.w),
+                            onTap: () => bottomBarController.pageChange(0),
+                            child: Icon(Icons.arrow_back, color: blackWhite),
+                          ),
                         ),
+                        title: TabBar(
+                          labelColor: ColorUtils.blueB9,
+                          unselectedLabelColor: ColorUtils.grey,
+                          indicatorColor: ColorUtils.blueB9,
+                          tabs: [
+                            Tab(
+                              child: Text(
+                                'Campaign',
+                                style: TextStyle(
+                                  fontWeight: FontWeightClass.fontWeight600,
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                'Contest',
+                                style: TextStyle(
+                                  fontWeight: FontWeightClass.fontWeight600,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        actions: [SizeConfig.sW9],
                       ),
                     ),
-                    Tab(
-                      child: Text(
-                        'Contest',
-                        style: TextStyle(
-                          fontWeight: FontWeightClass.fontWeight700,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                actions: [SizeConfig.sW9],
-              ),
-              body: TabBarView(
-                children: [
-                  CampaignScn(
-                      campaignContestViewModel: campaignContestViewModel),
-                  ContestScreen(
-                    campaignContestViewModel: campaignContestViewModel,
                   ),
-                ],
+                  body: TabBarView(
+                    children: [
+                      CampaignScn(
+                          campaignContestViewModel: campaignContestViewModel),
+                      ContestScreen(
+                        campaignContestViewModel: campaignContestViewModel,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+              if (campaignContestViewModel.applyCampaignApiResponse.status ==
+                      Status.LOADING ||
+                  campaignContestViewModel.applyContestApiResponse.status ==
+                      Status.LOADING)
+                Container(
+                  height: Get.height,
+                  width: Get.width,
+                  color: ColorUtils.black26,
+                  child: Loader(),
+                ),
+            ],
           );
         },
       );
@@ -162,6 +183,7 @@ class CampaignScn extends StatelessWidget {
 ///Contest Screen
 class ContestScreen extends StatelessWidget {
   CampaignContestViewModel campaignContestViewModel;
+
   ContestScreen({
     Key? key,
     required this.campaignContestViewModel,
@@ -252,9 +274,9 @@ class TabBarMethod extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 2.w),
             width: size.width,
             decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(blurRadius: 5, color: Colors.grey),
-              ],
+              // boxShadow: [
+              //   BoxShadow(blurRadius: 5, color: Colors.grey),
+              // ],
               color: whiteBlack2E,
               borderRadius: BorderRadius.circular(5.w),
             ),
@@ -310,11 +332,13 @@ class TabBarMethod extends StatelessWidget {
                       '$title',
                       color: blackWhite,
                       fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeightClass.fontWeight600,
                     ),
                     subtitle: AdoroText(
                       'Time Left : ${postTimeCalculate(createOn, "")}',
                       color: ColorUtils.black92,
+                      fontWeight: FontWeightClass.fontWeight500,
+                      fontSize: 10.sp,
                     ),
                   ),
                   SizeConfig.sH1,
@@ -405,7 +429,7 @@ class TabBarMethod extends StatelessWidget {
                         child: AdoroText(
                           'KNOW MORE',
                           color: ColorUtils.black92,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 12.sp,
                         ),
                       ),
@@ -446,7 +470,8 @@ class CampaignScreenController extends GetxController {
     required CampaignContestViewModel campaignContestViewModel,
     required String campaignId,
   }) async {
-    if (applied != "false") {
+    print('applied==>$applied');
+    if (applied == "false") {
       String path = await pickCampaignImage();
       logs(path);
 
@@ -460,14 +485,18 @@ class CampaignScreenController extends GetxController {
           final ApplyContestResModel response =
               campaignContestViewModel.applyContestApiResponse.data;
 
+          logs('response==>${response.status}');
+
           if (response.status.toString() == VariableUtils.status200) {
             campaignContestViewModel.getCampaignContest();
-            Get.to(() => DoneScreen(isCampaign: true));
+            Get.to(() => SuccessLogin(
+                  isBackRoute: true,
+                ));
 
-            showSnackBar(
-              message: response.msg ?? "apply successfully",
-              snackbarSuccess: true,
-            );
+            // showSnackBar(
+            //   message: response.msg ?? "apply successfully",
+            //   snackbarSuccess: true,
+            // );
           } else {
             showSnackBar(
               message: response.msg ?? VariableUtils.somethingWentWrong,
@@ -496,16 +525,17 @@ class CampaignScreenController extends GetxController {
         await campaignContestViewModel.applyCampaign(applyCampaignReqModel);
         if (campaignContestViewModel.applyCampaignApiResponse.status ==
             Status.COMPLETE) {
-          final CampaignContestResModel response =
+          final ApplyCampaignResModel response =
               campaignContestViewModel.applyCampaignApiResponse.data;
           if (response.status.toString() == VariableUtils.status200) {
             campaignContestViewModel.getCampaignContest();
-            Get.to(() => DoneScreen(isCampaign: true));
-
-            showSnackBar(
-              message: response.msg ?? "apply successfully",
-              snackbarSuccess: true,
-            );
+            Get.to(() => SuccessLogin(
+                  isBackRoute: true,
+                ));
+            // showSnackBar(
+            //   message: response.msg ?? "apply successfully",
+            //   snackbarSuccess: true,
+            // );
           } else {
             showSnackBar(
               message: response.msg ?? VariableUtils.somethingWentWrong,

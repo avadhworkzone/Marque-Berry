@@ -42,37 +42,22 @@ class TabBarComponents extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+                // homeController.updateTabController(
+                //     index
+                // );
                 if (index == 0) {
                   homeController.tabNameChange("relevant");
                   categoryFeedViewModel.pageNumberIndex = 0;
                   categoryFeedViewModel.isPageLoading = false;
                   await categoryFeedViewModel.categoryTrending("relevant");
-                  // if (categoryFeedViewModel.categoryApiResponse.status ==
-                  //     Status.COMPLETE) {
-                  //   CategoryResModel categoryResponse =
-                  //       categoryFeedViewModel.categoryApiResponse.data;
-                  //   if (categoryResponse.data != null) {
-                  //     homeController.categoryListUpdate(
-                  //       categoryResponse.data!,
-                  //     );
-                  //   }
-                  // }
-                } else if (index == 1) {
+                }
+                else if (index == 1) {
                   homeController.tabNameChange("trending");
                   categoryFeedViewModel.pageNumberIndex = 0;
                   categoryFeedViewModel.isPageLoading = false;
                   await categoryFeedViewModel.categoryTrending("trending");
-                  // if (categoryFeedViewModel.categoryApiResponse.status ==
-                  //     Status.COMPLETE) {
-                  //   CategoryResModel categoryResponse =
-                  //       categoryFeedViewModel.categoryApiResponse.data;
-                  //   if (categoryResponse.data != null) {
-                  //     homeController.categoryListUpdate(
-                  //       categoryResponse.data!,
-                  //     );
-                  //   }
-                  // }
-                } else {
+                }
+                else {
                   homeController.tabNameChange(
                     categoryDataList[index - 2].name,
                   );
@@ -81,16 +66,6 @@ class TabBarComponents extends StatelessWidget {
                   await categoryFeedViewModel.categoryTrending(
                     categoryDataList[index - 2].name.toString(),
                   );
-                  // if (categoryFeedViewModel.categoryApiResponse.status ==
-                  //     Status.COMPLETE) {
-                  //   CategoryResModel categoryResponse =
-                  //       categoryFeedViewModel.categoryApiResponse.data;
-                  //   if (categoryResponse.data != null) {
-                  //     homeController.categoryListUpdate(
-                  //       categoryResponse.data!,
-                  //     );
-                  //   }
-                  // }
                 }
               });
               homeController.tabChange(index);

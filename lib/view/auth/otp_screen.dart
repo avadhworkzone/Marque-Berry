@@ -4,10 +4,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:socialv/appService/notification_service.dart';
-
+import 'package:socialv/commanWidget/success_screen.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/view/drawer/support.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -248,9 +250,8 @@ class _ValidateOtpScreenState extends State<ValidateOtpScreen> {
                                   );
                                   Get.find<SettingViewModel>().isNotification =
                                       response.data?.notification ?? true;
-                                  Get.to(() => InterestScreen(
-                                      // isCampaign: false,
-                                      ));
+                                  Get.to(() => SuccessLogin());
+
                                   // Get.offAllNamed(RouteHelper.getDoneRoute());
                                 } else if (response.status.toString() ==
                                     "500") {

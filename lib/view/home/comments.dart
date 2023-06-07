@@ -101,10 +101,11 @@ class _CommentsState extends State<Comments> {
                 else
                   Expanded(
                     child: SingleChildScrollView(
-                      reverse: true,
+                      // reverse: true,
                       child: ListView.builder(
                         shrinkWrap: true,
                         primary: true,
+                        padding: EdgeInsets.zero,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: response.data
                                 ?.where((element) => element.parentId == "0")

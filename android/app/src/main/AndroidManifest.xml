@@ -8,7 +8,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="Adoro"
+        android:label="adoro"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
 

@@ -273,10 +273,8 @@ class UserList extends StatelessWidget {
                           SizeConfig.sH05,
                         ],
                       ),
-                      subtitle: AdoroText(
-                        followData.fullName ?? "",
-                        fontSize: 10.sp,
-                        color: blackWhite,
+                      subtitle: LastMsg(
+                        receiverId: followData.id.toString(),
                       ),
                       trailing: MessageCount(
                         receiverId: followData.id.toString(),
@@ -335,6 +333,63 @@ class MessageCount extends StatelessWidget {
 
         return UnSeenCountBox(count: 0);
       },
+    );
+  }
+}
+
+class LastMsg extends StatelessWidget {
+  final String receiverId;
+
+  const LastMsg({Key? key, required this.receiverId}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection("Chat")
+          .doc(chatId(
+              (PreferenceUtils.getInt(key: 'userid')).toString(), receiverId))
+          .snapshots(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.hasData) {
+          if (!snapshot.data!.exists) {
+            return lastMsgText("");
+          }
+          if ((snapshot.data?.exists ?? false) == false) {
+            return lastMsgText("");
+          }
+          final mapData = snapshot.data!.data() as Map<String, dynamic>;
+          if (mapData["message"].isEmpty) {
+            return lastMsgText("");
+          }
+
+          final messageList = (mapData["message"] as List<dynamic>);
+
+          final lastMsg =
+              messageList.last['messageType'] == MessageType.TEXT.name
+                  ? messageList.last['message']
+                  : messageList.last['messageType'] == MessageType.IMAGE.name
+                      ? "📷 Photo"
+                      : "🎥 Video";
+          final lastMsgTime = (messageList.last['date'] as Timestamp).toDate();
+
+          return lastMsgText(
+              '$lastMsg · ${postTimeCalculate(lastMsgTime.toString(), "", isUtc: true)}');
+        }
+        if (snapshot.hasError) {
+          return lastMsgText("");
+        }
+
+        return lastMsgText("");
+      },
+    );
+  }
+
+  AdoroText lastMsgText(String str) {
+    return AdoroText(
+      str,
+      fontSize: 8.sp,
+      color: ColorUtils.grey,
     );
   }
 }

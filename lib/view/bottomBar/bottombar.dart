@@ -28,6 +28,7 @@ class _BottomBarState extends State<BottomBar> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
   late List pageRoute;
   AuthViewModel authViewModel = Get.find<AuthViewModel>();
+  HomeController homeController = Get.find<HomeController>();
 
   // List pageRoute = [Home(), SharePost(), Home(), ProfileScreen1()];
 
@@ -70,6 +71,7 @@ class _BottomBarState extends State<BottomBar> {
             return GetBuilder<BottomBarController>(
               init: BottomBarController(),
               initState: (_) {
+
                 notificationInitialization();
               },
               builder: (bottomBarController) {

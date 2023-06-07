@@ -1,9 +1,14 @@
+
+
+
+
 // ignore_for_file: must_be_immutable
 
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/success_screen.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -12,6 +17,8 @@ import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/view/auth/otp_screen.dart';
+import 'package:socialv/view/drawer/result.dart';
 import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/message/message_list.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
@@ -131,11 +138,14 @@ class _HomeState extends State<Home> {
         builder: (homeController) {
           return Column(
             children: [
+              Divider(color: ColorUtils.greyF1,thickness: 0.8),
               TabBarComponents(
                 categoryDataList: selectedCategoryDataList,
                 homeController: homeController,
                 categoryFeedViewModel: categoryFeedViewModel,
               ),
+              Divider(color: ColorUtils.greyF1,thickness: 0.8,height: 0,),
+
               GetBuilder<CategoryFeedViewModel>(
                 init: CategoryFeedViewModel(),
                 initState: (_) {

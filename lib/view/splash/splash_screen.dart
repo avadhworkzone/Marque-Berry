@@ -16,13 +16,8 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: ColorUtils.white,
-      child: Container(
-        width: Get.width,
-        height: Get.height,
-        child: Image.asset(
-          ImagesWidgets.splashImage,
-          fit: BoxFit.cover,
-        ),
+      child: Image.asset(
+        ImagesWidgets.splashGifImage,
       ),
     );
   }

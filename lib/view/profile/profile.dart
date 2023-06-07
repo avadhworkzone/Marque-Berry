@@ -91,7 +91,7 @@ class Profile extends StatelessWidget {
                     if (profileResModel.data!.first.subTag ==
                         ProfileBtnStatus.Confirm.name)
                       UpperConfirmUser(profileResModel: profileResModel),
-                    SizeConfig.sH2,
+                    // SizeConfig.sH1,
                     CoverProfile(
                         con: con, profileData: profileResModel.data!.first),
                     ProfileHeaderSection(

@@ -478,7 +478,9 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
     CreatePostReqModel createPostReqModel,
     SharePostController sharePostController,
   ) async {
-    var categoryIndex = categoryDataList
+    // var categoryIndex = categoryDataList
+    //     .indexWhere((element) => element.id.toString().contains(categoryId));
+    final categoryIndex = selectedCategoryDataList
         .indexWhere((element) => element.id.toString().contains(categoryId));
 
     if (categoryId == "") {
@@ -526,15 +528,26 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
           message: createPostResModel.msg ?? "Post added successfully",
           snackbarSuccess: true,
         );
-        homeController.tabChange(categoryIndex + 2);
-
-        homeController.tabNameChange(
-          categoryName,
-        );
+        logs('categoryIndex----------->$categoryIndex');
+        if (categoryIndex > -1) {
+          homeController.tabChange(categoryIndex + 2);
+          homeController.tabNameChange(
+            categoryName,
+          );
+        } else {
+          homeController.tabChange(0);
+          homeController.tabNameChange(
+            "relevant",
+          );
+        }
+        // homeController.updateTabController(
+        //   categoryIndex > -1 ? categoryIndex + 2 : 0,
+        // );
         categoryFeedViewModel.pageNumberIndex = 0;
         homeController.animateTabScroll(28.w * categoryIndex + 2);
         categoryFeedViewModel.isPageLoading = false;
-        await categoryFeedViewModel.categoryTrending(categoryName);
+        await categoryFeedViewModel
+            .categoryTrending(categoryIndex > -1 ? categoryName : "relevant");
       } else if (createPostViewModel.createPostApiResponse.status ==
           Status.ERROR) {
         showSnackBar(

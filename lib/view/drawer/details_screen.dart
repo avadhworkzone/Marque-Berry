@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
@@ -62,9 +63,9 @@ class DetailsScreen extends StatelessWidget {
             width: size.width,
             decoration: BoxDecoration(
               color: whiteBlack2E,
-              boxShadow: [
-                BoxShadow(blurRadius: 5, color: Colors.grey),
-              ],
+              // boxShadow: [
+              //   BoxShadow(blurRadius: 5, color: Colors.grey),
+              // ],
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -115,12 +116,13 @@ class DetailsScreen extends StatelessWidget {
                   title: AdoroText(
                     '$title',
                     fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeightClass.fontWeight600,
                   ),
                   subtitle: AdoroText(
                     "$time",
                     color: ColorUtils.black92,
-                    fontSize: 12.sp,
+                    fontWeight: FontWeightClass.fontWeight500,
+                    fontSize: 10.sp,
                   ),
                 ),
                 SizeConfig.sH1,
@@ -131,7 +133,7 @@ class DetailsScreen extends StatelessWidget {
                     child: AdoroText(
                       description,
                       color: ColorUtils.black92,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -187,7 +189,7 @@ class DetailsScreen extends StatelessWidget {
                           color: applied == "false"
                               ? ColorUtils.white
                               : ColorUtils.green4E,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeightClass.fontWeight600,
                           fontSize: 12.sp,
                         ),
                       ),

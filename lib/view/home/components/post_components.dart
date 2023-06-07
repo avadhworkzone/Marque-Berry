@@ -97,19 +97,21 @@ class PostComponents extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(1.5.w),
-          color: whiteBlack2E,
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 5, color: Theme.of(context).colorScheme.background),
-          ],
-        ),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(1.5.w),
+        //   color: whiteBlack2E,
+        //   boxShadow: [
+        //     BoxShadow(
+        //         blurRadius: 5, color: Theme.of(context).colorScheme.background),
+        //   ],
+        // ),
         child: Column(
           children: [
             SizeConfig.sH1,
             ListTile(
+              contentPadding: EdgeInsets.zero,
               title: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   UserNameText(userId: userId, userName: userName, tagList: []),
                   if (finalTagList.isNotEmpty)
@@ -203,11 +205,11 @@ class PostComponents extends StatelessWidget {
               children: [
                 SizeConfig.sH1,
                 Padding(
-                  padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
+                  padding: EdgeInsets.fromLTRB(0.w, 0, 0.w, 4.w),
                   child: AdoroText(
                     "$title",
                     maxLines: 2,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     overflow: TextOverflow.ellipsis,
                     color: black92White,
                   ),
@@ -224,7 +226,7 @@ class PostComponents extends StatelessWidget {
                             url: contentImage,
                           )
                         : OctoImage(
-                            fit: BoxFit.cover,
+                            // fit: BoxFit.cover,
                             image: NetworkImage(contentImage),
                             progressIndicatorBuilder: (context, progress) {
                               double? value;
@@ -286,7 +288,7 @@ class PostComponents extends StatelessWidget {
                               isReload: false);
                         },
                         child: CommonImageScale(
-                          scale: 23.w,
+                          scale: 19.w,
                           color: black92White,
                           img: IconsWidgets.chatImage,
                         ),
@@ -300,7 +302,7 @@ class PostComponents extends StatelessWidget {
                           );
                         },
                         child: CommonImageScale(
-                          scale: 23.w,
+                          scale: 19.w,
                           color: black92White,
                           img: IconsWidgets.sendImage,
                         ),
@@ -331,11 +333,11 @@ class PostComponents extends StatelessWidget {
                   ),
                 ),
                 SizeConfig.sH1,
-                Padding(
-                  padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
-                  child: DecorationUtils.dividerLine2(),
-                ),
-                SizeConfig.sH1,
+                // Padding(
+                //   padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
+                //   child: DecorationUtils.dividerLine2(),
+                // ),
+                // SizeConfig.sH1,
                 if (likeProfile?.length != null)
                   Padding(
                     padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0.w),
@@ -471,6 +473,7 @@ class PostComponents extends StatelessWidget {
                 SizeConfig.sH1,
               ],
             ),
+            DecorationUtils.dividerLine2(thickness:2.5),
           ],
         ),
       ),
@@ -825,7 +828,7 @@ class UnlikeWidget extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.w),
         child: CommonImageScale(
           img: IconsWidgets.heartImage,
-          scale: 23.w,
+          scale: 19.w,
           color: Theme.of(context).textTheme.titleMedium?.color,
         ),
       ),

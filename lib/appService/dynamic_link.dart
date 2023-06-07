@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/view/auth/done_screen.dart';
 import 'package:socialv/view/auth/login_screen.dart';
 import 'package:socialv/view/bottomBar/bottombar.dart';
 import 'package:socialv/view/home/post_detail_screen.dart';
@@ -98,10 +97,14 @@ class DynamicLink {
     if (deepLink != null) {
       if (PreferenceUtils.getInt(key: PreferenceUtils.login) == 0) {
         String? referId;
-        if(deepLink.toString().contains('referId')){
-          referId=deepLink.toString().substring(deepLink.toString().indexOf('=') + 1);
+        if (deepLink.toString().contains('referId')) {
+          referId = deepLink
+              .toString()
+              .substring(deepLink.toString().indexOf('=') + 1);
         }
-        Get.off(() => LoginScreen(referId: referId,));
+        Get.off(() => LoginScreen(
+              referId: referId,
+            ));
       } else {
         final postId =
             deepLink.toString().substring(deepLink.toString().indexOf('=') + 1);
@@ -117,13 +120,11 @@ class DynamicLink {
 
   static void navigatePage() {
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 2, milliseconds: 500),
       () => Get.offAll(
         () => PreferenceUtils.getInt(key: PreferenceUtils.login) == 0
             ? LoginScreen()
-            : PreferenceUtils.getWelcome() == 0
-                ? DoneScreen()
-                : BottomBar(),
+            : BottomBar(),
       ),
     );
   }
@@ -138,10 +139,14 @@ class DynamicLink {
       if (deepLink != null) {
         if (PreferenceUtils.getInt(key: PreferenceUtils.login) == 0) {
           String? referId;
-          if(deepLink.toString().contains('referId')){
-            referId=deepLink.toString().substring(deepLink.toString().indexOf('=') + 1);
+          if (deepLink.toString().contains('referId')) {
+            referId = deepLink
+                .toString()
+                .substring(deepLink.toString().indexOf('=') + 1);
           }
-          Get.off(() => LoginScreen(referId: referId,));
+          Get.off(() => LoginScreen(
+                referId: referId,
+              ));
         } else {
           final postId = deepLink
               .toString()
