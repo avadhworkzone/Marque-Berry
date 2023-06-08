@@ -221,33 +221,66 @@ class PostComponents extends StatelessWidget {
                     // height: 75.w,
                     width: Get.width,
                     child: contentType.toLowerCase() == "video"
-                        ? InViewVideoComponents(
-                            play: isInView,
-                            url: contentImage,
-                          )
-                        : OctoImage(
-                            // fit: BoxFit.cover,
-                            image: NetworkImage(contentImage),
-                            progressIndicatorBuilder: (context, progress) {
-                              double? value;
-                              var expectedBytes = progress?.expectedTotalBytes;
-                              if (progress != null && expectedBytes != null) {
-                                value = progress.cumulativeBytesLoaded /
-                                    expectedBytes;
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: value,
-                                  color: blackWhite,
+                        ? InkWell(
+                            onTap: () {
+                              Get.dialog(
+                                Dialog(
+                                  insetPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.black45,
+                                  child: Center(
+                                    child: FileVideoPlayer(
+                                      url: contentImage,
+                                    ),
+                                  ),
                                 ),
                               );
                             },
-                            errorBuilder: (context, error, stacktrace) =>
-                                Padding(
-                              padding: EdgeInsets.all(7.w),
-                              child: CommonImage(
-                                img: IconsWidgets.imageImages,
-                                color: blackWhite,
+                            child: InViewVideoComponents(
+                              play: isInView,
+                              url: contentImage,
+                            ),
+                          )
+                        : InkWell(
+                            onTap: () {
+                              print("===================");
+                              Get.dialog(
+                                Dialog(
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.black45,
+                                    child: Center(
+                                      child: Image(
+                                        image: NetworkImage(
+                                          contentImage,
+                                        ),
+                                      ),
+                                    )),
+                              );
+                            },
+                            child: OctoImage(
+                              // fit: BoxFit.cover,
+                              image: NetworkImage(contentImage),
+                              progressIndicatorBuilder: (context, progress) {
+                                double? value;
+                                var expectedBytes =
+                                    progress?.expectedTotalBytes;
+                                if (progress != null && expectedBytes != null) {
+                                  value = progress.cumulativeBytesLoaded /
+                                      expectedBytes;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: value,
+                                    color: blackWhite,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, error, stacktrace) =>
+                                  Padding(
+                                padding: EdgeInsets.all(7.w),
+                                child: CommonImage(
+                                  img: IconsWidgets.imageImages,
+                                  color: blackWhite,
+                                ),
                               ),
                             ),
                           ),

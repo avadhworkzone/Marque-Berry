@@ -149,7 +149,7 @@ class CategoryFeedViewModel extends GetxController {
     update();
   }
 
-  /// ======================== POST LIKE VIEW MODEL ================================
+  /// ======================== POST LIKE VIEW MODEL ===================================
   Future<void> likePost(LikePostReqModel reqModel) async {
     logs('loading..');
     likeApiResponse = ApiResponse.loading('LOADING');
@@ -281,13 +281,15 @@ class CategoryFeedViewModel extends GetxController {
   /// ===================== POST LIKE IN COMMENT ========================
 
   Future<void> postLikeInComment(
-      {required String commentId, required String postId, bool isLiked = false}) async {
+      {required String commentId,
+      required String postId,
+      bool isLiked = false}) async {
     logs('loading..');
     postLikeInCommentApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
       final response = await LikeCommentRepo()
-          .likeComment(commentId: commentId, postId: postId,isLiked: isLiked);
+          .likeComment(commentId: commentId, postId: postId, isLiked: isLiked);
       postLikeInCommentApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('postLikeInCommentApiResponse ERROR :=> $e');

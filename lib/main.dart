@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialv/appService/notification_service.dart';
+import 'package:socialv/test.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:socialv/utils/color_utils.dart';
@@ -171,8 +172,7 @@ class _MyAppState extends State<MyApp> {
 
   EditProfileController editProfileController =
       Get.put(EditProfileController());
-  DrawerVideModel drawerVideModel =
-      Get.put(DrawerVideModel());
+  DrawerVideModel drawerVideModel = Get.put(DrawerVideModel());
 }
 
 class AppTheme {
@@ -180,7 +180,6 @@ class AppTheme {
     fontFamily: 'Poppins',
     cardColor: ColorUtils.greyE5,
     scaffoldBackgroundColor: ColorUtils.white,
-
     canvasColor: Colors.grey[200],
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
@@ -216,17 +215,17 @@ class AppTheme {
     primaryTextTheme: const TextTheme(
       labelMedium: TextStyle(color: ColorUtils.black),
       caption: TextStyle(color: ColorUtils.white),
-
     ),
     // appBarTheme: const AppBarTheme(
     //   brightness: Brightness.light,
     //   iconTheme: IconThemeData(color: ColorUtils.black),
     // ),
     colorScheme: const ColorScheme.light(
-        primary: ColorUtils.white,
-        onPrimary: ColorUtils.white,
-        secondary: ColorUtils.white,
-        background: ColorUtils.darkBlue3A,),
+      primary: ColorUtils.white,
+      onPrimary: ColorUtils.white,
+      secondary: ColorUtils.white,
+      background: ColorUtils.darkBlue3A,
+    ),
     iconTheme: const IconThemeData(color: ColorUtils.black),
     hintColor: ColorUtils.black,
     textTheme: const TextTheme(

@@ -22,7 +22,7 @@ String postTimeCalculate(date, ext, {bool isUtc = false}) {
       int data = date2.difference(date1).inDays;
 
       if (!isUtc) {
-        var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
+        var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, false);
         date1 = dateTime.toLocal();
       }
 

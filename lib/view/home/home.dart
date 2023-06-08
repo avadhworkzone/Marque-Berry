@@ -1,7 +1,3 @@
-
-
-
-
 // ignore_for_file: must_be_immutable
 
 import 'dart:convert';
@@ -138,14 +134,17 @@ class _HomeState extends State<Home> {
         builder: (homeController) {
           return Column(
             children: [
-              Divider(color: ColorUtils.greyF1,thickness: 0.8),
+              Divider(color: ColorUtils.greyF1, thickness: 0.8),
               TabBarComponents(
                 categoryDataList: selectedCategoryDataList,
                 homeController: homeController,
                 categoryFeedViewModel: categoryFeedViewModel,
               ),
-              Divider(color: ColorUtils.greyF1,thickness: 0.8,height: 0,),
-
+              Divider(
+                color: ColorUtils.greyF1,
+                thickness: 0.8,
+                height: 0,
+              ),
               GetBuilder<CategoryFeedViewModel>(
                 init: CategoryFeedViewModel(),
                 initState: (_) {
@@ -204,62 +203,58 @@ class _HomeState extends State<Home> {
                                                       .contains(postId) ==
                                                   false
                                               ? PostComponents(
-                                                isInView: isInView,
-                                                tagList:
-                                                    categoryIndex.tagUser ??
-                                                        [],
-                                                userId: int.parse(
-                                                    categoryIndex.userId
-                                                        .toString()),
-                                                contentType: categoryIndex
-                                                        .contentType ??
-                                                    "image",
-                                                homeController:
-                                                    homeController,
-                                                postId:
-                                                    categoryIndex.id ?? 0,
-                                                categoryFeedViewModel:
-                                                    categoryFeedViewModel,
-                                                likeByMe: categoryIndex
-                                                            .likedByMe
-                                                            .toString() ==
-                                                        'true'
-                                                    ? "You"
-                                                    : (categoryIndex
-                                                            .likedByPeople?[
-                                                                0]
-                                                            .username ??
-                                                        ""),
-                                                likeProfile: categoryIndex
-                                                    .likedByPeople,
-                                                profileImage:
-                                                    categoryIndex.image ??
-                                                        "",
-                                                userName: categoryIndex
-                                                        .username ??
-                                                    "",
-                                                time: postTimeCalculate(
-                                                  categoryIndex.createdOn,
-                                                  'ago',
-                                                ),
-                                                contentImage: categoryIndex
-                                                    .contentUrl
-                                                    .toString(),
-                                                title: categoryIndex.content
-                                                    .toString(),
-                                                // title: (categoryIndex.id ?? 0)
-                                                //     .toString(),
-                                                likeCounter: (categoryIndex
-                                                            .likedByPeople
-                                                            ?.length ??
-                                                        0)
-                                                    .toString(),
-                                                commentCounter:
-                                                    (categoryIndex
-                                                                .comments ??
-                                                            0)
-                                                        .toString(),
-                                              )
+                                                  isInView: isInView,
+                                                  tagList:
+                                                      categoryIndex.tagUser ??
+                                                          [],
+                                                  userId: int.parse(
+                                                      categoryIndex.userId
+                                                          .toString()),
+                                                  contentType: categoryIndex
+                                                          .contentType ??
+                                                      "image",
+                                                  homeController:
+                                                      homeController,
+                                                  postId: categoryIndex.id ?? 0,
+                                                  categoryFeedViewModel:
+                                                      categoryFeedViewModel,
+                                                  likeByMe: categoryIndex
+                                                              .likedByMe
+                                                              .toString() ==
+                                                          'true'
+                                                      ? "You"
+                                                      : (categoryIndex
+                                                              .likedByPeople?[0]
+                                                              .username ??
+                                                          ""),
+                                                  likeProfile: categoryIndex
+                                                      .likedByPeople,
+                                                  profileImage:
+                                                      categoryIndex.image ?? "",
+                                                  userName:
+                                                      categoryIndex.username ??
+                                                          "",
+                                                  time: postTimeCalculate(
+                                                    categoryIndex.createdOn,
+                                                    'ago',
+                                                  ),
+                                                  contentImage: categoryIndex
+                                                      .contentUrl
+                                                      .toString(),
+                                                  title: categoryIndex.content
+                                                      .toString(),
+                                                  // title: (categoryIndex.id ?? 0)
+                                                  //     .toString(),
+                                                  likeCounter: (categoryIndex
+                                                              .likedByPeople
+                                                              ?.length ??
+                                                          0)
+                                                      .toString(),
+                                                  commentCounter:
+                                                      (categoryIndex.comments ??
+                                                              0)
+                                                          .toString(),
+                                                )
                                               : SizedBox();
                                         },
                                       );
