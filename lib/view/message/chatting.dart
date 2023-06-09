@@ -31,6 +31,8 @@ import 'package:socialv/view/home/post_detail_screen.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
+import '../../home_text.dart';
+import '../../model/repo/get_post_detail_repo.dart';
 import '../profile/profile.dart';
 
 class ChattingScreen extends StatefulWidget {
@@ -174,7 +176,6 @@ class _ChattingScreenState extends State<ChattingScreen>
             ),
           ),
         ),
-
         body: Column(
           children: [
             Expanded(
@@ -189,7 +190,8 @@ class _ChattingScreenState extends State<ChattingScreen>
                           .snapshots(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (!snapshot.hasData) {
-                          return Center(child: Padding(
+                          return Center(
+                              child: Padding(
                             padding: EdgeInsets.only(bottom: 30.h),
                             child: Loader(),
                           ));
@@ -213,10 +215,10 @@ class _ChattingScreenState extends State<ChattingScreen>
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!["message"].length,
                               itemBuilder: (context, index) {
-                                String messageTypeFirebase =
-                                    snapshot.data?["message"][index]["messageType"];
-                                String senderIdFirebase =
-                                    snapshot.data?["message"][index]["senderId"];
+                                String messageTypeFirebase = snapshot
+                                    .data?["message"][index]["messageType"];
+                                String senderIdFirebase = snapshot
+                                    .data?["message"][index]["senderId"];
                                 String messageFirebase =
                                     snapshot.data?["message"][index]["message"];
 
@@ -285,10 +287,12 @@ class _ChattingScreenState extends State<ChattingScreen>
                         }
                       },
                     ),
-                    GetBuilder<ChattingController>(builder: (chattingController) {
+                    GetBuilder<ChattingController>(
+                        builder: (chattingController) {
                       print(
                           'chattingController._sourcePath=>${chattingController._sourcePath}');
-                      String ext = chattingController._sourcePath.split("/").last;
+                      String ext =
+                          chattingController._sourcePath.split("/").last;
                       print('EXT ===>$ext');
                       if (ext.contains("jpg") ||
                           ext.contains("png") ||
@@ -795,24 +799,23 @@ class RightImageWidget extends StatelessWidget {
                                     backgroundColor: Colors.black87,
                                     insetPadding: EdgeInsets.zero,
                                     child: Center(
-                                      child: PhotoView(
-                                        errorBuilder: (context, error, stackTrace) {
-                                          return CommonImage(
-                                            img: IconsWidgets.imageImages,
-                                            color: ColorUtils.black,
-                                          );
-                                        },
-                                        loadingBuilder: (context, event) {
-                                          return Loader();
-                                        },
-                                        backgroundDecoration: BoxDecoration(
-                                          color: Colors.transparent
-                                        ),
-                                        imageProvider: NetworkImage(
-                                          image,
-                                        ),
-                                      )
-                                    ),
+                                        child: PhotoView(
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return CommonImage(
+                                          img: IconsWidgets.imageImages,
+                                          color: ColorUtils.black,
+                                        );
+                                      },
+                                      loadingBuilder: (context, event) {
+                                        return Loader();
+                                      },
+                                      backgroundDecoration: BoxDecoration(
+                                          color: Colors.transparent),
+                                      imageProvider: NetworkImage(
+                                        image,
+                                      ),
+                                    )),
                                   ),
                                 );
                                 // Get.to(() => Dialog(
@@ -1070,12 +1073,19 @@ class LeftAlignTextWidget extends StatelessWidget {
                                             isFromBackScreen: true,
                                           ));
                                     },
-                              child: AdoroText(
-                                message,
-                                color: message.contains(DynamicLink.uriPrefix)
-                                    ? ColorUtils.blueB9
-                                    : ColorUtils.black,
-                              ),
+                              // child: DynamicLinkPostDitels(),
+                              child: message.contains(DynamicLink.uriPrefix)
+                                  ? DynamicLinkPostDitels(
+                                      // message: message,
+                                      postId: message.toString().substring(
+                                          message.toString().indexOf('=') + 1))
+                                  : AdoroText(
+                                      message,
+                                      color: message
+                                              .contains(DynamicLink.uriPrefix)
+                                          ? ColorUtils.blueB9
+                                          : ColorUtils.black,
+                                    ),
                             ),
                           ),
                           Padding(
@@ -1097,6 +1107,66 @@ class LeftAlignTextWidget extends StatelessWidget {
           SizeConfig.sH1AndHalf,
         ],
       ),
+    );
+  }
+}
+
+class DynamicLinkPostDitels extends StatelessWidget {
+  // final String message;
+  final String postId;
+  DynamicLinkPostDitels({
+    super.key,
+    // required this.message,
+    required this.postId,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Container(
+            height: 40.h,
+            decoration: BoxDecoration(
+                color: Colors.white60, borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SizeConfig.sW2,
+                    Image(
+                      height: 50,
+                      width: 50,
+                      image: AssetImage(
+                        "assets/images/text.png",
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text("Likenootherwa",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                Image(
+                  width: double.maxFinite,
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage(
+                    "assets/images/text.png",
+                  ),
+                ),
+                SizeConfig.sH1,
+                Text(postId
+                    // message,
+                    )
+              ],
+            ),
+          );
+        }
+
+        return CircularProgressIndicator();
+      },
     );
   }
 }
@@ -1161,12 +1231,19 @@ class RightAlignTextWidget extends StatelessWidget {
                                             isFromBackScreen: true),
                                       );
                                     },
-                              child: AdoroText(
-                                message,
-                                color: message.contains(DynamicLink.uriPrefix)
-                                    ? ColorUtils.blueB9
-                                    : ColorUtils.black,
-                              ),
+                              child: message.contains(DynamicLink.uriPrefix)
+                                  ? DynamicLinkPostDitels(
+                                      // message: message,
+                                      postId: message.toString().substring(
+                                          message.toString().indexOf('=') + 1),
+                                    )
+                                  : AdoroText(
+                                      message,
+                                      color: message
+                                              .contains(DynamicLink.uriPrefix)
+                                          ? ColorUtils.blueB9
+                                          : ColorUtils.black,
+                                    ),
                             ),
                           ),
                           Padding(

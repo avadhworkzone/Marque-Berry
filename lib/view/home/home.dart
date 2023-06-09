@@ -174,93 +174,108 @@ class _HomeState extends State<Home> {
                           )
                         : Stack(
                             children: [
-                              InViewNotifierList(
-                                controller: _scrollController,
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                isInViewPortCondition: (double deltaTop,
-                                    double deltaBottom,
-                                    double viewPortDimension) {
-                                  return deltaTop < (0.5 * viewPortDimension) &&
-                                      deltaBottom > (0.5 * viewPortDimension);
+                              RefreshIndicator(
+                                onRefresh: () async {
+                                  categoryFeedViewModel.pageNumberIndex = 0;
+                                  categoryFeedViewModel.isPageLoading = false;
+                                  await categoryFeedViewModel.categoryTrending(
+                                      homeController.tabName,
+                                      isReload: false);
                                 },
-                                itemCount: categoryPostList.length,
-                                builder: (BuildContext context, int index) {
-                                  final categoryIndex = categoryPostList[index];
-                                  final postId = (categoryIndex.id ?? 0);
-                                  return LayoutBuilder(
-                                    builder: (BuildContext context,
-                                        BoxConstraints constraints) {
-                                      return InViewNotifierWidget(
-                                        id: '$index',
-                                        builder: (BuildContext context,
-                                            bool isInView, Widget? child) {
-                                          if (postId == 0) {
-                                            return SizedBox();
-                                          }
-                                          return homeController.reportList
-                                                      .contains(postId) ==
-                                                  false
-                                              ? PostComponents(
-                                                  isInView: isInView,
-                                                  tagList:
-                                                      categoryIndex.tagUser ??
-                                                          [],
-                                                  userId: int.parse(
-                                                      categoryIndex.userId
-                                                          .toString()),
-                                                  contentType: categoryIndex
-                                                          .contentType ??
-                                                      "image",
-                                                  homeController:
-                                                      homeController,
-                                                  postId: categoryIndex.id ?? 0,
-                                                  categoryFeedViewModel:
-                                                      categoryFeedViewModel,
-                                                  likeByMe: categoryIndex
-                                                              .likedByMe
-                                                              .toString() ==
-                                                          'true'
-                                                      ? "You"
-                                                      : (categoryIndex
-                                                              .likedByPeople?[0]
-                                                              .username ??
-                                                          ""),
-                                                  likeProfile: categoryIndex
-                                                      .likedByPeople,
-                                                  profileImage:
-                                                      categoryIndex.image ?? "",
-                                                  userName:
-                                                      categoryIndex.username ??
-                                                          "",
-                                                  time: postTimeCalculate(
-                                                    categoryIndex.createdOn,
-                                                    'ago',
-                                                  ),
-                                                  contentImage: categoryIndex
-                                                      .contentUrl
-                                                      .toString(),
-                                                  title: categoryIndex.content
-                                                      .toString(),
-                                                  // title: (categoryIndex.id ?? 0)
-                                                  //     .toString(),
-                                                  likeCounter: (categoryIndex
-                                                              .likedByPeople
-                                                              ?.length ??
-                                                          0)
-                                                      .toString(),
-                                                  commentCounter:
-                                                      (categoryIndex.comments ??
-                                                              0)
-                                                          .toString(),
-                                                )
-                                              : SizedBox();
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
+                                child: InViewNotifierList(
+                                  controller: _scrollController,
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  isInViewPortCondition: (double deltaTop,
+                                      double deltaBottom,
+                                      double viewPortDimension) {
+                                    return deltaTop <
+                                            (0.5 * viewPortDimension) &&
+                                        deltaBottom > (0.5 * viewPortDimension);
+                                  },
+                                  itemCount: categoryPostList.length,
+                                  builder: (BuildContext context, int index) {
+                                    final categoryIndex =
+                                        categoryPostList[index];
+                                    final postId = (categoryIndex.id ?? 0);
+                                    return LayoutBuilder(
+                                      builder: (BuildContext context,
+                                          BoxConstraints constraints) {
+                                        return InViewNotifierWidget(
+                                          id: '$index',
+                                          builder: (BuildContext context,
+                                              bool isInView, Widget? child) {
+                                            if (postId == 0) {
+                                              return SizedBox();
+                                            }
+                                            return homeController.reportList
+                                                        .contains(postId) ==
+                                                    false
+                                                ? PostComponents(
+                                                    isInView: isInView,
+                                                    tagList:
+                                                        categoryIndex.tagUser ??
+                                                            [],
+                                                    userId: int.parse(
+                                                        categoryIndex.userId
+                                                            .toString()),
+                                                    contentType: categoryIndex
+                                                            .contentType ??
+                                                        "image",
+                                                    homeController:
+                                                        homeController,
+                                                    postId:
+                                                        categoryIndex.id ?? 0,
+                                                    categoryFeedViewModel:
+                                                        categoryFeedViewModel,
+                                                    likeByMe: categoryIndex
+                                                                .likedByMe
+                                                                .toString() ==
+                                                            'true'
+                                                        ? "You"
+                                                        : (categoryIndex
+                                                                .likedByPeople?[
+                                                                    0]
+                                                                .username ??
+                                                            ""),
+                                                    likeProfile: categoryIndex
+                                                        .likedByPeople,
+                                                    profileImage:
+                                                        categoryIndex.image ??
+                                                            "",
+                                                    userName: categoryIndex
+                                                            .username ??
+                                                        "",
+                                                    time: postTimeCalculate(
+                                                      categoryIndex.createdOn,
+                                                      'ago',
+                                                    ),
+                                                    contentImage: categoryIndex
+                                                        .contentUrl
+                                                        .toString(),
+                                                    title: categoryIndex.content
+                                                        .toString(),
+                                                    // title: (categoryIndex.id ?? 0)
+                                                    //     .toString(),
+                                                    likeCounter: (categoryIndex
+                                                                .likedByPeople
+                                                                ?.length ??
+                                                            0)
+                                                        .toString(),
+                                                    commentCounter:
+                                                        (categoryIndex
+                                                                    .comments ??
+                                                                0)
+                                                            .toString(),
+                                                  )
+                                                : SizedBox();
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                               if (categoryFeedViewModel.isPageLoading ||
                                   categoryFeedViewModel

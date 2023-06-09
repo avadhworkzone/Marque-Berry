@@ -41,6 +41,7 @@ import 'package:socialv/viewModel/follow_request_view_model.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
 
+import 'home_text.dart';
 import 'viewModel/drawer_viewmodel.dart';
 import 'viewModel/setting_viewmodel.dart';
 
@@ -100,6 +101,7 @@ class _MyAppState extends State<MyApp> {
               smartManagement: SmartManagement.full,
               onGenerateRoute: generateRoute,
               initialRoute: '/',
+              // home: HomeText(),
             );
           },
         );
@@ -118,7 +120,7 @@ class _MyAppState extends State<MyApp> {
             builder: (connectivityViewModel) {
               if (connectivityViewModel.isOnline != null) {
                 if (connectivityViewModel.isOnline!) {
-                  // return InterestScreen();
+                  // return HomeText();
                   return SplashScreen();
                 } else {
                   return const NoInterNetConnected();

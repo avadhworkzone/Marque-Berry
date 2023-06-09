@@ -242,7 +242,6 @@ class PostComponents extends StatelessWidget {
                           )
                         : InkWell(
                             onTap: () {
-                              print("===================");
                               Get.dialog(
                                 Dialog(
                                     insetPadding: EdgeInsets.zero,
