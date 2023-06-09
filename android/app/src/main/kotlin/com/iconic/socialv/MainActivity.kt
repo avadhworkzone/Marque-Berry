@@ -1,4 +1,4 @@
-package com.iconic.socialv
+package com.creator.adoro
 
 import io.flutter.embedding.android.FlutterActivity
 

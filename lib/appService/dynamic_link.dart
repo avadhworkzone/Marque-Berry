@@ -16,7 +16,7 @@ class DynamicLink {
   // FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
   /// CUSTOMER APP CONTENT
-  static String androidBundleIdUser = "com.iconic.socialv";
+  static String androidBundleIdUser = "com.creator.adoro";
   static String iosBundleIdUser = "";
   static String appStoreIdUser = "";
 
