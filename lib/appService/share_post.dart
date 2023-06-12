@@ -8,7 +8,7 @@ import 'package:socialv/utils/const_utils.dart';
 Future<void> shareContent(
     {required String postLink, required String postImg}) async {
   try {
-    final String postDescription = "Hello, check your share files!";
+    final String postDescription = "Hello, click on link";
     if (Platform.isAndroid) {
       var response = await http.get(Uri.parse(postImg));
       final documentDirectory = (await getExternalStorageDirectory())!.path;

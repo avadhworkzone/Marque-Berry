@@ -150,10 +150,36 @@ class CampaignScn extends StatelessWidget {
     final CampaignContestResModel campaignContestResponse =
         campaignContestViewModel.getCampaignContestApiResponse.data;
     if (campaignContestResponse.status.toString() == VariableUtils.status500) {
-      return Center(
-        child: AdoroText(
-          campaignContestResponse.msg ?? VariableUtils.somethingWentWrong,
-        ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Text(VariableUtils.noteCampaign,
+                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold)),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(VariableUtils.eachUserCanSubmit,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                )),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(VariableUtils.winnersWillBe,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                )),
+          ),
+          Spacer(),
+          Center(
+            child: AdoroText(
+              campaignContestResponse.msg ?? VariableUtils.somethingWentWrong,
+            ),
+          ),
+          Spacer()
+        ],
       );
     }
     if (campaignContestResponse.campaign?.length == 0) {
@@ -203,10 +229,36 @@ class ContestScreen extends StatelessWidget {
         campaignContestViewModel.getCampaignContestApiResponse.data;
 
     if (contestContestResponse.status.toString() == VariableUtils.status500) {
-      return Center(
-        child: AdoroText(
-          contestContestResponse.msg ?? VariableUtils.somethingWentWrong,
-        ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Text(VariableUtils.noteCampaign,
+                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold)),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(VariableUtils.eachUserCanSubmit,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                )),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(VariableUtils.winnersWillBe,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                )),
+          ),
+          Spacer(),
+          Center(
+            child: AdoroText(
+              contestContestResponse.msg ?? VariableUtils.somethingWentWrong,
+            ),
+          ),
+          Spacer(),
+        ],
       );
     }
 
