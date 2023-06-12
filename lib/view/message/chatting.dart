@@ -11,6 +11,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/check_follow_user_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/notification_chating_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
@@ -26,12 +27,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/home/post_detail_screen.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
-import '../../home_text.dart';
+import '../../model/apiModel/responseModel/category_res_model.dart';
+import '../../model/apiModel/responseModel/category_res_model.dart';
+import '../../model/apiModel/responseModel/get_post_detail_res_model.dart';
 import '../../model/repo/get_post_detail_repo.dart';
 import '../profile/profile.dart';
 
@@ -761,7 +765,9 @@ class RightImageWidget extends StatelessWidget {
                         }
                       : null,
                   child: Card(
-                    elevation: 0, color: Colors.grey[100],
+                    elevation: 0,
+                    // color: Colors.purple,
+                    color: Colors.grey[100],
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
@@ -779,7 +785,8 @@ class RightImageWidget extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Container(
-                              height: 60.w,
+                              // color: Colors.green,
+                              height: 65.w,
                               width: 55.w,
                               child: Icon(
                                 Icons.play_circle_outline,
@@ -827,8 +834,9 @@ class RightImageWidget extends StatelessWidget {
                                 //     ));
                               },
                               child: Container(
-                                height: 60.w,
-                                width: 55.w,
+                                // color: Colors.red,
+                                height: 55.w,
+                                width: 49.w,
                                 child: Image.network(image, fit: BoxFit.cover),
                               ),
                             ),
@@ -1076,9 +1084,9 @@ class LeftAlignTextWidget extends StatelessWidget {
                               // child: DynamicLinkPostDitels(),
                               child: message.contains(DynamicLink.uriPrefix)
                                   ? DynamicLinkPostDitels(
-                                      // message: message,
                                       postId: message.toString().substring(
-                                          message.toString().indexOf('=') + 1))
+                                          message.toString().indexOf('=') + 1),
+                                    )
                                   : AdoroText(
                                       message,
                                       color: message
@@ -1095,7 +1103,7 @@ class LeftAlignTextWidget extends StatelessWidget {
                               fontSize: 9.sp,
                               color: ColorUtils.black,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -1112,54 +1120,86 @@ class LeftAlignTextWidget extends StatelessWidget {
 }
 
 class DynamicLinkPostDitels extends StatelessWidget {
-  // final String message;
   final String postId;
+
   DynamicLinkPostDitels({
     super.key,
-    // required this.message,
     required this.postId,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
+  Widget build(
+    BuildContext context,
+  ) {
+    return FutureBuilder<GetPostDetailResModel>(
+      future: GetPostDetailRepo().getPost(postId),
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
+        if (snapshot.hasData) {
+          if (snapshot.data?.status != 200) {
+            return AdoroText(VariableUtils.somethingWentWrong);
+          }
+
+          final post = snapshot.data!.data!;
+
           return Container(
-            height: 40.h,
+            // height: 50.h,
             decoration: BoxDecoration(
                 color: Colors.white60, borderRadius: BorderRadius.circular(10)),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     SizeConfig.sW2,
-                    Image(
-                      height: 50,
-                      width: 50,
-                      image: AssetImage(
-                        "assets/images/text.png",
-                      ),
-                    ),
+                    CircleAvatar(
+                        radius: 16,
+                        backgroundImage:
+                            NetworkImage(post.image!) // child: Image(
+
+                        ),
                     SizedBox(
-                      width: 20,
+                      width: 8,
                     ),
-                    Text("Likenootherwa",
+                    Text(post.username ?? "",
                         style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold)),
+                            color: Colors.black, fontWeight: FontWeight.bold))
                   ],
                 ),
-                Image(
-                  width: double.maxFinite,
-                  fit: BoxFit.fitWidth,
-                  image: AssetImage(
-                    "assets/images/text.png",
-                  ),
-                ),
                 SizeConfig.sH1,
-                Text(postId
-                    // message,
-                    )
+                post.contentType == 'video'
+                    ? Container(
+                        height: 250,
+                        child: Center(
+                          child: Icon(
+                            Icons.play_circle_outline,
+                            size: 20.w,
+                            color: ColorUtils.black,
+                          ),
+                        ),
+                      )
+                    : Stack(
+                        children: [
+                          Image(
+                            height: 250,
+                            width: double.maxFinite,
+                            fit: BoxFit.fitWidth,
+                            image: NetworkImage(post.contentUrl!),
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                SizeConfig.sH1,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(post.content.toString()),
+                ),
               ],
             ),
           );
@@ -1200,6 +1240,7 @@ class RightAlignTextWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(left: 20.w),
                   child: Card(
+                    // color: Colors.red,
                     color: Colors.grey[100],
                     elevation: 0,
                     shape: const RoundedRectangleBorder(
@@ -1233,7 +1274,6 @@ class RightAlignTextWidget extends StatelessWidget {
                                     },
                               child: message.contains(DynamicLink.uriPrefix)
                                   ? DynamicLinkPostDitels(
-                                      // message: message,
                                       postId: message.toString().substring(
                                           message.toString().indexOf('=') + 1),
                                     )

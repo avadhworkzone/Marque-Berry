@@ -2,9 +2,10 @@ import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 
 class GetPostDetailResModel {
   GetPostDetailResModel({
-      this.status, 
-      this.msg, 
-      this.data,});
+    this.status,
+    this.msg,
+    this.data,
+  });
 
   GetPostDetailResModel.fromJson(dynamic json) {
     status = json['status'];
@@ -24,5 +25,4 @@ class GetPostDetailResModel {
     }
     return map;
   }
-
 }
