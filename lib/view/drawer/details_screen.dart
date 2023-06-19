@@ -139,19 +139,20 @@ class DetailsScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    if (method == "contest") {
-                      campaignScreenController.applyContest(
-                        applied: applied,
-                        campaignId: campaignId,
-                        campaignContestViewModel: campaignContestViewModel,
-                      );
-                    } else if (method == "campaign") {
-                      campaignScreenController.applyCampaign(
-                        applied: applied,
-                        contestId: campaignId,
-                        campaignContestViewModel: campaignContestViewModel,
-                      );
-                    }
+                    // if (method == "contest") {
+                    //   campaignScreenController.applyContest(
+                    //     applied: applied,
+                    //     campaignId: campaignId,
+                    //
+                    //     campaignContestViewModel: campaignContestViewModel,
+                    //   );
+                    // } else if (method == "campaign") {
+                    //   campaignScreenController.applyCampaign(
+                    //     applied: applied,
+                    //     contestId: campaignId,
+                    //     campaignContestViewModel: campaignContestViewModel,
+                    //   );
+                    // }
                   },
                   child: Padding(
                     padding:

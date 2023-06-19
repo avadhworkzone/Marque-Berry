@@ -287,7 +287,7 @@ class ContestScreen extends StatelessWidget {
   }
 }
 
-class TabBarMethod extends StatelessWidget {
+class TabBarMethod extends StatefulWidget {
   Size size;
   String title;
   String image;
@@ -314,6 +314,85 @@ class TabBarMethod extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<TabBarMethod> createState() => _TabBarMethodState();
+}
+
+CampaignScreenController campaignScreenController =
+    Get.find<CampaignScreenController>();
+// List<String> list = <String>['Image', 'GIF', 'Video'];
+
+var items = [
+  'Image',
+  'GIF',
+  'Video',
+];
+
+class _TabBarMethodState extends State<TabBarMethod> {
+  // String? selectedOption;
+  String dropdownValue = items.first;
+
+  void selectTypeDialog(
+    String applied,
+    String campaignId,
+    String method,
+    CampaignContestViewModel campaignContestViewModel,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Type'),
+          content: StatefulBuilder(
+            builder: (context, setState) {
+              return DropdownButton(
+                underline: SizedBox(),
+                isExpanded: true,
+                value: dropdownValue,
+                style: const TextStyle(color: Colors.black),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownValue = newValue!;
+                  });
+                },
+                items: items.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+              );
+            },
+          ),
+          actions: <Widget>[
+            InkWell(
+              child: Text('Save'),
+              onTap: () {
+                if (method == "contest") {
+                  campaignScreenController.applyContest(
+                    applied: applied,
+                    campaignId: campaignId,
+                    mediaType: dropdownValue,
+                    campaignContestViewModel: campaignContestViewModel,
+                  );
+                } else if (method == "campaign") {
+                  campaignScreenController.applyCampaign(
+                    applied: applied,
+                    contestId: campaignId,
+                    campaignContestViewModel: campaignContestViewModel,
+                    mediaType: dropdownValue,
+                  );
+                }
+                print(dropdownValue);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
@@ -324,7 +403,7 @@ class TabBarMethod extends StatelessWidget {
           padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 2.w),
           child: Container(
             margin: EdgeInsets.only(bottom: 2.w),
-            width: size.width,
+            width: widget.size.width,
             decoration: BoxDecoration(
               // boxShadow: [
               //   BoxShadow(blurRadius: 5, color: Colors.grey),
@@ -349,7 +428,7 @@ class TabBarMethod extends StatelessWidget {
                           fit: BoxFit.cover,
                           width: 24,
                           height: 24,
-                          image: NetworkImage(image),
+                          image: NetworkImage(widget.image),
                           progressIndicatorBuilder: (context, progress) {
                             double? value;
                             var expectedBytes = progress?.expectedTotalBytes;
@@ -381,13 +460,13 @@ class TabBarMethod extends StatelessWidget {
                       ),
                     ),
                     title: AdoroText(
-                      '$title',
+                      '${widget.title}',
                       color: blackWhite,
                       fontSize: 12.sp,
                       fontWeight: FontWeightClass.fontWeight600,
                     ),
                     subtitle: AdoroText(
-                      'Time Left : ${postTimeCalculate(createOn, "")}',
+                      'Time Left : ${postTimeCalculate(widget.createOn, "")}',
                       color: ColorUtils.black92,
                       fontWeight: FontWeightClass.fontWeight500,
                       fontSize: 10.sp,
@@ -395,7 +474,7 @@ class TabBarMethod extends StatelessWidget {
                   ),
                   SizeConfig.sH1,
                   AdoroText(
-                    "$description",
+                    "${widget.description}",
                     maxLines: 4,
                     color: blackWhite,
                     overflow: TextOverflow.ellipsis,
@@ -403,24 +482,31 @@ class TabBarMethod extends StatelessWidget {
                   SizeConfig.sH1,
                   InkWell(
                     onTap: () {
-                      if (method == "contest") {
-                        campaignScreenController.applyContest(
-                          applied: applied,
-                          campaignId: campaignContestId,
-                          campaignContestViewModel: campaignContestViewModel,
-                        );
-                      } else if (method == "campaign") {
-                        campaignScreenController.applyCampaign(
-                          applied: applied,
-                          contestId: campaignContestId,
-                          campaignContestViewModel: campaignContestViewModel,
-                        );
-                      }
+                      selectTypeDialog(
+                        widget.applied,
+                        widget.campaignContestId,
+                        widget.method,
+                        widget.campaignContestViewModel,
+                      );
+
+                      // if (method == "contest") {
+                      //   campaignScreenController.applyContest(
+                      //     applied: applied,
+                      //     campaignId: campaignContestId,
+                      //     campaignContestViewModel: campaignContestViewModel,
+                      //   );
+                      // } else if (method == "campaign") {
+                      //   campaignScreenController.applyCampaign(
+                      //     applied: applied,
+                      //     contestId: campaignContestId,
+                      //     campaignContestViewModel: campaignContestViewModel,
+                      //   );
+                      // }
                     },
                     child: Container(
                       height: 5.h,
-                      width: size.width,
-                      decoration: applied == "false"
+                      width: widget.size.width,
+                      decoration: widget.applied == "false"
                           ? BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -446,8 +532,8 @@ class TabBarMethod extends StatelessWidget {
                             ),
                       child: Center(
                         child: AdoroText(
-                          applied == "false" ? 'APPLY NOW' : "APPLIED",
-                          color: applied == "false"
+                          widget.applied == "false" ? 'APPLY NOW' : "APPLIED",
+                          color: widget.applied == "false"
                               ? ColorUtils.white
                               : ColorUtils.green4E,
                           fontWeight: FontWeight.w600,
@@ -460,19 +546,21 @@ class TabBarMethod extends StatelessWidget {
                   InkWell(
                     onTap: () => Get.to(
                       () => DetailsScreen(
-                        method: method,
-                        applied: applied,
-                        image: image,
-                        time: 'Time Left : ${postTimeCalculate(createOn, "")}',
-                        description: description,
-                        campaignId: campaignContestId,
-                        title: title,
-                        campaignContestViewModel: campaignContestViewModel,
+                        method: widget.method,
+                        applied: widget.applied,
+                        image: widget.image,
+                        time:
+                            'Time Left : ${postTimeCalculate(widget.createOn, "")}',
+                        description: widget.description,
+                        campaignId: widget.campaignContestId,
+                        title: widget.title,
+                        campaignContestViewModel:
+                            widget.campaignContestViewModel,
                       ),
                     ),
                     child: Container(
                       height: 40,
-                      width: size.width,
+                      width: widget.size.width,
                       decoration: BoxDecoration(
                         color: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(3.w),
@@ -518,6 +606,7 @@ class CampaignScreenController extends GetxController {
   }
 
   applyContest({
+    required String mediaType,
     required String applied,
     required CampaignContestViewModel campaignContestViewModel,
     required String campaignId,
@@ -530,6 +619,7 @@ class CampaignScreenController extends GetxController {
       if (path != '') {
         applyContestReqModel.media = path;
         applyContestReqModel.campaignId = campaignId;
+        applyContestReqModel.mediaType = mediaType;
         await campaignContestViewModel.applyContest(applyContestReqModel);
 
         if (campaignContestViewModel.applyContestApiResponse.status ==
@@ -564,6 +654,7 @@ class CampaignScreenController extends GetxController {
   }
 
   applyCampaign({
+    required String mediaType,
     required String applied,
     required String contestId,
     required CampaignContestViewModel campaignContestViewModel,
@@ -573,6 +664,7 @@ class CampaignScreenController extends GetxController {
       if (path != '') {
         applyCampaignReqModel.media = path;
         applyCampaignReqModel.contestId = contestId;
+        applyCampaignReqModel.mediaType = mediaType;
 
         await campaignContestViewModel.applyCampaign(applyCampaignReqModel);
         if (campaignContestViewModel.applyCampaignApiResponse.status ==

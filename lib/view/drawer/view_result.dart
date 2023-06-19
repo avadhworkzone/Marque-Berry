@@ -1,16 +1,29 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 
 import '../../commanWidget/common_appbar.dart';
+import '../../commanWidget/loader.dart';
+import '../../model/apiModel/responseModel/result_campaign_res_model.dart';
+import '../../model/apiModel/responseModel/result_res_model.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/font_style_utils.dart';
 import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
+import '../../viewModel/drawer_viewmodel.dart';
 
 class ViewResult extends StatelessWidget {
-  const ViewResult({Key? key}) : super(key: key);
+  ViewResult({
+    required this.resultType,
+    Key? key,
+  }) : super(key: key);
+
+  final String resultType;
+
+  final DrawerVideModel drawerVideModel = Get.find<DrawerVideModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,49 +40,90 @@ class ViewResult extends StatelessWidget {
           onTap: () => Get.back(),
         ),
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w),
-            child: Column(
-              children: [
-                SizeConfig.sH2,
-                Container(
-                  height: 6.h,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      color: whiteBlack2E,
-                      boxShadow: [
-                        BoxShadow(blurRadius: 2, color: Colors.grey),
-                      ],
-                      borderRadius: BorderRadius.circular(4.w)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(" ${index + 1} ",
-                          style: TextStyle(
-                              color: ColorUtils.black92, fontSize: 15.sp)),
-                      Padding(
-                        padding: EdgeInsets.only(right: 45.w),
-                        child: AdoroText(
-                          VariableUtils.userName,
-                          fontSize: 13.sp,
-                          fontWeight: FontWeightClass.fontWeightBold,
-                          color: blackWhite,
-                        ),
+      body: GetBuilder<DrawerVideModel>(
+        builder: (controller) {
+          if (controller.getResultCampaignResponse.status == Status.LOADING ||
+              controller.getResultCampaignResponse.status == Status.INITIAL) {
+            return Center(child: Loader());
+          } else if (controller.getResultCampaignResponse.status ==
+              Status.ERROR) {
+            return Center(child: SomethingWentWrong());
+          }
+          final ResultCampaignResModel resultCampaignResModel =
+              controller.getResultCampaignResponse.data;
+
+          if (resultCampaignResModel.status != 200) {
+            return Center(
+              child: AdoroText(VariableUtils.noDataFound),
+            );
+          }
+          final viewResultList = resultCampaignResModel.data;
+
+          return ListView.builder(
+            itemCount: viewResultList!.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: Column(
+                  children: [
+                    SizeConfig.sH2,
+                    Container(
+                      height: 6.h,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          color: whiteBlack2E,
+                          boxShadow: [
+                            BoxShadow(blurRadius: 2, color: Colors.grey),
+                          ],
+                          borderRadius: BorderRadius.circular(4.w)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(" ${index + 1} ",
+                              style: TextStyle(
+                                  color: ColorUtils.black92, fontSize: 15.sp)),
+                          Padding(
+                            padding: EdgeInsets.only(right: 45.w),
+                            child: AdoroText(
+                              viewResultList[index].username ?? "",
+                              // VariableUtils.userName,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeightClass.fontWeightBold,
+                              color: blackWhite,
+                            ),
+                          ),
+                          resultType == 'campaign'
+                              ? Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: AdoroText(
+                                    viewResultList[index].wonAmount.toString(),
+                                    // VariableUtils.price,
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeightClass.fontWeightBold,
+                                    color: ColorUtils.green4E,
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.network(
+                                    viewResultList[index].image ?? "",
+                                    scale: 2,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress != null) {
+                                        return CupertinoActivityIndicator();
+                                      }
+                                      return child;
+                                    },
+                                  ),
+                                ),
+                        ],
                       ),
-                      AdoroText(
-                        VariableUtils.price,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeightClass.fontWeightBold,
-                        color: ColorUtils.green4E,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    )
+                  ],
+                ),
+              );
+            },
           );
         },
       ),

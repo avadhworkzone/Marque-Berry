@@ -13,7 +13,6 @@ class CampaignContestViewModel extends GetxController {
   ApiResponse getCampaignContestApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse applyCampaignApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse applyContestApiResponse = ApiResponse.initial('INITIAL');
-
   ApiResponse getCampaignIdApiResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== GET CAMPAIGN CONTEST VIEW MODEL ================================
@@ -23,7 +22,7 @@ class CampaignContestViewModel extends GetxController {
     getCampaignContestApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
-      final response = await CampaignContestRepo().campaignContest();
+      final response = await CampaignContestRepo().campaignContestRepo();
       getCampaignContestApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('getCampaignContestApiResponse ERROR :=> $e');

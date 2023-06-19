@@ -147,6 +147,9 @@ class VariableUtils {
   /// Result
   static const brandName = "  Brand Name  ";
   static const campaignName = "  Campaign Name  ";
+  static const contestName = "  Contest Name ";
   static const viewResult = "  View Result  ";
   static const price = "  ₹500  ";
+  static const pleaseValidAmount = " Please Valid Amount";
+  static const pleaseEnterOtp = " Please Enter Otp";
 }
