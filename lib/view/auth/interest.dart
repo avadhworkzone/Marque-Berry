@@ -89,7 +89,7 @@ class InterestScreen extends StatelessWidget {
                                   Status.LOADING ||
                               authViewModel.memeCategoryApiResponse.status ==
                                   Status.INITIAL)
-                            return CircularProgressIndicator();
+                            return Center(child: CircularProgressIndicator());
                           else if (authViewModel
                                       .memeCategoryApiResponse.status ==
                                   Status.ERROR ||
@@ -214,9 +214,10 @@ class InterestScreen extends StatelessWidget {
 
   userDetails({required AuthViewModel authViewModel}) async {
     if (PreferenceUtils.getCategory().isNotEmpty) {
-      selectedCategoryDataList = (jsonDecode(PreferenceUtils.getCategory()) as List)
-          .map((e) => Category.fromJson(e))
-          .toList();
+      selectedCategoryDataList =
+          (jsonDecode(PreferenceUtils.getCategory()) as List)
+              .map((e) => Category.fromJson(e))
+              .toList();
     }
 
     List<String> tempUserCategoryIdList = [];
