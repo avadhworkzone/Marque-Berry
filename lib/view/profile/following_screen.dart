@@ -10,10 +10,10 @@ import 'package:socialv/model/apiModel/responseModel/get_follower_list_res_model
 import 'package:socialv/model/apiModel/responseModel/get_following_list_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/home/search_user.dart';
@@ -93,8 +93,8 @@ class FollowerFollowing extends StatelessWidget {
             context: context,
             title: title,
             icon: IconButton(
-              onPressed: (){
-                Get.to(()=>SearchUser());
+              onPressed: () {
+                Get.to(() => SearchUser());
               },
               icon: Icon(
                 Icons.search_rounded,

@@ -1,6 +1,6 @@
-import 'package:sizer/sizer.dart';
-import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:sizer/sizer.dart';
 
 String imagesbasePath = 'assets/images';
 String iconsbasePath = 'assets/icons';

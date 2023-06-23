@@ -1,5 +1,5 @@
-import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 
 /// DECORATION UTILS
@@ -158,7 +158,7 @@ class DecorationUtils {
   }
 
   static Divider dividerLine2({double? thickness}) {
-    return  Divider(thickness: thickness ?? 0.8, color: ColorUtils.greyF1);
+    return Divider(thickness: thickness ?? 0.8, color: ColorUtils.greyF1);
   }
 
   static BoxShadow boxShadow = BoxShadow(

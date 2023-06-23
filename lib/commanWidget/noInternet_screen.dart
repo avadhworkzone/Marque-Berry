@@ -1,10 +1,10 @@
 // ignore_for_file: file_names
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
 import 'package:socialv/utils/adoro_text.dart';
-import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
+import 'package:socialv/utils/variable_utils.dart';
 
 class NoInterNetConnected extends StatelessWidget {
   const NoInterNetConnected({Key? key}) : super(key: key);

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/model/repo/accept_follow_request_repo.dart';
 import 'package:socialv/model/repo/delete_follow_request_repo.dart';
 import 'package:socialv/model/repo/get_follower_list_repo.dart';
@@ -7,7 +8,6 @@ import 'package:socialv/model/repo/get_following_list_repo.dart';
 import 'package:socialv/model/repo/get_pending_request_repo.dart';
 import 'package:socialv/model/repo/send_follow_request_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
 
 class FollowFollowingViewModel extends GetxController {
   String _searchUserStr = "";

@@ -7,20 +7,13 @@ import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/view/drawer/view_result.dart';
+
 import '../../commanWidget/common_appbar.dart';
 import '../../commanWidget/common_image.dart';
-import '../../commanWidget/custom_snackbar.dart';
 import '../../commanWidget/loader.dart';
-import '../../model/apiModel/responseModel/result_campaign_res_model.dart';
-import '../../model/apiModel/responseModel/result_res_model.dart';
-import '../../model/apiModel/responseModel/result_res_model.dart';
-import '../../model/apiModel/responseModel/result_res_model.dart';
-import '../../model/apiModel/responseModel/result_res_model.dart';
-import '../../model/apiModel/responseModel/result_res_model.dart';
-import '../../model/repo/get_result_repo.dart';
+import '../../utils/adoro_text.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/font_style_utils.dart';
-import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
 import '../../viewModel/drawer_viewmodel.dart';
 

@@ -4,18 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
-import 'package:socialv/main.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/auth/login_screen.dart';
 import 'package:socialv/viewModel/setting_viewmodel.dart';
 
-import '../../commanWidget/noInternet_screen.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
-import '../../viewModel/connectivity_view_model.dart';
 
 class Setting extends StatelessWidget {
   Setting({Key? key}) : super(key: key);
@@ -43,8 +39,7 @@ class Setting extends StatelessWidget {
                   children: [
                     AdoroText(
                       VariableUtils.notifications,
-                      color:
-                      Theme.of(context).textTheme.titleSmall?.color,
+                      color: Theme.of(context).textTheme.titleSmall?.color,
                       fontWeight: FontWeight.bold,
                     ),
                     ClipRRect(
@@ -53,7 +48,8 @@ class Setting extends StatelessWidget {
                         splashColor: ColorUtils.transparent,
                         highlightColor: ColorUtils.transparent,
                         onTap: () {
-                          settingController.isNotification=!settingController.isNotification;
+                          settingController.isNotification =
+                              !settingController.isNotification;
                           settingController.changeNotificationStatus();
                         },
                         child: Container(
@@ -74,14 +70,13 @@ class Setting extends StatelessWidget {
                           ),
                           child: Row(
                             mainAxisAlignment:
-                            settingController.isNotification ==
-                                true
-                                ? MainAxisAlignment.end
-                                : MainAxisAlignment.start,
+                                settingController.isNotification == true
+                                    ? MainAxisAlignment.end
+                                    : MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 1.5.w),
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 1.5.w),
                                 child: Container(
                                   width: 5.5.w,
                                   height: 7.5.w,
@@ -106,8 +101,7 @@ class Setting extends StatelessWidget {
                   children: [
                     AdoroText(
                       VariableUtils.appTheme,
-                      color:
-                      Theme.of(context).textTheme.titleSmall?.color,
+                      color: Theme.of(context).textTheme.titleSmall?.color,
                       fontWeight: FontWeight.bold,
                     ),
                     ClipRRect(
@@ -143,8 +137,8 @@ class Setting extends StatelessWidget {
                                   height: 7.w,
                                   decoration: BoxDecoration(
                                     color: PreferenceUtils.getString(
-                                        key: 'mode') ==
-                                        "light"
+                                                key: 'mode') ==
+                                            "light"
                                         ? Colors.white
                                         : ColorUtils.transparent,
                                     shape: BoxShape.circle,
@@ -166,8 +160,8 @@ class Setting extends StatelessWidget {
                                   height: 7.w,
                                   decoration: BoxDecoration(
                                     color: PreferenceUtils.getString(
-                                        key: 'mode') ==
-                                        "dark"
+                                                key: 'mode') ==
+                                            "dark"
                                         ? ColorUtils.white
                                         : ColorUtils.transparent,
                                     shape: BoxShape.circle,
@@ -220,4 +214,3 @@ class Setting extends StatelessWidget {
     );
   }
 }
-

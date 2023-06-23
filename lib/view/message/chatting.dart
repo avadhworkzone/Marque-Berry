@@ -1,40 +1,38 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
-import 'package:octo_image/octo_image.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_image.dart';
-import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/check_follow_user_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/notification_chating_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/home/post_detail_screen.dart';
 import 'package:socialv/view/profile/edit_profile.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
-import '../../model/apiModel/responseModel/category_res_model.dart';
-import '../../model/apiModel/responseModel/category_res_model.dart';
 import '../../model/apiModel/responseModel/get_post_detail_res_model.dart';
 import '../../model/repo/get_post_detail_repo.dart';
 import '../profile/profile.dart';

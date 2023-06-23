@@ -9,11 +9,10 @@ import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/commanWidget/search_textfield.dart';
 import 'package:socialv/model/apiModel/responseModel/browser_template_res.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/view/template/download_template_listview.dart';
 import 'package:socialv/viewModel/template_view_model.dart';
 
@@ -99,7 +98,7 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
                     browserTemplateController.searchFunction(value);
                     setState(() {});
                   }),
-                 /* Container(
+                  /* Container(
                     width: 90.w,
                     decoration: BoxDecoration(
                       boxShadow: [

@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'package:get/get.dart';
-import 'package:flutter/services.dart';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class ConnectivityViewModel extends GetxController {
   final Connectivity _connectivity = Connectivity();

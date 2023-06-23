@@ -1,15 +1,16 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:socialv/model/apis/api_exception.dart';
+import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 
 import 'base_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
-import 'package:socialv/utils/enum_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/model/apis/api_exception.dart';
 
 /// USE HTTP TO API CALLING
 class ApiService extends BaseService {

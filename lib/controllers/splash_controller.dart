@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 

@@ -1,16 +1,15 @@
 import 'package:get/get.dart';
-import 'package:socialv/model/apiModel/requestModel/user_category_req_model.dart';
-import 'package:socialv/model/repo/get_note_repo.dart';
-import 'package:socialv/model/repo/meme_category_repo.dart';
-import 'package:socialv/model/repo/user_category_repo.dart';
-import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/model/repo/login_repo.dart';
-import 'package:socialv/model/repo/register_repo.dart';
-import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/model/repo/validate_otp_repo.dart';
-import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/user_category_req_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/model/repo/login_repo.dart';
+import 'package:socialv/model/repo/meme_category_repo.dart';
+import 'package:socialv/model/repo/register_repo.dart';
+import 'package:socialv/model/repo/user_category_repo.dart';
+import 'package:socialv/model/repo/validate_otp_repo.dart';
+import 'package:socialv/utils/const_utils.dart';
 
 class AuthViewModel extends GetxController {
   ApiResponse loginApiResponse = ApiResponse.initial('INITIAL');
@@ -18,7 +17,6 @@ class AuthViewModel extends GetxController {
   ApiResponse validateOTPApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse memeCategoryApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse userCategoryApiResponse = ApiResponse.initial('INITIAL');
-
 
   /// ======================== LOGIN VIEW MODEL ================================
 
@@ -95,6 +93,4 @@ class AuthViewModel extends GetxController {
     }
     update();
   }
-
-
 }

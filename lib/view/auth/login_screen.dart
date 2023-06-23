@@ -1,19 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
-import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/decoration_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/viewModel/auth_view_model.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/controllers/login_controller.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/decoration_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/view/auth/components/login_components.dart';
 import 'package:socialv/view/auth/components/register_components.dart';
-import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/register_req_model.dart';
+import 'package:socialv/viewModel/auth_view_model.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key, this.referId}) : super(key: key);

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_post_detail_res_model.dart';
 import 'package:socialv/model/apiService/api_service.dart';
 import 'package:socialv/model/apiService/base_service.dart';

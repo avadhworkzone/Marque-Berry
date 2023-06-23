@@ -2,38 +2,38 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
-import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
-import 'package:socialv/view/home/home.dart';
+
 import 'package:file_picker/file_picker.dart';
-import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/commanWidget/loader.dart';
-import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_image.dart';
-import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
+import 'package:socialv/model/apiModel/responseModel/create_post_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/app_services/common_profile_image.dart';
+import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/home/components/video_components.dart';
+import 'package:socialv/view/home/home.dart';
+import 'package:socialv/view/sharePost/tag_a_people.dart';
 import 'package:socialv/view/template/browser_template.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
-import 'package:socialv/controllers/bottomBar_controller.dart';
-import 'package:socialv/view/home/components/video_components.dart';
-import 'package:socialv/utils/app_services/common_profile_image.dart';
-import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
-import 'package:socialv/model/apiModel/responseModel/create_post_res_model.dart';
 
 import '../../utils/adoro_text.dart';
+import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
-import '../../utils/variable_utils.dart';
 import '../../utils/custom_text_field.dart';
 import '../../utils/size_config_utils.dart';
-import '../../utils/assets/images_utils.dart';
+import '../../utils/variable_utils.dart';
 
 class SharePost extends StatefulWidget {
   SharePost({Key? key}) : super(key: key);

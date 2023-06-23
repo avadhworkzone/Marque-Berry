@@ -11,16 +11,13 @@ import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
-import 'package:socialv/viewModel/drawer_viewmodel.dart';
 
-import '../../commanWidget/noInternet_screen.dart';
 import '../../utils/assets/images_utils.dart';
-import '../../viewModel/connectivity_view_model.dart';
 
 class ReferAndEarn extends StatefulWidget {
   ReferAndEarn({Key? key}) : super(key: key);

@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:get/get.dart';
+import 'package:socialv/utils/color_utils.dart';
 
 import '../../controllers/splash_controller.dart';
 import '../../utils/assets/images_utils.dart';

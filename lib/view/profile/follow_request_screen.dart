@@ -7,8 +7,8 @@ import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/pending_request_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
@@ -62,7 +62,7 @@ class FollowRequestScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Container(
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
@@ -102,12 +102,12 @@ class FollowRequestScreen extends StatelessWidget {
                                 child: ListView.builder(
                                   itemCount: pendingData.length,
                                   itemBuilder: (context, index) {
-                                    final user=pendingData[index];
+                                    final user = pendingData[index];
                                     return Column(
                                       children: [
                                         ListTile(
                                           title: Text(
-                                            user.fullName??'N/A',
+                                            user.fullName ?? 'N/A',
                                             style: TextStyle(
                                               color: blackWhite,
                                             ),
@@ -117,34 +117,44 @@ class FollowRequestScreen extends StatelessWidget {
                                             style: TextStyle(
                                                 color: ColorUtils.black92),
                                           ),
-                                          leading:ClipRRect(
-                                            borderRadius: BorderRadius.circular(15.w),
+                                          leading: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15.w),
                                             child: Container(
                                               color: Colors.grey[200],
                                               child: OctoImage(
                                                 fit: BoxFit.cover,
                                                 width: 13.w,
                                                 height: 13.w,
-                                                image: NetworkImage(user.image??""),
-                                                progressIndicatorBuilder: (context, progress) {
+                                                image: NetworkImage(
+                                                    user.image ?? ""),
+                                                progressIndicatorBuilder:
+                                                    (context, progress) {
                                                   double? value;
-                                                  var expectedBytes = progress?.expectedTotalBytes;
-                                                  if (progress != null && expectedBytes != null) {
-                                                    value = progress.cumulativeBytesLoaded / expectedBytes;
+                                                  var expectedBytes = progress
+                                                      ?.expectedTotalBytes;
+                                                  if (progress != null &&
+                                                      expectedBytes != null) {
+                                                    value = progress
+                                                            .cumulativeBytesLoaded /
+                                                        expectedBytes;
                                                   }
                                                   return Center(
-                                                    child: CircularProgressIndicator(
+                                                    child:
+                                                        CircularProgressIndicator(
                                                       value: value,
                                                       color: blackWhite,
                                                     ),
                                                   );
                                                 },
-                                                errorBuilder: (context, error, stacktrace) => Padding(
+                                                errorBuilder: (context, error,
+                                                        stacktrace) =>
+                                                    Padding(
                                                   padding: EdgeInsets.all(2.w),
                                                   child: CommonImage(
-                                                    img: IconsWidgets.userImages,
+                                                    img:
+                                                        IconsWidgets.userImages,
                                                     color: ColorUtils.black,
-
                                                   ),
                                                 ),
                                               ),
@@ -160,7 +170,9 @@ class FollowRequestScreen extends StatelessWidget {
                                                   scale: 4,
                                                 ),
                                               ),
-                                              SizedBox(width: 5.sp,),
+                                              SizedBox(
+                                                width: 5.sp,
+                                              ),
                                               InkWell(
                                                 onTap: () {},
                                                 child: Image.asset(

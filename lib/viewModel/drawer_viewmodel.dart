@@ -6,9 +6,6 @@ import 'package:socialv/model/repo/get_notification_repo.dart';
 import 'package:socialv/model/repo/get_wallet_balance_repo.dart';
 import 'package:socialv/model/repo/support_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
-
-import '../model/repo/campaign_contest_repo.dart';
 
 import '../model/repo/get_result_repo.dart';
 import '../model/repo/result_campaign_repo.dart';

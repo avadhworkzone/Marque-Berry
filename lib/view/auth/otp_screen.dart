@@ -1,32 +1,28 @@
-import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/appService/notification_service.dart';
-import 'package:socialv/commanWidget/success_screen.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/view/drawer/support.dart';
-import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/commanWidget/success_screen.dart';
 import 'package:socialv/controllers/validate_otp_controller.dart';
+import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/otp_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/otp_res_model.dart';
-import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
-import 'package:socialv/viewModel/drawer_viewmodel.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/viewModel/setting_viewmodel.dart';
 
-import 'interest.dart';
-import '../../utils/adoro_text.dart';
-import '../../utils/color_utils.dart';
-import '../../utils/variable_utils.dart';
-import '../../utils/size_config_utils.dart';
 import '../../commanWidget/custom_btn.dart';
 import '../../model/apiModel/responseModel/login_res_model.dart';
+import '../../utils/adoro_text.dart';
+import '../../utils/color_utils.dart';
+import '../../utils/size_config_utils.dart';
+import '../../utils/variable_utils.dart';
 
 class ValidateOtpScreen extends StatefulWidget {
   String type;

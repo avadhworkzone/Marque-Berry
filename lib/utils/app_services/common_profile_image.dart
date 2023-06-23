@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/utils/color_utils.dart';
 
 class CommonProfileImage extends StatelessWidget {
   double heightWidth;

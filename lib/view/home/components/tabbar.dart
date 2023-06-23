@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart' as categoryList;
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/view/home/home.dart';
-import 'package:socialv/utils/const_utils.dart' as categoryList;
 
 import '../../../viewModel/category_view_model.dart';
 
@@ -50,14 +50,12 @@ class TabBarComponents extends StatelessWidget {
                   categoryFeedViewModel.pageNumberIndex = 0;
                   categoryFeedViewModel.isPageLoading = false;
                   await categoryFeedViewModel.categoryTrending("relevant");
-                }
-                else if (index == 1) {
+                } else if (index == 1) {
                   homeController.tabNameChange("trending");
                   categoryFeedViewModel.pageNumberIndex = 0;
                   categoryFeedViewModel.isPageLoading = false;
                   await categoryFeedViewModel.categoryTrending("trending");
-                }
-                else {
+                } else {
                   homeController.tabNameChange(
                     categoryDataList[index - 2].name,
                   );
@@ -127,13 +125,14 @@ class TabBarComponents extends StatelessWidget {
                         SizeConfig.sH05,
                         Container(
                           width: (index == 0 || index == 1
-                              ? homeController.tabBarList[index]
-                              : categoryDataList[index - 2].name)
-                              .toString()
-                              .length *
+                                      ? homeController.tabBarList[index]
+                                      : categoryDataList[index - 2].name)
+                                  .toString()
+                                  .length *
                               8.5.sp,
                           height: 2,
-                          decoration: DecorationUtils.welcomeDecoration(context),
+                          decoration:
+                              DecorationUtils.welcomeDecoration(context),
                         ),
                       ],
                     ),

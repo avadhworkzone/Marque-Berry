@@ -8,7 +8,6 @@ import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/view/home/post_detail_screen.dart';
-import 'package:socialv/view/profile/show_post.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
 
 class PostsAndMentionsTab extends StatelessWidget {
@@ -136,7 +135,10 @@ class PostsAndMentionsTab extends StatelessWidget {
                             //   ),
                             // ),
                             onTap: () {
-                              Get.to(()=>PostDetailScreen(postId: post.id.toString(),isFromBackScreen: true,));
+                              Get.to(() => PostDetailScreen(
+                                    postId: post.id.toString(),
+                                    isFromBackScreen: true,
+                                  ));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(1.5.w),
@@ -170,7 +172,10 @@ class PostsAndMentionsTab extends StatelessWidget {
                           final mention = profile.mentions![index];
                           return InkWell(
                               onTap: () {
-                                Get.to(()=>PostDetailScreen(postId: mention.id.toString(),isFromBackScreen: true,));
+                                Get.to(() => PostDetailScreen(
+                                      postId: mention.id.toString(),
+                                      isFromBackScreen: true,
+                                    ));
                               },
                               child: PostImage(url: mention.contentUrl ?? ''));
                         },

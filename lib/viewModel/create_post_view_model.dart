@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:socialv/model/repo/get_post_detail_repo.dart';
-import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/model/repo/create_post_repo.dart';
-import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
+import 'package:socialv/model/repo/get_post_detail_repo.dart';
+import 'package:socialv/utils/const_utils.dart';
 
 class CreatePostViewModel extends GetxController {
   ApiResponse createPostApiResponse = ApiResponse.initial('INITIAL');

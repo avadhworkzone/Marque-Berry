@@ -16,7 +16,6 @@ import 'package:socialv/viewModel/profile_view_model.dart';
 
 import '../../../utils/shared_preference_utils.dart';
 import '../../message/chatting.dart';
-import '../profile.dart';
 
 class ProfileButtonSection extends StatelessWidget {
   const ProfileButtonSection({

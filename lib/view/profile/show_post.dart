@@ -1,14 +1,13 @@
-import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/model/apiModel/responseModel/user_profile_res_model.dart';
-import 'package:socialv/view/home/home.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/view/profile/profile.dart';
-import 'package:socialv/commanWidget/common_appbar.dart';
-import 'package:socialv/viewModel/category_view_model.dart';
+import 'package:get/get.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
+import 'package:sizer/sizer.dart';
+import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/model/apiModel/responseModel/user_profile_res_model.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/view/home/components/post_components.dart';
+import 'package:socialv/view/home/home.dart';
+import 'package:socialv/viewModel/category_view_model.dart';
 
 class ShowPost extends StatefulWidget {
   final int index;

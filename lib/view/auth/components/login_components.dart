@@ -9,11 +9,10 @@ import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/requestModel/login_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/login_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/routes/route_helper.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/validation_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/auth/otp_screen.dart';
@@ -67,7 +66,8 @@ class LoginComponents extends StatelessWidget {
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState!.validate()) {
                   loginReqModel.mobileNo = loginContact.text;
-                  loginReqModel.deviceToken = await NotificationService.getDeviceToken();
+                  loginReqModel.deviceToken =
+                      await NotificationService.getDeviceToken();
 
                   await authViewModel.login(loginReqModel);
                   if (authViewModel.loginApiResponse.status ==

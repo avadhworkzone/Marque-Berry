@@ -8,11 +8,11 @@ import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/requestModel/upload_template_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/upload_template_res_model.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/drawer/upload_template.dart';
 import 'package:socialv/view/template/my_template.dart';
@@ -69,7 +69,6 @@ class Template extends StatelessWidget {
                 child: CommonAppBar(
                   title: VariableUtils.templateText,
                   onTap: () => Get.back(),
-
                 ),
               ),
               body: Padding(

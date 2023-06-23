@@ -1,5 +1,5 @@
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 class SizeConfig {
   /// HEIGHT

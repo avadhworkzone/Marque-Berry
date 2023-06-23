@@ -1,19 +1,19 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously, deprecated_member_use
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
 import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_drawer.dart';
-import 'package:socialv/controllers/intrest_controller.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/view/home/home.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
+import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/home/home.dart';
+import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
 import 'package:socialv/viewModel/connectivity_view_model.dart';
+
 import '../drawer/campaign_screen.dart';
 import '../sharePost/share_post.dart';
 
@@ -71,7 +71,6 @@ class _BottomBarState extends State<BottomBar> {
             return GetBuilder<BottomBarController>(
               init: BottomBarController(),
               initState: (_) {
-
                 notificationInitialization();
               },
               builder: (bottomBarController) {

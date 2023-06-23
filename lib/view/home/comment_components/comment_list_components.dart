@@ -1,24 +1,24 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/model/apiModel/requestModel/delete_comment_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_comment_req_model.dart';
-import 'package:socialv/utils/custom_text_field.dart';
-import 'package:socialv/utils/validation_utils.dart';
-import 'package:socialv/view/home/home.dart';
+import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/utils/custom_text_field.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/commanWidget/common_image.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/viewModel/category_view_model.dart';
-import 'package:socialv/view/home/comment_components/replay_button.dart';
+import 'package:socialv/utils/validation_utils.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/home/comment_components/like_components.dart';
-import 'package:socialv/model/apiModel/requestModel/delete_comment_req_model.dart';
-import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
+import 'package:socialv/view/home/comment_components/replay_button.dart';
+import 'package:socialv/view/home/home.dart';
+import 'package:socialv/viewModel/category_view_model.dart';
 
 import '../../../model/apis/api_response.dart';
 import '../../profile/profile.dart';

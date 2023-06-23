@@ -1,21 +1,21 @@
 import 'package:get/get.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_comment_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/get_post_like_req_model.dart';
+import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/post_comment_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_comment_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/model/repo/Get_all_comment_repo.dart';
 import 'package:socialv/model/repo/delete_comment_repo.dart';
+import 'package:socialv/model/repo/dislike_post_repo.dart';
+import 'package:socialv/model/repo/feed_category_repo.dart';
+import 'package:socialv/model/repo/like_post_repo.dart';
 import 'package:socialv/model/repo/post_comment_repo.dart';
 import 'package:socialv/model/repo/post_like_user_repo.dart';
 import 'package:socialv/model/repo/report_post_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/model/repo/like_post_repo.dart';
-import 'package:socialv/model/repo/dislike_post_repo.dart';
-import 'package:socialv/model/repo/feed_category_repo.dart';
-import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
-import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
 
 class CategoryFeedViewModel extends GetxController {
   int _pageNumberIndex = 0;

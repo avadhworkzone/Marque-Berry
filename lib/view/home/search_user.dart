@@ -14,7 +14,6 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/typedef_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';

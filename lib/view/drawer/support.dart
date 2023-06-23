@@ -10,17 +10,15 @@ import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/requestModel/suppor_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/drawer_viewmodel.dart';
 
-import '../../commanWidget/noInternet_screen.dart';
 import '../../utils/assets/images_utils.dart';
-import '../../viewModel/connectivity_view_model.dart';
 
 class Support extends StatelessWidget {
   Support({Key? key}) : super(key: key);

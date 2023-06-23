@@ -6,19 +6,18 @@ import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/get_user_res_model.dart';
-import 'package:socialv/model/apiModel/responseModel/update_cover_pic_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/model/repo/get_search_users_repo.dart';
+import 'package:socialv/model/repo/get_user_profile_repo.dart';
 import 'package:socialv/model/repo/update_user_cover_pic_repo.dart';
 import 'package:socialv/model/repo/update_user_profile_pic_repo.dart';
 import 'package:socialv/model/repo/update_user_profile_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/model/repo/get_user_profile_repo.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 
 class ProfileViewModel extends GetxController {
-  bool _isLoading=false;
+  bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
@@ -118,7 +117,7 @@ class ProfileViewModel extends GetxController {
     update();
   }
 
-/// ======================== GET USER PROFILE DETAIL ================================
+  /// ======================== GET USER PROFILE DETAIL ================================
 
   Future<void> searchUsers(String searchStr) async {
     searchUserProfileApiResponse = ApiResponse.loading('LOADING');
@@ -194,7 +193,6 @@ class ProfileViewModel extends GetxController {
       final response =
           await UpdateUserCoverPicRepo().updateUserCoverPic(coverPhoto);
       updateUserCoverPicApiResponse = ApiResponse.complete(response);
-
     } catch (e) {
       logs('updateUserCoverPicApiResponse ERROR :=> $e');
       updateUserCoverPicApiResponse = ApiResponse.error('ERROR');

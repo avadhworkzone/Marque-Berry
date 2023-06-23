@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/typedef_utils.dart';
 
 class CommonAppBar extends StatelessWidget {

@@ -7,14 +7,15 @@ import 'package:socialv/model/apiModel/responseModel/get_notification_res_model.
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/view/profile/follow_request_screen.dart';
 import 'package:socialv/viewModel/drawer_viewmodel.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 import '../../commanWidget/common_appbar.dart';
+import '../../utils/adoro_text.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/font_style_utils.dart';
 import '../../utils/size_config_utils.dart';
-import '../../utils/adoro_text.dart';
 import '../../utils/variable_utils.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationScreen extends StatelessWidget {
   NotificationScreen({Key? key}) : super(key: key);
@@ -34,7 +35,6 @@ class NotificationScreen extends StatelessWidget {
           onTap: () => Get.back(),
         ),
       ),
-
       body: GetBuilder<DrawerVideModel>(initState: (state) {
         viewModel.getNotificationList();
       }, builder: (cont) {
@@ -95,7 +95,9 @@ class NotificationScreen extends StatelessWidget {
                         EdgeInsets.symmetric(vertical: 5.sp, horizontal: 10.sp),
                     margin: EdgeInsets.only(bottom: 5.sp),
                     child: AdoroText(
-                      (notification.message ?? 'N/A')+"  "+getTime(notification.createdOn!),
+                      (notification.message ?? 'N/A') +
+                          "  " +
+                          getTime(notification.createdOn!),
                       fontSize: 11.sp,
                       color: ColorUtils.black92,
                       fontWeight: FontWeightClass.fontWeight600,

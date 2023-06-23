@@ -16,7 +16,6 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
-import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
 
 class TagAPeople extends StatelessWidget {
@@ -93,7 +92,7 @@ class TagAPeople extends StatelessWidget {
 
           return Column(
             children: [
-            /*  Padding(
+              /*  Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.sp),
                 child: TextField(
                   style: TextStyle(color: Colors.black),
@@ -139,14 +138,14 @@ class TagAPeople extends StatelessWidget {
                       Divider(indent: 10, endIndent: 20, color: black92White),
                   itemBuilder: (context, index) {
                     final userData = searchUsersResModel.data![index];
-                    if(userData.id==PreferenceUtils.getInt(key: PreferenceUtils.userid)){
+                    if (userData.id ==
+                        PreferenceUtils.getInt(key: PreferenceUtils.userid)) {
                       return SizedBox();
                     }
                     return InkWell(
                       splashColor: ColorUtils.transparent,
                       highlightColor: ColorUtils.transparent,
                       onTap: () {
-
                         if (selectedTagList.contains(userData.id.toString())) {
                           selectedTagList.remove(userData.id.toString().obs);
                         } else {

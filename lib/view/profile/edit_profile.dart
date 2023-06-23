@@ -3,9 +3,9 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
@@ -24,9 +24,9 @@ import 'package:socialv/view/bottomBar/bottombar.dart';
 
 import '../../model/apiModel/responseModel/update_profile_pic_res_model.dart';
 import '../../utils/color_utils.dart';
-import '../../utils/variable_utils.dart';
 import '../../utils/decoration_utils.dart';
 import '../../utils/size_config_utils.dart';
+import '../../utils/variable_utils.dart';
 import '../../viewModel/profile_view_model.dart';
 
 class EditProfile extends StatelessWidget {

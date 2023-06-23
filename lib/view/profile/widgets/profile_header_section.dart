@@ -6,7 +6,6 @@ import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/view/profile/following_screen.dart';
-import 'package:socialv/view/profile/show_post.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
   const ProfileHeaderSection({
@@ -26,13 +25,10 @@ class ProfileHeaderSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          richTextColumn(
-            black92White,
-            blackWhite,
-            title: "Posts",
-            value: profile.postsCount.toString(),
-            onTap: (){}
-          ),
+          richTextColumn(black92White, blackWhite,
+              title: "Posts",
+              value: profile.postsCount.toString(),
+              onTap: () {}),
           richTextColumn(black92White, blackWhite,
               title: "Followers",
               value: profile.followersCount.toString(), onTap: () {

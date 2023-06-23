@@ -12,7 +12,6 @@ import 'package:socialv/model/apis/api_response.dart';
 
 import '../../commanWidget/common_appbar.dart';
 import '../../commanWidget/custom_btn.dart';
-
 import '../../commanWidget/custom_snackbar.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';

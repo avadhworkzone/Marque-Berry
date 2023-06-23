@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';

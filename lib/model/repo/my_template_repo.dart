@@ -1,7 +1,7 @@
 import 'package:socialv/model/apiModel/responseModel/my_template_res_model.dart';
-import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/model/apiService/api_service.dart';
 import 'package:socialv/model/apiService/base_service.dart';
+import 'package:socialv/utils/enum_utils.dart';
 
 class MyTemplateRepo extends BaseService {
   Future<MyTemplateResModel> myTemplate() async {

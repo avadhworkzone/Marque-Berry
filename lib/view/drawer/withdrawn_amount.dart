@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/view/drawer/enter_otp.dart';
 
 import '../../commanWidget/custom_snackbar.dart';

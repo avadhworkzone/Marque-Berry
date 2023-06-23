@@ -1,18 +1,18 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
-import 'package:socialv/utils/color_utils.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/utils/app_services/download_image.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/app_services/download_image.dart';
 
-import '../../utils/assets/images_utils.dart';
 import '../../commanWidget/common_appbar.dart';
+import '../../utils/assets/images_utils.dart';
 
 class DownloadTemplateList extends StatelessWidget {
   final String title;

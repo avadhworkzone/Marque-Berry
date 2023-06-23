@@ -1,5 +1,3 @@
-import 'package:socialv/utils/shared_preference_utils.dart';
-
 abstract class BaseService {
   /// ----------------- BASE URL START -----------------------
 

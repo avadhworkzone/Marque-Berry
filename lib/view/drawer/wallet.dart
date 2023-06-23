@@ -1,26 +1,23 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/get_wallet_balance_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/drawer/withdrawn_amount.dart';
 import 'package:socialv/viewModel/drawer_viewmodel.dart';
 
-import '../../commanWidget/noInternet_screen.dart';
 import '../../utils/assets/images_utils.dart';
-import '../../viewModel/connectivity_view_model.dart';
 
 class Wallet extends StatelessWidget {
   Wallet({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:socialv/utils/enum_utils.dart';
-import 'package:socialv/model/apiService/api_service.dart';
-import 'package:socialv/model/apiService/base_service.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/create_post_res_model.dart';
+import 'package:socialv/model/apiService/api_service.dart';
+import 'package:socialv/model/apiService/base_service.dart';
+import 'package:socialv/utils/enum_utils.dart';
 
 class CreatePostRepo extends BaseService {
   Future<CreatePostResModel> createPost(CreatePostReqModel reqModel) async {
@@ -13,14 +13,14 @@ class CreatePostRepo extends BaseService {
     // logs("IF PAHELA ----------->    $body");
 
     if (reqModel.tag == '' || reqModel.tag == null) {
-      body['tag']=jsonEncode([]);
+      body['tag'] = jsonEncode([]);
       // body.removeWhere((key, value) => key == 'tag');
     }
     // logs("IF PACHI ----------->    $body");
 
     if (reqModel.contentType == 'template') {
       body['content_type'] = getContentType(body['content_type']);
-      body.addAll({'url':body['file']});
+      body.addAll({'url': body['file']});
       body.removeWhere((key, value) => key == 'file');
       var response = await ApiService().getResponse(
         apiType: APIType.aPost,

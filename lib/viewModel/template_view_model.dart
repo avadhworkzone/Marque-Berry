@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
+import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/model/repo/browser_template_repo.dart';
 import 'package:socialv/model/repo/my_template_repo.dart';
 import 'package:socialv/model/repo/trending_template_repo.dart';
 import 'package:socialv/model/repo/upload_template_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
+
 import '../model/apiModel/requestModel/upload_template_req_model.dart';
 
 class TemplateViewModel extends GetxController {

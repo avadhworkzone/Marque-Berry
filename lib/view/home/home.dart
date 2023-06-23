@@ -1,34 +1,25 @@
 // ignore_for_file: must_be_immutable
-import 'dart:io';
-
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/commanWidget/success_screen.dart';
-import 'package:socialv/utils/adoro_text.dart';
-import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/color_utils.dart';
-import 'package:socialv/commanWidget/loader.dart';
-import 'package:socialv/utils/variable_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/commanWidget/common_image.dart';
-import 'package:socialv/view/auth/otp_screen.dart';
-import 'package:socialv/view/drawer/result.dart';
-import 'package:socialv/view/home/components/video_components.dart';
-import 'package:socialv/view/message/message_list.dart';
-import 'package:socialv/utils/assets/images_utils.dart';
-import 'package:socialv/view/home/components/tabbar.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/viewModel/category_view_model.dart';
+import 'package:get/get.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
-import 'package:socialv/view/home/components/post_components.dart';
+import 'package:sizer/sizer.dart';
+import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
+import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/utils/size_config_utils.dart';
+import 'package:socialv/utils/variable_utils.dart';
+import 'package:socialv/view/home/components/post_components.dart';
+import 'package:socialv/view/home/components/tabbar.dart';
+import 'package:socialv/view/message/message_list.dart';
+import 'package:socialv/viewModel/category_view_model.dart';
 
 import 'search_user.dart';
 

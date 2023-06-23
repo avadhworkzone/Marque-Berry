@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -31,43 +30,37 @@ class _InViewVideoComponentsState extends State<InViewVideoComponents> {
     super.initState();
     _controller = VideoPlayerController.network(widget.url);
     _initializeVideoPlayerFuture = _controller.initialize().then((_) {
-
       setState(() {});
     });
-    _controller.setVolume(isMute?0:1.0);
+    _controller.setVolume(isMute ? 0 : 1.0);
     if (widget.play) {
       _controller.play();
       _controller.setLooping(false);
-
     }
-
   }
 
   @override
   void didUpdateWidget(InViewVideoComponents oldWidget) {
-
     if (oldWidget.play != widget.play) {
       if (widget.play) {
         _controller.play();
-        _controller.setVolume(isMute?0:1.0);
+        _controller.setVolume(isMute ? 0 : 1.0);
         _controller.setLooping(true);
       } else {
         _controller.setVolume(0.0);
         _controller.pause();
       }
-    }else{
-      if(!isMute){
-        if(!isScreenOpen){
+    } else {
+      if (!isMute) {
+        if (!isScreenOpen) {
           _controller.setVolume(0.0);
           _controller.pause();
-        }else{
+        } else {
           _controller.play();
           _controller.setVolume(1.0);
         }
       }
-
     }
-
 
     print('didUpdateWidget=====>$mounted');
     super.didUpdateWidget(oldWidget);
@@ -97,9 +90,9 @@ class _InViewVideoComponentsState extends State<InViewVideoComponents> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          isMute=!isMute;
+                          isMute = !isMute;
                         });
-                        _controller.setVolume(isMute?0:1.0);
+                        _controller.setVolume(isMute ? 0 : 1.0);
                       },
                       child: CircleAvatar(
                         backgroundColor: Colors.black45,

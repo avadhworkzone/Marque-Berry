@@ -2,29 +2,28 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/material.dart';
+import 'package:socialv/commanWidget/custom_btn.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/controllers/intrest_controller.dart';
 import 'package:socialv/model/apiModel/requestModel/user_category_req_model.dart';
+import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/user_category_res_model.dart';
+import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
-import 'package:socialv/routes/route_helper.dart';
-import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
-import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/commanWidget/custom_btn.dart';
+import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/view/bottomBar/bottombar.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
-import 'package:socialv/utils/shared_preference_utils.dart';
-import 'package:socialv/controllers/intrest_controller.dart';
-import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
 
 class InterestScreen extends StatelessWidget {
   InterestScreen({Key? key}) : super(key: key);

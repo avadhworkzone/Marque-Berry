@@ -6,15 +6,12 @@ import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/note_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
-import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/adoro_text.dart';
-import 'package:socialv/viewModel/auth_view_model.dart';
+import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/viewModel/drawer_viewmodel.dart';
-
-import '../../commanWidget/noInternet_screen.dart';
-import '../../utils/variable_utils.dart';
-import '../../viewModel/connectivity_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../utils/variable_utils.dart';
 
 class Note extends StatelessWidget {
   Note({

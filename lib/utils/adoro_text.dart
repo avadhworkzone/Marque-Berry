@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AdoroText extends StatelessWidget {
   final String title;
@@ -42,7 +42,7 @@ class AdoroText extends StatelessWidget {
         overflow: overflow,
         fontStyle: fontStyle,
         fontWeight: fontWeight,
-        fontFamily: fontFamily??"Poppins",
+        fontFamily: fontFamily ?? "Poppins",
         decoration: decoration,
         fontSize: fontSize ?? 14,
         letterSpacing: letterSpacing,

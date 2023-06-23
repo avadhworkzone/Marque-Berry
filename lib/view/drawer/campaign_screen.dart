@@ -15,12 +15,12 @@ import 'package:socialv/model/apiModel/requestModel/apply_now_contest_req_model.
 import 'package:socialv/model/apiModel/responseModel/apply_now_campaign_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/compaign_contest_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
+import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
-import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
 
