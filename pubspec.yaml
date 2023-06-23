@@ -71,6 +71,13 @@ dependencies:
   simple_gradient_text: ^1.2.4
 
 
+
+
+
+
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

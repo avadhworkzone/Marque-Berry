@@ -4,7 +4,7 @@ import 'package:socialv/model/apiService/base_service.dart';
 import '../apiModel/responseModel/compaign_contest_res_model.dart';
 
 class CampaignContestRepo extends BaseService {
-  Future<CampaignContestResModel> campaignContest() async {
+  Future<CampaignContestResModel> campaignContestRepo() async {
     Map<String, dynamic> body = {};
 
     var response = await ApiService().getResponse(

@@ -8,13 +8,23 @@ import 'package:socialv/model/repo/support_repo.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 
+import '../model/repo/campaign_contest_repo.dart';
+
+import '../model/repo/get_result_repo.dart';
+import '../model/repo/result_campaign_repo.dart';
+import '../model/repo/withdrawn_amount_otp_repo.dart';
+import '../model/repo/withdrawn_amount_repo.dart';
+
 class DrawerVideModel extends GetxController {
-
-
   ApiResponse getNoteApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse postSupportApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getNotificationListApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getWalletBalanceApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse getWithdrawnAmountApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse postWithdrawnAmountOtpValidateApiResponse =
+      ApiResponse.initial('INITIAL');
+  ApiResponse getResultApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse getResultCampaignResponse = ApiResponse.initial('INITIAL');
 
   /// ======================== GET NOTE VIEW MODEL ================================
   Future<void> getNote() async {
@@ -72,6 +82,72 @@ class DrawerVideModel extends GetxController {
     } catch (e) {
       logs('getWalletBalanceApiResponse ERROR :=> $e');
       getWalletBalanceApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== Withdrawn Amount ================================
+
+  Future<void> getWithdrawnAmount() async {
+    logs('loading..');
+    getWithdrawnAmountApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await WithdrawnAmountRepo().withdrawnAmountRepo();
+      getWithdrawnAmountApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('getWithdrawnAmountApiResponse ERROR :=> $e');
+      getWithdrawnAmountApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== Withdrawn Amount Otp Validate ================================
+
+  Future<void> postWithdrawnAmountOtpValidate(String otp, String amount) async {
+    logs('loading..');
+    postWithdrawnAmountOtpValidateApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await WithdrawnAmountOtpValidateRepo()
+          .withdrawnAmountOtpValidateRepo(otp, amount);
+      postWithdrawnAmountOtpValidateApiResponse =
+          ApiResponse.complete(response);
+    } catch (e) {
+      logs('getWalletBalanceApiResponse ERROR :=> $e');
+      postWithdrawnAmountOtpValidateApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== Campaign And ContestApp ================================
+
+  Future<void> getResult() async {
+    logs('loading..');
+    getResultApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await ResultRepo().resultRepo();
+      getResultApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('resultCompletedCampaignApiResponse ERROR :=> $e');
+      getResultApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ======================== Result Campaign ================================
+
+  Future<void> getResultDetail(String id, String tag) async {
+    logs('loading..');
+    getResultCampaignResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await ResultCampaignRepo().resultCampaignRepo(id, tag);
+      getResultCampaignResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('getResultCampaignApiResponse ERROR :=> $e');
+      getResultCampaignResponse = ApiResponse.error('ERROR');
     }
     update();
   }

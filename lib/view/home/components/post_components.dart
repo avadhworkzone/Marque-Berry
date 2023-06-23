@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:socialv/appService/dynamic_link.dart';
+import 'package:socialv/appService/share_post.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/responseModel/category_res_model.dart';
@@ -221,33 +222,65 @@ class PostComponents extends StatelessWidget {
                     // height: 75.w,
                     width: Get.width,
                     child: contentType.toLowerCase() == "video"
-                        ? InViewVideoComponents(
-                            play: isInView,
-                            url: contentImage,
-                          )
-                        : OctoImage(
-                            // fit: BoxFit.cover,
-                            image: NetworkImage(contentImage),
-                            progressIndicatorBuilder: (context, progress) {
-                              double? value;
-                              var expectedBytes = progress?.expectedTotalBytes;
-                              if (progress != null && expectedBytes != null) {
-                                value = progress.cumulativeBytesLoaded /
-                                    expectedBytes;
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: value,
-                                  color: blackWhite,
+                        ? InkWell(
+                            onTap: () {
+                              Get.dialog(
+                                Dialog(
+                                  insetPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.black45,
+                                  child: Center(
+                                    child: FileVideoPlayer(
+                                      url: contentImage,
+                                    ),
+                                  ),
                                 ),
                               );
                             },
-                            errorBuilder: (context, error, stacktrace) =>
-                                Padding(
-                              padding: EdgeInsets.all(7.w),
-                              child: CommonImage(
-                                img: IconsWidgets.imageImages,
-                                color: blackWhite,
+                            child: InViewVideoComponents(
+                              play: isInView,
+                              url: contentImage,
+                            ),
+                          )
+                        : InkWell(
+                            onTap: () {
+                              Get.dialog(
+                                Dialog(
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.black45,
+                                    child: Center(
+                                      child: Image(
+                                        image: NetworkImage(
+                                          contentImage,
+                                        ),
+                                      ),
+                                    )),
+                              );
+                            },
+                            child: OctoImage(
+                              // fit: BoxFit.cover,
+                              image: NetworkImage(contentImage),
+                              progressIndicatorBuilder: (context, progress) {
+                                double? value;
+                                var expectedBytes =
+                                    progress?.expectedTotalBytes;
+                                if (progress != null && expectedBytes != null) {
+                                  value = progress.cumulativeBytesLoaded /
+                                      expectedBytes;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: value,
+                                    color: blackWhite,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, error, stacktrace) =>
+                                  Padding(
+                                padding: EdgeInsets.all(7.w),
+                                child: CommonImage(
+                                  img: IconsWidgets.imageImages,
+                                  color: blackWhite,
+                                ),
                               ),
                             ),
                           ),
@@ -522,9 +555,16 @@ class PostComponents extends StatelessWidget {
                   image: IconsWidgets.shareImages,
                   text: 'Share via',
                   onTap: () async {
+                    final videoPlaceHolder =
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmrBW7xw8im-mIyR8gjGRIHcpRlyZHRlyH_sI_Fax6E9mUqWMJskdNu8o68SdNqzKDkWg&usqp=CAU";
                     final postLink = await DynamicLink.createDynamicLinkForPost(
                         postId: postId.toString());
-                    Share.share(postLink);
+                    await shareContent(
+                        postLink: postLink,
+                        postImg: contentType == 'video'
+                            ? videoPlaceHolder
+                            : contentImage);
+                    // Share.share(postLink);
                   },
                 ),
                 SizeConfig.sH3,

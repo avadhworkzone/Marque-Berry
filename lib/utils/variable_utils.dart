@@ -1,5 +1,5 @@
 class VariableUtils {
-  static const appName='adoro';
+  static const appName = 'adoro';
 
   /// FONT-FAMILY VARIABLE
   static const poppinsBoldFontFamily = "Poppins_Bold";
@@ -18,7 +18,7 @@ class VariableUtils {
   ///
   static const noInternetText = "No internet connection";
   static const noInternetDescText = "Please check your internet \nconnection";
-  static const send="Send";
+  static const send = "Send";
 
   ///  VIREN VAR ///
   ///DRAWER
@@ -97,6 +97,10 @@ class VariableUtils {
   // static const wallet = "Wallet";
 
   static const note = " Note";
+  static const noteCampaign = " Note :";
+  static const eachUserCanSubmit =
+      "-Each user can submit upto 1 meme creatives.";
+  static const winnersWillBe = "-Winners will be announced at result section.";
 
   /// Refer & Earn
 
@@ -143,6 +147,9 @@ class VariableUtils {
   /// Result
   static const brandName = "  Brand Name  ";
   static const campaignName = "  Campaign Name  ";
+  static const contestName = "  Contest Name ";
   static const viewResult = "  View Result  ";
   static const price = "  ₹500  ";
+  static const pleaseValidAmount = " Please Valid Amount";
+  static const pleaseEnterOtp = " Please Enter Otp";
 }

@@ -69,4 +69,9 @@ abstract class BaseService {
   final String deleteFollowRequestURL = 'deleteFollowRequest';
   final String getPendingRequestListURL = 'getpendingRequestList';
   final String checkUserFollowedByMe = 'checkUserFollowedByMe?user_id=';
+
+  final String withdrawalAmount = 'send_withdrawal_otp';
+  final String withdrawalAmountOtpValidate = 'validateWithdrawOTP';
+  final String resultCompletedCampaign = 'getCompletedCampaign';
+  final String getResults = 'getResults';
 }

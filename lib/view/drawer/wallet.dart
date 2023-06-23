@@ -174,7 +174,7 @@ class Wallet extends StatelessWidget {
                   InkWell(
                     splashColor: ColorUtils.transparent,
                     highlightColor: ColorUtils.transparent,
-                    onTap: () => Get.to(WithdrawlAmount()),
+                    onTap: () => Get.to(WithdrawnAmount()),
                     child: Container(
                       height: 18.w,
                       width: 55.w,

@@ -31,6 +31,7 @@ class ReferAndEarn extends StatefulWidget {
 
 class _ReferAndEarnState extends State<ReferAndEarn> {
   RxString referLink = "".obs;
+  String referLinkWithDes = "";
 
   @override
   void initState() {
@@ -43,6 +44,10 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
         PreferenceUtils.getString(key: PreferenceUtils.referId);
     referLink.value =
         await DynamicLink.createDynamicLinkForReferAndErn(referId: referId);
+    referLinkWithDes = """
+Hey, I'm using adoro to network with brands, make meme and earn money.Join me! Download it here:
+${referLink.value}
+                   """;
   }
 
   @override
@@ -152,7 +157,8 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                 Expanded(
                                     child: Obx(
                                   () => Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 5),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
                                     child: TextFormField(
                                       key: ValueKey(referLink.value),
                                       readOnly: true,
@@ -168,11 +174,12 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                 )),
                                 InkWell(
                                   onTap: () {
-                                    FlutterClipboard.copy(referLink.value)
+                                    FlutterClipboard.copy(referLinkWithDes)
                                         .catchError((catchError) {})
                                         .then((value) {
                                       showSnackBar(
-                                        message: VariableUtils.copiedSuccessfully,
+                                        message:
+                                            VariableUtils.copiedSuccessfully,
                                         snackbarSuccess: true,
                                       );
                                     });
@@ -186,7 +193,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                 SizeConfig.sW2,
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -199,7 +206,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                 highlightColor: ColorUtils.transparent,
                 onTap: () {
                   Share.share(
-                    referLink.value,
+                    referLinkWithDes,
                   );
                 },
                 child: Container(
@@ -221,13 +228,18 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
               )
             ],
           ),
-
-            Obx(()=>referLink.value.isEmpty?Container(
-              color: ColorUtils.black26,
-              width: Get.width,
-              height: Get.height,
-              child: Center(child: Loader(),),
-            ):SizedBox(),)
+          Obx(
+            () => referLink.value.isEmpty
+                ? Container(
+                    color: ColorUtils.black26,
+                    width: Get.width,
+                    height: Get.height,
+                    child: Center(
+                      child: Loader(),
+                    ),
+                  )
+                : SizedBox(),
+          ),
         ],
       ),
     );
