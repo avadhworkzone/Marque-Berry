@@ -6,12 +6,12 @@ import 'package:socialv/utils/enum_utils.dart';
 
 class GetNotificationListRepo extends BaseService {
   /// ==========================  GET NOTIFICATION DATA  ==========================
-  Future<GetNotificationListResModel> getNotificationRepo() async {
+  Future<NotificationListResModel> getNotificationRepo() async {
     var response = await ApiService().getResponse(
       apiType: APIType.aGet,
       url: '$baseURL$getNotification',
     );
-    return GetNotificationListResModel.fromJson(response);
+    return NotificationListResModel.fromJson(response);
   }
 
   /// ==========================  CHANGE NOTIFICATION STATUS  ==========================

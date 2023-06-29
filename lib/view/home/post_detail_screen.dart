@@ -52,8 +52,9 @@ class PostDetailScreen extends StatelessWidget {
           preferredSize: Size.fromHeight(15.w),
           child: CommonAppBar(
             color: ColorUtils.transparent,
-            title: VariableUtils.appName,
-            onTap: () => isFromBackScreen?Get.back():Get.offAll(() => BottomBar()),
+            title: "Post",
+            onTap: () =>
+                isFromBackScreen ? Get.back() : Get.offAll(() => BottomBar()),
           ),
         ),
         body: GetBuilder<CreatePostViewModel>(
@@ -103,7 +104,7 @@ class PostDetailScreen extends StatelessWidget {
                   builder: (categoryFeedViewModel) {
                 return PostComponents(
                   isInView: true,
-                  tagList: postDetail.tagUser??[],
+                  tagList: postDetail.tagUser ?? [],
                   isPostDetailFromLink: true,
                   userId: int.parse(postDetail.userId!),
                   contentType: postDetail.contentType ?? "image",

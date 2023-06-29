@@ -1,64 +1,78 @@
-class GetNotificationListResModel {
-  GetNotificationListResModel({
-      this.status, 
-      this.msg, 
-      this.data,});
+class NotificationListResModel {
+  int? status;
+  List<Data>? data;
 
-  GetNotificationListResModel.fromJson(dynamic json) {
+  NotificationListResModel({this.status, this.data});
+
+  NotificationListResModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    msg = json['msg'];
     if (json['data'] != null) {
-      data = [];
+      data = <Data>[];
       json['data'].forEach((v) {
-        data?.add(NotificationData.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
-  int? status;
-  String? msg;
-  List<NotificationData>? data;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['status'] = status;
-    map['msg'] = msg;
-    if (data != null) {
-      map['data'] = data?.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    return map;
+    return data;
   }
-
 }
 
-class NotificationData {
-  NotificationData({
-      this.id, 
-      this.title, 
-      this.message, 
-      this.userId, 
-      this.createdOn,});
-
-  NotificationData.fromJson(dynamic json) {
-    id = json['id'];
-    title = json['title'];
-    message = json['message'];
-    userId = json['user_id'];
-    createdOn = json['created_on'];
-  }
+class Data {
   int? id;
   String? title;
   String? message;
   String? userId;
+  String? dataId;
+  String? isRead;
   String? createdOn;
+  String? username;
+  String? fullName;
+  String? image;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['title'] = title;
-    map['message'] = message;
-    map['user_id'] = userId;
-    map['created_on'] = createdOn;
-    return map;
+  Data(
+      {this.id,
+      this.title,
+      this.message,
+      this.userId,
+      this.dataId,
+      this.isRead,
+      this.createdOn,
+      this.username,
+      this.fullName,
+      this.image});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    message = json['message'];
+    userId = json['user_id'];
+    dataId = json['data_id'];
+    isRead = json['is_read'];
+    createdOn = json['created_on'];
+    username = json['username'];
+    fullName = json['full_name'];
+    image = json['image'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['message'] = this.message;
+    data['user_id'] = this.userId;
+    data['data_id'] = this.dataId;
+    data['is_read'] = this.isRead;
+    data['created_on'] = this.createdOn;
+    data['username'] = this.username;
+    data['full_name'] = this.fullName;
+    data['image'] = this.image;
+    return data;
+  }
 }

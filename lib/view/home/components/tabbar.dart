@@ -30,7 +30,7 @@ class TabBarComponents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30.sp,
+      height: 31.sp,
       // color: Colors.green,
       alignment: Alignment.center,
       child: ListView.builder(

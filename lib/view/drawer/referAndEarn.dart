@@ -217,12 +217,21 @@ ${referLink.value}
               Padding(
                 padding: EdgeInsets.only(left: 7.w, right: 7.w),
                 child: AdoroText(
-                  'When your friends will download the app with the referal code, you will get instant Rs. 2 in your wallet . And when your friend earn its first earning , then you will also get 5% from there first earning',
+                  'When your friends will download the app with the referal code, you will get instant Rs. 2 in your wallet . ',
+                  fontSize: 12.sp,
+                  // textAlign: TextAlign.center,
+                  color: Theme.of(context).textTheme.titleSmall?.color,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 7.w, right: 7.w),
+                child: AdoroText(
+                  'And when your friend earn its first earning , then you will also get 5% from there first earning',
                   fontSize: 12.sp,
                   textAlign: TextAlign.center,
                   color: Theme.of(context).textTheme.titleSmall?.color,
                 ),
-              )
+              ),
             ],
           ),
           Obx(

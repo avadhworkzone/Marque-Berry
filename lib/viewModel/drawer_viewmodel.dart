@@ -29,7 +29,7 @@ class DrawerVideModel extends GetxController {
     getNoteApiResponse = ApiResponse.loading('LOADING');
     update();
     try {
-      final response = await GetNoteRepo().getNote();
+      final response = await GetNoteRepo().getNoteRepo();
       getNoteApiResponse = ApiResponse.complete(response);
     } catch (e) {
       logs('getNoteApiResponse ERROR :=> $e');

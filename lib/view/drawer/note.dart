@@ -72,7 +72,7 @@ class Note extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(left: 2.w),
                         child: AdoroText(
-                          noteResModel.data!.note ?? "'N/A",
+                          noteResModel.data?.note ?? "'N/A",
                           color: ColorUtils.black92,
                           fontSize: 11.sp,
                         ),
@@ -89,15 +89,18 @@ class Note extends StatelessWidget {
                   child: InkWell(
                       onTap: () {
                         launchUrl(
-                          Uri.parse(noteResModel.data?.videoUrl ?? ""),
+                          Uri.parse(
+                              // noteResModel.data?.videoUrl ?? "",
+                              "https://www.youtube.com/watch?v=H5v3kku4y6Q"),
                         );
                       },
                       child: Image(
-                        image: NetworkImage(noteResModel.data!.thumbnail ?? ""),
-                        fit: BoxFit.fill,
+                        image: NetworkImage(noteResModel.data?.thumbnail ?? ""),
+                        // image: NetworkImage(
+                        //     "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"),
                       )),
                 ),
-              )
+              ),
             ],
           ),
         );

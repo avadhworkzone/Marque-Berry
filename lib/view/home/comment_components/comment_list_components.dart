@@ -21,6 +21,7 @@ import 'package:socialv/view/home/home.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 
 import '../../../model/apis/api_response.dart';
+import '../../../utils/shared_preference_utils.dart';
 import '../../profile/profile.dart';
 
 class CommentList extends StatefulWidget {
@@ -112,12 +113,22 @@ class _CommentListState extends State<CommentList> {
                 padding: EdgeInsets.symmetric(vertical: 2.h),
                 child: InkWell(
                     onTap: () {
-                      editDeleteBottomSheet(
-                        message: widget.message,
-                        categoryFeedViewModel: widget.categoryFeedViewModel,
-                        commentId: widget.commentId,
-                        context: context,
-                      );
+                      if (widget.userId ==
+                          PreferenceUtils.getInt(key: PreferenceUtils.userid)) {
+                        editDeleteBottomSheet(
+                          message: widget.message,
+                          categoryFeedViewModel: widget.categoryFeedViewModel,
+                          commentId: widget.commentId,
+                          context: context,
+                        );
+                      }
+
+                      // editDeleteBottomSheet(
+                      //   message: widget.message,
+                      //   categoryFeedViewModel: widget.categoryFeedViewModel,
+                      //   commentId: widget.commentId,
+                      //   context: context,
+                      // );
                     },
                     child: SizedBox(
                         width: Get.width,
@@ -130,11 +141,13 @@ class _CommentListState extends State<CommentList> {
           Row(
             children: [
               InkWell(
+                  borderRadius: BorderRadius.circular(2.w),
                   onTap: widget.likeOnTap,
                   child: LikeButton(
                       likecounter: widget.likeCount, isLiked: widget.isLiked)),
               SizeConfig.sW2,
               InkWell(
+                borderRadius: BorderRadius.circular(2.w),
                 onTap: () => widget.replayMessage(),
                 child: ReplayButton(replaycount: widget.replayCount),
               ),
@@ -172,7 +185,9 @@ class _CommentListState extends State<CommentList> {
                 InkWell(
                   onTap: () {
                     Get.back();
+
                     updateTextEditing.text = message;
+
                     // updateTextEditing.selection = TextSelection.fromPosition(
                     //   TextPosition(
                     //     offset: updateTextEditing.text.length,

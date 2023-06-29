@@ -105,7 +105,7 @@ class PostComponents extends StatelessWidget {
         // ),
         child: Column(
           children: [
-            SizeConfig.sH1,
+            SizeConfig.sH2,
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Wrap(
@@ -224,7 +224,7 @@ class PostComponents extends StatelessWidget {
                               Get.dialog(
                                 Dialog(
                                   insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Colors.black45,
+                                  backgroundColor: Colors.black,
                                   child: Center(
                                     child: FileVideoPlayer(
                                       url: contentImage,
@@ -243,7 +243,7 @@ class PostComponents extends StatelessWidget {
                               Get.dialog(
                                 Dialog(
                                     insetPadding: EdgeInsets.zero,
-                                    backgroundColor: Colors.black45,
+                                    backgroundColor: Colors.black,
                                     child: Center(
                                       child: Image(
                                         image: NetworkImage(

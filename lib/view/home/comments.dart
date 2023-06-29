@@ -22,7 +22,9 @@ import '../../commanWidget/common_appbar.dart';
 import '../../commanWidget/common_image.dart';
 import '../../model/apiModel/responseModel/post_comment_res_model.dart';
 import '../../model/apis/api_response.dart';
+import '../../utils/app_services/common_profile_image.dart';
 import '../../utils/assets/images_utils.dart';
+import '../../utils/shared_preference_utils.dart';
 import '../../viewModel/category_view_model.dart';
 
 class Comments extends StatefulWidget {
@@ -287,21 +289,29 @@ class _CommentsState extends State<Comments> {
                       padding: EdgeInsets.symmetric(horizontal: 3.w),
                       child: Row(
                         children: [
-                          CircleAvatar(
-                            radius: 6.w,
-                            backgroundColor: Colors.grey[100],
-                            backgroundImage: NetworkImage(widget.profileImage),
-                            onBackgroundImageError: (_, __) {
-                              CommonImage(
-                                img: IconsWidgets.userImages,
-                                color: ColorUtils.black,
-                              );
-                            },
+                          CommonProfileImage(
+                            heightWidth: 12.w,
+                            bgColor: Colors.grey[200],
+                            image: PreferenceUtils.getString(
+                              key: PreferenceUtils.profileImage,
+                            ),
                           ),
+                          // CircleAvatar(
+                          //   radius: 6.w,
+                          //   backgroundColor: Colors.grey[100],
+                          //   backgroundImage: NetworkImage(widget.profileImage),
+                          //   onBackgroundImageError: (_, __) {
+                          //     CommonImage(
+                          //       img: IconsWidgets.userImages,
+                          //       color: ColorUtils.black,
+                          //     );
+                          //   },
+                          // ),
                           SizeConfig.sW3,
                           Expanded(
                             child: CommonTextFormField(
                               focusNode: focusNode,
+
                               textstyle: TextStyle(color: blackWhite),
                               validator: (v) => emptyValidation(v),
                               color: blackWhite,

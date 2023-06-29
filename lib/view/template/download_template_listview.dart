@@ -135,10 +135,10 @@ class DownloadTemplateList extends StatelessWidget {
                                           },
                                           child: Container(
                                             height: 13.w,
-                                            width: 30.w,
+                                            width: 35.w,
                                             child: Image.asset(
                                               IconsWidgets.submitIconBtnImages,
-                                              fit: BoxFit.fill,
+                                              // fit: BoxFit.fill,
                                             ),
                                           ),
                                         ),
