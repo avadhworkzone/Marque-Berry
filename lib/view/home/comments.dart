@@ -136,6 +136,7 @@ class _CommentsState extends State<Comments> {
                                               isLiked:
                                                   commentData.isLikedByMe ??
                                                       false);
+
                                       if (categoryFeedViewModel
                                               .postLikeInCommentApiResponse
                                               .status ==

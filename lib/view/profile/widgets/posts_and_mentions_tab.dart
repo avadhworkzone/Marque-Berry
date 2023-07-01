@@ -9,6 +9,7 @@ import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/view/home/post_detail_screen.dart';
 import 'package:socialv/viewModel/profile_view_model.dart';
+import 'package:video_player/video_player.dart';
 
 class PostsAndMentionsTab extends StatelessWidget {
   const PostsAndMentionsTab({
@@ -143,14 +144,18 @@ class PostsAndMentionsTab extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(1.5.w),
                               child: post.contentType!.toLowerCase() == 'video'
-                                  ? Container(
-                                      color: black92White!.withOpacity(0.5),
-                                      child: Icon(
-                                        Icons.play_circle_outline,
-                                        size: 10.w,
-                                        color: whiteBlack2E,
-                                      ),
+                                  ? AbsorbPointer(
+                                      child: VideoPlayerScreen(
+                                          url: post.contentUrl ?? ''),
                                     )
+                                  // ? Container(
+                                  //     color: black92White!.withOpacity(0.5),
+                                  //     child: Icon(
+                                  //       Icons.play_circle_outline,
+                                  //       size: 10.w,
+                                  //       color: whiteBlack2E,
+                                  //     ),
+                                  //   )
                                   : PostImage(url: post.contentUrl ?? ''),
                             ),
                           );
@@ -213,6 +218,73 @@ class PostImage extends StatelessWidget {
           child: Icon(Icons.error_outline),
         );
       },
+    );
+  }
+}
+
+class VideoPlayerScreen extends StatefulWidget {
+  VideoPlayerScreen({
+    Key? key,
+    required this.url,
+  }) : super(key: key);
+  final String url;
+
+  @override
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+}
+
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    _controller = VideoPlayerController.network(
+      widget.url,
+    );
+    _initializeVideoPlayerFuture = _controller.initialize();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: ColorUtils.greyF1,
+        child: Center(
+          child: FutureBuilder(
+            future: _initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(
+                    _controller,
+                  ),
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        mini: true,
+        onPressed: () {},
+        // icon
+        child: Icon(
+          Icons.play_arrow,
+        ),
+      ),
     );
   }
 }

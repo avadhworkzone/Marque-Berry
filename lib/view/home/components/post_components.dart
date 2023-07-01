@@ -92,54 +92,58 @@ class PostComponents extends StatelessWidget {
         .where((element) =>
             element.id != PreferenceUtils.getInt(key: PreferenceUtils.userid))
         .toList();
-    return Padding(
-      padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
-      child: Container(
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(1.5.w),
-        //   color: whiteBlack2E,
-        //   boxShadow: [
-        //     BoxShadow(
-        //         blurRadius: 5, color: Theme.of(context).colorScheme.background),
-        //   ],
-        // ),
-        child: Column(
-          children: [
-            SizeConfig.sH2,
-            ListTile(
+    return Container(
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(1.5.w),
+      //   color: whiteBlack2E,
+      //   boxShadow: [
+      //     BoxShadow(
+      //         blurRadius: 5, color: Theme.of(context).colorScheme.background),
+      //   ],
+      // ),
+      child: Column(
+        children: [
+          SizeConfig.sH2,
+          Padding(
+            padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 0),
+            child: ListTile(
               contentPadding: EdgeInsets.zero,
-              title: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  UserNameText(userId: userId, userName: userName, tagList: []),
-                  if (finalTagList.isNotEmpty)
-                    AdoroText(
-                      ' is with ',
-                      fontSize: 12.sp,
-                      color: ColorUtils.grey,
-                      overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeightClass.fontWeight400,
-                    ),
-                  if (finalTagList.length > 0)
+              title: Padding(
+                padding: EdgeInsets.only(top: 2.w),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
                     UserNameText(
-                      userId: finalTagList.first.id!,
-                      userName: finalTagList.first.username!,
-                      tagList: [],
-                    ),
-                  if (finalTagList.length > 1)
-                    AdoroText(
-                      ' and ',
-                      fontSize: 12.sp,
-                      color: ColorUtils.grey,
-                      overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeightClass.fontWeight400,
-                    ),
-                  if (finalTagList.length > 1)
-                    UserNameText(
-                        userId: -1,
-                        userName: '${finalTagList.length - 1} others',
-                        tagList: finalTagList),
-                ],
+                        userId: userId, userName: userName, tagList: []),
+                    if (finalTagList.isNotEmpty)
+                      AdoroText(
+                        ' is with ',
+                        fontSize: 12.sp,
+                        color: ColorUtils.grey,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeightClass.fontWeight400,
+                      ),
+                    if (finalTagList.length > 0)
+                      UserNameText(
+                        userId: finalTagList.first.id!,
+                        userName: finalTagList.first.username!,
+                        tagList: [],
+                      ),
+                    if (finalTagList.length > 1)
+                      AdoroText(
+                        ' and ',
+                        fontSize: 12.sp,
+                        color: ColorUtils.grey,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeightClass.fontWeight400,
+                      ),
+                    if (finalTagList.length > 1)
+                      UserNameText(
+                          userId: -1,
+                          userName: '${finalTagList.length - 1} others',
+                          tagList: finalTagList),
+                  ],
+                ),
               ),
               subtitle: AdoroText(
                 time,
@@ -198,7 +202,10 @@ class PostComponents extends StatelessWidget {
                       icon: Icon(Icons.more_horiz, color: black92White),
                     ),
             ),
-            Column(
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizeConfig.sH1,
@@ -505,9 +512,11 @@ class PostComponents extends StatelessWidget {
                 SizeConfig.sH1,
               ],
             ),
-            DecorationUtils.dividerLine2(thickness: 2.5),
-          ],
-        ),
+          ),
+          DecorationUtils.dividerLine2(
+            thickness: 2.5,
+          ),
+        ],
       ),
     );
   }
