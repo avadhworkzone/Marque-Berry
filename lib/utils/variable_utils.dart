@@ -27,7 +27,7 @@ class VariableUtils {
   static const noteFromAdoroText = "Note from adoro";
   static const walletText = "Wallet";
   static const templateText = "Template";
-  static const referEarnText = "Refer & Earn";
+  static const referEarnText = "Refer and Earn";
   static const supportText = "Support";
   static const settingsText = "Settings";
 

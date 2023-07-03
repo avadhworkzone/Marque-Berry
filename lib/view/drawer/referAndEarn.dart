@@ -160,6 +160,13 @@ ${referLink.value}
                                       key: ValueKey(referLink.value),
                                       readOnly: true,
                                       initialValue: referLink.value,
+                                      style: TextStyle(
+                                        color: PreferenceUtils.getString(
+                                                    key: 'mode') ==
+                                                "dark"
+                                            ? ColorUtils.black
+                                            : ColorUtils.white,
+                                      ),
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:

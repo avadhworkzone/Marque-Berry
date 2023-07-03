@@ -105,7 +105,7 @@ class PostComponents extends StatelessWidget {
         children: [
           SizeConfig.sH2,
           Padding(
-            padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 0),
+            padding: EdgeInsets.fromLTRB(2.w, 0, 0.w, 0),
             child: ListTile(
               contentPadding: EdgeInsets.zero,
               title: Padding(
@@ -292,7 +292,8 @@ class PostComponents extends StatelessWidget {
                 ),
                 SizeConfig.sH3,
                 Padding(
-                  padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
+                  // padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
+                  padding: EdgeInsets.fromLTRB(0.w, 0, 0.w, 0.w),
                   child: Row(
                     children: [
                       categoryFeedViewModel.likeUnlink[postId] == true
@@ -379,7 +380,7 @@ class PostComponents extends StatelessWidget {
                 // SizeConfig.sH1,
                 if (likeProfile?.length != null)
                   Padding(
-                    padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0.w),
+                    padding: EdgeInsets.fromLTRB(1.w, 0, 0.w, 0.w),
                     child: Container(
                       width: Get.width,
                       child: Row(

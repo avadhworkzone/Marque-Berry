@@ -20,6 +20,7 @@ import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
 import 'package:socialv/viewModel/campaign_contest_view_model.dart';
@@ -156,13 +157,22 @@ class CampaignScn extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(VariableUtils.noteCampaign,
-                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.bold,
+                  color: PreferenceUtils.getString(key: 'mode') == "dark"
+                      ? ColorUtils.white
+                      : ColorUtils.black,
+                )),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(VariableUtils.eachUserCanSubmit,
                 style: TextStyle(
                   fontSize: 11.sp,
+                  color: PreferenceUtils.getString(key: 'mode') == "dark"
+                      ? ColorUtils.white
+                      : ColorUtils.black,
                 )),
           ),
           Padding(
@@ -170,6 +180,9 @@ class CampaignScn extends StatelessWidget {
             child: Text(VariableUtils.winnersWillBe,
                 style: TextStyle(
                   fontSize: 11.sp,
+                  color: PreferenceUtils.getString(key: 'mode') == "dark"
+                      ? ColorUtils.white
+                      : ColorUtils.black,
                 )),
           ),
           Spacer(),
@@ -235,13 +248,22 @@ class ContestScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(VariableUtils.noteCampaign,
-                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.bold,
+                  color: PreferenceUtils.getString(key: 'mode') == "dark"
+                      ? ColorUtils.white
+                      : ColorUtils.black,
+                )),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(VariableUtils.eachUserCanSubmit,
                 style: TextStyle(
                   fontSize: 11.sp,
+                  color: PreferenceUtils.getString(key: 'mode') == "dark"
+                      ? ColorUtils.white
+                      : ColorUtils.black,
                 )),
           ),
           Padding(
@@ -249,6 +271,9 @@ class ContestScreen extends StatelessWidget {
             child: Text(VariableUtils.winnersWillBe,
                 style: TextStyle(
                   fontSize: 11.sp,
+                  color: PreferenceUtils.getString(key: 'mode') == "dark"
+                      ? ColorUtils.white
+                      : ColorUtils.black,
                 )),
           ),
           Spacer(),
