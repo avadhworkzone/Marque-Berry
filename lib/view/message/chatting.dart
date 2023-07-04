@@ -40,14 +40,12 @@ import '../profile/profile.dart';
 class ChattingScreen extends StatefulWidget {
   String senderId;
   String receiverId;
-
   String senderName;
   String receiverName;
   String receiverFcmToken;
 
   String senderImage;
   String receiverImage;
-
   ChattingScreen(
       {Key? key,
       required this.senderId,
@@ -141,39 +139,44 @@ class _ChattingScreenState extends State<ChattingScreen>
                   icon: Icon(Icons.arrow_back, color: blackWhite),
                 ),
                 SizeConfig.sW2,
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.w),
-                  child: Container(
-                    color: Colors.grey[200],
-                    height: 10.w,
-                    width: 10.w,
-                    child: OctoImage(
-                      image: NetworkImage(scale: 1.3.w, widget.receiverImage),
-                      placeholderBuilder: OctoPlaceholder.blurHash(
-                        'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => Profile(userId: int.parse(widget.receiverId)));
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.w),
+                        child: Container(
+                          color: Colors.grey[200],
+                          height: 10.w,
+                          width: 10.w,
+                          child: OctoImage(
+                            image: NetworkImage(
+                                scale: 1.3.w, widget.receiverImage),
+                            placeholderBuilder: OctoPlaceholder.blurHash(
+                              'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                            ),
+                            errorBuilder: (context, obj, stack) => Image.asset(
+                              // 'assets/images/profile.png',
+                              IconsWidgets.userImages,
+                              scale: 4,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                      errorBuilder: (context, obj, stack) => Image.asset(
-                        // 'assets/images/profile.png',
-                        IconsWidgets.userImages,
-                        scale: 4,
+                      SizeConfig.sW2,
+                      AdoroText(
+                        widget.receiverName,
+                        color: blackWhite,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeightClass.fontWeight600,
                       ),
-                      fit: BoxFit.cover,
-                    ),
+                    ],
                   ),
                 ),
-                SizeConfig.sW2,
-                AdoroText(
-                  widget.receiverName,
-                  color: blackWhite,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeightClass.fontWeight600,
-                ),
-                // AdoroText(
-                //   "2H",
-                //   fontSize: 15.sp,
-                //   color: greyFABlack32,
-                //   fontWeight: FontWeightClass.fontWeight600,
-                // ),
               ],
             ),
           ),

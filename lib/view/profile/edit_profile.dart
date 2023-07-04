@@ -29,19 +29,33 @@ import '../../utils/size_config_utils.dart';
 import '../../utils/variable_utils.dart';
 import '../../viewModel/profile_view_model.dart';
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
   EditProfile({Key? key}) : super(key: key);
 
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile>
+    with SingleTickerProviderStateMixin {
   var fullName = TextEditingController();
+
   var username = TextEditingController();
+
   var mailId = TextEditingController();
+
   var bankName = TextEditingController();
+
   var beneficiaryName = TextEditingController();
+
   var accountNumber = TextEditingController();
+
   var ifscCode = TextEditingController();
+
   var mobileNumber = TextEditingController();
 
   UpdateUserReqDetail updateUserReqDetail = UpdateUserReqDetail();
+
   ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
 
   UpdateProfilePicReqModel updateProfilePicReqModel =
@@ -179,7 +193,15 @@ class EditProfile extends StatelessWidget {
                 init: ProfileViewModel(),
                 builder: (profileViewModel) {
                   if (profileViewModel.getUserProfileApiResponse.status ==
-                      Status.ERROR) return Center(child: SomethingWentWrong());
+                          Status.LOADING ||
+                      profileViewModel.getUserProfileApiResponse.status ==
+                          Status.INITIAL) {
+                    return Center(child: Loader());
+                  }
+                  if (profileViewModel.getUserProfileApiResponse.status ==
+                      Status.ERROR) {
+                    return Center(child: SomethingWentWrong());
+                  }
 
                   return Stack(
                     children: [
