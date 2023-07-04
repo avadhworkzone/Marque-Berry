@@ -113,7 +113,7 @@ class TabBarComponents extends StatelessWidget {
                               ? homeController.tabBarList[index]
                               : categoryDataList[index - 2].name,
                           style: TextStyle(
-                              fontSize: 16.sp,
+                              fontSize: 14.sp,
                               fontWeight: FontWeightClass.fontWeight700),
                           colors: [
                             ColorUtils.linearGradient7,

@@ -25,7 +25,7 @@ class LikeButton extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 4.5.w,
+          horizontal: 4.w,
           vertical: 2.1.w,
         ),
         child: Row(

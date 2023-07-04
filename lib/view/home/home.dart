@@ -48,7 +48,6 @@ class _HomeState extends State<Home> {
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
-
   @override
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;

@@ -107,7 +107,7 @@ class PostComponents extends StatelessWidget {
         children: [
           SizeConfig.sH2,
           Padding(
-            padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 0),
+            padding: EdgeInsets.fromLTRB(2.w, 0, 0.w, 0),
             child: ListTile(
               contentPadding: EdgeInsets.zero,
               title: Padding(
@@ -159,13 +159,13 @@ class PostComponents extends StatelessWidget {
                   Get.to(() => Profile(userId: userId));
                 },
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.w),
+                  borderRadius: BorderRadius.circular(20.w),
                   child: Container(
                     color: Colors.grey[200],
                     child: OctoImage(
                       fit: BoxFit.cover,
-                      width: 15.w,
-                      height: 15.w,
+                      width: 14.w,
+                      // height: 20.w,
                       image: NetworkImage(profileImage),
                       progressIndicatorBuilder: (context, progress) {
                         double? value;
@@ -299,7 +299,8 @@ class PostComponents extends StatelessWidget {
                 ),
                 SizeConfig.sH3,
                 Padding(
-                  padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 4.w),
+                  // padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 2.w),
+                  padding: EdgeInsets.fromLTRB(0.w, 0, 0.w, 0.w),
                   child: Row(
                     children: [
                       categoryFeedViewModel.likeUnlink[postId] == true
@@ -389,7 +390,7 @@ class PostComponents extends StatelessWidget {
                 // SizeConfig.sH1,
                 if (likeProfile?.length != null)
                   Padding(
-                    padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0.w),
+                    padding: EdgeInsets.fromLTRB(1.w, 0, 0.w, 0.w),
                     child: Container(
                       width: Get.width,
                       child: Row(
@@ -597,7 +598,7 @@ class PostComponents extends StatelessWidget {
               : 50.w,
           width: 100.w,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.w),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -686,32 +687,35 @@ class PostComponents extends StatelessWidget {
                     },
                   ),
                 SizeConfig.sH3,
-                bottomComponents(
-                  text: 'Report post',
-                  image: IconsWidgets.reportImages,
-                  onTap: () async {
-                    await categoryFeedViewModel
-                        .reportPost(postIdArg.toString());
+                if (userId.toString() !=
+                    PreferenceUtils.getInt(key: PreferenceUtils.userid)
+                        .toString())
+                  bottomComponents(
+                    text: 'Report post',
+                    image: IconsWidgets.reportImages,
+                    onTap: () async {
+                      await categoryFeedViewModel
+                          .reportPost(postIdArg.toString());
 
-                    if (categoryFeedViewModel.reportPostApiResponse.status ==
-                        Status.COMPLETE) {
-                      CommonStatusMsgResModel response =
-                          categoryFeedViewModel.reportPostApiResponse.data;
+                      if (categoryFeedViewModel.reportPostApiResponse.status ==
+                          Status.COMPLETE) {
+                        CommonStatusMsgResModel response =
+                            categoryFeedViewModel.reportPostApiResponse.data;
 
-                      if (response.status.toString() ==
-                          VariableUtils.status200) {
-                        homeController.reportSuccess(true);
-                        homeController.addReport(postIdArg);
-                      } else {
-                        showSnackBar(
-                          message:
-                              response.msg ?? VariableUtils.somethingWentWrong,
-                        );
+                        if (response.status.toString() ==
+                            VariableUtils.status200) {
+                          homeController.reportSuccess(true);
+                          homeController.addReport(postIdArg);
+                        } else {
+                          showSnackBar(
+                            message: response.msg ??
+                                VariableUtils.somethingWentWrong,
+                          );
+                        }
+                        Get.back();
                       }
-                      Get.back();
-                    }
-                  },
-                ),
+                    },
+                  ),
               ],
             ),
           ),

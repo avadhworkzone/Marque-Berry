@@ -52,7 +52,7 @@ class PostDetailScreen extends StatelessWidget {
           preferredSize: Size.fromHeight(15.w),
           child: CommonAppBar(
             color: ColorUtils.transparent,
-            title: "Post",
+            title: "Posts",
             onTap: () =>
                 isFromBackScreen ? Get.back() : Get.offAll(() => BottomBar()),
           ),

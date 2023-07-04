@@ -53,7 +53,7 @@ class ImageDownload {
       await raf.close();
 
       showSnackBar(
-        message: "Image download successfully",
+        message: "Image downloaded successfully",
         snackbarSuccess: true,
       );
     } catch (e) {

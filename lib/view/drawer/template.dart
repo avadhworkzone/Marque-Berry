@@ -77,7 +77,7 @@ class Template extends StatelessWidget {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 14.w,
-                    crossAxisSpacing: 14.w,
+                    crossAxisSpacing: 12.w,
                   ),
                   itemCount: 4,
                   itemBuilder: (context, index) {
