@@ -162,7 +162,9 @@ class Wallet extends StatelessWidget {
                   SizeConfig.sH1,
                   AdoroText(
                     // VariableUtils.wallet75,
-                    '${balanceList!.reduce((value, element) => value + element)} C',
+                    balanceList!.isEmpty
+                        ? "0 C"
+                        : '${balanceList.reduce((value, element) => value + element)} C',
                     color: blackWhite,
                     fontSize: 40.sp,
                     fontWeight: FontWeight.bold,

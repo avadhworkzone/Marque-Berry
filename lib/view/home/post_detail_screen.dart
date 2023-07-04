@@ -132,8 +132,11 @@ class PostDetailScreen extends StatelessWidget {
                   title: postDetail.content.toString(),
                   // title: (categoryIndex.id ?? 0)
                   //     .toString(),
-                  likeCounter:
-                      (postDetail.likedByPeople?.length ?? 0).toString(),
+                  // likeCounter:
+                  //     (postDetail.likedByPeople?.length ?? 0).toString(),
+                  likeCounter: (postDetail.likedByPeople?.length ?? 0) > 1
+                      ? ((postDetail.likedByPeople?.length ?? 1) - 1).toString()
+                      : "0",
                   commentCounter: (postDetail.comments ?? 0).toString(),
                 );
               }),

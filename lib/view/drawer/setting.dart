@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -193,6 +194,8 @@ class Setting extends StatelessWidget {
                   await PreferenceUtils.setCategory([]);
                   // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY4MjY2MTM0OCwiZXhwIjoxNjgzNTI1MzQ4fQ.3-t01FgVF4oat6okVX4LbqlLUkKQYLVq6Xmv2ZMn73U
                   await PreferenceUtils.setWelcome(0);
+                  showSnackBar(
+                      message: VariableUtils.youHaveSuccessfullyLogout);
                   Get.offAll(() => LoginScreen());
                 },
                 child: SizedBox(

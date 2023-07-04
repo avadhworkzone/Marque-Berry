@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/share_post.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
+import 'package:socialv/commanWidget/read_more_text.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_follow_request_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/dislike_post_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/like_post_req_model.dart';
@@ -211,13 +213,18 @@ class PostComponents extends StatelessWidget {
                 SizeConfig.sH1,
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.w, 0, 0.w, 4.w),
-                  child: AdoroText(
+                  child: ReadMoreTextWidget(
+                    text: "$title",
+                    fontWeight: FontWeight.w400,
+                    color: black92White,
+                  ),
+                  /*   child: AdoroText(
                     "$title",
                     maxLines: 2,
                     fontWeight: FontWeight.w400,
                     overflow: TextOverflow.ellipsis,
                     color: black92White,
-                  ),
+                  ),*/
                 ),
                 SizeConfig.sH1,
                 ClipRRect(
@@ -464,7 +471,48 @@ class PostComponents extends StatelessWidget {
                               );
                               isScreenOpen = true;
                             },
-                            child: Text.rich(
+                            child: Wrap(
+                              children: [
+                                AdoroText(
+                                  'Liked by ',
+                                  fontSize: 9.sp,
+                                  color: black92Blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => Profile(
+                                        userId: likeByMe == "You"
+                                            ? PreferenceUtils.getInt(
+                                                key: PreferenceUtils.userid)
+                                            : likeProfile!.first.id!));
+                                  },
+                                  child: AdoroText(
+                                    "$likeByMe ",
+                                    fontSize: 9.5.sp,
+                                    color: blackWhite,
+                                    fontFamily: 'Poppins_Bold',
+                                    fontWeight: FontWeightClass.fontWeight700,
+                                  ),
+                                ),
+                                if (likeCounter != "0")
+                                  AdoroText(
+                                    'and ',
+                                    fontSize: 9.sp,
+                                    color: black92Blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                if (likeCounter != "0")
+                                  AdoroText(
+                                    '$likeCounter other',
+                                    fontSize: 9.5.sp,
+                                    fontFamily: 'Poppins_Bold',
+                                    color: blackWhite,
+                                    fontWeight: FontWeightClass.fontWeight800,
+                                  )
+                              ],
+                            ),
+                            /*  child: Text.rich(
                               TextSpan(
                                 style: TextStyle(fontSize: 9.sp),
                                 children: <InlineSpan>[
@@ -484,9 +532,12 @@ class PostComponents extends StatelessWidget {
                                       fontFamily: 'Poppins_Bold',
                                       fontWeight: FontWeightClass.fontWeight700,
                                     ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Get.to(() => Profile(
+                                          userId: likeProfile!.first.id!)),
                                   ),
                                   TextSpan(
-                                    text: 'and ',
+                                    text: likeCounter == "0" ? "" : 'and ',
                                     style: TextStyle(
                                       fontSize: 9.sp,
                                       color: black92Blue,
@@ -494,7 +545,9 @@ class PostComponents extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '$likeCounter other',
+                                    text: likeCounter == "0"
+                                        ? ""
+                                        : '$likeCounter other',
                                     style: TextStyle(
                                       fontSize: 9.5.sp,
                                       fontFamily: 'Poppins_Bold',
@@ -504,7 +557,7 @@ class PostComponents extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
+                            ),*/
                           )
                         ],
                       ),

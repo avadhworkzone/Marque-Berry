@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/read_more_text.dart';
 import 'package:socialv/model/apiModel/requestModel/delete_comment_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_comment_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/common_status_msg_res_model.dart';
@@ -330,12 +331,24 @@ class CommentDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = message.split(" ");
 
+    // return ReadMoreTextWidget(
+    //   text: message,
+    //   fontSize: 11.5.sp,
+    //   color: ColorUtils.black92,
+    //   fontWeight: FontWeightClass.fontWeight600,
+    // );
     return Wrap(
       children: data.map((e) {
         if (e.contains("@")) {
           return mentionsText(e);
         }
         return normalText(e);
+        // return ReadMoreTextWidget(
+        //   text: e,
+        //   fontSize: 11.5.sp,
+        //   color: ColorUtils.black92,
+        //   fontWeight: FontWeightClass.fontWeight600,
+        // );
       }).toList(),
     );
   }
