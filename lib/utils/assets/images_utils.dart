@@ -71,8 +71,9 @@ class ImagesWidgets {
 
 class SvgWidgets {
   /// ON-BOARDING
-  // static String onBoarding2String = '$svgbasePath/onboarding_2.svg';
-  // static SvgPicture backBtnImage = SvgPicture.asset('assets/svg/back.svg');
+  static String chat = '$svgbasePath/chat.svg';
+  static String heart = '$svgbasePath/heart.svg';
+  static String send = '$svgbasePath/send.svg';
 }
 
 class IconsWidgets {

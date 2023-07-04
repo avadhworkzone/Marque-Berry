@@ -103,8 +103,10 @@ class _CampaignScreenState extends State<CampaignScreen> {
                   body: TabBarView(
                     children: [
                       CampaignScn(
+                          key: UniqueKey(),
                           campaignContestViewModel: campaignContestViewModel),
                       ContestScreen(
+                        key: UniqueKey(),
                         campaignContestViewModel: campaignContestViewModel,
                       ),
                     ],
@@ -331,67 +333,6 @@ class _TabBarMethodState extends State<TabBarMethod> {
   // String? selectedOption;
   String dropdownValue = items.first;
 
-  void selectTypeDialog(
-    String applied,
-    String campaignId,
-    String method,
-    CampaignContestViewModel campaignContestViewModel,
-  ) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Select Type'),
-          content: StatefulBuilder(
-            builder: (context, setState) {
-              return DropdownButton(
-                underline: SizedBox(),
-                isExpanded: true,
-                value: dropdownValue,
-                style: const TextStyle(color: Colors.black),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValue = newValue!;
-                  });
-                },
-                items: items.map((String items) {
-                  return DropdownMenuItem(
-                    value: items,
-                    child: Text(items),
-                  );
-                }).toList(),
-              );
-            },
-          ),
-          actions: <Widget>[
-            InkWell(
-              child: Text('Save'),
-              onTap: () {
-                if (method == "contest") {
-                  campaignScreenController.applyContest(
-                    applied: applied,
-                    campaignId: campaignId,
-                    mediaType: dropdownValue,
-                    campaignContestViewModel: campaignContestViewModel,
-                  );
-                } else if (method == "campaign") {
-                  campaignScreenController.applyCampaign(
-                    applied: applied,
-                    contestId: campaignId,
-                    campaignContestViewModel: campaignContestViewModel,
-                    mediaType: dropdownValue,
-                  );
-                }
-                print(dropdownValue);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
@@ -481,28 +422,30 @@ class _TabBarMethodState extends State<TabBarMethod> {
                   ),
                   SizeConfig.sH1,
                   InkWell(
-                    onTap: () {
-                      selectTypeDialog(
-                        widget.applied,
-                        widget.campaignContestId,
-                        widget.method,
-                        widget.campaignContestViewModel,
-                      );
+                    onTap: widget.applied == "false"
+                        ? () {
+                            selectTypeDialog(
+                                widget.applied,
+                                widget.campaignContestId,
+                                widget.method,
+                                widget.campaignContestViewModel,
+                                context);
 
-                      // if (method == "contest") {
-                      //   campaignScreenController.applyContest(
-                      //     applied: applied,
-                      //     campaignId: campaignContestId,
-                      //     campaignContestViewModel: campaignContestViewModel,
-                      //   );
-                      // } else if (method == "campaign") {
-                      //   campaignScreenController.applyCampaign(
-                      //     applied: applied,
-                      //     contestId: campaignContestId,
-                      //     campaignContestViewModel: campaignContestViewModel,
-                      //   );
-                      // }
-                    },
+                            // if (method == "contest") {
+                            //   campaignScreenController.applyContest(
+                            //     applied: applied,
+                            //     campaignId: campaignContestId,
+                            //     campaignContestViewModel: campaignContestViewModel,
+                            //   );
+                            // } else if (method == "campaign") {
+                            //   campaignScreenController.applyCampaign(
+                            //     applied: applied,
+                            //     contestId: campaignContestId,
+                            //     campaignContestViewModel: campaignContestViewModel,
+                            //   );
+                            // }
+                          }
+                        : null,
                     child: Container(
                       height: 5.h,
                       width: widget.size.width,
@@ -586,6 +529,71 @@ class _TabBarMethodState extends State<TabBarMethod> {
   }
 }
 
+Future<void> selectTypeDialog(String applied, String campaignId, String method,
+    CampaignContestViewModel campaignContestViewModel, BuildContext context,
+    {bool fromDetail = false}) async {
+  String dropdownValue = items.first;
+  return await Get.dialog(AlertDialog(
+    title: Text('Select Type'),
+    backgroundColor: Theme.of(context).cardColor,
+    content: StatefulBuilder(
+      builder: (context, setState) {
+        return DropdownButton(
+          underline: SizedBox(),
+          isExpanded: true,
+          value: dropdownValue,
+          dropdownColor: Theme.of(context).cardColor,
+          style:
+              TextStyle(color: Theme.of(context).textTheme.titleSmall?.color),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+          },
+          items: items.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: Text(items),
+            );
+          }).toList(),
+        );
+      },
+    ),
+    actions: <Widget>[
+      InkWell(
+        child: Text(
+          'Save',
+          style:
+              TextStyle(color: Theme.of(context).textTheme.titleSmall?.color),
+        ),
+        onTap: () async {
+          if (fromDetail) {
+            Get.back();
+          }
+          print('method==>$method');
+          if (method == "contest") {
+            await campaignScreenController.applyContest(
+              applied: applied,
+              campaignId: campaignId,
+              mediaType: dropdownValue,
+              campaignContestViewModel: campaignContestViewModel,
+            );
+          } else if (method == "campaign") {
+            await campaignScreenController.applyCampaign(
+              applied: applied,
+              contestId: campaignId,
+              campaignContestViewModel: campaignContestViewModel,
+              mediaType: dropdownValue,
+            );
+          }
+          print(dropdownValue);
+          Navigator.of(context).pop();
+        },
+      ),
+    ],
+  ));
+}
+
 class CampaignScreenController extends GetxController {
   ApplyContestReqModel applyContestReqModel = ApplyContestReqModel();
   ApplyCampaignReqModel applyCampaignReqModel = ApplyCampaignReqModel();
@@ -667,6 +675,7 @@ class CampaignScreenController extends GetxController {
         applyCampaignReqModel.mediaType = mediaType;
 
         await campaignContestViewModel.applyCampaign(applyCampaignReqModel);
+
         if (campaignContestViewModel.applyCampaignApiResponse.status ==
             Status.COMPLETE) {
           final ApplyCampaignResModel response =

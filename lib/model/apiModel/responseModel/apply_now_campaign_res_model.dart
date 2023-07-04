@@ -5,13 +5,13 @@ class ApplyCampaignResModel {
   ApplyCampaignResModel({this.status, this.msg});
 
   ApplyCampaignResModel.fromJson(Map<String, dynamic> json) {
-    status = json['campaign_id'];
+    status = json['status'];
     msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['campaign_id'] = this.status;
+    data['status'] = this.status;
     data['msg'] = this.msg;
     return data;
   }

@@ -332,10 +332,9 @@ class PostComponents extends StatelessWidget {
                               homeController.tabName,
                               isReload: false);
                         },
-                        child: CommonImageScale(
-                          scale: 19.w,
+                        child: CommonSvgImage(
                           color: black92White,
-                          img: IconsWidgets.chatImage,
+                          img: SvgWidgets.chat,
                         ),
                       ),
                       SizeConfig.sW2,
@@ -347,10 +346,14 @@ class PostComponents extends StatelessWidget {
                             categoryFeedViewModel: categoryFeedViewModel,
                           );
                         },
-                        child: CommonImageScale(
-                          scale: 19.w,
+                        // child: CommonImageScale(
+                        //   scale: 19.w,
+                        //   color: black92White,
+                        //   img: IconsWidgets.sendImage,
+                        // ),
+                        child: CommonSvgImage(
                           color: black92White,
-                          img: IconsWidgets.sendImage,
+                          img: SvgWidgets.send,
                         ),
                       ),
                       Spacer(),
@@ -891,7 +894,9 @@ class LikeWidget extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.w),
         child: Image.asset(
           IconsWidgets.heartFilledImage,
-          scale: 0.8.w,
+          // scale: 0.8.w,
+          height: 28,
+          width: 28,
           color: Colors.red,
         ),
       ),
@@ -927,11 +932,15 @@ class UnlikeWidget extends StatelessWidget {
             },
       child: Padding(
         padding: EdgeInsets.only(left: 1.w),
-        child: CommonImageScale(
-          img: IconsWidgets.heartImage,
-          scale: 19.w,
+        child: CommonSvgImage(
+          img: SvgWidgets.heart,
           color: Theme.of(context).textTheme.titleMedium?.color,
         ),
+        // child: CommonImageScale(
+        //   img: IconsWidgets.heartImage,
+        //   scale: 19.w,
+        //   color: Theme.of(context).textTheme.titleMedium?.color,
+        // ),
       ),
     );
   }

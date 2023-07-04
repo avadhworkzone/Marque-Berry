@@ -90,6 +90,7 @@ flutter:
     - assets/images/
     - assets/images/categories/
     - assets/icons/
+    - assets/svg/
     - assets/lotties/
     - assets/bottombar/
 

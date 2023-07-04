@@ -138,22 +138,28 @@ class DetailsScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    // if (method == "contest") {
-                    //   campaignScreenController.applyContest(
-                    //     applied: applied,
-                    //     campaignId: campaignId,
-                    //
-                    //     campaignContestViewModel: campaignContestViewModel,
-                    //   );
-                    // } else if (method == "campaign") {
-                    //   campaignScreenController.applyCampaign(
-                    //     applied: applied,
-                    //     contestId: campaignId,
-                    //     campaignContestViewModel: campaignContestViewModel,
-                    //   );
-                    // }
-                  },
+                  onTap: applied == "false"
+                      ? () async {
+                          await selectTypeDialog(applied, campaignId, method,
+                              campaignContestViewModel, context,
+                              fromDetail: true);
+
+                          // if (method == "contest") {
+                          //   campaignScreenController.applyContest(
+                          //     applied: applied,
+                          //     campaignId: campaignId,
+                          //
+                          //     campaignContestViewModel: campaignContestViewModel,
+                          //   );
+                          // } else if (method == "campaign") {
+                          //   campaignScreenController.applyCampaign(
+                          //     applied: applied,
+                          //     contestId: campaignId,
+                          //     campaignContestViewModel: campaignContestViewModel,
+                          //   );
+                          // }
+                        }
+                      : null,
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.w),

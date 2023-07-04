@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 
 class CommonImage extends StatelessWidget {
   String img;
@@ -15,6 +17,27 @@ class CommonImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(img, color: color);
+  }
+}
+
+class CommonSvgImage extends StatelessWidget {
+  String img;
+  Color? color;
+
+  CommonSvgImage({
+    Key? key,
+    required this.img,
+    this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.asset(
+      img,
+      color: color,
+      height: 28,
+      width: 28,
+    );
   }
 }
 
