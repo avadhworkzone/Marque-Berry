@@ -255,10 +255,17 @@ class _HomeState extends State<Home> {
                                                     // title: (categoryIndex.id ?? 0)
                                                     //     .toString(),
                                                     likeCounter: (categoryIndex
-                                                                .likedByPeople
-                                                                ?.length ??
-                                                            0)
-                                                        .toString(),
+                                                                    .likedByPeople
+                                                                    ?.length ??
+                                                                0) >
+                                                            1
+                                                        ? ((categoryIndex
+                                                                        .likedByPeople
+                                                                        ?.length ??
+                                                                    1) -
+                                                                1)
+                                                            .toString()
+                                                        : "0",
                                                     commentCounter:
                                                         (categoryIndex
                                                                     .comments ??
