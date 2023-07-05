@@ -9,17 +9,19 @@ class ReadMoreTextWidget extends StatelessWidget {
     this.color,
     this.fontWeight,
     this.fontSize,
+    this.trimLines,
   }) : super(key: key);
   final String text;
   final Color? color;
   final FontWeight? fontWeight;
   final double? fontSize;
+  final int? trimLines;
 
   @override
   Widget build(BuildContext context) {
     return ReadMoreText(
       text,
-      trimLines: 2,
+      trimLines: trimLines ?? 2,
       colorClickableText: ColorUtils.blueB9,
       lessStyle: TextStyle(
           color: ColorUtils.blueB9, fontSize: 14, fontWeight: FontWeight.bold),

@@ -11,6 +11,7 @@ class VariableUtils {
   static const status500 = '500';
   static const tryAfterSomeTime = 'Try after some times..';
   static const somethingWentWrong = "Something went wrong";
+  static const fileSizeMax = "File size maximum 50 MP";
   static const noDataFound = "No data found";
   static const serverError = "Server error";
   static const naError = "N/A";

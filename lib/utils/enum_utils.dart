@@ -1,7 +1,7 @@
 /// API CALLING METHOD
 // ignore_for_file: constant_identifier_names
 
-enum NotificationType{Chatting,Like,Comment,FollowRequest,ConfirmRequest}
+enum NotificationType { Chatting, Like, Comment, FollowRequest, ConfirmRequest }
 
 enum APIType { aPost, aGet, aDelete, aPut }
 
@@ -28,3 +28,5 @@ enum ProfileBtnStatus {
   EditProfile,
   Requested
 }
+
+enum ConvertType { B, KB, MB, GB, TB, PB, EB, ZB, YB }

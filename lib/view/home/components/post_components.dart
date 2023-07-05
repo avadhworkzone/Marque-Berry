@@ -899,8 +899,8 @@ class LikeWidget extends StatelessWidget {
         child: Image.asset(
           IconsWidgets.heartFilledImage,
           // scale: 0.8.w,
-          height: 28,
-          width: 28,
+          height: 26,
+          width: 26,
           color: Colors.red,
         ),
       ),

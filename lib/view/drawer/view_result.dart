@@ -75,14 +75,18 @@ class ViewResult extends StatelessWidget {
                             BoxShadow(blurRadius: 2, color: Colors.grey),
                           ],
                           borderRadius: BorderRadius.circular(4.w)),
+                      padding: EdgeInsets.symmetric(horizontal: 3.w),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(" ${index + 1} ",
-                              style: TextStyle(
-                                  color: ColorUtils.black92, fontSize: 15.sp)),
-                          Padding(
-                            padding: EdgeInsets.only(right: 45.w),
+                          SizedBox(
+                            width: 30,
+                            child: Text("${index + 1}.",
+                                style: TextStyle(
+                                    color: ColorUtils.black92,
+                                    fontSize: 15.sp)),
+                          ),
+                          Expanded(
                             child: AdoroText(
                               viewResultList[index].username ?? "",
                               // VariableUtils.userName,
@@ -92,15 +96,12 @@ class ViewResult extends StatelessWidget {
                             ),
                           ),
                           resultType == 'campaign'
-                              ? Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: AdoroText(
-                                    viewResultList[index].wonAmount.toString(),
-                                    // VariableUtils.price,
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeightClass.fontWeightBold,
-                                    color: ColorUtils.green4E,
-                                  ),
+                              ? AdoroText(
+                                  viewResultList[index].wonAmount.toString(),
+                                  // VariableUtils.price,
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeightClass.fontWeightBold,
+                                  color: ColorUtils.green4E,
                                 )
                               : Padding(
                                   padding: const EdgeInsets.all(8.0),

@@ -142,7 +142,7 @@ class CampaignList extends StatelessWidget {
             children: [
               SizeConfig.sH1,
               Container(
-                height: 8.h,
+                height: 9.h,
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   color: whiteBlack2E,
@@ -151,6 +151,7 @@ class CampaignList extends StatelessWidget {
                   ],
                   borderRadius: BorderRadius.circular(3.w),
                 ),
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
                 child: Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -286,7 +287,7 @@ class ContestList extends StatelessWidget {
             children: [
               SizeConfig.sH1,
               Container(
-                height: 8.h,
+                height: 9.h,
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   color: whiteBlack2E,
@@ -295,6 +296,7 @@ class ContestList extends StatelessWidget {
                   ],
                   borderRadius: BorderRadius.circular(3.w),
                 ),
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
                 child: Row(
                   children: [
                     SizeConfig.sW2,

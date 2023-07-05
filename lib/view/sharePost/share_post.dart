@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/appService/croping_image_service.dart';
+import 'package:socialv/appService/get_file_size.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
@@ -18,6 +20,7 @@ import 'package:socialv/model/apiModel/responseModel/meme_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/app_services/common_profile_image.dart';
 import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/home/components/video_components.dart';
@@ -512,6 +515,18 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
             PreferenceUtils.getInt(key: PreferenceUtils.userid).toString());
         createPostReqModel.tag = jsonEncode(tagList);
       }
+      final fileSize = await getFileSize(
+          filepath: createPostReqModel.contentUrl!,
+          convertType: ConvertType.MB.index);
+      logs('File Size :=>$fileSize');
+
+      if (num.parse(fileSize) > ConstUtils.maxFileSize) {
+        showSnackBar(
+          message: VariableUtils.fileSizeMax,
+        );
+        return;
+      }
+
       await createPostViewModel.createPost(createPostReqModel);
       if (createPostViewModel.createPostApiResponse.status == Status.LOADING ||
           createPostViewModel.createPostApiResponse.status == Status.INITIAL) {
@@ -740,11 +755,12 @@ class SharePostController extends GetxController {
           PlatformFile file = result.files.first;
 
           if (extension == "image") {
+            /* final cropImagePath = await CropImageService.cropImage(
+                context: context, file: file.path!);*/
             final cropImagePath = await cropImageClass.postCropImage(
               image: File(file.path!),
               isBackGround: true,
             );
-
             sourcePath = cropImagePath?.path ?? '';
           } else if (extension == "video" || extension == "gif") {
             sourcePath = file.path ?? '';

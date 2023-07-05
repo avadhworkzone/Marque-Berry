@@ -16,6 +16,7 @@ import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
+import 'package:socialv/commanWidget/read_more_text.dart';
 import 'package:socialv/model/apiModel/responseModel/check_follow_user_res_model.dart';
 import 'package:socialv/model/apiModel/responseModel/notification_chating_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
@@ -46,6 +47,7 @@ class ChattingScreen extends StatefulWidget {
 
   String senderImage;
   String receiverImage;
+
   ChattingScreen(
       {Key? key,
       required this.senderId,
@@ -1069,33 +1071,36 @@ class LeftAlignTextWidget extends StatelessWidget {
                         children: [
                           Flexible(
                             child: InkWell(
-                              onTap: !message.contains(DynamicLink.uriPrefix)
-                                  ? null
-                                  : () {
-                                      final postId = message
-                                          .toString()
-                                          .substring(
-                                              message.toString().indexOf('=') +
-                                                  1);
-                                      Get.to(() => PostDetailScreen(
-                                            postId: postId,
-                                            isFromBackScreen: true,
-                                          ));
-                                    },
-                              // child: DynamicLinkPostDitels(),
-                              child: message.contains(DynamicLink.uriPrefix)
-                                  ? DynamicLinkPostDitels(
-                                      postId: message.toString().substring(
-                                          message.toString().indexOf('=') + 1),
-                                    )
-                                  : AdoroText(
+                                onTap: !message.contains(DynamicLink.uriPrefix)
+                                    ? null
+                                    : () {
+                                        final postId = message
+                                            .toString()
+                                            .substring(message
+                                                    .toString()
+                                                    .indexOf('=') +
+                                                1);
+                                        Get.to(() => PostDetailScreen(
+                                              postId: postId,
+                                              isFromBackScreen: true,
+                                            ));
+                                      },
+                                // child: DynamicLinkPostDitels(),
+                                child: message.contains(DynamicLink.uriPrefix)
+                                    ? DynamicLinkPostDitels(
+                                        postId: message.toString().substring(
+                                            message.toString().indexOf('=') +
+                                                1),
+                                      )
+                                    : ReadMoreTextWidget(
+                                        text: message,
+                                        color: ColorUtils.black,
+                                        trimLines: 5,
+                                      ) /*AdoroText(
                                       message,
-                                      color: message
-                                              .contains(DynamicLink.uriPrefix)
-                                          ? ColorUtils.blueB9
-                                          : ColorUtils.black,
-                                    ),
-                            ),
+                                      color: ColorUtils.black,
+                                    ),*/
+                                ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
@@ -1259,33 +1264,36 @@ class RightAlignTextWidget extends StatelessWidget {
                         children: [
                           Flexible(
                             child: InkWell(
-                              onTap: !message.contains(DynamicLink.uriPrefix)
-                                  ? null
-                                  : () {
-                                      final postId = message
-                                          .toString()
-                                          .substring(
-                                              message.toString().indexOf('=') +
-                                                  1);
-                                      Get.to(
-                                        () => PostDetailScreen(
-                                            postId: postId,
-                                            isFromBackScreen: true),
-                                      );
-                                    },
-                              child: message.contains(DynamicLink.uriPrefix)
-                                  ? DynamicLinkPostDitels(
-                                      postId: message.toString().substring(
-                                          message.toString().indexOf('=') + 1),
-                                    )
-                                  : AdoroText(
+                                onTap: !message.contains(DynamicLink.uriPrefix)
+                                    ? null
+                                    : () {
+                                        final postId = message
+                                            .toString()
+                                            .substring(message
+                                                    .toString()
+                                                    .indexOf('=') +
+                                                1);
+                                        Get.to(
+                                          () => PostDetailScreen(
+                                              postId: postId,
+                                              isFromBackScreen: true),
+                                        );
+                                      },
+                                child: message.contains(DynamicLink.uriPrefix)
+                                    ? DynamicLinkPostDitels(
+                                        postId: message.toString().substring(
+                                            message.toString().indexOf('=') +
+                                                1),
+                                      )
+                                    : ReadMoreTextWidget(
+                                        text: message,
+                                        color: ColorUtils.black,
+                                        trimLines: 5,
+                                      ) /*AdoroText(
                                       message,
-                                      color: message
-                                              .contains(DynamicLink.uriPrefix)
-                                          ? ColorUtils.blueB9
-                                          : ColorUtils.black,
-                                    ),
-                            ),
+                                      color:ColorUtils.black,
+                                    ),*/
+                                ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10),

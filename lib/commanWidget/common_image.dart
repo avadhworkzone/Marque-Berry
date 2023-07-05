@@ -35,8 +35,8 @@ class CommonSvgImage extends StatelessWidget {
     return SvgPicture.asset(
       img,
       color: color,
-      height: 28,
-      width: 28,
+      height: 26,
+      width: 26,
     );
   }
 }

@@ -161,7 +161,10 @@ class _BottomBarState extends State<BottomBar> {
     return Expanded(
       child: InkWell(
         onTap: () {
-          if (index == 1) {
+          if (index == 0) {
+            controller.pageChange(index);
+            homeController.animateFeedScroll(0);
+          } else if (index == 1) {
             Get.to(
               () => SharePost(),
 

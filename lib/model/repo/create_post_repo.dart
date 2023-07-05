@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:socialv/appService/get_file_size.dart';
 import 'package:socialv/model/apiModel/requestModel/create_post_req_model.dart';
 import 'package:socialv/model/apiModel/responseModel/create_post_res_model.dart';
 import 'package:socialv/model/apiService/api_service.dart';

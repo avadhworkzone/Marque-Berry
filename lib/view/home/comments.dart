@@ -44,7 +44,7 @@ class Comments extends StatefulWidget {
 class _CommentsState extends State<Comments> {
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
-
+  bool isLikeLoading = false;
   PostCommentReqModel postCommentReqModel = PostCommentReqModel();
 
   postCommentApiCall(HomeController homeController) {
@@ -128,20 +128,29 @@ class _CommentsState extends State<Comments> {
                                 if (commentData.parentId == "0")
                                   CommentList(
                                     likeOnTap: () async {
-                                      await categoryFeedViewModel
-                                          .postLikeInComment(
-                                              commentId: commentData.commentId
-                                                  .toString(),
-                                              postId: commentData.postId!,
-                                              isLiked:
-                                                  commentData.isLikedByMe ??
-                                                      false);
+                                      if (isLikeLoading == false) {
+                                        isLikeLoading = true;
 
-                                      if (categoryFeedViewModel
-                                              .postLikeInCommentApiResponse
-                                              .status ==
-                                          Status.COMPLETE) {
-                                        postCommentApiCall(homeController);
+                                        await categoryFeedViewModel
+                                            .postLikeInComment(
+                                                commentId: commentData.commentId
+                                                    .toString(),
+                                                postId: commentData.postId!,
+                                                isLiked:
+                                                    commentData.isLikedByMe ??
+                                                        false);
+
+                                        if (categoryFeedViewModel
+                                                .postLikeInCommentApiResponse
+                                                .status ==
+                                            Status.COMPLETE) {
+                                          await postCommentApiCall(
+                                              homeController);
+                                        }
+                                        Future.delayed(Duration(seconds: 2),
+                                            () {
+                                          isLikeLoading = false;
+                                        });
                                       }
                                     },
                                     homeController: homeController,
@@ -191,22 +200,33 @@ class _CommentsState extends State<Comments> {
                                     padding: EdgeInsets.only(top: 5.w),
                                     child: CommentList(
                                       likeOnTap: () async {
-                                        await categoryFeedViewModel
-                                            .postLikeInComment(
-                                                commentId: commentData
-                                                    .childComment![i].commentId
-                                                    .toString(),
-                                                postId: commentData
-                                                    .childComment![i].postId!,
-                                                isLiked: commentData
-                                                        .childComment![i]
-                                                        .isLikedByMe ??
-                                                    false);
-                                        if (categoryFeedViewModel
-                                                .postLikeInCommentApiResponse
-                                                .status ==
-                                            Status.COMPLETE) {
-                                          postCommentApiCall(homeController);
+                                        logs('LIKE STATUS ==>$isLikeLoading');
+                                        if (isLikeLoading == false) {
+                                          isLikeLoading = true;
+
+                                          await categoryFeedViewModel
+                                              .postLikeInComment(
+                                                  commentId: commentData
+                                                      .childComment![i]
+                                                      .commentId
+                                                      .toString(),
+                                                  postId: commentData
+                                                      .childComment![i].postId!,
+                                                  isLiked: commentData
+                                                          .childComment![i]
+                                                          .isLikedByMe ??
+                                                      false);
+                                          if (categoryFeedViewModel
+                                                  .postLikeInCommentApiResponse
+                                                  .status ==
+                                              Status.COMPLETE) {
+                                            await postCommentApiCall(
+                                                homeController);
+                                          }
+                                          Future.delayed(Duration(seconds: 2),
+                                              () {
+                                            isLikeLoading = false;
+                                          });
                                         }
                                       },
                                       isLiked: commentData

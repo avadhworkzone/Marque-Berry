@@ -364,14 +364,14 @@ class LastMsg extends StatelessWidget {
 
           final messageList = (mapData["message"] as List<dynamic>);
 
-          final lastMsg =
+          String lastMsg =
               messageList.last['messageType'] == MessageType.TEXT.name
                   ? messageList.last['message']
                   : messageList.last['messageType'] == MessageType.IMAGE.name
                       ? "📷 Photo"
                       : "🎥 Video";
           final lastMsgTime = (messageList.last['date'] as Timestamp).toDate();
-
+          lastMsg = lastMsg.length > 100 ? lastMsg.substring(0, 100) : lastMsg;
           return lastMsgText(
               '$lastMsg · ${postTimeCalculate(lastMsgTime.toString(), "", isUtc: true)}');
         }
@@ -389,6 +389,7 @@ class LastMsg extends StatelessWidget {
       str,
       fontSize: 8.sp,
       color: ColorUtils.grey,
+      maxLines: 2,
     );
   }
 }

@@ -158,4 +158,5 @@ class CropImage {
 /// ========================== CONST UTILS ========================== ///
 class ConstUtils {
   static String selectedChattingUserId = "";
+  static num maxFileSize = 50;
 }

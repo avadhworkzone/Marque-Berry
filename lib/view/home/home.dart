@@ -33,12 +33,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   HomeController homeController = Get.find<HomeController>();
-  ScrollController _scrollController = ScrollController();
 
   void paginationListen(HomeController homeController) {
-    _scrollController.addListener(() {
-      if (_scrollController.position.maxScrollExtent ==
-          _scrollController.position.pixels) {
+    homeController.feedScrollController.addListener(() {
+      if (homeController.feedScrollController.position.maxScrollExtent ==
+          homeController.feedScrollController.position.pixels) {
         if (!categoryFeedViewModel.isPageLoading) {
           categoryFeedViewModel.categoryTrending(homeController.tabName);
         }
@@ -178,7 +177,8 @@ class _HomeState extends State<Home> {
                                       isReload: false);
                                 },
                                 child: InViewNotifierList(
-                                  controller: _scrollController,
+                                  controller:
+                                      homeController.feedScrollController,
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   padding: EdgeInsets.zero,
@@ -305,11 +305,17 @@ class _HomeState extends State<Home> {
 
 // GroupComponents(),
 class HomeController extends GetxController {
+  ScrollController feedScrollController = ScrollController();
   ScrollController tabScrollController = ScrollController();
   List tabBarList = [VariableUtils.relevantText, VariableUtils.trendingText];
 
   void animateTabScroll(double pos) {
     tabScrollController.animateTo(pos,
+        duration: Duration(milliseconds: 500), curve: Curves.ease);
+  }
+
+  void animateFeedScroll(double pos) {
+    feedScrollController.animateTo(pos,
         duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
 
