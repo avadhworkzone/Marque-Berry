@@ -33,7 +33,7 @@ class ViewResult extends StatelessWidget {
       // backgroundColor: whiteBlack2E,
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(16.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(
           title: VariableUtils.viewResult,
           onTap: () => Get.back(),
@@ -60,14 +60,16 @@ class ViewResult extends StatelessWidget {
 
           return ListView.builder(
             itemCount: viewResultList!.length,
+            padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Column(
                   children: [
-                    SizeConfig.sH2,
+                    // SizeConfig.sH2,
                     Container(
                       height: 6.h,
+                      margin: EdgeInsets.only(top: index == 0 ? 3 : 10),
                       width: double.maxFinite,
                       decoration: BoxDecoration(
                           color: whiteBlack2E,

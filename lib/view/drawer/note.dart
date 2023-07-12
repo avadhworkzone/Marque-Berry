@@ -29,7 +29,7 @@ class Note extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(16.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(
             title: VariableUtils.note,
             onTap: () => Get.back(),
@@ -45,7 +45,7 @@ class Note extends StatelessWidget {
           return Center(child: SomethingWentWrong());
         }
         final NoteResModel noteResModel = con.getNoteApiResponse.data;
-        if (noteResModel.status != 200) {
+        if (noteResModel.status != 200 || noteResModel.data == null) {
           return Center(
             child: AdoroText(VariableUtils.noDataFound),
           );

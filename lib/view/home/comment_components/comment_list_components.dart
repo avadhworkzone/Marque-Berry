@@ -329,45 +329,45 @@ class CommentDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = message.split(" ");
+    if (!message.contains("@")) {
+      return ReadMoreTextWidget(
+        text: message,
+        fontSize: 11.5.sp,
+        color: Theme.of(context).textTheme.titleSmall?.color,
+        fontWeight: FontWeightClass.fontWeight600,
+      );
+    }
+    final replyUser = message.split(" ").first + ' ';
+    List<String> data = [
+      replyUser,
+      message.replaceAll(replyUser, "").substring(1)
+    ];
 
-    // return ReadMoreTextWidget(
-    //   text: message,
-    //   fontSize: 11.5.sp,
-    //   color: ColorUtils.black92,
-    //   fontWeight: FontWeightClass.fontWeight600,
-    // );
+    print('Orig==>$message');
+    print('data=>$data');
+
     return Wrap(
       children: data.map((e) {
         if (e.contains("@")) {
           return mentionsText(e);
         }
-        return normalText(e);
-        // return ReadMoreTextWidget(
-        //   text: e,
-        //   fontSize: 11.5.sp,
-        //   color: ColorUtils.black92,
-        //   fontWeight: FontWeightClass.fontWeight600,
-        // );
+        // return normalText(e);
+        return ReadMoreTextWidget(
+          text: e,
+          fontSize: 11.5.sp,
+          color: Theme.of(context).textTheme.titleSmall?.color,
+          fontWeight: FontWeightClass.fontWeight600,
+        );
       }).toList(),
     );
   }
 }
 
 Text mentionsText(message) => Text(
-      '$message ',
+      '$message',
       style: TextStyle(
         fontSize: 11.5.sp,
         color: ColorUtils.blueB9,
-        fontWeight: FontWeightClass.fontWeight600,
-      ),
-    );
-
-Text normalText(message) => Text(
-      message + " ",
-      style: TextStyle(
-        fontSize: 11.5.sp,
-        color: ColorUtils.black92,
         fontWeight: FontWeightClass.fontWeight600,
       ),
     );

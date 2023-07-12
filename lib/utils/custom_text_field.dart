@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
+import 'package:socialv/utils/typedef_utils.dart';
 
 class CommonTextFieldContainer extends StatelessWidget {
   CommonTextFieldContainer({
@@ -63,10 +64,13 @@ class CommonTextFormField extends StatelessWidget {
   final bool? obscured;
   final String? lableTitle;
   final int? mobilelength;
+  final OnChangedString? onChanged;
+
   final Color? color;
   final Function validator;
   final hintText;
   final hintStyle;
+
   // final bool? enableSuggestions;
   final TextInputType? keyboardType;
   bool? denyInput = true;
@@ -96,6 +100,7 @@ class CommonTextFormField extends StatelessWidget {
     required this.controller,
     this.denyInputFormatters,
     this.allowInputFormatters,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -104,6 +109,7 @@ class CommonTextFormField extends StatelessWidget {
       controller: controller,
       focusNode: focusNode,
       validator: (v) => validator(v),
+      onChanged: onChanged ?? (str) {},
       keyboardType: keyboardType ?? TextInputType.name,
       style: textstyle ??
           TextStyle(
@@ -155,6 +161,7 @@ class SearchTextFormField extends StatelessWidget {
   final Function validator;
   final hintText;
   final hintStyle;
+
   // final bool? enableSuggestions;
   final TextInputType? keyboardType;
   final String denyInputFormatters;
@@ -252,6 +259,7 @@ class EditTextFormField extends StatelessWidget {
   final hintStyle;
 
   const EditTextFormField({super.key, this.hintText, this.hintStyle});
+
   @override
   Widget build(BuildContext context) {
     return TextField(

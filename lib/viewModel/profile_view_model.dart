@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
+import 'package:socialv/commanWidget/custom_image_crop.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/model/apiModel/requestModel/update_profile_pic_req_model.dart';
 import 'package:socialv/model/apiModel/requestModel/update_user_req_model.dart';
@@ -41,7 +42,7 @@ class ProfileViewModel extends GetxController {
     update();
   }
 
-  CropImage cropImageClass = CropImage();
+  // CropImage cropImageClass = CropImage();
 
   Future<String> pickCoverImage(context) async {
     coverImagePath = "";
@@ -52,16 +53,22 @@ class ProfileViewModel extends GetxController {
       if (result != null) {
         PlatformFile file = result.files.first;
 
-        final cropPath = await cropImageClass.cropImage(
+        /*  final cropPath = await cropImageClass.cropImage(
           context: context,
           image: File(file.path!),
           isBackGround: true,
         );
-        coverImagePath = cropPath?.path ?? "";
-
-        if (coverImagePath != "") {
-          await updateUserCoverPic(coverImagePath);
+        coverImagePath = cropPath?.path ?? "";*/
+        final cropImagePath = await Get.to(() => CustomImageCrop(
+              img: file.path!,
+            ));
+        if (cropImagePath != null) {
+          await updateUserCoverPic(cropImagePath);
         }
+
+        /* if (coverImagePath != "") {
+          await updateUserCoverPic(coverImagePath);
+        }*/
       }
     } catch (e) {
       logs("NORMAL IMAGE CATCH $e");

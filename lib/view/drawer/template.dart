@@ -65,7 +65,7 @@ class Template extends StatelessWidget {
             return Scaffold(
               backgroundColor: Theme.of(context).cardColor,
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(16.w),
+                preferredSize: Size(100.w, 60),
                 child: CommonAppBar(
                   title: VariableUtils.templateText,
                   onTap: () => Get.back(),

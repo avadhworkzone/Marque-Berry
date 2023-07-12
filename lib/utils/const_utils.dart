@@ -1,9 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
+// import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
 logs(String message) {
@@ -78,7 +79,7 @@ OutlineInputBorder border = OutlineInputBorder(
   borderSide: BorderSide(color: Colors.grey.shade200),
 );
 
-class CropImage {
+/*class CropImage {
   Future<File?> cropImage({
     required File image,
     required bool isBackGround,
@@ -153,10 +154,15 @@ class CropImage {
 
     return File(croppedFile.path);
   }
-}
+}*/
 
 /// ========================== CONST UTILS ========================== ///
 class ConstUtils {
   static String selectedChattingUserId = "";
   static num maxFileSize = 50;
+}
+
+class FirebaseCollection {
+  static final chatCollection = FirebaseFirestore.instance.collection("Chat");
+  static final userCollection = FirebaseFirestore.instance.collection("User");
 }

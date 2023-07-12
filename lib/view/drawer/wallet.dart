@@ -31,7 +31,7 @@ class Wallet extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(16.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(
           title: VariableUtils.walletText,
           onTap: () => Get.back(),
@@ -185,7 +185,7 @@ class Wallet extends StatelessWidget {
                       child: Center(
                         child: AdoroText(
                           VariableUtils.withdrawMoney,
-                          fontSize: 17.sp,
+                          fontSize: 14.sp,
                           color: ColorUtils.white,
                           fontWeight: FontWeight.bold,
                         ),

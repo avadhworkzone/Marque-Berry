@@ -29,7 +29,7 @@ class WithdrawnAmount extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(20.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(title: '', onTap: () => Get.back()),
       ),
       body: Stack(

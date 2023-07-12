@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ import 'package:socialv/controllers/intrest_controller.dart';
 import 'package:socialv/controllers/login_controller.dart';
 import 'package:socialv/controllers/validate_otp_controller.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/drawer/campaign_screen.dart';
 import 'package:socialv/view/drawer/template.dart';
@@ -42,7 +42,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await GetStorage.init();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      /*    options: FirebaseOptions(
+          apiKey: "AIzaSyDDF9LnUPO7z60xSt_8tKG4UtbyFEKVr1U",
+          appId: "1:988984878081:android:80c3e80083b66d9c7a4c00",
+          messagingSenderId: "988984878081",
+          projectId: "adoro-app")*/
+      );
 
   /// FIREBASE BACKGROUND NOTIFICATION LISTENER
   FirebaseMessaging.onBackgroundMessage(
@@ -84,10 +90,10 @@ class _MyAppState extends State<MyApp> {
           stream: isLightTheme.stream,
           builder: (context, AsyncSnapshot snapshot) {
             return GetMaterialApp(
-              theme:
-                  PreferenceUtils.getString(key: PreferenceUtils.mode) == "dark"
-                      ? AppTheme.darkTheme
-                      : AppTheme.lightTheme,
+              theme: PreferenceUtils.getString(key: PreferenceUtils.mode) ==
+                  "dark"
+                  ? AppTheme.darkTheme
+                  : AppTheme.lightTheme,
               title: "ADORO",
               navigatorKey: Get.key,
               debugShowCheckedModeBanner: false,

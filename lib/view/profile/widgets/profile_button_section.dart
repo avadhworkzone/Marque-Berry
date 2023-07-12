@@ -158,14 +158,18 @@ class FollowingBtn extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Get.to(() => ChattingScreen(
-                    senderName: PreferenceUtils.getString(key: 'username'),
+                    senderName: PreferenceUtils.getString(
+                        key: PreferenceUtils.fullname),
+                    senderUserName: PreferenceUtils.getString(
+                        key: PreferenceUtils.username),
                     senderId:
                         (PreferenceUtils.getInt(key: 'userid')).toString(),
                     senderImage: PreferenceUtils.getString(key: 'profile'),
                     receiverId: profileUser.id!.toString(),
-                    receiverName: profileUser.username ?? "",
+                    receiverName: profileUser.fullName ?? "",
                     receiverImage: profileUser.image ?? "",
                     receiverFcmToken: profileUser.deviceToken ?? "",
+                    receiverUserName: profileUser.username ?? "",
                   ));
             },
             child: Container(

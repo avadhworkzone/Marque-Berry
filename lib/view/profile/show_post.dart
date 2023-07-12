@@ -12,11 +12,13 @@ import 'package:socialv/viewModel/category_view_model.dart';
 class ShowPost extends StatefulWidget {
   final int index;
   final List<Posts> postList;
+  final String title;
 
   ShowPost({
     Key? key,
     required this.postList,
     required this.index,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -43,10 +45,10 @@ class _ShowPostState extends State<ShowPost> {
         return Scaffold(
           backgroundColor: whiteBlack2E,
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(15.w),
+            preferredSize: Size(100.w, 60),
             child: CommonAppBar(
               color: ColorUtils.transparent,
-              title: 'Posts',
+              title: widget.title, //'Posts',
               onTap: () => Get.back(),
             ),
           ),

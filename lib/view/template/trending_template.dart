@@ -58,8 +58,9 @@ class TrendingTemplate extends StatelessWidget {
           }
 
           return Padding(
-            padding: EdgeInsets.all(2.5.w),
+            padding: EdgeInsets.fromLTRB(2.5.w, 0, 2.5.w, 2.5.w),
             child: GridView.builder(
+              padding: EdgeInsets.zero,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 mainAxisSpacing: 3.w,

@@ -37,7 +37,7 @@ class EnterOtpScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(15.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(title: '', onTap: () => Get.back()),
       ),
       body: Stack(
@@ -45,9 +45,9 @@ class EnterOtpScreen extends StatelessWidget {
           Column(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 18.h,
-              ),
+              // SizedBox(
+              //   height: 18.h,
+              // ),
               AdoroText(
                 VariableUtils.deepanshuSarmandal,
                 fontSize: 13.sp,

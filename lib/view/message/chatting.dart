@@ -14,6 +14,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/appService/dynamic_link.dart';
 import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/custom_image_crop.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/commanWidget/read_more_text.dart';
@@ -42,9 +43,10 @@ class ChattingScreen extends StatefulWidget {
   String senderId;
   String receiverId;
   String senderName;
+  String senderUserName;
   String receiverName;
+  String receiverUserName;
   String receiverFcmToken;
-
   String senderImage;
   String receiverImage;
 
@@ -53,7 +55,9 @@ class ChattingScreen extends StatefulWidget {
       required this.senderId,
       required this.receiverId,
       required this.senderName,
+      required this.senderUserName,
       required this.receiverName,
+      required this.receiverUserName,
       required this.senderImage,
       required this.receiverImage,
       required this.receiverFcmToken})
@@ -115,6 +119,7 @@ class _ChattingScreenState extends State<ChattingScreen>
 
   @override
   Widget build(BuildContext context) {
+    print('RE ->${widget.receiverUserName} sen:=>${widget.receiverFcmToken}');
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
 
     return WillPopScope(
@@ -171,7 +176,7 @@ class _ChattingScreenState extends State<ChattingScreen>
                       ),
                       SizeConfig.sW2,
                       AdoroText(
-                        widget.receiverName,
+                        widget.receiverUserName,
                         color: blackWhite,
                         fontSize: 15.sp,
                         fontWeight: FontWeightClass.fontWeight600,
@@ -191,8 +196,7 @@ class _ChattingScreenState extends State<ChattingScreen>
                 child: Column(
                   children: [
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection("Chat")
+                      stream: FirebaseCollection.chatCollection
                           .doc(chatId(widget.senderId, widget.receiverId))
                           .snapshots(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -463,27 +467,24 @@ class _ChattingScreenState extends State<ChattingScreen>
       // FocusScope.of(context).unfocus();
       isMsgSending.value = true;
 
-      if (!isUserFollowed) {
-        showSnackBar(
-          message: "Please first follow this user",
-          snackbarSuccess: true,
-        );
-        return;
-      }
-      bool exists = (await FirebaseFirestore.instance
-              .collection("Chat")
+      // if (!isUserFollowed) {
+      //   showSnackBar(
+      //     message: "Please first follow this user",
+      //     snackbarSuccess: true,
+      //   );
+      //   return;
+      // }
+      bool exists = (await FirebaseCollection.chatCollection
               .doc(chatId(widget.senderId, widget.receiverId))
               .get())
           .exists;
       if (exists == false) {
-        await FirebaseFirestore.instance
-            .collection("Chat")
+        await FirebaseCollection.chatCollection
             .doc(chatId(widget.senderId, widget.receiverId))
             .set({"message": {}});
       }
 
-      await FirebaseFirestore.instance
-          .collection("Chat")
+      await FirebaseCollection.chatCollection
           .doc(chatId(widget.senderId, widget.receiverId))
           .update(
         {
@@ -504,15 +505,17 @@ class _ChattingScreenState extends State<ChattingScreen>
         },
       ).then((value) async {
         final deviceToken = await NotificationService.getDeviceToken();
+
         final messageData = NotificationChattingModel(
-          receiverFcmToken: deviceToken,
-          receiverId: widget.senderId,
-          receiverImage: widget.senderImage,
-          receiverName: widget.senderName,
-          senderId: widget.receiverId,
-          senderImage: widget.receiverImage,
-          senderName: widget.receiverName,
-        );
+            receiverFcmToken: deviceToken,
+            receiverId: widget.senderId,
+            receiverImage: widget.senderImage,
+            receiverName: widget.senderName,
+            receiverUserName: widget.senderUserName,
+            senderId: widget.receiverId,
+            senderImage: widget.receiverImage,
+            senderName: widget.receiverName,
+            senderUserName: widget.receiverUserName);
 
         NotificationService.sendMessage(
             receivedToken: widget.receiverFcmToken,
@@ -521,12 +524,32 @@ class _ChattingScreenState extends State<ChattingScreen>
                 : messageType == MessageType.IMAGE
                     ? "📷 Photo"
                     : '🎥 Video',
-            title: widget.senderName,
+            title: widget.senderUserName,
             data: {
               'data': messageData.toJson(),
               'id': DateTime.now().millisecond.toString(),
               'notification_type': NotificationType.Chatting.name
             });
+
+        /// UPDATE SENDER DATA IN FIREBASE
+        FirebaseCollection.userCollection.doc(widget.senderId).set({
+          'id': widget.senderId,
+          'name': widget.senderName,
+          'userName': widget.senderUserName,
+          'userImage': widget.senderImage,
+          'deviceToken': deviceToken,
+          'updatedTime': DateTime.now().millisecondsSinceEpoch,
+        });
+
+        /// UPDATE RECEIVER DATA IN FIREBASE
+        FirebaseCollection.userCollection.doc(widget.receiverId).set({
+          'id': widget.receiverId,
+          'name': widget.receiverName,
+          'userName': widget.receiverUserName,
+          'userImage': widget.receiverImage,
+          'deviceToken': widget.receiverFcmToken,
+          'updatedTime': DateTime.now().millisecondsSinceEpoch,
+        });
       });
     } catch (e) {
       logs("no message:----> $e");
@@ -1388,12 +1411,17 @@ class ChattingController extends GetxController {
         if (_sourcePath.contains('.jpg') ||
             _sourcePath.contains('.jpeg') ||
             _sourcePath.contains('.png')) {
-          final cropImagePath = await cropImageClass.postCropImage(
+          final cropImagePath = await Get.to(() => CustomImageCrop(
+                img: file.path!,
+              ));
+          /* final cropImagePath = await cropImageClass.postCropImage(
             image: File(file.path!),
             isBackGround: true,
-          );
+          );*/
           if (cropImagePath != null) {
-            _sourcePath = cropImagePath.path;
+            _sourcePath = cropImagePath;
+          } else {
+            _sourcePath = "";
           }
         }
       } else {

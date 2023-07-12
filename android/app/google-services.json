@@ -14,46 +14,10 @@
       },
       "oauth_client": [
         {
-          "client_id": "988984878081-7fnr0b48t6vp7glaup8gbetvjg8tlsla.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDDF9LnUPO7z60xSt_8tKG4UtbyFEKVr1U"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "988984878081-7fnr0b48t6vp7glaup8gbetvjg8tlsla.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "988984878081-emf60t8209439o7qclgfmegbt38vf8gv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.iconic.socialv"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:988984878081:android:ba1a53d575af959f7a4c00",
-        "android_client_info": {
-          "package_name": "com.iconic.socialv"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "988984878081-sq8puksm1s06thdnqs3j0ckui7bugdlo.apps.googleusercontent.com",
+          "client_id": "988984878081-d8hu96npue6og2o7dshu5lnkf02ammrq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.iconic.socialv",
+            "package_name": "com.creator.adoro",
             "certificate_hash": "ef8ccd49e57354b96130101079aad4a1cb1bf4db"
           }
         },

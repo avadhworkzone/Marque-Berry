@@ -46,7 +46,7 @@ class Profile extends StatelessWidget {
       child: Scaffold(
         backgroundColor: greyFABlack32,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(15.w),
+          preferredSize: Size(100.w, 60),
           child: CommonAppBar(
             color: ColorUtils.transparent,
             title: 'Profile',

@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/commanWidget/custom_image_crop.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
@@ -509,7 +510,7 @@ class _EditProfileState extends State<EditProfile>
   }
 }
 
-CropImage cropImageClass = CropImage();
+// CropImage cropImageClass = CropImage();
 
 class EditProfileController extends GetxController {
   String profileImagePath = "";
@@ -523,14 +524,18 @@ class EditProfileController extends GetxController {
       );
       if (result != null) {
         PlatformFile file = result.files.first;
-        // profileImagePath = file.path!;
-        final cropImagePath = await cropImageClass.cropImage(
+        final cropImagePath = await Get.to(() => CustomImageCrop(
+              img: file.path!,
+            ));
+        profileImagePath = cropImagePath ?? "";
+
+        /*    final cropImagePath = await cropImageClass.cropImage(
           image: File(file.path!),
           isBackGround: false,
           context: context,
         );
 
-        profileImagePath = cropImagePath?.path ?? '';
+        profileImagePath = cropImagePath?.path ?? '';*/
       }
     } catch (e) {
       logs("PROFILE IMAGE CATCH $e");

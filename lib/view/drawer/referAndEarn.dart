@@ -53,7 +53,7 @@ ${referLink.value}
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(16.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(
           title: VariableUtils.referEarnText,
           onTap: () => Get.back(),
@@ -161,11 +161,7 @@ ${referLink.value}
                                       readOnly: true,
                                       initialValue: referLink.value,
                                       style: TextStyle(
-                                        color: PreferenceUtils.getString(
-                                                    key: 'mode') ==
-                                                "dark"
-                                            ? ColorUtils.black
-                                            : ColorUtils.white,
+                                        color: ColorUtils.black,
                                       ),
                                       decoration: InputDecoration(
                                           border: InputBorder.none,

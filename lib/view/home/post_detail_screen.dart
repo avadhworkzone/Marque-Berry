@@ -17,10 +17,14 @@ import 'package:socialv/viewModel/create_post_view_model.dart';
 
 class PostDetailScreen extends StatelessWidget {
   PostDetailScreen(
-      {Key? key, required this.postId, this.isFromBackScreen = false})
+      {Key? key,
+      required this.postId,
+      this.isFromBackScreen = false,
+      this.title})
       : super(key: key);
   final String postId;
   final bool isFromBackScreen;
+  final String? title;
 
   final CreatePostViewModel viewModel = Get.find<CreatePostViewModel>();
   final HomeController homeController = Get.find<HomeController>();
@@ -49,10 +53,10 @@ class PostDetailScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: greyFABlack32,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(15.w),
+          preferredSize: Size(100.w, 60),
           child: CommonAppBar(
             color: ColorUtils.transparent,
-            title: "Posts",
+            title: title ?? "Posts",
             onTap: () =>
                 isFromBackScreen ? Get.back() : Get.offAll(() => BottomBar()),
           ),
@@ -104,6 +108,7 @@ class PostDetailScreen extends StatelessWidget {
                   builder: (categoryFeedViewModel) {
                 return PostComponents(
                   isInView: true,
+                  isTopPadding: false,
                   tagList: postDetail.tagUser ?? [],
                   isPostDetailFromLink: true,
                   userId: int.parse(postDetail.userId!),

@@ -28,7 +28,8 @@ class ReadMoreTextWidget extends StatelessWidget {
       trimMode: TrimMode.Line,
       trimCollapsedText: ' Show more',
       trimExpandedText: ' Show less',
-      style: TextStyle(color: color, fontSize: fontSize),
+      style:
+          TextStyle(color: color, fontSize: fontSize, fontWeight: fontWeight),
       moreStyle: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.bold,

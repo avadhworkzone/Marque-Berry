@@ -8,9 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socialv/appService/croping_image_service.dart';
 import 'package:socialv/appService/get_file_size.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/custom_image_crop.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
@@ -49,7 +49,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
   String categoryId = '';
   String categoryName = '';
   List<Category> categoryDataList = [];
-
+  String descriptionStr = "";
   final description = TextEditingController();
   SharePostController sharePostController = Get.find<SharePostController>();
 
@@ -95,7 +95,6 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
-
     return WillPopScope(
       onWillPop: () async {
         Get.back();
@@ -153,7 +152,9 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                       color: blackWhite,
                                     ),
                                     Spacer(),
-                                    sharePostController.sourcePath != ""
+                                    sharePostController.sourcePath != "" &&
+                                            descriptionStr.isNotEmpty &&
+                                            categoryId != ""
                                         ? InkWell(
                                             splashColor: ColorUtils.transparent,
                                             highlightColor:
@@ -250,7 +251,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                                       SizeConfig.sW2,
                                                       DropdownButton(
                                                         underline: SizedBox(),
-                                                        menuMaxHeight: 200,
+                                                        menuMaxHeight: 250,
                                                         hint: Text(
                                                           categoryName == ""
                                                               ? "Category"
@@ -326,6 +327,10 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
                                             .whatYouWantToTalkAbout,
                                         hintStyle:
                                             TextStyle(color: ColorUtils.grey),
+                                        onChanged: (value) {
+                                          descriptionStr = value;
+                                          setState(() {});
+                                        },
                                         validator: () {},
                                         controller: description,
                                       ),
@@ -485,13 +490,13 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
     //     .indexWhere((element) => element.id.toString().contains(categoryId));
     final categoryIndex = selectedCategoryDataList
         .indexWhere((element) => element.id.toString().contains(categoryId));
-
+    print('descriptionStr=>$descriptionStr');
     if (categoryId == "") {
       showSnackBar(
         message: "Category not selected",
         snackbarSuccess: false,
       );
-    } else if (description.text == "") {
+    } else if (descriptionStr.isEmpty) {
       showSnackBar(
         message: "Description is required",
         snackbarSuccess: false,
@@ -518,9 +523,8 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
       final fileSize = await getFileSize(
           filepath: createPostReqModel.contentUrl!,
           convertType: ConvertType.MB.index);
-      logs('File Size :=>$fileSize');
 
-      if (num.parse(fileSize) > ConstUtils.maxFileSize) {
+      if (fileSize > ConstUtils.maxFileSize) {
         showSnackBar(
           message: VariableUtils.fileSizeMax,
         );
@@ -689,7 +693,7 @@ class CommonUploadTile extends StatelessWidget {
   }
 }
 
-CropImage cropImageClass = CropImage();
+// CropImage cropImageClass = CropImage();
 
 class SharePostController extends GetxController {
   String sourcePath = "";
@@ -755,13 +759,23 @@ class SharePostController extends GetxController {
           PlatformFile file = result.files.first;
 
           if (extension == "image") {
+            String? cropImagePath = await Get.to(() => CustomImageCrop(
+                  img: file.path!,
+                ));
+            logs('cropImagePath=> $cropImagePath');
+            if (cropImagePath != null) {
+              print(
+                  'FILE LENGTH :=>${File(cropImagePath).readAsBytesSync().lengthInBytes}');
+
+              sourcePath = cropImagePath;
+            }
             /* final cropImagePath = await CropImageService.cropImage(
                 context: context, file: file.path!);*/
-            final cropImagePath = await cropImageClass.postCropImage(
-              image: File(file.path!),
-              isBackGround: true,
-            );
-            sourcePath = cropImagePath?.path ?? '';
+            // final cropImagePath = await cropImageClass.postCropImage(
+            //   image: File(file.path!),
+            //   isBackGround: true,
+            // );
+            // sourcePath = cropImagePath?.path ?? '';
           } else if (extension == "video" || extension == "gif") {
             sourcePath = file.path ?? '';
 

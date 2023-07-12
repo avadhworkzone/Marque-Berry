@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socialv/appService/dynamic_link.dart';
+import 'package:socialv/appService/notification_service.dart';
 import 'package:socialv/commanWidget/common_image.dart';
 import 'package:socialv/commanWidget/custom_btn.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/get_following_list_res_model.dart';
+import 'package:socialv/model/apiModel/responseModel/notification_chating_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart';
+import 'package:socialv/utils/enum_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
 import 'package:socialv/utils/variable_utils.dart';
@@ -30,7 +34,7 @@ sharePostBottomSheet({
       .getFollowingList((PreferenceUtils.getInt(key: 'userid')).toString());
   String searchUserStr = "";
   List<FollowingData> selectedUser = [];
-  bool isLoading=false;
+  bool isLoading = false;
 
   Get.bottomSheet(Builder(builder: (context) {
     print(
@@ -160,24 +164,23 @@ sharePostBottomSheet({
                   },
                 ),
               ),
-              if(isLoading)
+              if (isLoading)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: CupertinoActivityIndicator(),
                 ),
-              if (selectedUser.isNotEmpty&&!isLoading)
+              if (selectedUser.isNotEmpty && !isLoading)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: CustomBtn(
                       onTap: () async {
-                        setState((){
-                          isLoading=true;
+                        setState(() {
+                          isLoading = true;
                         });
                         final postLink =
-                            'https://socialv.page.link/post?postId=$postIdArg';
+                            '${DynamicLink.uriPrefix}/post?postId=$postIdArg';
                         for (var user in selectedUser) {
-                          bool exists = (await FirebaseFirestore.instance
-                                  .collection("Chat")
+                          bool exists = (await FirebaseCollection.chatCollection
                                   .doc(chatId(
                                       PreferenceUtils.getInt(key: 'userid')
                                           .toString(),
@@ -185,8 +188,7 @@ sharePostBottomSheet({
                                   .get())
                               .exists;
                           if (exists == false) {
-                            await FirebaseFirestore.instance
-                                .collection("Chat")
+                            await FirebaseCollection.chatCollection
                                 .doc(chatId(
                                     PreferenceUtils.getInt(key: 'userid')
                                         .toString(),
@@ -194,39 +196,105 @@ sharePostBottomSheet({
                                 .set({"message": {}});
                           }
 
-                            await FirebaseFirestore.instance
-                                .collection("Chat")
-                                .doc(chatId(
-                                    PreferenceUtils.getInt(key: 'userid')
-                                        .toString(),
-                                    user.id.toString()))
-                                .update(
-                              {
-                                "message": FieldValue.arrayUnion([
-                                  {
-                                    'date': DateTime.now(),
-                                    "message": postLink,
-                                    'senderId':
-                                        PreferenceUtils.getInt(key: 'userid')
-                                            .toString(),
-                                    'receiverId': user.id.toString(),
-                                    "seen": false,
-                                    "document": chatId(
-                                        PreferenceUtils.getInt(key: 'userid')
-                                            .toString(),
-                                        user.id.toString()),
-                                    "messageType": MessageType.TEXT.name,
-                                  }
-                                ]),
-                                "last_message_time":
-                                    DateTime.now().millisecondsSinceEpoch,
-                                'senderId':
-                                    PreferenceUtils.getInt(key: 'userid')
-                                        .toString(),
-                                'receiverId': user.id.toString(),
-                              },
+                          await FirebaseCollection.chatCollection
+                              .doc(chatId(
+                                  PreferenceUtils.getInt(key: 'userid')
+                                      .toString(),
+                                  user.id.toString()))
+                              .update(
+                            {
+                              "message": FieldValue.arrayUnion([
+                                {
+                                  'date': DateTime.now(),
+                                  "message": postLink,
+                                  'senderId':
+                                      PreferenceUtils.getInt(key: 'userid')
+                                          .toString(),
+                                  'receiverId': user.id.toString(),
+                                  "seen": false,
+                                  "document": chatId(
+                                      PreferenceUtils.getInt(key: 'userid')
+                                          .toString(),
+                                      user.id.toString()),
+                                  "messageType": MessageType.TEXT.name,
+                                }
+                              ]),
+                              "last_message_time":
+                                  DateTime.now().millisecondsSinceEpoch,
+                              'senderId': PreferenceUtils.getInt(key: 'userid')
+                                  .toString(),
+                              'receiverId': user.id.toString(),
+                            },
+                          ).then((value) {
+                            /// UPDATE SENDER DATA IN FIREBASE
+                            FirebaseCollection.userCollection
+                                .doc(PreferenceUtils.getInt(key: 'userid')
+                                    .toString())
+                                .set({
+                              'id': PreferenceUtils.getInt(
+                                      key: PreferenceUtils.userid)
+                                  .toString(),
+                              'name': PreferenceUtils.getString(
+                                      key: PreferenceUtils.fullname)
+                                  .toString(),
+                              'userName': PreferenceUtils.getString(
+                                      key: PreferenceUtils.username)
+                                  .toString(),
+                              'userImage': PreferenceUtils.getString(
+                                      key: PreferenceUtils.profileImage)
+                                  .toString(),
+                              'deviceToken': PreferenceUtils.getString(
+                                      key: PreferenceUtils.deviceToken)
+                                  .toString(),
+                              'updatedTime':
+                                  DateTime.now().millisecondsSinceEpoch,
+                            });
+
+                            /// UPDATE RECEIVER DATA IN FIREBASE
+                            FirebaseCollection.userCollection
+                                .doc(user.id.toString())
+                                .set({
+                              'id': user.id.toString(),
+                              'name': user.fullName.toString(),
+                              'userName': user.username.toString(),
+                              'userImage': user.image.toString(),
+                              'deviceToken': user.deviceToken,
+                              'updatedTime':
+                                  DateTime.now().millisecondsSinceEpoch,
+                            });
+                            final messageData = NotificationChattingModel(
+                              receiverFcmToken: PreferenceUtils.getString(
+                                      key: PreferenceUtils.deviceToken)
+                                  .toString(),
+                              receiverId: PreferenceUtils.getInt(
+                                      key: PreferenceUtils.userid)
+                                  .toString(),
+                              receiverImage: PreferenceUtils.getString(
+                                      key: PreferenceUtils.profileImage)
+                                  .toString(),
+                              receiverName: PreferenceUtils.getString(
+                                      key: PreferenceUtils.fullname)
+                                  .toString(),
+                              receiverUserName: PreferenceUtils.getString(
+                                      key: PreferenceUtils.username)
+                                  .toString(),
+                              senderId: user.id.toString(),
+                              senderImage: user.image.toString(),
+                              senderName: user.fullName.toString(),
+                              senderUserName: user.username.toString(),
                             );
 
+                            NotificationService.sendMessage(
+                                receivedToken: user.deviceToken!,
+                                msg: "Post",
+                                title: user.username ?? "N/A",
+                                data: {
+                                  'data': messageData.toJson(),
+                                  'id': DateTime.now().millisecond.toString(),
+                                  'notification_type':
+                                      NotificationType.Chatting.name
+                                });
+                          });
                         }
                         Get.back();
                       },

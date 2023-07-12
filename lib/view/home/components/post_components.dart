@@ -3,6 +3,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
@@ -46,6 +47,7 @@ class PostComponents extends StatelessWidget {
   String commentCounter = '0';
   String profileImage;
   String likeByMe;
+  bool isTopPadding;
 
   bool isInView;
 
@@ -76,7 +78,8 @@ class PostComponents extends StatelessWidget {
       required this.commentCounter,
       required this.categoryFeedViewModel,
       required this.tagList,
-      this.isPostDetailFromLink = false})
+      this.isPostDetailFromLink = false,
+      this.isTopPadding = true})
       : super(key: key);
 
   LikePostReqModel likePostReqModel = LikePostReqModel();
@@ -105,7 +108,7 @@ class PostComponents extends StatelessWidget {
       // ),
       child: Column(
         children: [
-          SizeConfig.sH2,
+          if (isTopPadding) SizeConfig.sH2,
           Padding(
             padding: EdgeInsets.fromLTRB(2.w, 0, 0.w, 0),
             child: ListTile(
@@ -478,7 +481,7 @@ class PostComponents extends StatelessWidget {
                               children: [
                                 AdoroText(
                                   'Liked by ',
-                                  fontSize: 9.sp,
+                                  fontSize: 11,
                                   color: black92Blue,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -492,7 +495,7 @@ class PostComponents extends StatelessWidget {
                                   },
                                   child: AdoroText(
                                     "$likeByMe ",
-                                    fontSize: 9.5.sp,
+                                    fontSize: 13,
                                     color: blackWhite,
                                     fontFamily: 'Poppins_Bold',
                                     fontWeight: FontWeightClass.fontWeight700,
@@ -501,14 +504,14 @@ class PostComponents extends StatelessWidget {
                                 if (likeCounter != "0")
                                   AdoroText(
                                     'and ',
-                                    fontSize: 9.sp,
+                                    fontSize: 11,
                                     color: black92Blue,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 if (likeCounter != "0")
                                   AdoroText(
                                     '$likeCounter other',
-                                    fontSize: 9.5.sp,
+                                    fontSize: 13,
                                     fontFamily: 'Poppins_Bold',
                                     color: blackWhite,
                                     fontWeight: FontWeightClass.fontWeight800,
@@ -594,11 +597,11 @@ class PostComponents extends StatelessWidget {
           ),
           height: userId.toString() !=
                   PreferenceUtils.getInt(key: PreferenceUtils.userid).toString()
-              ? 70.w
-              : 50.w,
+              ? 190
+              : 120,
           width: 100.w,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -613,9 +616,13 @@ class PostComponents extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizeConfig.sH3,
+                //SizeConfig.sH3,
+                SizedBox(
+                  height: 10,
+                ),
                 bottomComponents(
-                  image: IconsWidgets.shareImages,
+                  image: SvgWidgets.shareSvg,
+                  scale: 10,
                   text: 'Share via',
                   onTap: () async {
                     final videoPlaceHolder =
@@ -630,7 +637,9 @@ class PostComponents extends StatelessWidget {
                     // Share.share(postLink);
                   },
                 ),
-                SizeConfig.sH3,
+                SizedBox(
+                  height: 15,
+                ),
                 bottomComponents(
                   onTap: () async {
                     final postLink = await DynamicLink.createDynamicLinkForPost(
@@ -641,17 +650,20 @@ class PostComponents extends StatelessWidget {
                     });
                   },
                   text: 'Copy link',
-                  image: IconsWidgets.linkImages,
+                  image: SvgWidgets.copyLink,
+                  scale: 4,
                 ),
                 if (userId.toString() !=
                     PreferenceUtils.getInt(key: PreferenceUtils.userid)
                         .toString())
-                  SizeConfig.sH3,
+                  SizedBox(
+                    height: 15,
+                  ),
                 if (userId.toString() !=
                     PreferenceUtils.getInt(key: PreferenceUtils.userid)
                         .toString())
                   bottomComponents(
-                    image: IconsWidgets.unfollowImages,
+                    image: SvgWidgets.unFollow,
                     text: categoryFeedViewModel.followUnfollow[userId] == true
                         ? "Unfollow"
                         : "Follow",
@@ -686,13 +698,15 @@ class PostComponents extends StatelessWidget {
                       }
                     },
                   ),
-                SizeConfig.sH3,
+                SizedBox(
+                  height: 15,
+                ),
                 if (userId.toString() !=
                     PreferenceUtils.getInt(key: PreferenceUtils.userid)
                         .toString())
                   bottomComponents(
                     text: 'Report post',
-                    image: IconsWidgets.reportImages,
+                    image: SvgWidgets.reportPost,
                     onTap: () async {
                       await categoryFeedViewModel
                           .reportPost(postIdArg.toString());
@@ -724,19 +738,28 @@ class PostComponents extends StatelessWidget {
     );
   }
 
-  Widget bottomComponents({
-    required String text,
-    required String image,
-    required OnTab onTap,
-  }) {
+  Widget bottomComponents(
+      {required String text,
+      required String image,
+      required OnTab onTap,
+      double? scale}) {
     return InkWell(
       onTap: onTap,
       child: Row(
         children: [
-          Image.asset(
-            image,
-            scale: 1.5.w,
-            color: ColorUtils.black,
+          SizedBox(
+            width: 25,
+            height: 25,
+            child: SvgPicture.asset(
+              image,
+              height: 15,
+              width: 15,
+            ),
+            /* child: Image.asset(
+              image,
+              scale: scale ?? 1.5.w,
+              color: ColorUtils.black,
+            ),*/
           ),
           SizeConfig.sW3,
           AdoroText(text, color: ColorUtils.black92, fontSize: 14.sp),
@@ -896,6 +919,18 @@ class LikeWidget extends StatelessWidget {
             },
       child: Padding(
         padding: EdgeInsets.only(left: 1.w),
+        child: CommonSvgImage(
+          img: SvgWidgets.selectedHeart,
+          // color: Theme.of(context).textTheme.titleMedium?.color,
+        ),
+        // child: CommonImageScale(
+        //   img: IconsWidgets.heartImage,
+        //   scale: 19.w,
+        //   color: Theme.of(context).textTheme.titleMedium?.color,
+        // ),
+      ),
+      /*   child: Padding(
+        padding: EdgeInsets.only(left: 1.w),
         child: Image.asset(
           IconsWidgets.heartFilledImage,
           // scale: 0.8.w,
@@ -903,7 +938,7 @@ class LikeWidget extends StatelessWidget {
           width: 26,
           color: Colors.red,
         ),
-      ),
+      ),*/
     );
   }
 }

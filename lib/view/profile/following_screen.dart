@@ -87,25 +87,22 @@ class FollowerFollowing extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).cardColor,
-        appBar: PreferredSize(
-          preferredSize: Size(100.w, 70),
-          child: customAppbar(
-            context: context,
-            title: title,
-            icon: IconButton(
-              onPressed: () {
-                Get.to(() => SearchUser());
-              },
-              icon: Icon(
-                Icons.search_rounded,
-                color: blackWhite,
-              ),
-            ),
-            leadingOnTap: () {
-              getUserProfile();
-              Get.back();
+        appBar: customAppbar(
+          context: context,
+          title: title,
+          icon: IconButton(
+            onPressed: () {
+              Get.to(() => SearchUser());
             },
+            icon: Icon(
+              Icons.search_rounded,
+              color: blackWhite,
+            ),
           ),
+          leadingOnTap: () {
+            getUserProfile();
+            Get.back();
+          },
         ),
         body: GetBuilder<FollowFollowingViewModel>(
           builder: (followRequestViewModel) {
@@ -130,7 +127,7 @@ class FollowerFollowing extends StatelessWidget {
                       Positioned(
                         bottom: 0,
                         child: Container(
-                          height: Get.height - 22.w - 70,
+                          height: Get.height - 22.w - 60,
                           width: Get.width,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(

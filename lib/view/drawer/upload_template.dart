@@ -12,6 +12,7 @@ import 'package:socialv/model/apis/api_response.dart';
 
 import '../../commanWidget/common_appbar.dart';
 import '../../commanWidget/custom_btn.dart';
+import '../../commanWidget/custom_image_crop.dart';
 import '../../commanWidget/custom_snackbar.dart';
 import '../../utils/assets/images_utils.dart';
 import '../../utils/color_utils.dart';
@@ -48,7 +49,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(16.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(
           title: VariableUtils.uploadTemplate,
           onTap: () => Get.back(),
@@ -59,7 +60,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizeConfig.sH3,
+                // SizeConfig.sH3,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -152,7 +153,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
                   child: Column(
                     children: [
                       CommonTextFormField(
-                        color: ColorUtils.black,
+                        color: Theme.of(context).textTheme.titleSmall?.color,
                         // color: Colors.redAccent,
                         // color: blackWhite,
                         controller: uploadTemplateCaption,
@@ -227,7 +228,7 @@ class _UploadTemplateState extends State<UploadTemplate> {
     );
   }
 
-  CropImage cropImageClass = CropImage();
+  // CropImage cropImageClass = CropImage();
   String selectedImagePath = "";
   String selectedLicensedImagePath = "";
 
@@ -239,15 +240,20 @@ class _UploadTemplateState extends State<UploadTemplate> {
       if (result != null) {
         PlatformFile file = result.files.first;
 
-        final cropImagePath = await cropImageClass.cropImage(
+        /* final cropImagePath = await cropImageClass.cropImage(
           image: File(file.path!),
           isBackGround: true,
           context: context,
-        );
-        if (selectedTabIndex == 0) {
-          selectedImagePath = cropImagePath?.path ?? "";
-        } else {
-          selectedLicensedImagePath = cropImagePath?.path ?? "";
+        );*/
+        final cropImagePath = await Get.to(() => CustomImageCrop(
+              img: file.path!,
+            ));
+        if (cropImagePath != null) {
+          if (selectedTabIndex == 0) {
+            selectedImagePath = cropImagePath;
+          } else {
+            selectedLicensedImagePath = cropImagePath;
+          }
         }
       }
       setState(() {});

@@ -7,16 +7,19 @@ class SearchTextField extends StatelessWidget {
   const SearchTextField({
     super.key,
     required this.onChangedString,
+    this.verticalPadding,
   });
 
   final OnChangedString onChangedString;
+  final double? verticalPadding;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.sp),
       child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5),
+          margin: EdgeInsets.symmetric(
+              horizontal: 10.sp, vertical: verticalPadding ?? 5),
           decoration: BoxDecoration(
             borderRadius: new BorderRadius.circular(10.sp),
             color: ColorUtils.white,
@@ -31,7 +34,7 @@ class SearchTextField extends StatelessWidget {
             decoration: InputDecoration(
                 counterText: "",
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.sp),
+                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.sp),
                 prefixIcon: Icon(
                   Icons.search,
                   color: ColorUtils.grey.shade600,

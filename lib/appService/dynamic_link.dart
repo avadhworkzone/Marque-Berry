@@ -9,7 +9,7 @@ import 'package:socialv/view/home/post_detail_screen.dart';
 class DynamicLink {
   /// MAIN CONTENT
   static String uriPrefix = "https://socialv.page.link";
-  // static String domainLink = "https://www.adoro.social";
+  // static String uriPrefix = "https://adorotv.page.link";
   static final dynamicLinks = FirebaseDynamicLinks.instance;
 
   /// CUSTOMER APP CONTENT

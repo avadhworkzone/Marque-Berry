@@ -35,6 +35,7 @@ class TagAPeople extends StatelessWidget {
     Color? black92White = Theme.of(context).textTheme.titleMedium?.color;
     Color whiteBlack2E = Theme.of(context).scaffoldBackgroundColor;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: customAppbar(
         title: 'Tag friend',
         context: context,
@@ -124,9 +125,11 @@ class TagAPeople extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.sp))),
                 ),
               ),*/
-              SearchTextField(onChangedString: (value) {
-                profileViewModel.searchUsers(value);
-              }),
+              SearchTextField(
+                  verticalPadding: 0,
+                  onChangedString: (value) {
+                    profileViewModel.searchUsers(value);
+                  }),
               SizedBox(
                 height: 10,
               ),

@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/model/apiModel/responseModel/user_profile_res_model.dart';
 import 'package:socialv/utils/adoro_text.dart';
+import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
@@ -180,6 +182,7 @@ class PostsAndMentionsTab extends StatelessWidget {
                                 Get.to(() => PostDetailScreen(
                                       postId: mention.id.toString(),
                                       isFromBackScreen: true,
+                                      title: 'Mentioned',
                                     ));
                               },
                               child: PostImage(url: mention.contentUrl ?? ''));
@@ -206,7 +209,7 @@ class PostImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       url,
-      fit: BoxFit.fill,
+      fit: BoxFit.cover,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress != null) {
           return Center(child: CupertinoActivityIndicator());
@@ -259,30 +262,40 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       body: Container(
         color: ColorUtils.greyF1,
-        child: Center(
-          child: FutureBuilder(
-            future: _initializeVideoPlayerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(
-                    _controller,
-                  ),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        mini: true,
-        onPressed: () {},
-        // icon
-        child: Icon(
-          Icons.play_arrow,
+        child: Stack(
+          children: [
+            Center(
+              child: FutureBuilder(
+                future: _initializeVideoPlayerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(
+                        _controller,
+                      ),
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
+            Positioned(
+              top: 5,
+              right: 5,
+              child: SvgPicture.asset(SvgWidgets.videoPlay),
+              /*  child: CircleAvatar(
+                radius: 9,
+                backgroundColor: ColorUtils.black26,
+                child: Icon(
+                  Icons.play_arrow,
+                  size: 13,
+                  color: ColorUtils.white,
+                ),
+              ),*/
+            )
+          ],
         ),
       ),
     );

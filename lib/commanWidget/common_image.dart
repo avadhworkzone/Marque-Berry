@@ -35,8 +35,16 @@ class CommonSvgImage extends StatelessWidget {
     return SvgPicture.asset(
       img,
       color: color,
-      height: 26,
-      width: 26,
+      height: img.contains('heart.svg')
+          ? 24
+          : img.contains('selectedHeart.svg')
+              ? 23
+              : 26,
+      width: img.contains('heart.svg')
+          ? 24
+          : img.contains('selectedHeart.svg')
+              ? 23
+              : 26,
     );
   }
 }

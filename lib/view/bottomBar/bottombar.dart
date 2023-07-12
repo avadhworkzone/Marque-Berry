@@ -62,6 +62,12 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    String themeType = PreferenceUtils.getString(key: PreferenceUtils.mode);
+    print('themeType:=>$themeType');
+    if (themeType.isEmpty) {
+      themeType = 'light';
+    }
+    print('AFTER themeType:=>$themeType');
     DynamicLink.listenDynamicLinks();
     return GetBuilder<ConnectivityViewModel>(
       init: ConnectivityViewModel(),
@@ -102,8 +108,8 @@ class _BottomBarState extends State<BottomBar> {
                             bottomBarIcon(
                               index: 0,
                               img: bottomBarController.selectedIndex == 0
-                                  ? '$bottomPath${PreferenceUtils.getString(key: 'mode')}_home_selected.png'
-                                  : '$bottomPath${PreferenceUtils.getString(key: 'mode')}_home.png',
+                                  ? '$bottomPath${themeType}_home_selected.png'
+                                  : '$bottomPath${themeType}_home.png',
                               context: context,
                               controller: bottomBarController,
                             ),
@@ -111,8 +117,7 @@ class _BottomBarState extends State<BottomBar> {
                             bottomBarIcon(
                               index: 1,
                               context: context,
-                              img:
-                                  '$bottomPath${PreferenceUtils.getString(key: 'mode')}_share.png',
+                              img: '$bottomPath${themeType}_share.png',
                               controller: bottomBarController,
                             ),
                             // const Spacer(),
@@ -121,16 +126,16 @@ class _BottomBarState extends State<BottomBar> {
                               context: context,
                               controller: bottomBarController,
                               img: bottomBarController.selectedIndex == 2
-                                  ? '$bottomPath${PreferenceUtils.getString(key: 'mode')}_campaign_selected.png'
-                                  : '$bottomPath${PreferenceUtils.getString(key: 'mode')}_campaign.png',
+                                  ? '$bottomPath${themeType}_campaign_selected.png'
+                                  : '$bottomPath${themeType}_campaign.png',
                             ),
                             // const Spacer(),
                             bottomBarIcon(
                               index: 3,
                               context: context,
                               img: bottomBarController.selectedIndex == 3
-                                  ? '$bottomPath${PreferenceUtils.getString(key: 'mode')}_profile_selected.png'
-                                  : '$bottomPath${PreferenceUtils.getString(key: 'mode')}_profile.png',
+                                  ? '$bottomPath${themeType}_profile_selected.png'
+                                  : '$bottomPath${themeType}_profile.png',
                               controller: bottomBarController,
                             ),
                           ],

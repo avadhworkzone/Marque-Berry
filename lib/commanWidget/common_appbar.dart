@@ -45,7 +45,7 @@ class CommonAppBar extends StatelessWidget {
   }
 }
 
-AppBar customAppbar(
+PreferredSizeWidget customAppbar(
     {required String title,
     required BuildContext context,
     Color? color,
@@ -54,26 +54,29 @@ AppBar customAppbar(
   Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
   Color? whiteBlack = Theme.of(context).scaffoldBackgroundColor;
 
-  return AppBar(
-    centerTitle: true,
-    elevation: 0,
-    backgroundColor: color ?? Theme.of(context).cardColor,
-    title: AdoroText(
-      title,
-      fontSize: 15.sp,
-      color: blackWhite,
-      fontWeight: FontWeightClass.fontWeightBold,
-    ),
-    leading: IconButton(
-      onPressed: leadingOnTap ?? () => Get.back(),
-      splashRadius: 6.w,
-      icon: Icon(Icons.arrow_back, color: blackWhite),
-    ),
-    actions: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: icon,
+  return PreferredSize(
+    preferredSize: Size(100.w, 60),
+    child: AppBar(
+      centerTitle: true,
+      elevation: 0,
+      backgroundColor: color ?? Theme.of(context).cardColor,
+      title: AdoroText(
+        title,
+        fontSize: 15.sp,
+        color: blackWhite,
+        fontWeight: FontWeightClass.fontWeightBold,
       ),
-    ],
+      leading: IconButton(
+        onPressed: leadingOnTap ?? () => Get.back(),
+        splashRadius: 6.w,
+        icon: Icon(Icons.arrow_back, color: blackWhite),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: icon,
+        ),
+      ],
+    ),
   );
 }

@@ -7,7 +7,7 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     getMode();
-    DynamicLink.getInitialDynamicLinks();
+
     super.onInit();
   }
 
@@ -18,6 +18,7 @@ class SplashController extends GetxController {
         key: PreferenceUtils.mode,
         value: brightness.name,
       );
+      DynamicLink.getInitialDynamicLinks();
     }
   }
 }

@@ -252,6 +252,8 @@ class NotificationService {
             receiverImage: notificationData.receiverImage!,
             receiverName: notificationData.receiverName!,
             receiverFcmToken: notificationData.receiverFcmToken!,
+            senderUserName: notificationData.senderUserName!,
+            receiverUserName: notificationData.receiverUserName!,
           ));
     } else if (data['notification_type'] == NotificationType.Like.name ||
         data['notification_type'] == NotificationType.Comment.name) {

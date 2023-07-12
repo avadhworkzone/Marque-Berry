@@ -35,7 +35,7 @@ class SearchUser extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(15.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(
           title: 'Search',
           onTap: () => Get.back(),
@@ -68,9 +68,11 @@ class SearchUser extends StatelessWidget {
 
           return Column(
             children: [
-              SearchTextField(onChangedString: (value) {
-                profileViewModel.searchUsers(value);
-              }),
+              SearchTextField(
+                  verticalPadding: 0,
+                  onChangedString: (value) {
+                    profileViewModel.searchUsers(value);
+                  }),
               /*  Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.sp),
                 child: TextField(

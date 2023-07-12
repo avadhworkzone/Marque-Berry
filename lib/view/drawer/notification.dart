@@ -31,10 +31,11 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
+
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(16.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(
           title: VariableUtils.notificationText,
           color: Theme.of(context).cardColor,
@@ -91,6 +92,7 @@ class NotificationScreen extends StatelessWidget {
                 ),
               ListView.builder(
                 shrinkWrap: true,
+                padding: EdgeInsets.zero,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: notificationListResModel.data?.length ?? 0,
                 itemBuilder: (context, index) {
@@ -133,7 +135,7 @@ class NotificationScreen extends StatelessWidget {
                             "  " +
                             getTime(notification.createdOn!),
                         fontSize: 11.sp,
-                        color: ColorUtils.black92,
+                        color: blackWhite,
                         fontWeight: FontWeightClass.fontWeight600,
                       ),
                     ),

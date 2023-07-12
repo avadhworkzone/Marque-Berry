@@ -18,7 +18,7 @@ class ContestResult extends StatelessWidget {
         child: Scaffold(
             backgroundColor: ColorUtils.greyFA,
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(16.w),
+              preferredSize: Size(100.w, 60),
               child: CommonAppBar(
                 title: VariableUtils.viewResult,
                 onTap: () => Get.back(),
@@ -26,6 +26,7 @@ class ContestResult extends StatelessWidget {
             ),
             body: ListView.builder(
               itemCount: 10,
+              padding: EdgeInsets.zero,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),

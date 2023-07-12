@@ -87,7 +87,7 @@ class _CommentsState extends State<Comments> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 PreferredSize(
-                  preferredSize: Size.fromHeight(22.w),
+                  preferredSize: Size(100.w, 60),
                   child: CommonAppBar(
                     title: 'Comments',
                     onTap: () => Get.back(),

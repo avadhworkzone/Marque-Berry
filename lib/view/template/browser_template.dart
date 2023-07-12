@@ -93,11 +93,13 @@ class _BrowserTemplateState extends State<BrowserTemplate> {
 
               return Column(
                 children: [
-                  SizeConfig.sH2,
-                  SearchTextField(onChangedString: (value) {
-                    browserTemplateController.searchFunction(value);
-                    setState(() {});
-                  }),
+                  // SizeConfig.sH2,
+                  SearchTextField(
+                      verticalPadding: 0,
+                      onChangedString: (value) {
+                        browserTemplateController.searchFunction(value);
+                        setState(() {});
+                      }),
                   /* Container(
                     width: 90.w,
                     decoration: BoxDecoration(

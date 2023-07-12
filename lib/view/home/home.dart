@@ -55,59 +55,62 @@ class _HomeState extends State<Home> {
     return Scaffold(
       // backgroundColor: greyFABlack32,
       backgroundColor: Theme.of(context).cardColor,
-      appBar: AppBar(
-        elevation: 0.0,
-        titleSpacing: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: ColorUtils.transparent,
-        leading: Padding(
-          padding: EdgeInsets.all(1.2.w),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(20.w),
-            onTap: () => widget.scaffoldKey.currentState!.openDrawer(),
-            child: CommonImageScale(
-              img: IconsWidgets.menuImage,
-              scale: 3.4,
-              color: blackWhite,
+      appBar: PreferredSize(
+        preferredSize: Size(100.w, 60),
+        child: AppBar(
+          elevation: 0.0,
+          titleSpacing: 0,
+          automaticallyImplyLeading: false,
+          backgroundColor: ColorUtils.transparent,
+          leading: Padding(
+            padding: EdgeInsets.all(1.2.w),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20.w),
+              onTap: () => widget.scaffoldKey.currentState!.openDrawer(),
+              child: CommonImageScale(
+                img: IconsWidgets.menuImage,
+                scale: 3.4,
+                color: blackWhite,
+              ),
             ),
           ),
+          title: Padding(
+            padding: EdgeInsets.only(
+              bottom: 6,
+            ),
+            child: CommonImageWidth(
+              width: 25.w,
+              img: IconsWidgets.adoroTextImages,
+            ),
+          ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Get.to(() => SearchUser());
+              },
+              child: CommonImageHeightWidth(
+                img: IconsWidgets.searchImage,
+                width: 7.w,
+                height: 7.w,
+                color: blackWhite,
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Get.to(
+                () => MessageList(),
+                transition: Transition.rightToLeft,
+                duration: Duration(milliseconds: 400),
+              ),
+              child: CommonImageHeightWidth(
+                img: IconsWidgets.messageImage,
+                width: 8.w,
+                height: 8.w,
+                color: blackWhite,
+              ),
+            ),
+            SizeConfig.sW3,
+          ],
         ),
-        title: Padding(
-          padding: EdgeInsets.only(
-            bottom: 6,
-          ),
-          child: CommonImageWidth(
-            width: 25.w,
-            img: IconsWidgets.adoroTextImages,
-          ),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Get.to(() => SearchUser());
-            },
-            child: CommonImageHeightWidth(
-              img: IconsWidgets.searchImage,
-              width: 7.w,
-              height: 7.w,
-              color: blackWhite,
-            ),
-          ),
-          GestureDetector(
-            onTap: () => Get.to(
-              () => MessageList(),
-              transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 400),
-            ),
-            child: CommonImageHeightWidth(
-              img: IconsWidgets.messageImage,
-              width: 8.w,
-              height: 8.w,
-              color: blackWhite,
-            ),
-          ),
-          SizeConfig.sW3,
-        ],
       ),
       body: GetBuilder<HomeController>(
         initState: (_) {
@@ -128,7 +131,14 @@ class _HomeState extends State<Home> {
         builder: (homeController) {
           return Column(
             children: [
-              Divider(color: ColorUtils.greyF1, thickness: 0.8),
+              Divider(
+                color: ColorUtils.greyF1,
+                thickness: 0.8,
+                height: 0,
+              ),
+              SizedBox(
+                height: 10,
+              ),
               TabBarComponents(
                 categoryDataList: selectedCategoryDataList,
                 homeController: homeController,

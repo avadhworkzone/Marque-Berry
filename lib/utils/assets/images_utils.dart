@@ -20,6 +20,7 @@ class ImagesWidgets {
   static String profileImagesImage = '$imagesbasePath/profileimages.png';
   static String submitButtonImage = '$imagesbasePath/submitButton.png';
   static String gradientRectangle = '$imagesbasePath/gradientRectangle.png';
+
   // static String splashImage = '$imagesbasePath/splash.png';
   static String splashGifImage = '$imagesbasePath/splashGif.gif';
   static String doneGifImage = '$imagesbasePath/doneGif.gif';
@@ -73,7 +74,13 @@ class SvgWidgets {
   /// ON-BOARDING
   static String chat = '$svgbasePath/chat.svg';
   static String heart = '$svgbasePath/heart.svg';
+  static String selectedHeart = '$svgbasePath/selectedHeart.svg';
   static String send = '$svgbasePath/send.svg';
+  static String copyLink = '$svgbasePath/copyLink.svg';
+  static String reportPost = '$svgbasePath/reportPost.svg';
+  static String shareSvg = '$svgbasePath/share.svg';
+  static String unFollow = '$svgbasePath/unFollow.svg';
+  static String videoPlay = '$svgbasePath/videoPlay.svg';
 }
 
 class IconsWidgets {
@@ -125,6 +132,7 @@ class IconsWidgets {
   static String clipboardImages = '$iconsbasePath/clipboard.png';
   static String shareBtnImages = '$iconsbasePath/share_btn.png';
   static String linkImages = '$iconsbasePath/link.png';
+  static String copyLinkImages = '$iconsbasePath/copylink.png';
   static String tagImages = '$iconsbasePath/tag.png';
   static String imageImages = '$iconsbasePath/image.png';
   static String videoImages = '$iconsbasePath/video.png';

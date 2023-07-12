@@ -51,13 +51,13 @@ class DetailsScreen extends StatelessWidget {
       // backgroundColor: whiteBlack2E,
       backgroundColor: Theme.of(context).cardColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(15.w),
+        preferredSize: Size(100.w, 60),
         child: CommonAppBar(title: 'Details', onTap: () => Get.back()),
       ),
       body: GetBuilder<CampaignScreenController>(
           builder: (campaignScreenController) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.w),
+          padding: EdgeInsets.fromLTRB(5.w, 0, 5.w, 6.w),
           child: Container(
             height: size.height,
             width: size.width,
