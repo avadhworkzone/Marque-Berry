@@ -520,15 +520,18 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
             PreferenceUtils.getInt(key: PreferenceUtils.userid).toString());
         createPostReqModel.tag = jsonEncode(tagList);
       }
-      final fileSize = await getFileSize(
-          filepath: createPostReqModel.contentUrl!,
-          convertType: ConvertType.MB.index);
+      print('LINK=>${createPostReqModel.contentType}');
+      if (createPostReqModel.contentType != "template") {
+        final fileSize = await getFileSize(
+            filepath: createPostReqModel.contentUrl!,
+            convertType: ConvertType.MB.index);
 
-      if (fileSize > ConstUtils.maxFileSize) {
-        showSnackBar(
-          message: VariableUtils.fileSizeMax,
-        );
-        return;
+        if (fileSize > ConstUtils.maxFileSize) {
+          showSnackBar(
+            message: VariableUtils.fileSizeMax,
+          );
+          return;
+        }
       }
 
       await createPostViewModel.createPost(createPostReqModel);
@@ -547,6 +550,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
           message: createPostResModel.msg ?? "Post added successfully",
           snackbarSuccess: true,
         );
+
         logs('categoryIndex----------->$categoryIndex');
         if (categoryIndex > -1) {
           homeController.tabChange(categoryIndex + 2);
@@ -565,6 +569,7 @@ class _SharePostState extends State<SharePost> with TickerProviderStateMixin {
         categoryFeedViewModel.pageNumberIndex = 0;
         homeController.animateTabScroll(28.w * categoryIndex + 2);
         categoryFeedViewModel.isPageLoading = false;
+        bottomBarController.pageChange(0);
         await categoryFeedViewModel
             .categoryTrending(categoryIndex > -1 ? categoryName : "relevant");
       } else if (createPostViewModel.createPostApiResponse.status ==

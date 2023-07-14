@@ -6,6 +6,7 @@ import 'package:octo_image/octo_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/commanWidget/common_image.dart';
+import 'package:socialv/commanWidget/custom_snackbar.dart';
 import 'package:socialv/commanWidget/loader.dart';
 import 'package:socialv/model/apiModel/responseModel/get_wallet_balance_res_model.dart';
 import 'package:socialv/model/apis/api_response.dart';
@@ -173,7 +174,24 @@ class Wallet extends StatelessWidget {
                   InkWell(
                     splashColor: ColorUtils.transparent,
                     highlightColor: ColorUtils.transparent,
-                    onTap: () => Get.to(WithdrawnAmount()),
+                    onTap: () {
+                      if (balanceList.isEmpty) {
+                        showSnackBar(
+                          message: "You don’t have enough coin to withdraw",
+                        );
+                        return;
+                      }
+
+                      final amount = balanceList
+                          .reduce((value, element) => value + element);
+                      if (amount < 1) {
+                        showSnackBar(
+                          message: "You don’t have enough coin to withdraw",
+                        );
+                        return;
+                      }
+                      Get.to(WithdrawnAmount());
+                    },
                     child: Container(
                       height: 18.w,
                       width: 55.w,

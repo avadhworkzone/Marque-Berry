@@ -32,6 +32,7 @@ import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
+import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
 
 import '../../../utils/variable_utils.dart';
@@ -331,6 +332,8 @@ class PostComponents extends StatelessWidget {
                             ),
                           );
                           isScreenOpen = true;
+                          Get.find<CreatePostViewModel>()
+                              .getPostDetail(postId.toString());
                           categoryFeedViewModel.pageNumberIndex = 0;
                           categoryFeedViewModel.categoryTrending(
                               homeController.tabName,
@@ -371,6 +374,8 @@ class PostComponents extends StatelessWidget {
                             ),
                           );
                           isScreenOpen = true;
+                          Get.find<CreatePostViewModel>()
+                              .getPostDetail(postId.toString());
                           categoryFeedViewModel.pageNumberIndex = 0;
                           categoryFeedViewModel.categoryTrending(
                               homeController.tabName,
@@ -391,7 +396,7 @@ class PostComponents extends StatelessWidget {
                 //   child: DecorationUtils.dividerLine2(),
                 // ),
                 // SizeConfig.sH1,
-                if (likeProfile?.length != null)
+                if ((likeProfile?.length ?? 0) > 0)
                   Padding(
                     padding: EdgeInsets.fromLTRB(1.w, 0, 0.w, 0.w),
                     child: Container(
@@ -680,6 +685,8 @@ class PostComponents extends StatelessWidget {
                                 .deleteFollowRequestApiResponse.status ==
                             Status.COMPLETE) {
                           Get.back();
+                          Get.find<CreatePostViewModel>()
+                              .getPostDetail(postId.toString());
                           categoryFeedViewModel.setFollowData(userId, false);
                           categoryFeedViewModel.pageNumberIndex = 0;
                           categoryFeedViewModel.categoryTrending(
@@ -915,6 +922,7 @@ class LikeWidget extends StatelessWidget {
               await categoryFeedViewModel.dislikePost(disLikePostReqModel);
               await categoryFeedViewModel.setLikeUnlike(postId, false);
               categoryFeedViewModel.pageNumberIndex = 0;
+              Get.find<CreatePostViewModel>().getPostDetail(postId.toString());
               categoryFeedViewModel.categoryTrending(tabName, isReload: false);
             },
       child: Padding(
@@ -967,6 +975,7 @@ class UnlikeWidget extends StatelessWidget {
               categoryFeedViewModel.setLikeUnlike(postId, true);
               await categoryFeedViewModel.likePost(likePostReqModel);
               categoryFeedViewModel.pageNumberIndex = 0;
+              Get.find<CreatePostViewModel>().getPostDetail(postId.toString());
               categoryFeedViewModel.categoryTrending(tabName, isReload: false);
             },
       child: Padding(

@@ -59,11 +59,12 @@ class ProfileViewModel extends GetxController {
           isBackGround: true,
         );
         coverImagePath = cropPath?.path ?? "";*/
-        final cropImagePath = await Get.to(() => CustomImageCrop(
+        final cropImagePathTemp = await Get.to(() => CustomImageCrop(
               img: file.path!,
             ));
-        if (cropImagePath != null) {
-          await updateUserCoverPic(cropImagePath);
+        if (cropImagePathTemp != null) {
+          coverImagePath = cropImagePathTemp;
+          await updateUserCoverPic(cropImagePathTemp);
         }
 
         /* if (coverImagePath != "") {

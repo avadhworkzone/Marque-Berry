@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/commanWidget/common_appbar.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/drawer/enter_otp.dart';
 
 import '../../commanWidget/custom_snackbar.dart';
@@ -23,7 +24,8 @@ class WithdrawnAmount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? blackWhite = Theme.of(context).textTheme.titleSmall?.color;
-
+    final fullName = PreferenceUtils.getString(key: PreferenceUtils.fullname);
+    final userName = PreferenceUtils.getString(key: PreferenceUtils.username);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -41,7 +43,7 @@ class WithdrawnAmount extends StatelessWidget {
                 height: 15.h,
               ),
               AdoroText(
-                VariableUtils.deepanshuSarmandal,
+                fullName == null || fullName == "" ? userName : fullName,
                 fontSize: 13.sp,
                 color: blackWhite,
                 fontWeight: FontWeight.w300,

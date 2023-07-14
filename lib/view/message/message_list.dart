@@ -90,6 +90,7 @@ class MessageList extends StatelessWidget {
                   builder: (context, snapshot) {
                     logs(
                         'Foll ==>${getFollowingListResModel.data?.map((e) => jsonEncode(e.toJson())).toList()}');
+
                     if (!snapshot.hasData) {
                       return Center(child: Loader());
                     }

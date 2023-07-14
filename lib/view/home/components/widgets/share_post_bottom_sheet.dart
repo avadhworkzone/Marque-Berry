@@ -64,7 +64,8 @@ sharePostBottomSheet({
             VariableUtils.status500) {
           return Center(
             child: AdoroText(
-              getFollowingListResModel.msg ?? VariableUtils.somethingWentWrong,
+              // getFollowingListResModel.msg ?? VariableUtils.somethingWentWrong,
+              "Please Follow creators to share content with them",
             ),
           );
         }

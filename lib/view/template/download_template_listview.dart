@@ -128,6 +128,7 @@ class DownloadTemplateList extends StatelessWidget {
                                         ),
                                         InkWell(
                                           onTap: () {
+                                            logs('CAP----');
                                             imageDownload.getStoragePermission(
                                               path: templateList[index]
                                                   .templateUrl,

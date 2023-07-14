@@ -125,7 +125,7 @@ class PostDetailScreen extends StatelessWidget {
                                   -1
                               ? "You"
                               : (postDetail.likedByPeople?[0].username ?? "")
-                          : (postDetail.likedByPeople?[0].username ?? ""),
+                          : "",
                   likeProfile: postDetail.likedByPeople,
                   profileImage: postDetail.image ?? "",
                   userName: postDetail.username ?? "",

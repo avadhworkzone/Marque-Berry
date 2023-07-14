@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socialv/commanWidget/custom_snackbar.dart';
@@ -13,12 +15,14 @@ class ImageDownload {
       Get.find<DownloadTemplateController>();
 
   Future<void> getStoragePermission({required String path}) async {
+    logs('0------');
     var storageStatus = await Permission.storage.status;
     if (storageStatus != PermissionStatus.granted) {
       await Permission.storage.request();
     }
-
     var storageStatusAgain = await Permission.storage.status;
+    logs('111111=>$storageStatusAgain');
+
     if (storageStatusAgain == PermissionStatus.granted) {
       downloadImage(path);
     }
@@ -28,7 +32,13 @@ class ImageDownload {
 
   Future downloadImage(String url) async {
     try {
-      final response = await dio.get(
+      var response = await Dio()
+          .get(url, options: Options(responseType: ResponseType.bytes));
+      await ImageGallerySaver.saveImage(Uint8List.fromList(response.data),
+          quality: 100,
+          name: "${DateTime.now().millisecondsSinceEpoch.toString()}");
+
+      /* final response = await dio.get(
         url,
         onReceiveProgress: downloadTemplateController.progressDownload,
         options: Options(
@@ -39,6 +49,7 @@ class ImageDownload {
           },
         ),
       );
+      print('CALL-----');
       String savePath = (await getDownloadPath()) ?? '';
       if (savePath == "") {
         showSnackBar(message: "Download failed");
@@ -51,7 +62,7 @@ class ImageDownload {
       var raf = file.openSync(mode: FileMode.write);
       raf.writeFromSync(response.data);
       await raf.close();
-
+*/
       showSnackBar(
         message: "Image downloaded successfully",
         snackbarSuccess: true,

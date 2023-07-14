@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socialv/model/apiModel/responseModel/user_profile_res_model.dart';
@@ -37,22 +38,28 @@ class CoverProfile extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 16 / 9,
                 child: Container(
-                  width: Get.width,
-                  margin: EdgeInsets.only(bottom: 9.w),
-                  child: con.coverImagePath != "" &&
-                          profileData.id ==
-                              PreferenceUtils.getInt(
-                                  key: PreferenceUtils.userid)
-                      ? Image.file(
-                          File(
-                            con.coverImagePath,
-                          ),
-                          // fit: BoxFit.fill,
-                          fit: BoxFit.fitWidth,
-                          // fit: BoxFit.contain,
-                        )
-                      : CommonCoverImage(image: profileData.coverPhoto ?? ""),
-                ),
+                    width: Get.width,
+                    margin: EdgeInsets.only(bottom: 9.w),
+                    child: con.coverImagePath != "" &&
+                            profileData.id ==
+                                PreferenceUtils.getInt(
+                                    key: PreferenceUtils.userid)
+                        ? Image.file(
+                            File(
+                              con.coverImagePath,
+                            ),
+                            // fit: BoxFit.fill,
+                            fit: BoxFit.fitWidth,
+                            // fit: BoxFit.contain,
+                          )
+                        : profileData.coverPhoto == null ||
+                                profileData.coverPhoto == ""
+                            ? SvgPicture.asset(
+                                'assets/images/profileCover.svg',
+                                fit: BoxFit.cover,
+                              )
+                            : CommonCoverImage(
+                                image: profileData.coverPhoto ?? "")),
               ),
             ),
             if (profileData.id ==

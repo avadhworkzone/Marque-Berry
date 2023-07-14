@@ -159,7 +159,7 @@ OutlineInputBorder border = OutlineInputBorder(
 /// ========================== CONST UTILS ========================== ///
 class ConstUtils {
   static String selectedChattingUserId = "";
-  static num maxFileSize = 50;
+  static num maxFileSize = 70;
 }
 
 class FirebaseCollection {

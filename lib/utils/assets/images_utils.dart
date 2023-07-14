@@ -24,6 +24,7 @@ class ImagesWidgets {
   // static String splashImage = '$imagesbasePath/splash.png';
   static String splashGifImage = '$imagesbasePath/splashGif.gif';
   static String doneGifImage = '$imagesbasePath/doneGif.gif';
+  static String darkDoneGif = '$imagesbasePath/darkDoneGif.gif';
   static String tickSquareImage = '$imagesbasePath/TickSquare.png';
   static String closeSquareImage = '$imagesbasePath/CloseSquare.png';
   static String referEarnImage = '$imagesbasePath/referEarn.png';

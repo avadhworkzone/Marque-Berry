@@ -19,6 +19,8 @@ class SplashController extends GetxController {
         value: brightness.name,
       );
       DynamicLink.getInitialDynamicLinks();
+    } else {
+      DynamicLink.getInitialDynamicLinks();
     }
   }
 }

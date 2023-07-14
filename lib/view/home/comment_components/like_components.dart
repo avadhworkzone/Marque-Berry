@@ -32,16 +32,14 @@ class LikeButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             isLiked
-                ? Image.asset(
-                    IconsWidgets.heartFilledImage,
-                    scale: 1.w,
-                    color: Colors.red,
+                ? CommonSvgImage(
+                    img: SvgWidgets.selectedHeart,
+
+                    // color: Theme.of(context).textTheme.titleMedium?.color,
                   )
-                : CommonImageScale(
-                    img: IconsWidgets.unLikeComment,
-                    // img: IconsWidgets.heartImage,
-                    scale: 2.5,
-                    color: ColorUtils.black92,
+                : CommonSvgImage(
+                    img: SvgWidgets.heart,
+                    // color: Theme.of(context).textTheme.titleMedium?.color,
                   ),
             SizeConfig.sW2,
             AdoroText(
