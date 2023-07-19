@@ -100,7 +100,7 @@ class NotificationScreen extends StatelessWidget {
                   if (notification.title == 'Follow Request') {
                     return UserProfileDasType(
                       userId: notification.dataId!,
-                      image: notification.image!,
+                      image: notification.image ?? '',
                       username: notification.username!,
                       fullname: notification.fullName!,
                       tital: notification.title!,
@@ -110,7 +110,7 @@ class NotificationScreen extends StatelessWidget {
                   if (notification.title == 'Request Accepted') {
                     return NotificationUserProfile(
                       userId: notification.dataId!,
-                      image: notification.image!,
+                      image: notification.image ?? "",
                       username: notification.username!,
                       fullname: notification.fullName!,
                       tital: notification.title!,

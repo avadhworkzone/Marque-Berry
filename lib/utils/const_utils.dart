@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
+import 'package:video_player/video_player.dart';
 
 logs(String message) {
   if (kDebugMode) {
@@ -160,6 +161,8 @@ OutlineInputBorder border = OutlineInputBorder(
 class ConstUtils {
   static String selectedChattingUserId = "";
   static num maxFileSize = 70;
+
+  static Map<String,VideoPlayerController> videoControllerList={};
 }
 
 class FirebaseCollection {

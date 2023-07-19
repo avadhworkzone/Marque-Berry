@@ -21,6 +21,7 @@ abstract class BaseService {
   final String dislikeURL = 'deleteLike';
   final String reportPostURL = 'ReportPost';
   final String createPostURL = 'createPost';
+  final String deletePostUrl = 'deletePost';
   final String createPostByChooseTemplate = 'createPostByChooseTemplate';
   final String getPostById = 'getPostById?post_id=';
   final String postLikesInComments = 'postLikesInComments';

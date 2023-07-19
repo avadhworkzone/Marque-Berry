@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';

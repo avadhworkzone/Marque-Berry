@@ -8,7 +8,9 @@ import 'package:socialv/commanWidget/common_drawer.dart';
 import 'package:socialv/commanWidget/noInternet_screen.dart';
 import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
+import 'package:socialv/view/home/components/video_components.dart';
 import 'package:socialv/view/home/home.dart';
 import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/auth_view_model.dart';
@@ -165,18 +167,51 @@ class _BottomBarState extends State<BottomBar> {
   }) {
     return Expanded(
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           if (index == 0) {
+            int playedIndex = -1;
+            playedIndex = ConstUtils.videoControllerList.values
+                .toList()
+                .indexWhere((element) => element.value.isPlaying);
+            if (playedIndex > -1) {
+              ConstUtils.videoControllerList.values
+                  .toList()[playedIndex]
+                  .pause();
+            }
+            ConstUtils.videoControllerList.clear();
             controller.pageChange(index);
             homeController.animateFeedScroll(0);
           } else if (index == 1) {
-            Get.to(
+            int playedIndex = -1;
+            playedIndex = ConstUtils.videoControllerList.values
+                .toList()
+                .indexWhere((element) => element.value.isPlaying);
+            if (playedIndex > -1) {
+              ConstUtils.videoControllerList.values
+                  .toList()[playedIndex]
+                  .pause();
+            }
+            await Get.to(
               () => SharePost(),
-
-              // duration: Duration(milliseconds: 500),
-              // transition: Transition.leftToRight,
             );
+            if (playedIndex > -1) {
+              ConstUtils.videoControllerList.values
+                  .toList()[playedIndex]
+                  .play();
+            }
           } else {
+            int playedIndex = -1;
+            playedIndex = ConstUtils.videoControllerList.values
+                .toList()
+                .indexWhere((element) => element.value.isPlaying);
+            if (playedIndex > -1) {
+              ConstUtils.videoControllerList.values
+                  .toList()[playedIndex]
+                  .pause();
+            }
+            ConstUtils.videoControllerList.values.toList().forEach((element) {
+              element.dispose();
+            });
             controller.pageChange(index);
           }
         },

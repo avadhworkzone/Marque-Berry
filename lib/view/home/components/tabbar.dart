@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/color_utils.dart';
 import 'package:socialv/utils/const_utils.dart' as categoryList;
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
@@ -41,6 +42,15 @@ class TabBarComponents extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
+              int playedIndex = -1;
+              playedIndex = ConstUtils.videoControllerList.values
+                  .toList()
+                  .indexWhere((element) => element.value.isPlaying);
+              if (playedIndex > -1) {
+                ConstUtils.videoControllerList.values
+                    .toList()[playedIndex]
+                    .pause();
+              }
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                 // homeController.updateTabController(
                 //     index

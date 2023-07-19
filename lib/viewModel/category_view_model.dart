@@ -53,6 +53,7 @@ class CategoryFeedViewModel extends GetxController {
   ApiResponse deleteCommentApiResponse = ApiResponse.initial('INITIAL');
 
   ApiResponse reportPostApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse deletePostApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse getLikeByUserApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse postLikeInCommentApiResponse = ApiResponse.initial('INITIAL');
 
@@ -258,6 +259,22 @@ class CategoryFeedViewModel extends GetxController {
     } catch (e) {
       logs('reportPostApiResponse ERROR :=> $e');
       reportPostApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// ===================== DELETE POST ========================
+
+  Future<void> deletePost(String postId) async {
+    logs('loading..');
+    deletePostApiResponse = ApiResponse.loading('LOADING');
+    update();
+    try {
+      final response = await ReportPostRepo().deletePost(postId);
+      deletePostApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      logs('deletePostApiResponse ERROR :=> $e');
+      deletePostApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }

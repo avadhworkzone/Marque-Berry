@@ -15,4 +15,13 @@ class ReportPostRepo extends BaseService {
 
     return CommonStatusMsgResModel.fromJson(response);
   }
+
+  Future<CommonStatusMsgResModel> deletePost(String postId) async {
+    var response = await ApiService().getResponse(
+      apiType: APIType.aPost,
+      body: {"post_id": postId},
+      url: '$baseURL$deletePostUrl',
+    );
+    return CommonStatusMsgResModel.fromJson(response);
+  }
 }

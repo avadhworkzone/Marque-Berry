@@ -80,6 +80,7 @@ class SvgWidgets {
   static String copyLink = '$svgbasePath/copyLink.svg';
   static String reportPost = '$svgbasePath/reportPost.svg';
   static String shareSvg = '$svgbasePath/share.svg';
+  static String deleteSvg = '$svgbasePath/delete.svg';
   static String unFollow = '$svgbasePath/unFollow.svg';
   static String videoPlay = '$svgbasePath/videoPlay.svg';
 }

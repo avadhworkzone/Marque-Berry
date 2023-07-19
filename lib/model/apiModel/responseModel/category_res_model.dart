@@ -1,3 +1,5 @@
+import 'package:video_player/video_player.dart';
+
 class CategoryResModel {
   int? status;
   String? msg;
@@ -43,6 +45,7 @@ class CategoryData {
   List<LikedByPeople>? likedByPeople;
   List<TagUser>? tagUser;
   bool? likedByMe;
+  VideoPlayerController? videoPlayerController;
 
   CategoryData(
       {this.id,
@@ -129,7 +132,7 @@ class TagUser {
   String? fullName;
   String? image;
 
-  TagUser({this.id, this.username, this.fullName,this.image});
+  TagUser({this.id, this.username, this.fullName, this.image});
 
   TagUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];

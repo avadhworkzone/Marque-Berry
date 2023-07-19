@@ -21,6 +21,7 @@ import 'package:socialv/model/apis/api_response.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/decoration_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
@@ -34,6 +35,7 @@ import 'package:socialv/view/profile/profile.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
 import 'package:socialv/viewModel/create_post_view_model.dart';
 import 'package:socialv/viewModel/follow_request_view_model.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../utils/variable_utils.dart';
 import 'widgets/share_post_bottom_sheet.dart';
@@ -98,6 +100,15 @@ class PostComponents extends StatelessWidget {
         .where((element) =>
             element.id != PreferenceUtils.getInt(key: PreferenceUtils.userid))
         .toList();
+    print('video:=>$isInView URL:=>$contentImage');
+
+    /// ===================== ADD VIDEO CONTROLLER IN CONST VARIABLE ===================== ///
+    if (!ConstUtils.videoControllerList.containsKey(contentImage) &&
+        contentType == "video") {
+      ConstUtils.videoControllerList.addAll({
+        contentImage: VideoPlayerController.networkUrl(Uri.parse(contentImage))
+      });
+    }
     return Container(
       // decoration: BoxDecoration(
       //   borderRadius: BorderRadius.circular(1.5.w),
@@ -159,8 +170,22 @@ class PostComponents extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               leading: InkWell(
-                onTap: () {
-                  Get.to(() => Profile(userId: userId));
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
+                  await Get.to(() => Profile(userId: userId));
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.w),
@@ -238,8 +263,19 @@ class PostComponents extends StatelessWidget {
                     width: Get.width,
                     child: contentType.toLowerCase() == "video"
                         ? InkWell(
-                            onTap: () {
-                              Get.dialog(
+                            onTap: () async {
+                              int playedIndex = -1;
+                              playedIndex = ConstUtils
+                                  .videoControllerList.values
+                                  .toList()
+                                  .indexWhere(
+                                      (element) => element.value.isPlaying);
+                              if (playedIndex > -1) {
+                                ConstUtils.videoControllerList.values
+                                    .toList()[playedIndex]
+                                    .pause();
+                              }
+                              await Get.dialog(
                                 Dialog(
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.black,
@@ -250,10 +286,17 @@ class PostComponents extends StatelessWidget {
                                   ),
                                 ),
                               );
+                              if (playedIndex > -1) {
+                                ConstUtils.videoControllerList.values
+                                    .toList()[playedIndex]
+                                    .play();
+                              }
                             },
                             child: InViewVideoComponents(
                               play: isInView,
                               url: contentImage,
+                              videoPlayerController:
+                                  ConstUtils.videoControllerList[contentImage]!,
                             ),
                           )
                         : InkWell(
@@ -324,14 +367,26 @@ class PostComponents extends StatelessWidget {
                       // SizeConfig.sW1AndHalf,
                       InkWell(
                         onTap: () async {
-                          isScreenOpen = false;
+                          int playedIndex = -1;
+                          playedIndex = ConstUtils.videoControllerList.values
+                              .toList()
+                              .indexWhere((element) => element.value.isPlaying);
+                          if (playedIndex > -1) {
+                            ConstUtils.videoControllerList.values
+                                .toList()[playedIndex]
+                                .pause();
+                          }
                           await Get.to(
                             () => Comments(
                               postId: postId,
                               profileImage: profileImage,
                             ),
                           );
-                          isScreenOpen = true;
+                          if (playedIndex > -1) {
+                            ConstUtils.videoControllerList.values
+                                .toList()[playedIndex]
+                                .play();
+                          }
                           Get.find<CreatePostViewModel>()
                               .getPostDetail(postId.toString());
                           categoryFeedViewModel.pageNumberIndex = 0;
@@ -366,14 +421,26 @@ class PostComponents extends StatelessWidget {
                       Spacer(),
                       InkWell(
                         onTap: () async {
-                          isScreenOpen = false;
+                          int playedIndex = -1;
+                          playedIndex = ConstUtils.videoControllerList.values
+                              .toList()
+                              .indexWhere((element) => element.value.isPlaying);
+                          if (playedIndex > -1) {
+                            ConstUtils.videoControllerList.values
+                                .toList()[playedIndex]
+                                .pause();
+                          }
                           await Get.to(
                             () => Comments(
                               postId: postId,
                               profileImage: profileImage,
                             ),
                           );
-                          isScreenOpen = true;
+                          if (playedIndex > -1) {
+                            ConstUtils.videoControllerList.values
+                                .toList()[playedIndex]
+                                .play();
+                          }
                           Get.find<CreatePostViewModel>()
                               .getPostDetail(postId.toString());
                           categoryFeedViewModel.pageNumberIndex = 0;
@@ -476,11 +543,25 @@ class PostComponents extends StatelessWidget {
                           if (likeProfile!.length == 1) SizeConfig.sW2,
                           InkWell(
                             onTap: () async {
-                              isScreenOpen = false;
+                              int playedIndex = -1;
+                              playedIndex = ConstUtils
+                                  .videoControllerList.values
+                                  .toList()
+                                  .indexWhere(
+                                      (element) => element.value.isPlaying);
+                              if (playedIndex > -1) {
+                                ConstUtils.videoControllerList.values
+                                    .toList()[playedIndex]
+                                    .pause();
+                              }
                               await Get.to(
                                 () => LikeScreen(likeProfile: postId),
                               );
-                              isScreenOpen = true;
+                              if (playedIndex > -1) {
+                                ConstUtils.videoControllerList.values
+                                    .toList()[playedIndex]
+                                    .play();
+                              }
                             },
                             child: Wrap(
                               children: [
@@ -491,12 +572,28 @@ class PostComponents extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    Get.to(() => Profile(
+                                  onTap: () async {
+                                    int playedIndex = -1;
+                                    playedIndex = ConstUtils
+                                        .videoControllerList.values
+                                        .toList()
+                                        .indexWhere((element) =>
+                                            element.value.isPlaying);
+                                    if (playedIndex > -1) {
+                                      ConstUtils.videoControllerList.values
+                                          .toList()[playedIndex]
+                                          .pause();
+                                    }
+                                    await Get.to(() => Profile(
                                         userId: likeByMe == "You"
                                             ? PreferenceUtils.getInt(
                                                 key: PreferenceUtils.userid)
                                             : likeProfile!.first.id!));
+                                    if (playedIndex > -1) {
+                                      ConstUtils.videoControllerList.values
+                                          .toList()[playedIndex]
+                                          .play();
+                                    }
                                   },
                                   child: AdoroText(
                                     "$likeByMe ",
@@ -603,7 +700,7 @@ class PostComponents extends StatelessWidget {
           height: userId.toString() !=
                   PreferenceUtils.getInt(key: PreferenceUtils.userid).toString()
               ? 190
-              : 120,
+              : 140,
           width: 100.w,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10),
@@ -705,37 +802,81 @@ class PostComponents extends StatelessWidget {
                       }
                     },
                   ),
-                SizedBox(
-                  height: 15,
-                ),
+
+                if (userId.toString() ==
+                    PreferenceUtils.getInt(key: PreferenceUtils.userid)
+                        .toString())
+                  Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: InkWell(
+                      onTap: () async {
+                        await categoryFeedViewModel
+                            .deletePost(postIdArg.toString());
+
+                        if (categoryFeedViewModel
+                                .deletePostApiResponse.status ==
+                            Status.COMPLETE) {
+                          CommonStatusMsgResModel response =
+                              categoryFeedViewModel.deletePostApiResponse.data;
+                          if (response.status.toString() ==
+                              VariableUtils.status200) {
+                            homeController.reportSuccess(true);
+                            homeController.addReport(postIdArg);
+                          } else {
+                            showSnackBar(
+                              message: response.msg ??
+                                  VariableUtils.somethingWentWrong,
+                            );
+                          }
+                          Get.back();
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(
+                              width: 25,
+                              height: 25,
+                              child: Icon(Icons.delete_outline_outlined)),
+                          SizeConfig.sW3,
+                          AdoroText('Delete post',
+                              color: ColorUtils.black92, fontSize: 14.sp),
+                        ],
+                      ),
+                    ),
+                  ),
+
                 if (userId.toString() !=
                     PreferenceUtils.getInt(key: PreferenceUtils.userid)
                         .toString())
-                  bottomComponents(
-                    text: 'Report post',
-                    image: SvgWidgets.reportPost,
-                    onTap: () async {
-                      await categoryFeedViewModel
-                          .reportPost(postIdArg.toString());
+                  Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: bottomComponents(
+                      text: 'Report post',
+                      image: SvgWidgets.reportPost,
+                      onTap: () async {
+                        await categoryFeedViewModel
+                            .reportPost(postIdArg.toString());
 
-                      if (categoryFeedViewModel.reportPostApiResponse.status ==
-                          Status.COMPLETE) {
-                        CommonStatusMsgResModel response =
-                            categoryFeedViewModel.reportPostApiResponse.data;
+                        if (categoryFeedViewModel
+                                .reportPostApiResponse.status ==
+                            Status.COMPLETE) {
+                          CommonStatusMsgResModel response =
+                              categoryFeedViewModel.reportPostApiResponse.data;
 
-                        if (response.status.toString() ==
-                            VariableUtils.status200) {
-                          homeController.reportSuccess(true);
-                          homeController.addReport(postIdArg);
-                        } else {
-                          showSnackBar(
-                            message: response.msg ??
-                                VariableUtils.somethingWentWrong,
-                          );
+                          if (response.status.toString() ==
+                              VariableUtils.status200) {
+                            homeController.reportSuccess(true);
+                            homeController.addReport(postIdArg);
+                          } else {
+                            showSnackBar(
+                              message: response.msg ??
+                                  VariableUtils.somethingWentWrong,
+                            );
+                          }
+                          Get.back();
                         }
-                        Get.back();
-                      }
-                    },
+                      },
+                    ),
                   ),
               ],
             ),
@@ -791,12 +932,23 @@ class UserNameText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (userId == -1) {
           showOtherUserBottomSheet(context);
           return;
         }
-        Get.to(() => Profile(userId: userId));
+        int playedIndex = -1;
+        playedIndex = ConstUtils.videoControllerList.values
+            .toList()
+            .indexWhere((element) => element.value.isPlaying);
+        if (playedIndex > -1) {
+          ConstUtils.videoControllerList.values.toList()[playedIndex].pause();
+        }
+
+        await Get.to(() => Profile(userId: userId));
+        if (playedIndex > -1) {
+          ConstUtils.videoControllerList.values.toList()[playedIndex].play();
+        }
       },
       child: AdoroText(
         userName,

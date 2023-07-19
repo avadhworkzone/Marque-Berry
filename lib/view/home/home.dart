@@ -20,6 +20,7 @@ import 'package:socialv/view/home/components/post_components.dart';
 import 'package:socialv/view/home/components/tabbar.dart';
 import 'package:socialv/view/message/message_list.dart';
 import 'package:socialv/viewModel/category_view_model.dart';
+import 'package:video_player/video_player.dart';
 
 import 'search_user.dart';
 
@@ -47,6 +48,7 @@ class _HomeState extends State<Home> {
 
   CategoryFeedViewModel categoryFeedViewModel =
       Get.find<CategoryFeedViewModel>();
+
   @override
   Widget build(BuildContext context) {
     Color greyFABlack32 = Theme.of(context).cardColor;
@@ -85,8 +87,22 @@ class _HomeState extends State<Home> {
           ),
           actions: [
             GestureDetector(
-              onTap: () {
-                Get.to(() => SearchUser());
+              onTap: () async {
+                int playedIndex = -1;
+                playedIndex = ConstUtils.videoControllerList.values
+                    .toList()
+                    .indexWhere((element) => element.value.isPlaying);
+                if (playedIndex > -1) {
+                  ConstUtils.videoControllerList.values
+                      .toList()[playedIndex]
+                      .pause();
+                }
+                await Get.to(() => SearchUser());
+                if (playedIndex > -1) {
+                  ConstUtils.videoControllerList.values
+                      .toList()[playedIndex]
+                      .play();
+                }
               },
               child: CommonImageHeightWidth(
                 img: IconsWidgets.searchImage,
@@ -96,11 +112,27 @@ class _HomeState extends State<Home> {
               ),
             ),
             GestureDetector(
-              onTap: () => Get.to(
-                () => MessageList(),
-                transition: Transition.rightToLeft,
-                duration: Duration(milliseconds: 400),
-              ),
+              onTap: () async {
+                int playedIndex = -1;
+                playedIndex = ConstUtils.videoControllerList.values
+                    .toList()
+                    .indexWhere((element) => element.value.isPlaying);
+                if (playedIndex > -1) {
+                  ConstUtils.videoControllerList.values
+                      .toList()[playedIndex]
+                      .pause();
+                }
+                await Get.to(
+                  () => MessageList(),
+                  transition: Transition.rightToLeft,
+                  duration: Duration(milliseconds: 400),
+                );
+                if (playedIndex > -1) {
+                  ConstUtils.videoControllerList.values
+                      .toList()[playedIndex]
+                      .play();
+                }
+              },
               child: CommonImageHeightWidth(
                 img: IconsWidgets.messageImage,
                 width: 8.w,
@@ -170,7 +202,8 @@ class _HomeState extends State<Home> {
 
                   List<CategoryData> categoryPostList =
                       categoryFeedViewModel.categoryPostList;
-
+                  print(
+                      'homeController.reportList=>${homeController.reportList}');
                   return Expanded(
                     child: categoryPostList.isEmpty
                         ? Center(
@@ -213,6 +246,20 @@ class _HomeState extends State<Home> {
                                               bool isInView, Widget? child) {
                                             if (postId == 0) {
                                               return SizedBox();
+                                            }
+                                            if (!ConstUtils.videoControllerList
+                                                    .containsKey(categoryIndex
+                                                        .contentUrl) &&
+                                                categoryIndex.contentType ==
+                                                    "video") {
+                                              ConstUtils.videoControllerList
+                                                  .addAll({
+                                                categoryIndex.contentUrl!:
+                                                    VideoPlayerController
+                                                        .networkUrl(Uri.parse(
+                                                            categoryIndex
+                                                                .contentUrl!))
+                                              });
                                             }
                                             return homeController.reportList
                                                         .contains(postId) ==

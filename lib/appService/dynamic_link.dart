@@ -4,6 +4,7 @@ import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/view/auth/login_screen.dart';
 import 'package:socialv/view/bottomBar/bottombar.dart';
+import 'package:socialv/view/drawer/referAndEarn.dart';
 import 'package:socialv/view/home/post_detail_screen.dart';
 
 class DynamicLink {
@@ -103,12 +104,19 @@ class DynamicLink {
               referId: referId,
             ));
       } else {
-        final postId =
-            deepLink.toString().substring(deepLink.toString().indexOf('=') + 1);
-        logs('GET INIT POSt ID =>$postId');
-        Get.to(() => PostDetailScreen(
-              postId: postId,
-            ));
+        if (deepLink.toString().contains('referId')) {
+          Get.off(() => ReferAndEarn(
+                fromDeepLink: true,
+              ));
+        } else {
+          final postId = deepLink
+              .toString()
+              .substring(deepLink.toString().indexOf('=') + 1);
+          logs('GET INIT POSt ID =>$postId');
+          Get.to(() => PostDetailScreen(
+                postId: postId,
+              ));
+        }
       }
     } else {
       navigatePage();
@@ -145,11 +153,17 @@ class DynamicLink {
                 referId: referId,
               ));
         } else {
-          final postId = deepLink
-              .toString()
-              .substring(deepLink.toString().indexOf('=') + 1);
-          print('POST ID ==>$postId');
-          Get.to(() => PostDetailScreen(postId: postId));
+          if (deepLink.toString().contains('referId')) {
+            Get.off(() => ReferAndEarn(
+                  fromDeepLink: true,
+                ));
+          } else {
+            final postId = deepLink
+                .toString()
+                .substring(deepLink.toString().indexOf('=') + 1);
+            print('POST ID ==>$postId');
+            Get.to(() => PostDetailScreen(postId: postId));
+          }
         }
       } else {
         print('CONTINUE WITHOUT DEEP LINK.............');

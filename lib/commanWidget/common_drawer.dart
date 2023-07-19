@@ -6,6 +6,7 @@ import 'package:socialv/controllers/bottomBar_controller.dart';
 import 'package:socialv/utils/adoro_text.dart';
 import 'package:socialv/utils/assets/images_utils.dart';
 import 'package:socialv/utils/color_utils.dart';
+import 'package:socialv/utils/const_utils.dart';
 import 'package:socialv/utils/font_style_utils.dart';
 import 'package:socialv/utils/shared_preference_utils.dart';
 import 'package:socialv/utils/size_config_utils.dart';
@@ -51,6 +52,15 @@ class MyDrawer extends StatelessWidget {
               ListTile(
                 splashColor: ColorUtils.transparent,
                 onTap: () {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
                   bottomBar.pageChange(3);
                 },
@@ -82,72 +92,184 @@ class MyDrawer extends StatelessWidget {
               ),
               SizeConfig.sH2,
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => NotificationScreen());
+                  await Get.to(() => NotificationScreen());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.notificationText,
                 image: IconsWidgets.notificationImage,
               ),
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => Result());
+                  await Get.to(() => Result());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.resultText,
                 image: IconsWidgets.resultImage,
               ),
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => Note());
+                  await Get.to(() => Note());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.noteFromAdoroText,
                 image: IconsWidgets.noteImage,
               ),
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => Wallet());
+                  await Get.to(() => Wallet());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.walletText,
                 image: IconsWidgets.walletImage,
               ),
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => Template());
+                  await Get.to(() => Template());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.templateText,
                 image: IconsWidgets.templateImage,
               ),
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => ReferAndEarn());
+                  await Get.to(() => ReferAndEarn());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.referEarnText,
                 image: IconsWidgets.referImage,
               ),
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => Support());
+                  await Get.to(() => Support());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.supportText,
                 image: IconsWidgets.supportImage,
               ),
               drawerListTile(
-                onTap: () {
+                onTap: () async {
+                  int playedIndex = -1;
+                  playedIndex = ConstUtils.videoControllerList.values
+                      .toList()
+                      .indexWhere((element) => element.value.isPlaying);
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .pause();
+                  }
                   Get.back();
-                  Get.to(() => Setting());
+                  await Get.to(() => Setting());
+                  if (playedIndex > -1) {
+                    ConstUtils.videoControllerList.values
+                        .toList()[playedIndex]
+                        .play();
+                  }
                 },
                 context: context,
                 title: VariableUtils.settingsText,
